@@ -1,0 +1,16 @@
+
+#ns01 = "http://myNs01.com"
+#ns02 = "http://myNs02.com"
+		
+!MyRequest:
+	#ns11 = "http://myNs11.com"
+	#ns12 = "http://myNs12.com"
+	
+	request
+	
+!MyRequest2:
+	#ns21 = "http://myNs21.com"
+	#ns22 = "http://myNs22.com"
+	
+	request
+	

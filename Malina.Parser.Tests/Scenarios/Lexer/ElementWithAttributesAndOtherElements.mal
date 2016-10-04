@@ -1,0 +1,7 @@
+
+!MyRequest:
+	ns1.request:
+		@name = "name1"
+		@ns1.name2 = name2
+		tag1 = tag1
+		ns1.tag2 = "tag2"

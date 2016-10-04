@@ -1,0 +1,7 @@
+/.vs/MalinaTool/v14/*.suo
+/Malina.Antlr/bin/Debug/*.dll
+*.suo
+*.dll
+bin
+obj
+packages

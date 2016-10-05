@@ -1,5 +1,7 @@
 lexer grammar MalinaLexer;
 
+tokens { INDENT, DEDENT, NEWLINE}
+
 WS				:	WsSpaces	-> skip;
 
 INDENT_DEDENT		:	(Eol Spaces)+ {IndentDedent();};

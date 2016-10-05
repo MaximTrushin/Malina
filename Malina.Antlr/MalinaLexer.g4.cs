@@ -33,7 +33,7 @@ namespace Malina.Parser
                 //Emitting 1 or more DEDENTS
                 while (_indents.Count > 1 && _indents.Peek() > indent)
                 {
-                    Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DEDENT, Channel, CharIndex - indent, CharIndex));
+                    Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DEDENT, Channel, CharIndex - indent, CharIndex - 1));
                     _indents.Pop();
                 }
             }
@@ -68,5 +68,15 @@ namespace Malina.Parser
                 return _tokens.Dequeue();
             return base.NextToken();
         }
+
+        public override void Recover(LexerNoViableAltException e)
+        {
+            //Lexer recover strategy - ignore all till next space, tab or EOL
+            while (_input.La(1) != -1 && _input.La(1) != ' ' && _input.La(1) != '\n' && _input.La(1) != '\r' && _input.La(1) != '\t')
+            {
+                Interpreter.Consume(_input);
+            }
+        }
+
     }
 }

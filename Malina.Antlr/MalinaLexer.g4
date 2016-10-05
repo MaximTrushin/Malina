@@ -27,18 +27,18 @@ SHORT_ID			:	ShortName;
 VALUE_BEGIN			:	'='	[ \t]* -> pushMode(IN_VALUE);
 
 
-INVALID : . { if (InvalidTokens.Count < 100) InvalidTokens.Add(Token); };
+//INVALID : . { if (InvalidTokens.Count < 100) InvalidTokens.Add(Token); };
 
 mode IN_VALUE;
 	OBJECT_VALUE	:
 					(	PARAMETER_ID						
 					|	ALIAS_ID
-					|	INVALID					
+					//|	INVALID					
 					)		-> popMode;
 	VALUE			:	
 					(	'"' (~('"') | '""')* '"'	
 					)		-> popMode;
-	O_VALUE_BEGIN	:	~[$%"\'`] ~[\r\n]* -> popMode;
+	O_VALUE_BEGIN	:	~[$%"'] ~[\r\n]* -> popMode;
 
 
 fragment	Eol				:	( '\r'? '\n' )

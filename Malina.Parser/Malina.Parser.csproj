@@ -47,6 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Malina.Antlr\MalinaLexer.g4.cs">
+      <Link>MalinaLexer.g4.cs</Link>
+      <DependentUpon>MalinaLexer.g4</DependentUpon>
+    </Compile>
     <Compile Include="..\Malina.Antlr\obj\Debug\MalinaLexer.cs">
       <Link>Generated\MalinaLexer.cs</Link>
     </Compile>

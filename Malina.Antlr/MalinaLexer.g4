@@ -1,16 +1,8 @@
 lexer grammar MalinaLexer;
-@header {
-  using System.Collections.Generic;
-}
-
-@lexer::members {
-  public List<IToken> Invalid = new List<IToken>();
-}
-
 
 WS				:	WsSpaces	-> skip;
 
-INDENT_DEDENT		:	(Eol Spaces)+;
+INDENT_DEDENT		:	(Eol Spaces)+ {IndentDedent();};
 
 COLON				:	':';
 
@@ -33,7 +25,7 @@ SHORT_ID			:	ShortName;
 VALUE_BEGIN			:	'='	[ \t]* -> pushMode(IN_VALUE);
 
 
-INVALID : . { if (Invalid.Count < 100) Invalid.Add(Token); };
+INVALID : . { if (InvalidTokens.Count < 100) InvalidTokens.Add(Token); };
 
 mode IN_VALUE;
 	OBJECT_VALUE	:

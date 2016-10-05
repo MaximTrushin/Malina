@@ -48,12 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MalinaLexer.g4.cs">
+      <DependentUpon>MalinaLexer.g4</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="MalinaLexer.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>Malina.Parser</CustomToolNamespace>
+      <Visitor>False</Visitor>
+      <Listener>False</Listener>
     </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>

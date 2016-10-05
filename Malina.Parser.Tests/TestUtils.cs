@@ -50,7 +50,7 @@ namespace Malina.Parser.Tests
             var tokens = lexer.GetAllTokens();
             PrintTokens(tokens);
             Assert.AreEqual(false, lexerErros.HasErrors);
-            Assert.AreEqual(0, lexer.Invalid.Count);
+            Assert.AreEqual(0, lexer.InvalidTokens.Count);
         }
 
         private static void PrintCode(string code)

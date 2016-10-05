@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scenarios\Lexer\AliasDefinitionWithAttrAndElem.mal">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\Lexer\AliasDefinitionWithAttributes.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

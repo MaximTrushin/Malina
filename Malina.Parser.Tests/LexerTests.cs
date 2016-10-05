@@ -25,6 +25,13 @@ namespace Malina.Parser.Tests
         }
 
         [Test]
+        public void AliasDefinitionWithAttrAndElem()
+        {
+            PerformTest();
+
+        }
+
+        [Test]
         public void AliasDefinitionWithDefaultBlockParameters()
         {
             PerformTest();

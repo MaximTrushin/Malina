@@ -4,14 +4,13 @@ lexer grammar MalinaLexer;
 }
 
 @lexer::members {
-  
   public List<IToken> Invalid = new List<IToken>();
 }
 
 
 WS				:	WsSpaces	-> skip;
 
-INDENT_DEDENT		:	Eol Spaces;
+INDENT_DEDENT		:	(Eol Spaces)+;
 
 COLON				:	':';
 
@@ -45,7 +44,7 @@ mode IN_VALUE;
 	VALUE			:	
 					(	'"' (~('"') | '""')* '"'	
 					)		-> popMode;
-	O_VALUE_BEGIN	:	~[$%"\'`] ~[)\r\n]*;
+	O_VALUE_BEGIN	:	~[$%"\'`] ~[\r\n]* -> popMode;
 
 
 fragment	Eol				:	( '\r'? '\n' )
@@ -71,7 +70,7 @@ fragment	LineComment		:   '//' ~[\r\n]*
 fragment	Name			:	FullName | ShortName
 							;
 
-fragment	FullName		:	(NameStartChar NameChar* '.')+ NameStartChar NameChar*
+fragment	FullName		:	(ShortName '.')+ ShortName
 							;
 
 fragment	ShortName		:	NameStartChar NameChar*

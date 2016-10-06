@@ -260,6 +260,7 @@ namespace Malina.Parser.Tests
         }
 
         [Test]
+        [RecordedTest]
         public void OpenStringMiltiline()
         {
             PerformTest();

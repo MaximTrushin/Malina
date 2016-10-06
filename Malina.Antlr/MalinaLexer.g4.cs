@@ -62,6 +62,22 @@ namespace Malina.Parser
 
         private void IndentDedent()
         {
+            if (_input.La(1) == -1)
+            {
+                if (_indents.Count > 1)
+                {
+                    //We have to return Dedent here, otherwise NextToken will return EOF and stop. It will cause unreported DEDENTs.
+                    Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DEDENT, Channel, CharIndex, CharIndex));
+                    _indents.Pop();
+                    return;
+                }
+                else
+                {
+                    //Ignore indents in the end of file if there no DEDENTS have to be reported. See comment above.
+                    Skip();
+                    return;
+                }
+            }
 
             var indent = CalcIndent();
             int prevIndent = _indents.Peek();

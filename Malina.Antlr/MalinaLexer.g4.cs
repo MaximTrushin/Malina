@@ -139,6 +139,7 @@ namespace Malina.Parser
             {
                 if (indent > _currentIndent + 1)
                 {
+                    //Indent should be included in the Open String Value
                     EmitExtraOSIndent(indent, _currentIndent);
                 }
                 else //if not ExtraOSIndent then SKIP
@@ -164,7 +165,7 @@ namespace Malina.Parser
 
         private void EmitExtraOSIndent(int indent, int currentIndent)
         {
-            //var extraIndent = (InputStream as AntlrInputStream).GetText(new Antlr4.Runtime.Misc.Interval(InputStream.Index - indent, InputStream.Index));
+            if (_input.La(-1) == '=') currentIndent = currentIndent - 2; // Add 2 more symbols if OS is ended by dedented ==
             EmitToken(OPEN_VALUE_INDENT, InputStream.Index - indent + currentIndent + 1, InputStream.Index - 1);
         }
     }

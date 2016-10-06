@@ -68,14 +68,13 @@ namespace Malina.Parser.Tests
             ErrorListener<int> lexerErros;
             IList<IToken> tokens =  GetTokens(code, out lexer, out lexerErros);
 
-            Console.WriteLine("");
-            Console.WriteLine("Tokens:");
 
             Assert.AreEqual(false, lexerErros.HasErrors);
 
             Assert.AreEqual(0, lexer.InvalidTokens.Count);
 
             var printedTokens = PrintedTokens(tokens);
+            Console.WriteLine("");
             Console.WriteLine("Tokens:");
             Console.WriteLine(printedTokens);
 
@@ -92,10 +91,7 @@ namespace Malina.Parser.Tests
                     Assert.AreEqual(recorded, printedTokens);
                 }
             }
-
         }
-
-
 
         private static IList<IToken> GetTokens(string code, out MalinaLexer lexer, out ErrorListener<int> lexerErros)
         {

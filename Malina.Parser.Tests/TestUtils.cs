@@ -90,7 +90,7 @@ namespace Malina.Parser.Tests
                 
                 var s = token.StartIndex;
                 var e = token.StopIndex;
-                Console.WriteLine("\t{2}:{3}\t{0} {1}\t ({4},{5})", GetType(token), text, token.Line, token.Column, token.StartIndex, token.StopIndex);
+                Console.WriteLine("\t{2}:{3}\t{0}\t`{1}`\t ({4},{5})", GetType(token), text, token.Line, token.Column, token.StartIndex, token.StopIndex);
             }
         }
 

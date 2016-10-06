@@ -1,6 +1,6 @@
 lexer grammar MalinaLexer;
 
-tokens { INDENT, DEDENT, NEWLINE}
+tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_INDENT}
 
 WS				:	WsSpaces	-> skip;
 
@@ -24,22 +24,27 @@ ARGUMENT_ID			:	'.' Name;
 FULL_ID				:	FullName;
 SHORT_ID			:	ShortName;
 
-VALUE_BEGIN			:	'='	[ \t]* -> pushMode(IN_VALUE);
+VALUE_BEGIN			:	'='	Spaces -> pushMode(IN_VALUE);
 
 
 //INVALID : . { if (InvalidTokens.Count < 100) InvalidTokens.Add(Token); };
 
 mode IN_VALUE;
-	OBJECT_VALUE	:
+	//Parameter or Alias assignment
+	OBJECT_VALUE	: 
 					(	PARAMETER_ID						
 					|	ALIAS_ID
 					//|	INVALID					
 					)		-> popMode;
+
+	//Double quoted string
 	VALUE			:	
 					(	'"' (~('"') | '""')* '"'	
 					)		-> popMode;
-	O_VALUE_BEGIN	:	~[$%"'] ~[\r\n]* -> popMode;
 
+	//Open string and Multi Line Open String
+	OPEN_VALUE_EOL		:	Eol Spaces '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
+	OPEN_VALUE			:	(~[\r\n])+; //Open string content
 
 fragment	Eol				:	( '\r'? '\n' )
 							;

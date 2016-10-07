@@ -81,10 +81,15 @@ namespace Malina.Parser
 
             var indent = CalcIndent();
             int prevIndent = _indents.Peek();
-            if (indent == prevIndent)
+            if (indent == prevIndent) 
+                
             {
                 //Emitting NEWLINE
-                Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), NEWLINE, Channel, CharIndex - indent - 1, CharIndex - indent - 1));
+                if (_tokenStartCharIndex > 0) //Ignore New Line starting in BOF
+                {
+                    Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), NEWLINE, Channel, CharIndex - indent - 1, CharIndex - indent - 1));
+                }
+                else Skip();                
             }
             else if (indent > prevIndent)
             {
@@ -150,7 +155,7 @@ namespace Malina.Parser
                 //Emitting 1 or more DEDENTS
                 while (_indents.Count > 1 && _indents.Peek() > indent)
                 {
-                    //Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DEDENT, Channel,));
+                    EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                     EmitToken(DEDENT, CharIndex - indent, CharIndex - 1);
                     _indents.Pop();
                 }

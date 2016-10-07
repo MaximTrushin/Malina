@@ -216,6 +216,12 @@
     <None Include="Scenarios\Lexer\PerformLexerTest.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttrAndElem.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

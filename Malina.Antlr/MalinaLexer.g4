@@ -43,8 +43,8 @@ mode IN_VALUE;
 					)		-> popMode;
 
 	//Open string and Multi Line Open String
-	OPEN_VALUE_EOL		:	Eol Spaces '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
-	OPEN_VALUE			:	(~[\r\n])+; //Open string content
+	OPEN_VALUE_EOL		:	(Eol Spaces)+ '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
+	OPEN_VALUE			:	~[$%"\'\r\n](~[\r\n])*; //Open string content can't start with [$%"\'\r\n]
 
 fragment	Eol				:	( '\r'? '\n' )
 							;

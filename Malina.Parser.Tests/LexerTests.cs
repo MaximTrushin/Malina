@@ -17,14 +17,14 @@ namespace Malina.Parser.Tests
     {
 
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasDefinitionWithAttributes()
         {
             PerformTest();
 
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasDefinitionWithAttrAndElem()
         {
             PerformTest();
@@ -259,8 +259,7 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test]
-        [RecordedTest]
+        [Test, RecordedTest]        
         public void OpenStringMiltiline()
         {
             PerformTest();

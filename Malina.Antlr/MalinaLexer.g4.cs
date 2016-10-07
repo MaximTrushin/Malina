@@ -61,11 +61,13 @@ namespace Malina.Parser
         {
             if (_input.La(1) == -1)
             {
+                //Lexer reached EOF. Adding trailing NEWLINE and DEDENTS if neeeded
                 if (_indents.Count > 1)
                 {
+                    EmitToken(NEWLINE, CharIndex, CharIndex);
                     //We have to return Dedent here, otherwise NextToken will return EOF and stop. It will cause unreported DEDENTs.
-                    Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DEDENT, Channel, CharIndex, CharIndex));
-                    _indents.Pop();
+                    //Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DEDENT, Channel, CharIndex, CharIndex));
+                    //_indents.Pop();
                     return;
                 }
                 else
@@ -96,6 +98,11 @@ namespace Malina.Parser
             }
             else
             {
+                //Adding 1 NEWLINE before DEDENTS
+                if (_indents.Count > 1 && _indents.Peek() > indent)
+                {
+                    EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                }
                 //Emitting 1 or more DEDENTS
                 while (_indents.Count > 1 && _indents.Peek() > indent)
                 {
@@ -135,8 +142,11 @@ namespace Malina.Parser
             var indent = CalcOsIndent();
             if (indent == _currentIndent)
             {
-                //Emitting NEWLINE
-                EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                //Emitting NEWLINE if OS is not ended by ==
+                if (_input.La(-1) != '=')
+                    EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                else
+                    Skip();
                 PopMode();
             }
             else if (indent > _currentIndent)
@@ -151,6 +161,7 @@ namespace Malina.Parser
             }
             else
             {
+                //Adding 1 NEWLINE before DEDENTS
                 if (_indents.Count > 1 && _indents.Peek() > indent)
                 {
                     EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);

@@ -32,9 +32,8 @@ VALUE_BEGIN			:	'='	Spaces -> pushMode(IN_VALUE);
 mode IN_VALUE;
 	//Parameter or Alias assignment
 	OBJECT_VALUE	: 
-					(	PARAMETER_ID						
-					|	ALIAS_ID
-					//|	INVALID					
+					(	PARAMETER_ID {Emit(PARAMETER_ID);}						
+					|	ALIAS_ID {Emit(ALIAS_ID);}
 					)		-> popMode;
 
 	//Double quoted string

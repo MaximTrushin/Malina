@@ -1,9 +1,6 @@
 ﻿using Antlr4.Runtime;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Malina.Parser
 {
@@ -130,6 +127,8 @@ namespace Malina.Parser
             //return -i - 1;
             return osIndent;
         }
+
+        //Open String Indents/Dedents processing
         private void OsIndentDedent()
         {
             var _currentIndent = _indents.Peek();
@@ -152,10 +151,13 @@ namespace Malina.Parser
             }
             else
             {
-                //Emitting 1 or more DEDENTS
-                while (_indents.Count > 1 && _indents.Peek() > indent)
+                if (_indents.Count > 1 && _indents.Peek() > indent)
                 {
                     EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                }
+                //Emitting 1 or more DEDENTS
+                while (_indents.Count > 1 && _indents.Peek() > indent)
+                {                    
                     EmitToken(DEDENT, CharIndex - indent, CharIndex - 1);
                     _indents.Pop();
                 }
@@ -167,6 +169,12 @@ namespace Malina.Parser
         {
             Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, start, stop));
         }
+
+        private void Emit(int tokenType)
+        {
+            Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, _tokenStartCharIndex, InputStream.Index - 1));
+        }
+
 
         private void EmitExtraOSIndent(int indent, int currentIndent)
         {

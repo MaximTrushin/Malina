@@ -31,19 +31,19 @@ namespace Malina.Parser.Tests
 
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasDefinitionWithDefaultBlockParameters()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasDefinitionWithDefaultInlineBlockParameters()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasDefinitionWithInplaceAttributeDefaultParameters()
         {
             PerformTest();

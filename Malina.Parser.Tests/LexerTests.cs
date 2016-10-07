@@ -49,37 +49,37 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test]
+        [Test,RecordedTest]
         public void AliasDefinitionWithInplaceAttributeParameters()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasDefinitionWithInplaceInlineParameters()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasDefinitionWithSimpleParameters()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test,RecordedTest]
         public void AliasWithArguments()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasWithInlineArgumentList()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test,RecordedTest]
         public void AliasWithInlineArgumentList2()
         {
             PerformTest();

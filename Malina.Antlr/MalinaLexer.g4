@@ -8,8 +8,8 @@ INDENT_DEDENT		:	(Eol Spaces)+ {IndentDedent();};
 
 COLON				:	':';
 
-LPAREN				:	'('	;
-RPAREN				:	')'	;
+LPAREN				:	'('	{EnterWsa();} -> skip;
+RPAREN				:	')'	{ExitWsa();}  -> skip;
 COMMA				:	',';
 
 NAMESPACE_ID		:	'#' ShortName;

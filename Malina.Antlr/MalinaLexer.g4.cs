@@ -9,6 +9,12 @@ namespace Malina.Parser
         public List<IToken> InvalidTokens = new List<IToken>();
         private Stack<int> _indents = new Stack<int>(new[] { 0 });
         private Queue<IToken> _tokens = new Queue<IToken>();
+        private Stack<int> _wsaStack = new Stack<int>();
+
+        private bool InWsaMode
+        {
+            get { return _wsaStack.Count > 0;}
+        }
 
         public override void Emit(IToken token)
         {
@@ -29,9 +35,15 @@ namespace Malina.Parser
             //Checking if Dedents need to be generated in the EOF
             if (_input.La(1) == Eof && _indents.Peek() > 0)
             {
+                if (InWsaMode)
+                {
+                    //If still in WSA mode in the EOF then clear wsa mode.
+                    while (_wsaStack.Count > 0) _wsaStack.Pop();
+                }
+
                 while (_indents.Peek() > 0)
                 {
-                    EmitToken(DEDENT, CharIndex, CharIndex);
+                    EmitIndentationToken(DEDENT, CharIndex, CharIndex);
                     _indents.Pop();
                 }
 
@@ -64,10 +76,7 @@ namespace Malina.Parser
                 //Lexer reached EOF. Adding trailing NEWLINE and DEDENTS if neeeded
                 if (_indents.Count > 1)
                 {
-                    EmitToken(NEWLINE, CharIndex, CharIndex);
-                    //We have to return Dedent here, otherwise NextToken will return EOF and stop. It will cause unreported DEDENTs.
-                    //Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DEDENT, Channel, CharIndex, CharIndex));
-                    //_indents.Pop();
+                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
                     return;
                 }
                 else
@@ -86,7 +95,7 @@ namespace Malina.Parser
                 //Emitting NEWLINE
                 if (_tokenStartCharIndex > 0) //Ignore New Line starting in BOF
                 {
-                    Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), NEWLINE, Channel, CharIndex - indent - 1, CharIndex - indent - 1));
+                    EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);                    
                 }
                 else Skip();                
             }
@@ -94,19 +103,19 @@ namespace Malina.Parser
             {
                 //Emitting INDENT
                 _indents.Push(indent);
-                Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), INDENT, Channel, CharIndex - indent, CharIndex - 1));
+                EmitIndentationToken(INDENT, CharIndex - indent, CharIndex - 1);                
             }
             else
             {
                 //Adding 1 NEWLINE before DEDENTS
                 if (_indents.Count > 1 && _indents.Peek() > indent)
                 {
-                    EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                    EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 }
                 //Emitting 1 or more DEDENTS
                 while (_indents.Count > 1 && _indents.Peek() > indent)
                 {
-                    Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DEDENT, Channel, CharIndex - indent, CharIndex - 1));
+                    EmitIndentationToken(DEDENT, CharIndex - indent, CharIndex - 1);                    
                     _indents.Pop();
                 }
             }
@@ -144,7 +153,7 @@ namespace Malina.Parser
             {
                 //Emitting NEWLINE if OS is not ended by ==
                 if (_input.La(-1) != '=')
-                    EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                    EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 else
                     Skip();
                 PopMode();
@@ -164,21 +173,24 @@ namespace Malina.Parser
                 //Adding 1 NEWLINE before DEDENTS
                 if (_indents.Count > 1 && _indents.Peek() > indent)
                 {
-                    EmitToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                    EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 }
                 //Emitting 1 or more DEDENTS
                 while (_indents.Count > 1 && _indents.Peek() > indent)
                 {                    
-                    EmitToken(DEDENT, CharIndex - indent, CharIndex - 1);
+                    EmitIndentationToken(DEDENT, CharIndex - indent, CharIndex - 1);
                     _indents.Pop();
                 }
                 PopMode();
             }
         }
 
-        private void EmitToken(int tokenType, int start, int stop)
+        private void EmitIndentationToken(int tokenType, int start, int stop)
         {
-            Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, start, stop));
+            if (InWsaMode)
+                Skip();
+            else            
+                Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, start, stop));
         }
 
         private void Emit(int tokenType)
@@ -189,8 +201,19 @@ namespace Malina.Parser
 
         private void EmitExtraOSIndent(int indent, int currentIndent)
         {
-            if (_input.La(-1) == '=') currentIndent = currentIndent - 2; // Add 2 more symbols if OS is ended by dedented ==
-            EmitToken(OPEN_VALUE_INDENT, InputStream.Index - indent + currentIndent + 1, InputStream.Index - 1);
+            if (_input.La(-1) == '=') currentIndent = currentIndent - 2; // Add 2 more symbols if Open String is ended by dedented ==
+            EmitIndentationToken(OPEN_VALUE_INDENT, InputStream.Index - indent + currentIndent + 1, InputStream.Index - 1);
+        }
+
+        private void EnterWsa()
+        {
+            _wsaStack.Push(_tokenStartCharIndex);
+        }
+
+        private void ExitWsa()
+        {
+            if (_wsaStack.Count > 0)
+                _wsaStack.Pop();
         }
     }
 }

@@ -85,175 +85,175 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasWithInlineArgumentList3()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasWithInlineArgumentList4()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasWithInlineArgumentList5()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void AliasWithInlineArguments()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementList1()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithAlias()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithAliasAndAliasDefinition()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithAliasedAttribute()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithAttributes()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithAttributesAndOtherElements()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithNestedAlias()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithNestedAliasAndNestedAliasDefinition()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithOpenStringValue()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ElementWithValue()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void EmptyElement()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void EmptyElementWithNamespace()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void InlineElementBody1()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void InlineElementBody2()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void InlineElementBody3()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void InlineElementBody4()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void LineComments()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ModuleNamespaceOverload()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void ModuleWithTwoNamespaces()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void MultiLineComments()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void NamespaceScope1()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void NamespaceScope2()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void NamespaceScope3()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void OneNamespaceNoBrackets()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void OpenStringEndOnDedentAndEof()
         {
             PerformTest();
@@ -265,19 +265,19 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void OpenStringSimple()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void TwoNamespaces()
         {
             PerformTest();
         }
 
-        [Test]
+        [Test, RecordedTest]
         public void WithoutNamespaces()
         {
             PerformTest();

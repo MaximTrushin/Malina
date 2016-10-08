@@ -231,6 +231,9 @@
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeDefaultParameters.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeParameters.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceInlineParameters.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -246,7 +249,103 @@
     <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList2.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList3.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList4.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList5.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementList1.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAlias.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasAndAliasDefinition.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasedAttribute.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributes.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributesAndOtherElements.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAlias.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAliasAndNestedAliasDefinition.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithValue.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\EmptyElement.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\EmptyElementWithNamespace.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody1.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody2.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody3.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody4.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\LineComments.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ModuleNamespaceOverload.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ModuleWithTwoNamespaces.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\MultiLineComments.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope1.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope2.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope3.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\OneNamespaceNoBrackets.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\OpenStringSimple.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\TwoNamespaces.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\WithoutNamespaces.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\Lexer\TwoNamespaces.mal">

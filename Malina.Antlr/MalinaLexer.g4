@@ -15,7 +15,7 @@ COMMA				:	',';
 NAMESPACE_ID		:	'#' ShortName;
 DOCUMENT_ID			:	'!' Name;
 ALIAS_DEF_ID		:	'!$' Name;
-SCOPE_ID			:   '#' FullName;
+SCOPE_ID			:   '#' FullName |'#.' ShortName ;
 ATTRIBUTE_ID		:	'@' Name;
 ALIAS_ID			:	'$' Name;
 PARAMETER_ID		:	'%' Name;
@@ -25,6 +25,7 @@ FULL_ID				:	FullName;
 SHORT_ID			:	ShortName;
 
 VALUE_BEGIN			:	'='	Spaces -> pushMode(IN_VALUE);
+OPEN_VALUE_BEGIN	:	'=='	Spaces -> pushMode(IN_VALUE);
 
 
 //INVALID : . { if (InvalidTokens.Count < 100) InvalidTokens.Add(Token); };

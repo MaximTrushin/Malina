@@ -35,8 +35,7 @@ namespace Malina.Parser.Tests
         public static string LoadRecordedTest()
         {
             var trace = new StackTrace();
-            var method = trace.GetFrame(2).GetMethod();
-            var testCaseName = method.Name;
+            var testCaseName = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
             var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
             if (!File.Exists(fileName)) return null;
 
@@ -46,8 +45,7 @@ namespace Malina.Parser.Tests
         private static void SaveRecordedTest(string printedTokens)
         {
             var trace = new StackTrace();
-            var method = trace.GetFrame(2).GetMethod();
-            var testCaseName = method.Name;
+            var testCaseName = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
             var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 

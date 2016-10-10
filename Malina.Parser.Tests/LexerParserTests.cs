@@ -13,7 +13,7 @@ using static Malina.Parser.Tests.TestUtils;
 namespace Malina.Parser.Tests
 {
     [TestFixture]
-    public class LexerTests
+    public class LexerParserTests
     {
 
 

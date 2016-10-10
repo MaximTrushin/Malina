@@ -67,10 +67,19 @@
     <Compile Include="..\Malina.Antlr\obj\Debug\MalinaParserVisitor.cs">
       <Link>Generated\MalinaParserVisitor.cs</Link>
     </Compile>
+    <Compile Include="INodeContext.cs" />
+    <Compile Include="MalinaParser.cs" />
+    <Compile Include="MalinaParserListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
+      <Project>{66E57A03-08AD-491B-9B1D-6CB4A0D37969}</Project>
+      <Name>Malina.DOM</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

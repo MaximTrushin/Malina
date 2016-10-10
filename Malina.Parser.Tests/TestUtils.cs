@@ -21,16 +21,12 @@ namespace Malina.Parser.Tests
                 return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             }
         }
+
         public static string LoadTestCode()
         {
-            return LoadTestCode(3);
-        }
-
-        public static string LoadTestCode(int index)
-        {
             var trace = new StackTrace();
-            var method = trace.GetFrame(index).GetMethod();
-            var testCaseName = method.Name;
+            var testCaseName = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
+            
             var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\").Append(testCaseName).Append(".mal").ToString();
 
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
@@ -68,7 +64,6 @@ namespace Malina.Parser.Tests
             ErrorListener<int> lexerErros;
             IList<IToken> tokens =  GetTokens(code, out lexer, out lexerErros);
 
-
             Assert.AreEqual(false, lexerErros.HasErrors);
 
             Assert.AreEqual(0, lexer.InvalidTokens.Count);
@@ -91,6 +86,18 @@ namespace Malina.Parser.Tests
                     Assert.AreEqual(recorded, printedTokens);
                 }
             }
+
+            lexer.Reset();
+            var parser = new MalinaParser(new CommonTokenStream(lexer));
+            var malinaListener = new MalinaParserListener();
+            parser.AddParseListener(malinaListener);
+            parser.BuildParseTree = false;
+
+            var module = parser.module();
+            //module.
+            var i = 1;
+
+
         }
 
         private static IList<IToken> GetTokens(string code, out MalinaLexer lexer, out ErrorListener<int> lexerErros)

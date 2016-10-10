@@ -75,24 +75,22 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             AliasDefinition definition = node as AliasDefinition;
             Value = definition.Value;
             Namespaces.AssignNodes(definition.Namespaces);
-            if (!shallow)
-            {
-                Entities.AssignNodes(definition.Entities);
-                Attributes.AssignNodes(definition.Attributes);
-                Parameters.AssignNodes(definition.Parameters);
-            }
+            Entities.AssignNodes(definition.Entities);
+            Attributes.AssignNodes(definition.Attributes);
+            Parameters.AssignNodes(definition.Parameters);
+
         }
 
         public override Node Clone()
         {
             AliasDefinition definition = new AliasDefinition();
-            definition.Assign(this, false);
+            definition.Assign(this);
             return definition;
         }
 

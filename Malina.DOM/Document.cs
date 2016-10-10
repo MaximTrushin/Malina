@@ -56,21 +56,19 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Document document = node as Document;
             Namespaces.AssignNodes(document.Namespaces);
-            if (!shallow)
-            {
-                DocumentElement = (Entity)document.DocumentElement.Clone();
-            }
+            DocumentElement = (Entity)document.DocumentElement.Clone();
+
         }
 
         public override Node Clone()
         {
             Document document = new Document();
-            document.Assign(this, false);
+            document.Assign(this);
             return document;
         }
 

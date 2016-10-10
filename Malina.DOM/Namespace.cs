@@ -29,9 +29,9 @@ namespace Malina.DOM
             visitor.OnNamespace(this);
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Namespace namespace2 = node as Namespace;
             Name = namespace2.Name;
             Url = namespace2.Url;
@@ -41,7 +41,7 @@ namespace Malina.DOM
         public override Node Clone()
         {
             Namespace namespace2 = new Namespace();
-            namespace2.Assign(this, false);
+            namespace2.Assign(this);
             return namespace2;
         }
     }

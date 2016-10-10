@@ -34,9 +34,9 @@ namespace Malina.DOM
             visitor.OnArgument(this);
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Argument argument = node as Argument;
             OfAlias = argument.OfAlias;
         }
@@ -44,7 +44,7 @@ namespace Malina.DOM
         public override Node Clone()
         {
             Argument argument = new Argument();
-            argument.Assign(this, false);
+            argument.Assign(this);
             return argument;
         }
 

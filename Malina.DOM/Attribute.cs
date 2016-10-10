@@ -28,9 +28,9 @@ namespace Malina.DOM
             visitor.OnAttribute(this);
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Attribute attribute = node as Attribute;
             Namespace = attribute.Namespace;
             Name = attribute.Name;
@@ -41,7 +41,7 @@ namespace Malina.DOM
         public override Node Clone()
         {
             Attribute attribute = new Attribute();
-            attribute.Assign(this, false);
+            attribute.Assign(this);
             return attribute;
         }
 

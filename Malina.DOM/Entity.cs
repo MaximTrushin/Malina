@@ -13,9 +13,9 @@ namespace Malina.DOM
         {
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Entity entity = node as Entity;
             this.Name = entity.Name;
         }

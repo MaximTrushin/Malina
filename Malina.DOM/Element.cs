@@ -59,26 +59,24 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Element element = node as Element;
             Namespace = element.Namespace;
             Value = element.Value;
             ObjectValue = element.ObjectValue;
             DefaultNamespace = element.DefaultNamespace;
             ValueType = element.ValueType;
-            if (!shallow)
-            {
-                Entities.AssignNodes(element.Entities);
-                Attributes.AssignNodes(element.Attributes);
-            }
+            Entities.AssignNodes(element.Entities);
+            Attributes.AssignNodes(element.Attributes);
+
         }
 
         public override Node Clone()
         {
             Element element = new Element();
-            element.Assign(this, false);
+            element.Assign(this);
             return element;
         }
 

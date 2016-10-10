@@ -48,21 +48,19 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Alias alias = node as Alias;
             ResolvedAliasDefinition = alias.ResolvedAliasDefinition;
-            if (!shallow)
-            {
-                Arguments.AssignNodes(alias.Arguments);
-            }
+            Arguments.AssignNodes(alias.Arguments);
+
         }
 
         public override Node Clone()
         {
             Alias alias = new Alias();
-            alias.Assign(this, false);
+            alias.Assign(this);
             return alias;
         }
 

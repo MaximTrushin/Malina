@@ -25,10 +25,10 @@ namespace Malina.DOM
 
         public Parameter(string ns, string name, string value, AliasDefinition ofAliasDefinition)
         {
-            base.Namespace = ns;
-            base.Name = name;
-            base.Value = value;
-            this.OfAliasDefinition = ofAliasDefinition;
+            Namespace = ns;
+            Name = name;
+            Value = value;
+            OfAliasDefinition = ofAliasDefinition;
         }
 
         public override void Accept(IDomVisitor visitor)
@@ -36,25 +36,25 @@ namespace Malina.DOM
             visitor.OnParameter(this);
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Parameter parameter = node as Parameter;
-            this.OfAliasDefinition = parameter.OfAliasDefinition;
-            this.IsValueParameter = parameter.IsValueParameter;
-            this.EmptyAsDefault = parameter.EmptyAsDefault;
+            OfAliasDefinition = parameter.OfAliasDefinition;
+            IsValueParameter = parameter.IsValueParameter;
+            EmptyAsDefault = parameter.EmptyAsDefault;
         }
 
         public override Node Clone()
         {
             Parameter parameter = new Parameter();
-            parameter.Assign(this, false);
+            parameter.Assign(this);
             return parameter;
         }
 
         public override string ToString()
         {
-            return new StringBuilder().Append(this.OfAliasDefinition.Name).Append(":").Append(base.Name).ToString();
+            return new StringBuilder().Append(OfAliasDefinition.Name).Append(":").Append(Name).ToString();
         }
     }
 

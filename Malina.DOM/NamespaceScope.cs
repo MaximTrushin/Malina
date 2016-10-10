@@ -48,22 +48,20 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             NamespaceScope scope = node as NamespaceScope;
             Name = scope.Name;
-            if (!shallow)
-            {
-                Entities.AssignNodes(scope.Entities);
-                Attributes.AssignNodes(scope.Attributes);
-            }
+            Entities.AssignNodes(scope.Entities);
+            Attributes.AssignNodes(scope.Attributes);
+
         }
 
         public override Node Clone()
         {
             NamespaceScope scope = new NamespaceScope();
-            scope.Assign(this, false);
+            scope.Assign(this);
             return scope;
         }
 

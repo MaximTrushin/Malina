@@ -50,22 +50,20 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node, bool shallow)
+        public override void Assign(Node node)
         {
-            base.Assign(node, shallow);
+            base.Assign(node);
             Module module = node as Module;
             Name = module.Name;
-            if (!shallow)
-            {
-                Members.AssignNodes(module.Members);
-                Namespaces.AssignNodes(module.Namespaces);
-            }
+            Members.AssignNodes(module.Members);
+            Namespaces.AssignNodes(module.Namespaces);
+
         }
 
         public override Node Clone()
         {
             Module module = new Module();
-            module.Assign(this, false);
+            module.Assign(this);
             return module;
         }
 

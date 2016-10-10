@@ -15,7 +15,6 @@
 	4:72	ALIAS_ID	`$Addresses.NY.Albany`	 (104,123)
 	4:92	COMMA	`,`	 (124,124)
 	4:94	ARGUMENT_ID	`.AccountType`	 (126,137)
-	4:107	VALUE_BEGIN	`= `	 (139,140)
 	4:134	ALIAS_ID	`$AccountTypes.NewCustomer`	 (141,165)
 	5:0	NEWLINE	`<EOF>`	 (167,167)
 	5:0	DEDENT	`<EOF>`	 (167,167)

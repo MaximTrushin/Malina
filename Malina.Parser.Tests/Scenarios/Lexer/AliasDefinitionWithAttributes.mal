@@ -1,9 +1,10 @@
 
-!$Customer:
-	@attr1 = "1"
-	@attr2 = "2" @attr3 = "3"
-	Customer:
-		Account:
-			%AccountType
-		%ServiceAddress
-		%BillingAddress
+!$Address.UK.Cambridge:
+	@xsi.type = ipo:EU-Address
+		
+	
+			
+		
+!$Address.UK.Cambridge:
+	@xsi.type = ipo:EU-Address
+

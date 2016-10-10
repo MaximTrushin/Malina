@@ -48,8 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MalinaLexer.g4.cs">
-      <DependentUpon>MalinaLexer.g4</DependentUpon>
+    <Compile Include="MalinaLexer.cs" />
+    <Compile Include="MalinaParser.g4.cs">
+      <DependentUpon>MalinaParser.g4</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +60,10 @@
       <CustomToolNamespace>Malina.Parser</CustomToolNamespace>
       <Visitor>False</Visitor>
       <Listener>False</Listener>
+    </Antlr4>
+    <Antlr4 Include="MalinaParser.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>Malina.Parser</CustomToolNamespace>
     </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>

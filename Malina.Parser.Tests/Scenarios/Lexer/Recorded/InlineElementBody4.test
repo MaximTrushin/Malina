@@ -7,7 +7,6 @@
 	4:2	SHORT_ID	`e1`	 (25,26)
 	4:4	COLON	`:`	 (27,27)
 	4:7	SHORT_ID	`e2`	 (30,31)
-	4:10	VALUE_BEGIN	`= `	 (33,34)
 	4:12	VALUE	`"test"`	 (35,40)
 	5:0	NEWLINE	`<EOF>`	 (43,43)
 	5:0	DEDENT	`<EOF>`	 (43,43)

@@ -11,7 +11,6 @@
 	5:15	COLON	`:`	 (50,50)
 	6:4	INDENT	`\t\t\t\t`	 (52,55)
 	6:4	SHORT_ID	`Type`	 (56,59)
-	6:9	VALUE_BEGIN	`= `	 (61,62)
 	6:11	OPEN_VALUE	`NewCustomer`	 (63,73)
 	7:2	NEWLINE	`\n`	 (74,74)
 	7:2	DEDENT	`\t\t`	 (75,76)

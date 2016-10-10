@@ -46,12 +46,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Malina.Antlr\MalinaLexer.g4.cs">
-      <Link>MalinaLexer.g4.cs</Link>
-      <DependentUpon>MalinaLexer.g4</DependentUpon>
+    <Compile Include="..\Malina.Antlr\MalinaLexer.cs">
+      <Link>MalinaLexer.cs</Link>
     </Compile>
     <Compile Include="..\Malina.Antlr\obj\Debug\MalinaLexer.cs">
       <Link>Generated\MalinaLexer.cs</Link>
+    </Compile>
+    <Compile Include="..\Malina.Antlr\obj\Debug\MalinaParser.cs">
+      <Link>Generated\MalinaParser.cs</Link>
+    </Compile>
+    <Compile Include="..\Malina.Antlr\obj\Debug\MalinaParserBaseListener.cs">
+      <Link>Generated\MalinaParserBaseListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Malina.Antlr\obj\Debug\MalinaParserBaseVisitor.cs">
+      <Link>Generated\MalinaParserBaseVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\Malina.Antlr\obj\Debug\MalinaParserListener.cs">
+      <Link>Generated\MalinaParserListener.cs</Link>
+    </Compile>
+    <Compile Include="..\Malina.Antlr\obj\Debug\MalinaParserVisitor.cs">
+      <Link>Generated\MalinaParserVisitor.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

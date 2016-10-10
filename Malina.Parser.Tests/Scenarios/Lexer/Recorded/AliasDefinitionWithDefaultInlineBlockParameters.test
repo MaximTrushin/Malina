@@ -9,7 +9,6 @@
 	4:11	PARAMETER_ID	`%AccountType`	 (35,46)
 	4:23	COLON	`:`	 (47,47)
 	4:25	SHORT_ID	`Type`	 (49,52)
-	4:30	VALUE_BEGIN	`= `	 (54,55)
 	4:32	OPEN_VALUE	`NewCustomer`	 (56,66)
 	5:2	NEWLINE	`\n`	 (67,67)
 	5:2	PARAMETER_ID	`%ServiceAddress`	 (70,84)

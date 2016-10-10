@@ -24,8 +24,8 @@ ARGUMENT_ID			:	'.' Name;
 FULL_ID				:	FullName;
 SHORT_ID			:	ShortName;
 
-VALUE_BEGIN			:	'='	Spaces -> pushMode(IN_VALUE);
-OPEN_VALUE_BEGIN	:	'=='	Spaces -> pushMode(IN_VALUE);
+VALUE_BEGIN			:	'='	Spaces -> skip, pushMode(IN_VALUE);
+OPEN_VALUE_BEGIN	:	'=='	Spaces -> skip, pushMode(IN_VALUE);
 
 
 //INVALID : . { if (InvalidTokens.Count < 100) InvalidTokens.Add(Token); };

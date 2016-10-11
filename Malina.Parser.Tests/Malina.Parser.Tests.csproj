@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DOMPrinterVisitor.cs" />
     <Compile Include="ErrorListener.cs" />
     <Compile Include="LexerParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -359,6 +360,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
+      <Project>{66e57a03-08ad-491b-9b1d-6cb4a0d37969}</Project>
+      <Name>Malina.DOM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Malina.Parser\Malina.Parser.csproj">
       <Project>{78d74fb6-fada-405b-9494-ede7688491ed}</Project>
       <Name>Malina.Parser</Name>

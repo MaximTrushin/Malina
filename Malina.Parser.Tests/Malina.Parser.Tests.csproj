@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Malina.Parser.Tests</RootNamespace>
     <AssemblyName>Malina.Parser.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -360,6 +361,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Malina.DOM.Antlr\Malina.DOM.Antlr.csproj">
+      <Project>{902e7778-7de3-4d1a-beb7-9e13b8e525d2}</Project>
+      <Name>Malina.DOM.Antlr</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
       <Project>{66e57a03-08ad-491b-9b1d-6cb4a0d37969}</Project>
       <Name>Malina.DOM</Name>

@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Malina.DOM;
+using Malina.DOM.Antlr;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace Malina.Parser
             ExitContext(context);        }
 
 
-        private void EnterContext<T>(INodeContext<T> context) where T : Node, new()
+        private void EnterContext<T>(INodeContext<T> context) where T : Node, IAntlrCharStreamConsumer, new()
         {            
             context.InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
 

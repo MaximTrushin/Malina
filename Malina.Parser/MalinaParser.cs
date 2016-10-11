@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Malina.DOM;
+using Malina.DOM.Antlr;
+using Antlr4.Runtime.Misc;
 
 namespace Malina.Parser
 {
@@ -17,6 +18,10 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ALIAS_DEF_ID();
+                var inputStream = id.Symbol.InputStream;
+                Node.AliasDefIDInterval = new Interval( id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var s = Node.Name;
+                var i = 1;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Malina.DOM;
+using Malina.DOM.Antlr;
 using System.Text;
 
 namespace Malina.Parser.Tests
@@ -12,7 +13,7 @@ namespace Malina.Parser.Tests
             get { return _sb.ToString(); }
         }
 
-        public override void OnAliasDefinition(AliasDefinition node)
+        public override void OnAliasDefinition(DOM.AliasDefinition node)
         {
             _sb.Append(node.Name);
             base.OnAliasDefinition(node);

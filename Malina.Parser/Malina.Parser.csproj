@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Malina.Parser</RootNamespace>
     <AssemblyName>Malina.Parser</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -76,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Malina.DOM.Antlr\Malina.DOM.Antlr.csproj">
+      <Project>{902e7778-7de3-4d1a-beb7-9e13b8e525d2}</Project>
+      <Name>Malina.DOM.Antlr</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
       <Project>{66E57A03-08AD-491B-9B1D-6CB4A0D37969}</Project>
       <Name>Malina.DOM</Name>

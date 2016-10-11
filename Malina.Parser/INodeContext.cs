@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Malina.DOM;
+using Malina.DOM.Antlr;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Malina.Parser
 
     public static class NodeContextExtensions
     {
-        public static T InitNode<T>(this INodeContext<T> ctx, Node parent) where T : Node, new()
+        public static T InitNode<T>(this INodeContext<T> ctx, Node parent) where T : Node, IAntlrCharStreamConsumer, new()
         {
             if (ctx.Node == null)
             {
@@ -24,6 +25,7 @@ namespace Malina.Parser
                 //if (parent != null)
                 //    parent.AppendChild(node);
                 ctx.Node = node;
+                node.CharStream = (ctx as ParserRuleContext).start.InputStream;
             }
             return ctx.Node;
         }

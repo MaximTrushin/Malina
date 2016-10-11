@@ -92,8 +92,14 @@ namespace Malina.Parser.Tests
             parser.BuildParseTree = false;
 
             var module = parser.module();
+            var printerVisitor = new DOMPrinterVisitor();
             //module.
-            var i = 1;
+            foreach (var item in malinaListener.Nodes)
+            {
+                printerVisitor.VisitNode(item);
+            }
+
+            Console.WriteLine(printerVisitor.Text);
 
 
         }

@@ -16,6 +16,7 @@ namespace Malina.Parser
             public void ApplyContext()
             {
                 this.SetNodeLocation();
+                var id = ALIAS_DEF_ID();
             }
         }
     }

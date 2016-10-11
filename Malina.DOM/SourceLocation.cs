@@ -7,32 +7,34 @@ namespace Malina.DOM
         // Fields
         private readonly int _column;
         private readonly int _line;
+        private readonly int _index;
 
         // Methods
-        public SourceLocation(int line, int column)
+        public SourceLocation(int line, int column, int index)
         {
-            this._line = line;
-            this._column = column;
+            _line = line;
+            _column = column;
+            _index = index;
         }
 
         public int CompareTo(SourceLocation other)
         {
-            int num = this._line.CompareTo(other._line);
+            int num = _line.CompareTo(other._line);
             if (num != 0)
             {
                 return num;
             }
-            return this._column.CompareTo(other._column);
+            return _column.CompareTo(other._column);
         }
 
         public bool Equals(SourceLocation other)
         {
-            return (this.CompareTo(other) == 0);
+            return (CompareTo(other) == 0);
         }
 
         public override string ToString()
         {
-            return string.Format("({0},{1})", this._line, this._column);
+            return string.Format("({0},{1},{2})", _line, _column, _index);
         }
 
         // Properties
@@ -40,7 +42,7 @@ namespace Malina.DOM
         {
             get
             {
-                return this._column;
+                return _column;
             }
         }
 
@@ -48,7 +50,7 @@ namespace Malina.DOM
         {
             get
             {
-                return ((this._line > 0) && (this._column > 0));
+                return ((_line > 0) && (_column > 0));
             }
         }
 
@@ -56,7 +58,15 @@ namespace Malina.DOM
         {
             get
             {
-                return this._line;
+                return _line;
+            }
+        }
+
+        public int Index
+        {
+            get
+            {
+                return _index;
             }
         }
     }

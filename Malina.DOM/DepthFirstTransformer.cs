@@ -1,6 +1,6 @@
 ﻿namespace Malina.DOM
 {
-    public class DepthFirstTransformer : IDomVisitor
+    public class MalinaDepthFirstTransformer : IDomVisitor
     {
         private Node _resultingNode;
 

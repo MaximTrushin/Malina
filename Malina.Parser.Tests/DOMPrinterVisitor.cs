@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Malina.Parser.Tests
 {
-    class DOMPrinterVisitor: DepthFirstTransformer
+    class DOMPrinterVisitor: MalinaDepthFirstTransformer
     {
         private int _indent = 0;
         private StringBuilder _sb = new StringBuilder();
@@ -28,8 +28,9 @@ namespace Malina.Parser.Tests
         public override void OnAttribute(DOM.Attribute node)
         {
             PrintNodeStart(node);
-            _sb.Append(":");
-            base.OnAttribute(node);
+            _sb.Append("= `");
+            _sb.Append(node.Value);
+            _sb.Append("`");
             _sb.AppendLine();
         }
 
@@ -41,9 +42,9 @@ namespace Malina.Parser.Tests
             _sb.Append('\t', _indent);
             _sb.Append("\t");
             _sb.Append(node.GetType().Name);
-            _sb.Append(" '");
+            _sb.Append(" `");
             _sb.Append(node.Name);
-            _sb.Append("'");
+            _sb.Append("`");
         }
 
     }

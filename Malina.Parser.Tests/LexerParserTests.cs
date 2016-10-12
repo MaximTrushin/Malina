@@ -17,7 +17,7 @@ namespace Malina.Parser.Tests
     {
 
 
-        [Test, RecordedTest]
+        [Test, RecordTest]
         public void AliasDefinitionWithAttributes()
         {
             PerformTest();

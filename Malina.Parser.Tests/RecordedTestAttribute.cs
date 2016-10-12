@@ -9,4 +9,7 @@ namespace Malina.Parser.Tests
     class RecordedTestAttribute: Attribute
     {
     }
+    class RecordTestAttribute : Attribute
+    {
+    }
 }

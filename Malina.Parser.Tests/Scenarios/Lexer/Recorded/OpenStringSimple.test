@@ -11,7 +11,7 @@
 	5:8	OPEN_VALUE	`blabla`	 (42,47)
 	6:2	NEWLINE	`\n`	 (48,48)
 	6:2	SHORT_ID	`e3`	 (51,52)
-	6:7	VALUE	`"blablabla"`	 (56,66)
+	6:7	DQS	`"blablabla"`	 (56,66)
 	7:0	NEWLINE	`<EOF>`	 (68,68)
 	7:0	DEDENT	`<EOF>`	 (68,68)
 	7:0	DEDENT	`<EOF>`	 (68,68)

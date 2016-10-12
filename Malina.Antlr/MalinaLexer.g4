@@ -38,8 +38,12 @@ mode IN_VALUE;
 					)		-> popMode;
 
 	//Double quoted string
-	VALUE			:	
-					(	'"' (~('"') | '""')* '"'	
+	DQS			:	
+					(	'"' (~["\r\n] | '""')* '"'	
+					)		-> popMode;
+	//Double quoted string multiline
+	DQS_ML			:	
+					(	'"' (~["] | '""')* '"'	
 					)		-> popMode;
 
 	//Open string and Multi Line Open String

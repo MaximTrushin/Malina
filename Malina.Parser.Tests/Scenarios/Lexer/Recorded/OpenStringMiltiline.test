@@ -18,7 +18,7 @@
 	10:1	NEWLINE	`\n`	 (93,93)
 	10:1	DEDENT	`\t`	 (94,94)
 	10:1	SHORT_ID	`e3`	 (95,96)
-	10:6	VALUE	`"blablabla"`	 (100,110)
+	10:6	DQS	`"blablabla"`	 (100,110)
 	11:1	NEWLINE	`\n`	 (111,111)
 	11:1	SHORT_ID	`e4`	 (113,114)
 	11:6	OPEN_VALUE	`blabla`	 (118,123)

@@ -7,7 +7,7 @@
 	4:2	SHORT_ID	`e1`	 (25,26)
 	4:4	COLON	`:`	 (27,27)
 	4:7	ATTRIBUTE_ID	`@at1`	 (30,33)
-	4:14	VALUE	`"val1"`	 (37,42)
+	4:14	DQS	`"val1"`	 (37,42)
 	4:21	ATTRIBUTE_ID	`@at2`	 (44,47)
 	4:26	SHORT_ID	`e2`	 (49,50)
 	4:34	ALIAS_ID	`$a1`	 (54,56)

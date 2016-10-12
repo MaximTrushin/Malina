@@ -5,7 +5,7 @@
 	3:8	COLON	`:`	 (21,21)
 	4:2	INDENT	`\t\t`	 (23,24)
 	4:2	ATTRIBUTE_ID	`@at1`	 (25,28)
-	4:9	VALUE	`"val1"`	 (32,37)
+	4:9	DQS	`"val1"`	 (32,37)
 	4:16	ATTRIBUTE_ID	`@at2`	 (39,42)
 	5:2	NEWLINE	`\n`	 (43,43)
 	5:2	SHORT_ID	`e2`	 (46,47)

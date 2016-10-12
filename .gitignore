@@ -5,3 +5,4 @@
 bin
 obj
 packages
+/Malina.Parser.PerfomanceTests/Scenarios/Lexer

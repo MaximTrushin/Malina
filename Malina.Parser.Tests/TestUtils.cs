@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -89,9 +90,22 @@ namespace Malina.Parser.Tests
             var parser = new MalinaParser(new CommonTokenStream(lexer));
             var malinaListener = new MalinaParserListener();
             parser.AddParseListener(malinaListener);
-            parser.BuildParseTree = false;
+            parser.BuildParseTree = true;
 
             var module = parser.module();
+
+            int nCount = 0;
+            int tCount = 0;
+
+            Console.WriteLine();
+            Console.WriteLine("ParseTree:");
+            Console.WriteLine();
+
+            PrintTree(module, 0, ref nCount, ref tCount);
+            Console.WriteLine();
+            Console.WriteLine("DOM:");
+            Console.WriteLine();
+
             var printerVisitor = new DOMPrinterVisitor();
             //module.
             foreach (var item in malinaListener.Nodes)
@@ -165,6 +179,36 @@ namespace Malina.Parser.Tests
         private static string GetType(IToken token)
         {
             return (token.TokenSource as MalinaLexer).Vocabulary.GetSymbolicName(token.Type);
+        }
+
+        public static void PrintTree(ParserRuleContext ctx, int indent, ref int nCount, ref int tCount)
+        {
+            nCount++;
+            var symbols = new List<TerminalNodeImpl>();
+            IEnumerable<ParserRuleContext> nodes = new List<ParserRuleContext>();
+            if (ctx.children != null)
+            {
+                symbols = ctx.children.OfType<TerminalNodeImpl>().Where(
+                    s => s.Symbol.Type != MalinaLexer.NEWLINE
+                         && s.Symbol.Type != MalinaLexer.INDENT
+                         && s.Symbol.Type != MalinaLexer.DEDENT
+                         //&& !string.IsNullOrEmpty(s.Symbol.Text)
+                    ).ToList();
+                nodes = ctx.children.OfType<ParserRuleContext>();
+            }
+            tCount += symbols.Count();
+
+            var ruleName = MalinaParser.ruleNames[ctx.RuleIndex];
+
+            var sSymbols = string.Join(", ", symbols.Select(s => string.Format("{0}={1}", GetType(s.Symbol), s.Symbol.Text)));
+
+            Console.Write("\n");
+            Console.Write("{0}{1}: ({2})", "".PadLeft(indent * 4), ruleName, sSymbols);
+
+            foreach (var child in nodes)
+            {
+                PrintTree(child, indent + 1, ref nCount, ref tCount);
+            }
         }
     }
 }

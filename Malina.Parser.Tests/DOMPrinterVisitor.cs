@@ -16,14 +16,8 @@ namespace Malina.Parser.Tests
 
         public override void OnAliasDefinition(DOM.AliasDefinition node)
         {
-            
-            _sb.Append(node.start.Line);
+            PrintNodeStart(node);
             _sb.Append(":");
-            _sb.Append(node.start.Column);
-            _sb.Append('\t', _indent);            
-            _sb.Append("    AliasDefinition '");
-            _sb.Append(node.Name);
-            _sb.Append("'   :");
             _sb.AppendLine();
             _indent++;
             base.OnAliasDefinition(node);
@@ -32,18 +26,25 @@ namespace Malina.Parser.Tests
             
         }
         public override void OnAttribute(DOM.Attribute node)
-        {            
-            _sb.Append(node.start.Line);
+        {
+            PrintNodeStart(node);
             _sb.Append(":");
-            _sb.Append(node.start.Column);
-            _sb.Append('\t', _indent);            
-            _sb.Append("    Attribute '");
-            _sb.Append(node.Name);
-            _sb.Append("'   :");
             base.OnAttribute(node);
             _sb.AppendLine();
         }
-        
+
+        private void PrintNodeStart(DOM.Node node)
+        {
+            _sb.Append(node.start.Line);
+            _sb.Append(":");
+            _sb.Append(node.start.Column);
+            _sb.Append('\t', _indent);
+            _sb.Append("\t");
+            _sb.Append(node.GetType().Name);
+            _sb.Append(" '");
+            _sb.Append(node.Name);
+            _sb.Append("'");
+        }
 
     }
 

@@ -45,7 +45,7 @@ namespace Malina.DOM
         }
 
         // Properties
-        public string Value
+        public virtual string Value
         {
             get
             {

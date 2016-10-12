@@ -89,8 +89,10 @@ namespace Malina.Parser.Tests
             lexer.Reset();
             var parser = new MalinaParser(new CommonTokenStream(lexer));
             var malinaListener = new MalinaParserListener();
+            var parserErrorListener = new ErrorListener<IToken>();
+            parser.AddErrorListener(parserErrorListener);
             parser.AddParseListener(malinaListener);
-            parser.BuildParseTree = true;
+            //parser.BuildParseTree = true;
 
             var module = parser.module();
 
@@ -100,9 +102,11 @@ namespace Malina.Parser.Tests
             Console.WriteLine();
             Console.WriteLine("ParseTree:");
             Console.WriteLine();
-
+            
             PrintTree(module, 0, ref nCount, ref tCount);
+            Assert.AreEqual(false, parserErrorListener.HasErrors);
             Console.WriteLine();
+
             Console.WriteLine("DOM:");
             Console.WriteLine();
 

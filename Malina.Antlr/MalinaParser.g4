@@ -27,7 +27,10 @@ attr_inline	:	ATTRIBUTE_ID;
 
 block_line_stmt	:	attr_stmt;
 
-attr_stmt	:	ATTRIBUTE_ID (VALUE | OPEN_VALUE) NEWLINE;
+attr_stmt	:	ATTRIBUTE_ID (VALUE | open_value) NEWLINE;
+
+open_value	: (OPEN_VALUE | OPEN_VALUE_INDENT)+;
+
 
 
 

@@ -1,20 +1,14 @@
-﻿using System;
+﻿using Antlr4.Runtime;
+using Antlr4.Runtime.Misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Malina.DOM;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
 
 namespace Malina.DOM.Antlr
 {
-
-    public interface IAntlrCharStreamConsumer
-    {
-        ICharStream CharStream{set;}
-    }
-    public class AliasDefinition : DOM.AliasDefinition, IAntlrCharStreamConsumer
+    public class Attribute : DOM.Attribute, IAntlrCharStreamConsumer
     {
         private ICharStream _charStream;
         private Interval _idInterval;
@@ -39,7 +33,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Name != null) return base.Name;
-                return _charStream.GetText(new Interval(_idInterval.a + 2, _idInterval.b));
+                return _charStream.GetText(new Interval(_idInterval.a + 1, _idInterval.b));
             }
 
             set

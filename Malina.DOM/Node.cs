@@ -11,7 +11,21 @@ namespace Malina.DOM
         public SourceLocation end;
         public Module OwnerModule;
         public SourceLocation start;
+        private string _name;
 
+
+        public virtual string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+            }
+        }
         // Methods
         protected Node()
         {

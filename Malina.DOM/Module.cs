@@ -9,7 +9,6 @@ namespace Malina.DOM
         private NodeCollection<ModuleMember> _member;
         private NodeCollection<Namespace> _namespaces;
         public string FileName;
-        public string Name;
 
         // Methods
         public Module()

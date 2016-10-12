@@ -22,8 +22,8 @@ namespace Malina.Parser
             if (ctx.Node == null)
             {
                 var node = new T();
-                //if (parent != null)
-                //    parent.AppendChild(node);
+                if (parent != null)
+                    parent.AppendChild(node);
                 ctx.Node = node;
                 node.CharStream = (ctx as ParserRuleContext).start.InputStream;
             }

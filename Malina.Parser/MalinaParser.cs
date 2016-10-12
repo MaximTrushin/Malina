@@ -18,11 +18,22 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ALIAS_DEF_ID();
-                var inputStream = id.Symbol.InputStream;
-                Node.AliasDefIDInterval = new Interval( id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var s = Node.Name;
-                var i = 1;
+                Node.IDInterval = new Interval( id.Symbol.StartIndex, id.Symbol.StopIndex);
             }
         }
+
+        public partial class Attr_stmtContext : INodeContext<DOM.Antlr.Attribute>
+        {
+            public DOM.Antlr.Attribute Node { get; set; }
+            
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ATTRIBUTE_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+
+            }
+        }
+
     }
 }

@@ -8,7 +8,6 @@ namespace Malina.DOM
         // Fields
         public bool Derived;
         public string[] Elements;
-        public string Name;
         public string Url;
 
         // Methods

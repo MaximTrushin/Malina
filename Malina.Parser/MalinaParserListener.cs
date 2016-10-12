@@ -33,7 +33,20 @@ namespace Malina.Parser
         public override void ExitAlias_def_stmt([NotNull] MalinaParser.Alias_def_stmtContext context)
         {
             base.ExitAlias_def_stmt(context);
-            ExitContext(context);        }
+            ExitContext(context);
+        }
+
+        public override void EnterAttr_stmt([NotNull] MalinaParser.Attr_stmtContext context)
+        {
+            EnterContext(context);
+            base.EnterAttr_stmt(context);
+        }
+
+        public override void ExitAttr_stmt([NotNull] MalinaParser.Attr_stmtContext context)
+        {
+            base.ExitAttr_stmt(context);
+            ExitContext(context);
+        }
 
 
         private void EnterContext<T>(INodeContext<T> context) where T : Node, IAntlrCharStreamConsumer, new()

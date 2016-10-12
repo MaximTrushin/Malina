@@ -5,9 +5,6 @@ namespace Malina.DOM
     [Serializable]
     public abstract class Entity : Node
     {
-        // Fields
-        public string Name;
-
         // Methods
         protected Entity()
         {

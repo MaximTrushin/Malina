@@ -32,21 +32,60 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ATTRIBUTE_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var value = VALUE();
+                var openValue = open_value();
+                if (openValue != null)
+                {
+                    Node.IntervalSet = new IntervalSet();
+                    foreach (var item in openValue.children)
+                    {                        
+                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
+                    } 
+                }
+                else 
+                {
+                    var value = DQS();
+                    if (value != null)
+                    {
+                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
+                    }
+                }
+                
+                var i = 1;
+                //Node.Value = value;
+            }
+        }
+
+        public partial class Attr_inlineContext : INodeContext<DOM.Antlr.Attribute>
+        {
+            public DOM.Antlr.Attribute Node { get; set; }
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ATTRIBUTE_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
                 var openValue = open_value();
                 if (openValue != null)
                 {
                     Node.IntervalSet = new IntervalSet();
                     foreach (var item in openValue.children)
                     {
-                        
                         Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    } 
+                    }
                 }
+                else
+                {
+                    var value = DQS();
+                    if (value != null)
+                    {
+                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
+                    }
+                }
+
                 var i = 1;
                 //Node.Value = value;
             }
         }
+        
 
     }
 }

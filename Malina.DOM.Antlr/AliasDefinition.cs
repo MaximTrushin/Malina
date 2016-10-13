@@ -9,11 +9,6 @@ using Antlr4.Runtime.Misc;
 
 namespace Malina.DOM.Antlr
 {
-
-    public interface IAntlrCharStreamConsumer
-    {
-        ICharStream CharStream{set;}
-    }
     public class AliasDefinition : DOM.AliasDefinition, IAntlrCharStreamConsumer
     {
         private ICharStream _charStream;

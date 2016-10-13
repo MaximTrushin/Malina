@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AliasDefinition.cs" />
     <Compile Include="Attribute.cs" />
+    <Compile Include="IAntlrCharStreamConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

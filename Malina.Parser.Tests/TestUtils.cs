@@ -63,9 +63,7 @@ namespace Malina.Parser.Tests
             ErrorListener<int> lexerErros;
             IList<IToken> tokens =  GetTokens(code, out lexer, out lexerErros);
 
-            Assert.AreEqual(false, lexerErros.HasErrors);
 
-            Assert.AreEqual(0, lexer.InvalidTokens.Count);
 
             var printedTokens = PrintedTokens(tokens);
             Console.WriteLine("");
@@ -73,16 +71,13 @@ namespace Malina.Parser.Tests
             Console.WriteLine(printedTokens);
 
             var isRecordedTest = IsRecordedTest();
+            string recorded = null;
             if (isRecordedTest)
             {
-                var recorded = LoadRecordedTest();
+                recorded = LoadRecordedTest();
                 if (recorded == null)
                 {
                     SaveRecordedTest(printedTokens);
-                }
-                else
-                {
-                    Assert.AreEqual(recorded, printedTokens);
                 }
             }
 
@@ -118,6 +113,16 @@ namespace Malina.Parser.Tests
             }
 
             Console.WriteLine(printerVisitor.Text);
+
+            if (recorded != null)
+            {
+                Assert.AreEqual(recorded, printedTokens);
+            }
+
+            Assert.AreEqual(false, lexerErros.HasErrors);
+
+            Assert.AreEqual(0, lexer.InvalidTokens.Count);
+
             //Assert.AreEqual(false, parserErrorListener.HasErrors);
 
         }

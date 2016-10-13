@@ -5,29 +5,29 @@ options { tokenVocab=MalinaLexer; }
 //_inline - inline expression
 //_stmt - declaration statement (always ends with NEWLINE).
 
-module			:	namespace_decl_stmt* (document_stmt | alias_def_stmt)*
-				;
+module			:	namespace_decl_stmt* (document_stmt | alias_def_stmt)*;
+
 namespace_decl_stmt : NAMESPACE_ID;
 
-document_stmt	:	DOCUMENT_ID COLON;// document_body;
-
-//document_body	: document_body_inline | document_body_block;
-
-//document_body_inline	:	
+document_stmt	:	DOCUMENT_ID ((block_inline NEWLINE) | block);// document_body;
 
 alias_def_stmt	:	ALIAS_DEF_ID ((block_inline NEWLINE) | block);
 
-block	:	COLON INDENT (block_line_stmt)+ DEDENT;
+block	:	COLON INDENT (block_line_stmt | inline_stmt)+ DEDENT;
 
 block_inline	:	COLON (inline_expression)+;
 
+//Represent inline expression
 inline_expression	:	attr_inline;
 
-attr_inline	:	ATTRIBUTE_ID;
+inline_stmt	:	inline_expression (inline_expression)+ NEWLINE;
 
+attr_inline	:	ATTRIBUTE_ID (DQS | open_value);
+
+//Represents one line of block. Always ends with NEWLINE
 block_line_stmt	:	attr_stmt;
 
-attr_stmt	:	ATTRIBUTE_ID (VALUE | open_value) NEWLINE;
+attr_stmt	:	ATTRIBUTE_ID (DQS | open_value) NEWLINE;
 
 open_value	: (OPEN_VALUE | OPEN_VALUE_INDENT)+;
 

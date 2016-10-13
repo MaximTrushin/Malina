@@ -39,15 +39,22 @@ namespace Malina.Parser
         public override void EnterAttr_stmt([NotNull] MalinaParser.Attr_stmtContext context)
         {
             EnterContext(context);
-            base.EnterAttr_stmt(context);
         }
 
         public override void ExitAttr_stmt([NotNull] MalinaParser.Attr_stmtContext context)
         {
-            base.ExitAttr_stmt(context);
             ExitContext(context);
         }
 
+        public override void EnterAttr_inline([NotNull] MalinaParser.Attr_inlineContext context)
+        {
+            EnterContext(context);
+        }
+ 
+        public override void ExitAttr_inline([NotNull] MalinaParser.Attr_inlineContext context)
+        {
+            ExitContext(context);
+        }
 
         private void EnterContext<T>(INodeContext<T> context) where T : Node, IAntlrCharStreamConsumer, new()
         {            

@@ -1,13 +1,4 @@
-﻿using Antlr4.Runtime;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using static Malina.Parser.Tests.TestUtils;
 
 namespace Malina.Parser.Tests
@@ -17,267 +8,267 @@ namespace Malina.Parser.Tests
     {
 
 
-        [Test, RecordTest]
+        [Test, LexerRecorded, ParseTreeRecorded]
         public void AliasDefinitionWithAttributes()
         {
             PerformTest();
 
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasDefinitionWithAttrAndElem()
         {
             PerformTest();
 
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasDefinitionWithDefaultBlockParameters()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasDefinitionWithDefaultInlineBlockParameters()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasDefinitionWithInplaceAttributeDefaultParameters()
         {
             PerformTest();
         }
 
-        [Test,RecordedTest]
+        [Test,LexerRecorded]
         public void AliasDefinitionWithInplaceAttributeParameters()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasDefinitionWithInplaceInlineParameters()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasDefinitionWithSimpleParameters()
         {
             PerformTest();
         }
 
-        [Test,RecordedTest]
+        [Test,LexerRecorded]
         public void AliasWithArguments()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasWithInlineArgumentList()
         {
             PerformTest();
         }
 
-        [Test,RecordedTest]
+        [Test,LexerRecorded]
         public void AliasWithInlineArgumentList2()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasWithInlineArgumentList3()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasWithInlineArgumentList4()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasWithInlineArgumentList5()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void AliasWithInlineArguments()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementList1()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithAlias()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithAliasAndAliasDefinition()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithAliasedAttribute()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithAttributes()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithAttributesAndOtherElements()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithNestedAlias()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithNestedAliasAndNestedAliasDefinition()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithOpenStringValue()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ElementWithValue()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void EmptyElement()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void EmptyElementWithNamespace()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void InlineElementBody1()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void InlineElementBody2()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void InlineElementBody3()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void InlineElementBody4()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void LineComments()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ModuleNamespaceOverload()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void ModuleWithTwoNamespaces()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void MultiLineComments()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void NamespaceScope1()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void NamespaceScope2()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void NamespaceScope3()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void OneNamespaceNoBrackets()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void OpenStringEndOnDedentAndEof()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]        
+        [Test, LexerRecorded]        
         public void OpenStringMiltiline()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void OpenStringSimple()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void TwoNamespaces()
         {
             PerformTest();
         }
 
-        [Test, RecordedTest]
+        [Test, LexerRecorded]
         public void WithoutNamespaces()
         {
             PerformTest();

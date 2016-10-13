@@ -25,32 +25,54 @@ namespace Malina.Parser.Tests
 
         public static string LoadTestCode()
         {
-            var trace = new StackTrace();
-            var testCaseName = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
-            
+            var testCaseName = GetTestCaseName();
+
             var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\").Append(testCaseName).Append(".mal").ToString();
 
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
         }
 
-        public static string LoadRecordedTest()
+        private static string GetTestCaseName()
         {
             var trace = new StackTrace();
-            var testCaseName = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
+            return trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
+        }
+
+        public static string LoadRecordedTest()
+        {
+            var testCaseName = GetTestCaseName();
             var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
             if (!File.Exists(fileName)) return null;
 
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
         }
 
+        public static string LoadRecordedParseTreeTest()
+        {
+            var testCaseName = GetTestCaseName();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".tree").ToString();
+            if (!File.Exists(fileName)) return null;
+
+            return File.ReadAllText(fileName).Replace("\r\n", "\n");
+        }
+        
+
         private static void SaveRecordedTest(string printedTokens)
         {
-            var trace = new StackTrace();
-            var testCaseName = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
+            var testCaseName = GetTestCaseName();
             var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, printedTokens);
+        }
+
+        private static void SaveRecordedParseTreeTest(string parseTree)
+        {
+            var testCaseName = GetTestCaseName();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".tree").ToString();
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+
+            File.WriteAllText(fileName, parseTree);
         }
 
         public static void PerformTest()
@@ -59,28 +81,29 @@ namespace Malina.Parser.Tests
 
             PrintCode(code);
 
+            //Testing Lexer
             MalinaLexer lexer;
             ErrorListener<int> lexerErros;
             IList<IToken> tokens =  GetTokens(code, out lexer, out lexerErros);
-
-
 
             var printedTokens = PrintedTokens(tokens);
             Console.WriteLine("");
             Console.WriteLine("Tokens:");
             Console.WriteLine(printedTokens);
 
-            var isRecordedTest = IsRecordedTest();
+            var isLexerRecordedTest = IsLexerRecordedTest();
+            var isLexerRecordTest = IsLexerRecordTest(); //Overwrites existing recording
             string recorded = null;
-            if (isRecordedTest)
+            if (isLexerRecordedTest || isLexerRecordTest)
             {
-                recorded = LoadRecordedTest();
-                if (recorded == null)
+                if (isLexerRecordedTest) recorded = LoadRecordedTest();
+                if (recorded == null || isLexerRecordTest)
                 {
                     SaveRecordedTest(printedTokens);
                 }
             }
 
+            //Testing Parse Tree
             lexer.Reset();
             var parser = new MalinaParser(new CommonTokenStream(lexer));
             var malinaListener = new MalinaParserListener();
@@ -97,11 +120,29 @@ namespace Malina.Parser.Tests
             Console.WriteLine();
             Console.WriteLine("ParseTree:");
             Console.WriteLine();
+
+            var sb = new StringBuilder();
+            PrintTree(module, 0, sb, ref nCount, ref tCount);
+            var parseTree = sb.ToString();
             
-            PrintTree(module, 0, ref nCount, ref tCount);
-            
+            var isParseTreeRecordedTest = IsParseTreeRecordedTest();
+            var isParseTreeRecordTest = IsParseTreeRecordTest(); //Overwrites existing recording
+            string recordedParseTree = null;
+            if (isParseTreeRecordedTest || isParseTreeRecordTest)
+            {
+                if (isParseTreeRecordedTest) recordedParseTree = LoadRecordedParseTreeTest();
+                if (recordedParseTree == null || isParseTreeRecordTest)
+                {
+                    SaveRecordedParseTreeTest(parseTree);
+                }
+            }
+
+
+
             Console.WriteLine();
 
+
+            //Testing DOM generation
             Console.WriteLine("DOM:");
             Console.WriteLine();
 
@@ -114,6 +155,8 @@ namespace Malina.Parser.Tests
 
             Console.WriteLine(printerVisitor.Text);
 
+
+            //Lexer Assertions
             if (recorded != null)
             {
                 Assert.AreEqual(recorded, printedTokens);
@@ -122,6 +165,13 @@ namespace Malina.Parser.Tests
             Assert.AreEqual(false, lexerErros.HasErrors);
 
             Assert.AreEqual(0, lexer.InvalidTokens.Count);
+
+            //Parse Tree Assertions
+            if (recordedParseTree != null)
+            {
+                Assert.AreEqual(recordedParseTree, parseTree);
+            }
+
 
             //Assert.AreEqual(false, parserErrorListener.HasErrors);
 
@@ -137,11 +187,52 @@ namespace Malina.Parser.Tests
             return lexer.GetAllTokens();
         }
 
-        private static bool IsRecordedTest()
+        private static bool IsLexerRecordedTest()
         {
             var trace = new StackTrace();
-            var method = trace.GetFrame(2).GetMethod();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.FullName == "Malina.Parser.Tests.RecordedTestAttribute");
+            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
+            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(LexerRecordedAttribute))) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(LexerRecordedAttribute)));
+        }
+
+        private static bool IsLexerRecordTest()
+        {
+            var trace = new StackTrace();
+            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
+            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(LexerRecordAttribute))) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(LexerRecordAttribute)));
+        }
+
+        private static bool IsDomRecordedTest()
+        {
+            var trace = new StackTrace();
+            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
+            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(DomRecordedAttribute))) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(DomRecordedAttribute)));
+        }
+
+        private static bool IsDomRecordTest()
+        {
+            var trace = new StackTrace();
+            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
+            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(DomRecordAttribute))) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(DomRecordAttribute)));
+        }
+
+        private static bool IsParseTreeRecordedTest()
+        {
+            var trace = new StackTrace();
+            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
+            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(ParseTreeRecordedAttribute))) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(ParseTreeRecordedAttribute)));
+        }
+
+        private static bool IsParseTreeRecordTest()
+        {
+            var trace = new StackTrace();
+            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
+            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(ParseTreeRecordAttribute))) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(ParseTreeRecordAttribute)));
         }
 
         private static void PrintCode(string code)
@@ -190,7 +281,7 @@ namespace Malina.Parser.Tests
             return (token.TokenSource as MalinaLexer).Vocabulary.GetSymbolicName(token.Type);
         }
 
-        public static void PrintTree(ParserRuleContext ctx, int indent, ref int nCount, ref int tCount)
+        public static void PrintTree(ParserRuleContext ctx, int indent, StringBuilder sb, ref int nCount, ref int tCount)
         {
             nCount++;
             var symbols = new List<TerminalNodeImpl>();
@@ -211,12 +302,12 @@ namespace Malina.Parser.Tests
 
             var sSymbols = string.Join(", ", symbols.Select(s => string.Format("{0}={1}", GetType(s.Symbol), s.Symbol.Text)));
 
-            Console.Write("\n");
-            Console.Write("{0}{1}: ({2})", "".PadLeft(indent * 4), ruleName, sSymbols);
+            sb.Append('\n');
+            sb.Append(string.Format("{0}{1}: ({2})", "".PadLeft(indent * 4), ruleName, sSymbols));
 
             foreach (var child in nodes)
             {
-                PrintTree(child, indent + 1, ref nCount, ref tCount);
+                PrintTree(child, indent + 1, sb, ref nCount, ref tCount);
             }
         }
     }

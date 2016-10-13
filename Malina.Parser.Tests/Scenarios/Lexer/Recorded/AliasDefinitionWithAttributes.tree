@@ -1,0 +1,12 @@
+
+module: ()
+    alias_def_stmt: (ALIAS_DEF_ID=!$Address.UK.Cambridge)
+        block: (COLON=:)
+            block_line_stmt: ()
+                attr_stmt: (ATTRIBUTE_ID=@xsi.type)
+                    open_value: (OPEN_VALUE=ipo:EU-Address)
+    alias_def_stmt: (ALIAS_DEF_ID=!$Address.UK.Cambridge)
+        block: (COLON=:)
+            block_line_stmt: ()
+                attr_stmt: (ATTRIBUTE_ID=@xsi.type)
+                    open_value: (OPEN_VALUE=ipo:EU-Address)

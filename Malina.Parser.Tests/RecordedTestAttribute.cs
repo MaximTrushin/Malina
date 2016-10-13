@@ -6,10 +6,22 @@ using System.Threading.Tasks;
 
 namespace Malina.Parser.Tests
 {
-    class RecordedTestAttribute: Attribute
+    class LexerRecordedAttribute: Attribute
     {
     }
-    class RecordTestAttribute : Attribute
+    class LexerRecordAttribute : Attribute
+    {
+    }
+    class DomRecordedAttribute : Attribute
+    {
+    }
+    class DomRecordAttribute : Attribute
+    {
+    }
+    class ParseTreeRecordedAttribute : Attribute
+    {
+    }
+    class ParseTreeRecordAttribute : Attribute
     {
     }
 }

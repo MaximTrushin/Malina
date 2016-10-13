@@ -224,6 +224,7 @@
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.tree" />
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultBlockParameters.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

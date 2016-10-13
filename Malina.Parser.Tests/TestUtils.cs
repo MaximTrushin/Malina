@@ -32,6 +32,15 @@ namespace Malina.Parser.Tests
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
         }
 
+        public static string LoadTestCodeRaw()
+        {
+            var testCaseName = GetTestCaseName();
+
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\").Append(testCaseName).Append(".mal").ToString();
+
+            return File.ReadAllText(fileName);
+        }
+
         private static string GetTestCaseName()
         {
             var trace = new StackTrace();

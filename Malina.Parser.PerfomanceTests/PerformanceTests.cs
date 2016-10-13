@@ -16,7 +16,7 @@ namespace Malina.Parser.PerfomanceTests
         public void BigFile()
         {
             Console.WriteLine("Starting BigFile");
-            var code = LoadTestCode();
+            var code = LoadTestCodeRaw();
             var lexer = new MalinaLexer(new AntlrInputStream(code));
             lexer.RemoveErrorListeners();
             lexer.ErrorListeners.Clear();

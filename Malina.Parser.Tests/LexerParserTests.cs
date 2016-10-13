@@ -9,14 +9,14 @@ namespace Malina.Parser.Tests
     {
 
 
-        [Test, LexerRecorded, ParseTreeRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasDefinitionWithAttributes()
         {
             PerformTest();
 
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasDefinitionWithAttrAndElem()
         {
             PerformTest();

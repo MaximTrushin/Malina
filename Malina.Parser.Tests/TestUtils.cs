@@ -56,16 +56,6 @@ namespace Malina.Parser.Tests
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
         }
 
-        public static string LoadRecordedParseTreeTest()
-        {
-            var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".tree").ToString();
-            if (!File.Exists(fileName)) return null;
-
-            return File.ReadAllText(fileName).Replace("\r\n", "\n");
-        }
-        
-
         private static void SaveRecordedTest(string printedTokens)
         {
             var testCaseName = GetTestCaseName();
@@ -75,6 +65,15 @@ namespace Malina.Parser.Tests
             File.WriteAllText(fileName, printedTokens);
         }
 
+        public static string LoadRecordedParseTreeTest()
+        {
+            var testCaseName = GetTestCaseName();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".tree").ToString();
+            if (!File.Exists(fileName)) return null;
+
+            return File.ReadAllText(fileName).Replace("\r\n", "\n");
+        }
+        
         private static void SaveRecordedParseTreeTest(string parseTree)
         {
             var testCaseName = GetTestCaseName();
@@ -82,6 +81,24 @@ namespace Malina.Parser.Tests
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, parseTree);
+        }
+
+        public static string LoadRecordedDomTest()
+        {
+            var testCaseName = GetTestCaseName();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".dom").ToString();
+            if (!File.Exists(fileName)) return null;
+
+            return File.ReadAllText(fileName).Replace("\r\n", "\n");
+        }
+
+        private static void SaveRecordedDomTest(string printedTokens)
+        {
+            var testCaseName = GetTestCaseName();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".dom").ToString();
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+
+            File.WriteAllText(fileName, printedTokens);
         }
 
         public static void PerformTest()
@@ -164,6 +181,18 @@ namespace Malina.Parser.Tests
 
             Console.WriteLine(printerVisitor.Text);
 
+            var isDomRecordedTest = IsDomRecordedTest();
+            var isDomRecordTest = IsDomRecordTest(); //Overwrites existing recording
+            string recordedDom = null;
+            if (isDomRecordedTest || isDomRecordTest)
+            {
+                if (isDomRecordedTest) recordedDom = LoadRecordedDomTest();
+                if (recordedDom == null || isDomRecordTest)
+                {
+                    SaveRecordedDomTest(printerVisitor.Text);
+                }
+            }
+
 
             //Lexer Assertions
             if (recorded != null)
@@ -181,6 +210,11 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedParseTree, parseTree);
             }
 
+            //DOM Assertions
+            if (recordedDom != null)
+            {
+                Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"));
+            }
 
             //Assert.AreEqual(false, parserErrorListener.HasErrors);
 

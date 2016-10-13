@@ -11,8 +11,7 @@ namespace Malina.DOM
         public bool DefaultNamespace;
         public bool IsValueElement;
         public string Namespace;
-        public object ObjectValue;
-        public string Value;
+        public object ObjectValue;        
         public ValueType ValueType;
 
         // Methods
@@ -20,20 +19,18 @@ namespace Malina.DOM
         {
         }
 
-        public Element(string ns, string name, string value)
+        public Element(string ns, string name)
         {
             Namespace = ns;
             Name = name;
-            Value = value;
         }
 
-        public Element(string ns, string name, NodeCollection<Entity> entities, NodeCollection<Attribute> attributes, string value, object objectValue)
+        public Element(string ns, string name, NodeCollection<Entity> entities, NodeCollection<Attribute> attributes, object objectValue)
         {
             Namespace = ns;
             Name = name;
             Entities = entities;
             Attributes = attributes;
-            Value = value;
             ObjectValue = objectValue;
         }
 
@@ -64,7 +61,6 @@ namespace Malina.DOM
             base.Assign(node);
             Element element = node as Element;
             Namespace = element.Namespace;
-            Value = element.Value;
             ObjectValue = element.ObjectValue;
             DefaultNamespace = element.DefaultNamespace;
             ValueType = element.ValueType;
@@ -81,6 +77,14 @@ namespace Malina.DOM
         }
 
         // Properties
+
+        public virtual string Value
+        {
+            get
+            {
+                return ((ObjectValue != null) ? (!(ObjectValue is Alias) ? ObjectValue.ToString() : ("$" + (ObjectValue as Alias).Name)) : null);
+            }
+        }
         public NodeCollection<Attribute> Attributes
         {
             get

@@ -21,8 +21,8 @@ ALIAS_ID			:	'$' Name;
 PARAMETER_ID		:	'%' Name;
 ARGUMENT_ID			:	'.' Name;
 
-FULL_ID				:	FullName;
-SHORT_ID			:	ShortName;
+ELEMENT_ID			:	ShortName | FullName;
+
 
 VALUE_BEGIN			:	'='	Spaces -> skip, pushMode(IN_VALUE);
 OPEN_VALUE_BEGIN	:	'=='	Spaces -> skip, pushMode(IN_VALUE);

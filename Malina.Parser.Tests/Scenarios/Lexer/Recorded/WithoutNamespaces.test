@@ -1,6 +1,6 @@
 	2:0	DOCUMENT_ID	`!MyRequest`	 (1,10)
 	2:10	COLON	`:`	 (11,11)
 	3:1	INDENT	`\t`	 (13,13)
-	3:1	SHORT_ID	`request`	 (14,20)
+	3:1	ELEMENT_ID	`request`	 (14,20)
 	4:0	NEWLINE	`<EOF>`	 (22,22)
 	4:0	DEDENT	`<EOF>`	 (22,22)

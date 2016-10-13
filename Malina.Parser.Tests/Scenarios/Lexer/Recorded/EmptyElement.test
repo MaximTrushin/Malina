@@ -1,6 +1,6 @@
 	2:0	DOCUMENT_ID	`!a`	 (1,2)
 	2:2	COLON	`:`	 (3,3)
 	3:1	INDENT	`\t`	 (5,5)
-	3:1	SHORT_ID	`b`	 (6,6)
+	3:1	ELEMENT_ID	`b`	 (6,6)
 	5:0	NEWLINE	`<EOF>`	 (9,9)
 	5:0	DEDENT	`<EOF>`	 (9,9)

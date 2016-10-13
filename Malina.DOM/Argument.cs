@@ -15,17 +15,16 @@ namespace Malina.DOM
         {
         }
 
-        public Argument(Element e) : base(e.Namespace, e.Name, e.Entities, e.Attributes, e.Value, e.ObjectValue)
+        public Argument(Element e) : base(e.Namespace, e.Name, e.Entities, e.Attributes,  e.ObjectValue)
         {
             start = e.start;
             end = e.end;
         }
 
-        public Argument(string ns, string name, string value, Alias ofAlias)
+        public Argument(string ns, string name, Alias ofAlias)
         {
             Namespace = ns;
-            Name = name;
-            Value = value;
+            Name = name;            
             OfAlias = ofAlias;
         }
 

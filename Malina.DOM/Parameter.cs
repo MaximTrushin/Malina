@@ -16,18 +16,17 @@ namespace Malina.DOM
         {
         }
 
-        public Parameter(Element e) : base(e.Namespace, e.Name, e.Entities, e.Attributes, e.Value, e.ObjectValue)
+        public Parameter(Element e) : base(e.Namespace, e.Name, e.Entities, e.Attributes, e.ObjectValue)
         {
             base.start = e.start;
             base.end = e.end;
         }
 
 
-        public Parameter(string ns, string name, string value, AliasDefinition ofAliasDefinition)
+        public Parameter(string ns, string name, AliasDefinition ofAliasDefinition)
         {
             Namespace = ns;
             Name = name;
-            Value = value;
             OfAliasDefinition = ofAliasDefinition;
         }
 

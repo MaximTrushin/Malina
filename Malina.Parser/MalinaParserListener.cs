@@ -26,13 +26,11 @@ namespace Malina.Parser
         public override void EnterAlias_def_stmt([NotNull] MalinaParser.Alias_def_stmtContext context)
         {
             EnterContext(context);
-            base.EnterAlias_def_stmt(context);
         }
 
 
         public override void ExitAlias_def_stmt([NotNull] MalinaParser.Alias_def_stmtContext context)
         {
-            base.ExitAlias_def_stmt(context);
             ExitContext(context);
         }
 
@@ -52,6 +50,36 @@ namespace Malina.Parser
         }
  
         public override void ExitAttr_inline([NotNull] MalinaParser.Attr_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterValue_element_stmt([NotNull] MalinaParser.Value_element_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitValue_element_stmt([NotNull] MalinaParser.Value_element_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterEmpty_element_stmt([NotNull] MalinaParser.Empty_element_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_element_stmt([NotNull] MalinaParser.Empty_element_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterBlock_element_stmt([NotNull] MalinaParser.Block_element_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_element_stmt([NotNull] MalinaParser.Block_element_stmtContext context)
         {
             ExitContext(context);
         }

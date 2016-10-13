@@ -34,6 +34,30 @@ namespace Malina.Parser.Tests
             _sb.AppendLine();
         }
 
+        public override void OnElement(DOM.Element node)
+        {
+            PrintNodeStart(node);
+
+            if (node.ObjectValue != null)
+                _sb.Append("= `");
+                _sb.Append(node.Value);
+            if (node.Attributes.Count + node.Entities.Count > 0)
+            {
+                _sb.AppendLine(":");
+                _indent++;
+            }
+
+            base.OnElement(node);
+
+            if (node.ObjectValue != null)
+                _sb.Append("`");
+            if (node.Attributes.Count + node.Entities.Count > 0)
+            {
+                _indent++;
+            }
+            _sb.AppendLine();
+        }
+
         private void PrintNodeStart(DOM.Node node)
         {
             _sb.Append(node.start.Line);

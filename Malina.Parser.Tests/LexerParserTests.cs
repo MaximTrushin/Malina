@@ -4,6 +4,7 @@ using static Malina.Parser.Tests.TestUtils;
 namespace Malina.Parser.Tests
 {
     [TestFixture]
+    //[LexerRecord]//Overwrites all recorded tests
     public class LexerParserTests
     {
 

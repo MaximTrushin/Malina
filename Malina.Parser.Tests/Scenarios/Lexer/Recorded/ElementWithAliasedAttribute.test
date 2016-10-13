@@ -1,7 +1,7 @@
 	2:0	DOCUMENT_ID	`!MyRequest`	 (1,10)
 	2:10	COLON	`:`	 (11,11)
 	3:1	INDENT	`\t`	 (13,13)
-	3:1	FULL_ID	`ns1.request`	 (14,24)
+	3:1	ELEMENT_ID	`ns1.request`	 (14,24)
 	3:12	COLON	`:`	 (25,25)
 	4:2	INDENT	`\t\t`	 (27,28)
 	4:2	ATTRIBUTE_ID	`@name`	 (29,33)

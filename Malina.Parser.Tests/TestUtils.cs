@@ -146,7 +146,7 @@ namespace Malina.Parser.Tests
                 }
             }
 
-
+            Console.WriteLine(parseTree);
 
             Console.WriteLine();
 
@@ -301,7 +301,7 @@ namespace Malina.Parser.Tests
                     s => s.Symbol.Type != MalinaLexer.NEWLINE
                          && s.Symbol.Type != MalinaLexer.INDENT
                          && s.Symbol.Type != MalinaLexer.DEDENT
-                         //&& !string.IsNullOrEmpty(s.Symbol.Text)
+                         && !string.IsNullOrEmpty(s.Symbol.Text)
                     ).ToList();
                 nodes = ctx.children.OfType<ParserRuleContext>();
             }

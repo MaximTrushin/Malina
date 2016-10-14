@@ -44,7 +44,7 @@ block_element_inline	:	ELEMENT_ID block_inline;
 //ATTRIBUTE RULES
 
 //statements
-attr_stmt	:	ATTRIBUTE_ID (DQS | open_value)? NEWLINE;
+attr_stmt	:	ATTRIBUTE_ID (DQS | open_value | parameter_inline | alias_inline)? NEWLINE;
 
 //inline
 attr_inline	:	value_attr_inline | empty_attr_inline;

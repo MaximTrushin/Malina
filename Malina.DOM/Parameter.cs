@@ -53,7 +53,7 @@ namespace Malina.DOM
 
         public override string ToString()
         {
-            return new StringBuilder().Append(OfAliasDefinition.Name).Append(":").Append(Name).ToString();
+            return new StringBuilder().Append("%").Append(Name).ToString();
         }
     }
 

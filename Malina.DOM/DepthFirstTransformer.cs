@@ -22,6 +22,10 @@
 
         public virtual void OnAttribute(Attribute node)
         {
+            if (node.ObjectValue is Alias || node.ObjectValue is Parameter)
+            {
+                Visit(node.ObjectValue as Node);
+            }
         }
 
         public virtual void OnDocument(Document node)

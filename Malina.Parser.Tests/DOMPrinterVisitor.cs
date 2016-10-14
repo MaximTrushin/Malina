@@ -28,9 +28,17 @@ namespace Malina.Parser.Tests
         public override void OnAttribute(DOM.Attribute node)
         {
             PrintNodeStart(node);
-            _sb.Append("= `");
-            _sb.Append(node.Value);
-            _sb.Append("`");
+            if (node.ObjectValue is Node)
+            {
+                _sb.Append("= ");
+                base.OnAttribute(node);
+            }
+            else
+            {
+                _sb.Append("= `");
+                _sb.Append(node.Value);
+                _sb.Append("`");
+            }
             _sb.AppendLine();
         }
 
@@ -64,23 +72,31 @@ namespace Malina.Parser.Tests
 
         public override void OnParameter(DOM.Parameter node)
         {
-            PrintNodeStart(node);
+            
 
             if (node.Value != null)
             {
+                _sb.Append("\t");
+                _sb.Append(node.GetType().Name);
+                _sb.Append(" `");
+                _sb.Append(node.Name);
+                _sb.Append("`");
+
                 _sb.Append("= `");
                 _sb.Append(node.Value);
                 _sb.Append("`");
             }
+            else PrintNodeStart(node);
+
             if (node.Attributes.Count + node.Entities.Count > 0)
-            {
+            {                
                 _sb.AppendLine(":");
                 _indent++;
             }
 
             base.OnParameter(node);
 
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Value != null || (node.Attributes.Count + node.Entities.Count > 0))
             {
                 _indent--;
             }

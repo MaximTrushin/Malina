@@ -59,7 +59,7 @@ namespace Malina.Parser.Tests
         private static void SaveRecordedTest(string printedTokens)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, printedTokens);
@@ -77,7 +77,7 @@ namespace Malina.Parser.Tests
         private static void SaveRecordedParseTreeTest(string parseTree)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".tree").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".tree").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, parseTree);

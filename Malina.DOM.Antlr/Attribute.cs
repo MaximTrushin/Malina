@@ -65,6 +65,11 @@ namespace Malina.DOM.Antlr
             }
         }
 
+        public override void AppendChild(Node child)
+        {
+            ObjectValue = child;
+        }
+
         private string GetValueFromIntervals()
         {
             var _sb = new StringBuilder();

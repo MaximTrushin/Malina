@@ -44,10 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alias.cs" />
     <Compile Include="AliasDefinition.cs" />
     <Compile Include="Attribute.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="IAntlrCharStreamConsumer.cs" />
+    <Compile Include="Parameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

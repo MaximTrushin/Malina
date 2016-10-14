@@ -44,12 +44,23 @@ namespace Malina.Parser
             ExitContext(context);
         }
 
-        public override void EnterAttr_inline([NotNull] MalinaParser.Attr_inlineContext context)
+
+        public override void EnterValue_attr_inline([NotNull] MalinaParser.Value_attr_inlineContext context)
         {
             EnterContext(context);
         }
  
-        public override void ExitAttr_inline([NotNull] MalinaParser.Attr_inlineContext context)
+        public override void ExitValue_attr_inline([NotNull] MalinaParser.Value_attr_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterEmpty_attr_inline([NotNull] MalinaParser.Empty_attr_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_attr_inline([NotNull] MalinaParser.Empty_attr_inlineContext context)
         {
             ExitContext(context);
         }

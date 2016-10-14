@@ -85,6 +85,7 @@ namespace Malina.Parser
         #endregion
 
         #region ELEMENT context classes
+        #region STATEMENT context 
         public override void EnterValue_element_stmt([NotNull] MalinaParser.Value_element_stmtContext context)
         {
             EnterContext(context);
@@ -115,8 +116,41 @@ namespace Malina.Parser
             ExitContext(context);
         }
         #endregion
+        #region INLINE context
+        public override void EnterValue_element_inline([NotNull] MalinaParser.Value_element_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitValue_element_inline([NotNull] MalinaParser.Value_element_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterEmpty_element_inline([NotNull] MalinaParser.Empty_element_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_element_inline([NotNull] MalinaParser.Empty_element_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterBlock_element_inline([NotNull] MalinaParser.Block_element_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_element_inline([NotNull] MalinaParser.Block_element_inlineContext context)
+        {
+            ExitContext(context);
+        }
+        #endregion
+        #endregion
 
         #region PARAMETER context classes
+        #region STATEMENT context
         public override void EnterBlock_parameter_stmt([NotNull] MalinaParser.Block_parameter_stmtContext context)
         {
             EnterContext(context);
@@ -148,7 +182,41 @@ namespace Malina.Parser
         }
         #endregion
 
+        #region INLINE context
+        public override void EnterBlock_parameter_inline([NotNull] MalinaParser.Block_parameter_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_parameter_inline([NotNull] MalinaParser.Block_parameter_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterEmpty_parameter_inline([NotNull] MalinaParser.Empty_parameter_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_parameter_inline([NotNull] MalinaParser.Empty_parameter_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterValue_parameter_inline([NotNull] MalinaParser.Value_parameter_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitValue_parameter_inline([NotNull] MalinaParser.Value_parameter_inlineContext context)
+        {
+            ExitContext(context);
+        }
+        #endregion
+        #endregion
+
         #region ALIAS context classes
+        #region STATEMENT context
         public override void EnterBlock_alias_stmt([NotNull] MalinaParser.Block_alias_stmtContext context)
         {
             EnterContext(context);
@@ -178,6 +246,38 @@ namespace Malina.Parser
         {
             ExitContext(context);
         }
+        #endregion
+        #region INLINE context
+        public override void EnterBlock_alias_inline([NotNull] MalinaParser.Block_alias_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_alias_inline([NotNull] MalinaParser.Block_alias_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterEmpty_alias_inline([NotNull] MalinaParser.Empty_alias_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_alias_inline([NotNull] MalinaParser.Empty_alias_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterValue_alias_inline([NotNull] MalinaParser.Value_alias_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitValue_alias_inline([NotNull] MalinaParser.Value_alias_inlineContext context)
+        {
+            ExitContext(context);
+        }
+        #endregion
         #endregion
 
 

@@ -1,0 +1,10 @@
+2:0	AliasDefinition `Customer`:
+3:1		Element `Customer`:
+4:2			Element `Account`:
+5:3				Parameter `AccountType`:
+6:4					Element `Type`= `NewCustomer`
+7:2			Parameter `ServiceAddress`:
+8:3				Alias `Addresses.PA.Hawley`
+9:2			Parameter `BillingAddress`:
+10:3				Alias `Addresses.PA.Hawley`
+

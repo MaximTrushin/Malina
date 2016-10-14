@@ -58,6 +58,8 @@
 
         public virtual void OnParameter(Parameter node)
         {
+            Visit(node.Attributes);
+            Visit(node.Entities);
         }
 
         protected virtual void ReplaceCurrentNode(Node replacement)

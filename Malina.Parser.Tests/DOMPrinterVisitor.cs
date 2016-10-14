@@ -52,13 +52,14 @@ namespace Malina.Parser.Tests
 
             base.OnElement(node);
 
-            if (node.Value != null)
-                _sb.Append("`");
             if (node.Attributes.Count + node.Entities.Count > 0)
             {
-                _indent++;
+                _indent--;
             }
-            _sb.AppendLine();
+            else
+            {
+                _sb.AppendLine();
+            }
         }
 
         public override void OnParameter(DOM.Parameter node)
@@ -77,15 +78,44 @@ namespace Malina.Parser.Tests
                 _indent++;
             }
 
-            base.OnElement(node);
+            base.OnParameter(node);
 
-            if (node.Value != null)
-                _sb.Append("`");
             if (node.Attributes.Count + node.Entities.Count > 0)
             {
+                _indent--;
+            }
+            else
+            {
+                _sb.AppendLine();
+            }
+        }
+
+        public override void OnAlias(DOM.Alias node)
+        {
+            PrintNodeStart(node);
+
+            if (node.Value != null)
+            {
+                _sb.Append("= `");
+                _sb.Append(node.Value);
+                _sb.Append("`");
+            }
+            if (node.Attributes.Count + node.Entities.Count > 0)
+            {
+                _sb.AppendLine(":");
                 _indent++;
             }
-            _sb.AppendLine();
+
+            base.OnAlias(node);
+
+            if (node.Attributes.Count + node.Entities.Count > 0)
+            {
+                _indent--;
+            }
+            else
+            {
+                _sb.AppendLine();
+            }
         }
 
         private void PrintNodeStart(DOM.Node node)

@@ -95,7 +95,7 @@ namespace Malina.Parser.Tests
         private static void SaveRecordedDomTest(string printedTokens)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".dom").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".dom").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, printedTokens);
@@ -193,6 +193,8 @@ namespace Malina.Parser.Tests
                 }
             }
 
+
+            PrintCode(code);
 
             //Lexer Assertions
             if (recorded != null)

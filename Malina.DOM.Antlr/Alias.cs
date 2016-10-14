@@ -44,7 +44,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Name != null) return base.Name;
-                return _charStream.GetText(new Interval(_idInterval.a, _idInterval.b));
+                return _charStream.GetText(new Interval(_idInterval.a + 1, _idInterval.b));
             }
 
             set

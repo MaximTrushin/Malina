@@ -8,7 +8,7 @@
 	4:21	PARAMETER_ID	`%Account`	 (37,44)
 	5:2	NEWLINE	`\n`	 (45,45)
 	5:2	ELEMENT_ID	`CreatedOn`	 (48,56)
-	5:24	PARAMETER_ID	`%CreatedOn`	 (60,69)
+	5:24	ALIAS_ID	`$CreatedOn`	 (60,69)
 	6:2	NEWLINE	`\n`	 (70,70)
 	6:2	ELEMENT_ID	`AccountType`	 (73,83)
 	6:13	COLON	`:`	 (84,84)

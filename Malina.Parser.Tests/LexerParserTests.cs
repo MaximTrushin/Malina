@@ -39,14 +39,14 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasDefinitionWithInplaceAttributeParameters()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
-        public void AliasDefinitionWithInplaceInlineParameters()
+        [Test, LexerRecord]
+        public void AliasDefinitionWithInlineParameters()
         {
             PerformTest();
         }

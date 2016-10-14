@@ -2,7 +2,7 @@
 !$Customer:
 	Customer:
 		@Account = %Account
-		CreatedOn = %CreatedOn
+		CreatedOn = $CreatedOn
 		AccountType: %AccountType
 		%Address
 		

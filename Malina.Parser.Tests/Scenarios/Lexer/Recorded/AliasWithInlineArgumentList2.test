@@ -7,6 +7,7 @@
 	4:3	ALIAS_ID	`$Customer`	 (35,43)
 	4:12	COLON	`:`	 (44,44)
 	4:15	ARGUMENT_ID	`.AccountType`	 (47,58)
+	4:30	EQUAL	`= `	 (60,61)
 	4:30	DQS	`"Assets"`	 (62,69)
 	5:0	NEWLINE	`<EOF>`	 (72,72)
 	5:0	DEDENT	`<EOF>`	 (72,72)

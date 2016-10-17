@@ -71,9 +71,10 @@ namespace Malina.Parser
 
         private void IndentDedent()
         {
+            //Lexer reached EOF. 
             if (_input.La(1) == -1)
             {
-                //Lexer reached EOF. Adding trailing NEWLINE and DEDENTS if neeeded
+                //Adding trailing NEWLINE and DEDENTS if neeeded
                 if (_indents.Count > 1)
                 {
                     EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
@@ -87,10 +88,10 @@ namespace Malina.Parser
                 }
             }
 
+            //Lexer hasn't reached EOF
             var indent = CalcIndent();
             int prevIndent = _indents.Peek();
             if (indent == prevIndent)
-
             {
                 //Emitting NEWLINE
                 if (_tokenStartCharIndex > 0) //Ignore New Line starting in BOF

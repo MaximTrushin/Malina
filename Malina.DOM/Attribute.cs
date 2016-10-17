@@ -7,7 +7,7 @@ namespace Malina.DOM
     {
         // Fields
         public string Namespace;
-        public object ObjectValue;
+        private object _objectValue;
         public ValueType ValueType;
 
         // Methods
@@ -53,6 +53,18 @@ namespace Malina.DOM
             }
         }
 
+        public object ObjectValue
+        {
+            get
+            {
+                return _objectValue;
+            }
+
+            set
+            {
+                _objectValue = value;
+            }
+        }
     }
 
 

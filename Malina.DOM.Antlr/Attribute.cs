@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Malina.DOM.Antlr
 {
-    public class Attribute : DOM.Attribute, IAntlrCharStreamConsumer
+    public class Attribute : DOM.Attribute, IAntlrCharStreamConsumer, IValueNode
     {
         private ICharStream _charStream;
         private Interval _idInterval;

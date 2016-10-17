@@ -280,6 +280,28 @@ namespace Malina.Parser
         #endregion
         #endregion
 
+        #region Value
+         public override void ExitValue_inline([NotNull] MalinaParser.Value_inlineContext context)
+        {
+            var parent = _nodeStack.Peek() as IValueNode;
 
+            var dqs = context.DQS();
+            if (dqs != null)
+            {
+                parent.IntervalSet = new IntervalSet();
+                parent.IntervalSet.Add((dqs.Payload as CommonToken).StartIndex + 1, (dqs.Payload as CommonToken).StopIndex - 1);
+                return;
+            }
+
+            var openValue = context.OPEN_VALUE();
+            if (openValue != null)
+            {
+                parent.IntervalSet = new IntervalSet();
+                parent.IntervalSet.Add((openValue.Payload as CommonToken).StartIndex, (openValue.Payload as CommonToken).StopIndex);
+
+            }
+
+        }
+        #endregion
     }
 }

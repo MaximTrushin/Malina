@@ -35,23 +35,6 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ATTRIBUTE_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = open_value();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {                        
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    } 
-                }
-                else 
-                {
-                    var value = DQS();
-                    if (value != null)
-                    {
-                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
-                    }
-                }
             }
         }
 
@@ -64,23 +47,6 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ATTRIBUTE_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = open_value();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
-                else
-                {
-                    var value = DQS();
-                    if (value != null)
-                    {
-                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
-                    }
-                }
             }
         }
 
@@ -108,25 +74,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = open_value();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
-                else
-                {
-                    var value = DQS();
-                    if (value != null)
-                    {
-                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
-                    }
-                }
             }
-
         }
 
         public partial class Empty_element_stmtContext : INodeContext<Element>
@@ -166,23 +114,6 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = open_value();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
-                else
-                {
-                    var value = DQS();
-                    if (value != null)
-                    {
-                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
-                    }
-                }
             }
 
         }
@@ -239,21 +170,13 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = PARAMETER_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = open_value();
+                var openValue = value();
                 if (openValue != null)
                 {
                     Node.IntervalSet = new IntervalSet();
                     foreach (var item in openValue.children)
                     {
                         Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
-                else
-                {
-                    var value = DQS();
-                    if (value != null)
-                    {
-                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
                     }
                 }
             }
@@ -294,21 +217,13 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = PARAMETER_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = open_value();
+                var openValue = value_inline();
                 if (openValue != null)
                 {
                     Node.IntervalSet = new IntervalSet();
                     foreach (var item in openValue.children)
                     {
                         Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
-                else
-                {
-                    var value = DQS();
-                    if (value != null)
-                    {
-                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
                     }
                 }
             }
@@ -365,21 +280,13 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ALIAS_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = open_value();
+                var openValue = value();
                 if (openValue != null)
                 {
                     Node.IntervalSet = new IntervalSet();
                     foreach (var item in openValue.children)
                     {
                         Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
-                else
-                {
-                    var value = DQS();
-                    if (value != null)
-                    {
-                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
                     }
                 }
             }
@@ -420,21 +327,13 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ALIAS_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = open_value();
+                var openValue = value_inline();
                 if (openValue != null)
                 {
                     Node.IntervalSet = new IntervalSet();
                     foreach (var item in openValue.children)
                     {
                         Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
-                else
-                {
-                    var value = DQS();
-                    if (value != null)
-                    {
-                        Node.IntervalSet = new IntervalSet((value.Payload as CommonToken).StartIndex + 1, (value.Payload as CommonToken).StopIndex - 1);
                     }
                 }
             }

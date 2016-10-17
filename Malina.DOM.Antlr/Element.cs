@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Malina.DOM.Antlr
 {
-    public class Element : DOM.Element, IAntlrCharStreamConsumer
+    public class Element : DOM.Element, IAntlrCharStreamConsumer, IValueNode
     {
         private ICharStream _charStream;
         private Interval _idInterval;

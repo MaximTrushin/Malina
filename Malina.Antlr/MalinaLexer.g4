@@ -1,6 +1,6 @@
 lexer grammar MalinaLexer;
 
-tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_INDENT}
+tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_INDENT, EQUAL, DBL_EQUAL}
 
 WS				:	WsSpaces	-> skip;
 
@@ -23,10 +23,8 @@ ARGUMENT_ID			:	'.' Name;
 
 ELEMENT_ID			:	ShortName | FullName;
 
-
-VALUE_BEGIN			:	'='	Spaces -> skip, pushMode(IN_VALUE);
-OPEN_VALUE_BEGIN	:	'=='	Spaces -> skip, pushMode(IN_VALUE);
-
+VALUE_BEGIN			:	'='	Spaces {Emit(EQUAL);} -> pushMode(IN_VALUE);
+OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);} -> pushMode(IN_VALUE);
 
 //INVALID : . { if (InvalidTokens.Count < 100) InvalidTokens.Add(Token); };
 

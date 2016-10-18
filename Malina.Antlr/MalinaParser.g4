@@ -87,16 +87,16 @@ string_value_ml	:	(EQUAL | DBL_EQUAL) (DQS_ML | open_value_ml);
 
 open_value_ml	:	(OPEN_VALUE | OPEN_VALUE_INDENT) (OPEN_VALUE | OPEN_VALUE_INDENT)+;
 
-object_value	:	EQUAL (object_value_ml | object_value_inline);
+object_value	:	object_value_ml | object_value_inline;
 
 object_value_ml	:	parameter_object_value_ml | alias_object_value_ml;
 object_value_inline	:	parameter_object_value_inline | alias_object_value_inline;
 
-parameter_object_value_inline	:	PARAMETER_ID value_inline?;
-parameter_object_value_ml	:	PARAMETER_ID value_ml;
+parameter_object_value_inline	:	EQUAL PARAMETER_ID value_inline?;
+parameter_object_value_ml	:	EQUAL PARAMETER_ID value_ml;
 
-alias_object_value_inline	:	ALIAS_ID value_inline?;
-alias_object_value_ml	:	ALIAS_ID value_ml;
+alias_object_value_inline	:	EQUAL ALIAS_ID value_inline?;
+alias_object_value_ml	:	EQUAL ALIAS_ID value_ml;
 
 
 

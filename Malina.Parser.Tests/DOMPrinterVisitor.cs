@@ -39,7 +39,7 @@ namespace Malina.Parser.Tests
             {
                 _sb.Append("= ");
                 _valueNodeExpected.Push(true);
-                base.OnAttribute(node);
+                Visit(node.ObjectValue as Node);
                 _valueNodeExpected.Pop();
             }
             else if (node.Value != null)
@@ -58,7 +58,7 @@ namespace Malina.Parser.Tests
             {
                 _sb.Append("= ");
                 _valueNodeExpected.Push(true);
-                Visit(node);
+                Visit(node.ObjectValue as Node);
                 _valueNodeExpected.Pop();
             }
             else if(node.Value != null)
@@ -126,9 +126,18 @@ namespace Malina.Parser.Tests
         {
             if (_valueNodeExpected.Peek())
             {
-                _sb.Append("= `");
-                _sb.Append(node.Value);
+                _sb.Append("\t");
+                _sb.Append(node.GetType().Name);
+                _sb.Append(" `");
+                _sb.Append(node.Name);
                 _sb.Append("`");
+
+                if (node.Value != null)
+                {
+                    _sb.Append("= `");
+                    _sb.Append(node.Value);
+                    _sb.Append("`");
+                }
             }
             else PrintNodeStart(node);
 

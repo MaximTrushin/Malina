@@ -342,7 +342,7 @@ namespace Malina.Parser
         #endregion
 
         #region VALUEs NodeContext
-        public partial class Parameter_object_value_inlineContext : INodeContext<Parameter>
+        public partial class Parameter_object_value_inlineContext: INodeContext<Parameter>
         {
             public Parameter Node { get; set; }
 
@@ -354,6 +354,18 @@ namespace Malina.Parser
             }
         }
 
+        public partial class Alias_object_value_inlineContext: INodeContext<Alias>
+        {
+            public Alias Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ALIAS_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+        
         #endregion
 
 

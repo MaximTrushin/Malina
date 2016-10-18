@@ -24,6 +24,20 @@ namespace Malina.Parser
             }
             return ctx.Node;
         }
+
+        public static T InitValueNode<T>(this INodeContext<T> ctx, Node parent) where T : Node, IAntlrCharStreamConsumer, new()
+        {
+            if (ctx.Node == null)
+            {
+                var node = new T();
+                if (parent != null)
+                    (parent as IValueNode).ObjectValue = node;
+                ctx.Node = node;
+                node.CharStream = (ctx as ParserRuleContext).start.InputStream;
+            }
+            return ctx.Node;
+        }
+
         public static void SetNodeLocation<T>(this INodeContext<T> ctx) where T : Node
         {
             var context = (ParserRuleContext)ctx;

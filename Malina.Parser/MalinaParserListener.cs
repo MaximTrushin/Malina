@@ -23,9 +23,12 @@ namespace Malina.Parser
                 return _nodes;
             }
         }
-        private void EnterContext<T>(INodeContext<T> context) where T : Node, IAntlrCharStreamConsumer, new()
+        private void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, IAntlrCharStreamConsumer, new()
         {
-            context.InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
+            if(!valueNode)
+                context.InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
+            else
+                context.InitValueNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
 
             if (_nodeStack.Count == 0) _nodes.Add(context.Node);
 
@@ -311,10 +314,18 @@ namespace Malina.Parser
         public override void ExitParameter_object_value_inline([NotNull] MalinaParser.Parameter_object_value_inlineContext context)
         {
             ExitContext(context);
-            //var parent = _nodeStack.Peek() as IValueNode;
-            //parent.ObjectValue = context.Node;
-
         }
+
+        public override void EnterAlias_object_value_inline([NotNull] MalinaParser.Alias_object_value_inlineContext context)
+        {
+            EnterContext(context, true);
+        }
+
+        public override void ExitAlias_object_value_inline([NotNull] MalinaParser.Alias_object_value_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
         #endregion
     }
 }

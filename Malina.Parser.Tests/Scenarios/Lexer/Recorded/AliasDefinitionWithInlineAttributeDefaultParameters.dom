@@ -1,0 +1,7 @@
+2:0	AliasDefinition `Customer`:
+3:1		Element `Customer`:
+4:2			Attribute `Account`= 	Parameter `Account`= `Inactive`
+5:2			Element `AccountType`:
+6:3				Parameter `AccountType`
+7:2			Parameter `Address`
+

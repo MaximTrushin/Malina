@@ -98,10 +98,10 @@
     <None Include="Scenarios\Lexer\AliasDefinitionWithDefaultInlineBlockParameters.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\AliasDefinitionWithInplaceAttributeDefaultParameters.mal">
+    <None Include="Scenarios\Lexer\AliasDefinitionWithInlineAttributeDefaultParameters.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\AliasDefinitionWithInplaceAttributeParameters.mal">
+    <None Include="Scenarios\Lexer\AliasDefinitionWithInlineAttributeParameters.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\Lexer\AliasDefinitionWithInlineParameters.mal">
@@ -254,16 +254,16 @@
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultInlineBlockParameters.tree">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeDefaultParameters.dom">
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.dom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeDefaultParameters.test">
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeDefaultParameters.tree">
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.tree">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeParameters.dom">
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeParameters.dom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeParameters.test">
@@ -272,7 +272,7 @@
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineParameters.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeParameters.tree">
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeParameters.tree">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithSimpleParameters.test">

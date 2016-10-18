@@ -199,7 +199,7 @@ namespace Malina.Parser.Tests
             //Lexer Assertions
             if (recorded != null)
             {
-                Assert.AreEqual(recorded, printedTokens);
+                Assert.AreEqual(recorded, printedTokens, "LEXER assertion failed");
             }
 
             Assert.AreEqual(false, lexerErros.HasErrors);
@@ -209,13 +209,13 @@ namespace Malina.Parser.Tests
             //Parse Tree Assertions
             if (recordedParseTree != null)
             {
-                Assert.AreEqual(recordedParseTree, parseTree);
+                Assert.AreEqual(recordedParseTree, parseTree, "PARSE TREE assertion failed");
             }
 
             //DOM Assertions
             if (recordedDom != null)
             {
-                Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"));
+                Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
             }
 
             //Assert.AreEqual(false, parserErrorListener.HasErrors);

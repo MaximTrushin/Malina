@@ -1,8 +1,0 @@
-
-module: ()
-    alias_def_stmt: (ALIAS_DEF_ID=!$Customer)
-        block: (COLON=:, ATTRIBUTE_ID=@Account, EQUAL== , PARAMETER_ID=%Account, EQUAL== , OPEN_VALUE=Inactive, ELEMENT_ID=AccountType, COLON=:, PARAMETER_ID=%AccountType, PARAMETER_ID=%Address)
-            block_line_stmt: ()
-                element_stmt: ()
-                    block_element_stmt: (ELEMENT_ID=Customer)
-                        block: (COLON=:)

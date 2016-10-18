@@ -281,7 +281,7 @@ namespace Malina.Parser
         #endregion
 
         #region Value
-         public override void ExitValue_inline([NotNull] MalinaParser.Value_inlineContext context)
+         public override void ExitString_value_inline([NotNull] MalinaParser.String_value_inlineContext context)
         {
             var parent = _nodeStack.Peek() as IValueNode;
 

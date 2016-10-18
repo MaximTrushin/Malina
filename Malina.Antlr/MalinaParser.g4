@@ -13,19 +13,19 @@ document_stmt	:	DOCUMENT_ID ((block_inline NEWLINE) | block);
 
 alias_def_stmt	:	ALIAS_DEF_ID ((block_inline NEWLINE) | block);
 
-block	:	COLON INDENT (block_line_stmt | inline_stmt)+ DEDENT;
+block	:	COLON INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ DEDENT;
 
 block_inline	:	COLON (inline_expression)+ COMMA?;
 
 inline_stmt	:	inline_expression+ NEWLINE;
+
+hybrid_stmt	:	inline_expression+ block_line_stmt;
 
 //Represent inline expression
 inline_expression	:	attr_inline | element_inline | parameter_inline | alias_inline;
 
 //Represents one line of block. Always ends with NEWLINE
 block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt;
-
-
 
 //ELEMENT RULES 
 
@@ -64,7 +64,6 @@ empty_parameter_inline	: PARAMETER_ID;
 value_parameter_inline	: PARAMETER_ID value_inline;
 block_parameter_inline	: PARAMETER_ID block_inline;
 
-
 //ALIAS RULES
 //statements
 alias_stmt	:	empty_alias_stmt | value_alias_stmt | block_alias_stmt;
@@ -78,15 +77,26 @@ empty_alias_inline	: ALIAS_ID;
 value_alias_inline	: ALIAS_ID value_inline;
 block_alias_inline	: ALIAS_ID block_inline;
 
+value	:	 string_value | object_value;
+value_inline	:	string_value_inline | object_value_inline;
+value_ml	:	string_value_ml | object_value_ml;
 
-value	:	 value_inline | value_ml;
-
-value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | DQS);
-value_ml	:	(EQUAL | DBL_EQUAL) (DQS_ML | open_value_ml);
+string_value	:	string_value_inline | string_value_ml;
+string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | DQS);
+string_value_ml	:	(EQUAL | DBL_EQUAL) (DQS_ML | open_value_ml);
 
 open_value_ml	:	(OPEN_VALUE | OPEN_VALUE_INDENT)+;
 
+object_value	:	object_value_ml | object_value_inline;
 
+object_value_ml	:	parameter_object_value_ml | alias_object_value_ml;
+object_value_inline	:	parameter_object_value_inline | alias_object_value_inline;
+
+parameter_object_value_inline	:	PARAMETER_ID value_inline;
+parameter_object_value_ml	:	PARAMETER_ID value_ml;
+
+alias_object_value_inline	:	ALIAS_ID value_inline;
+alias_object_value_ml	:	ALIAS_ID value_ml;
 
 
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Malina.DOM.Antlr
 {
-    public class Parameter : DOM.Parameter, IAntlrCharStreamConsumer
+    public class Parameter : DOM.Parameter, IAntlrCharStreamConsumer, IValueNode
     {
         private ICharStream _charStream;
         private Interval _idInterval;

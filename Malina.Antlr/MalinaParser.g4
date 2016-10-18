@@ -44,7 +44,7 @@ block_element_inline	:	ELEMENT_ID block_inline;
 //ATTRIBUTE RULES
 
 //statements
-attr_stmt	:	ATTRIBUTE_ID (value | parameter_inline | alias_inline)? NEWLINE;
+attr_stmt	:	ATTRIBUTE_ID (value)? NEWLINE;
 
 //inline
 attr_inline	:	value_attr_inline | empty_attr_inline;
@@ -85,17 +85,17 @@ string_value	:	string_value_inline | string_value_ml;
 string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | DQS);
 string_value_ml	:	(EQUAL | DBL_EQUAL) (DQS_ML | open_value_ml);
 
-open_value_ml	:	(OPEN_VALUE | OPEN_VALUE_INDENT)+;
+open_value_ml	:	(OPEN_VALUE | OPEN_VALUE_INDENT) (OPEN_VALUE | OPEN_VALUE_INDENT)+;
 
-object_value	:	object_value_ml | object_value_inline;
+object_value	:	EQUAL (object_value_ml | object_value_inline);
 
 object_value_ml	:	parameter_object_value_ml | alias_object_value_ml;
 object_value_inline	:	parameter_object_value_inline | alias_object_value_inline;
 
-parameter_object_value_inline	:	PARAMETER_ID value_inline;
+parameter_object_value_inline	:	PARAMETER_ID value_inline?;
 parameter_object_value_ml	:	PARAMETER_ID value_ml;
 
-alias_object_value_inline	:	ALIAS_ID value_inline;
+alias_object_value_inline	:	ALIAS_ID value_inline?;
 alias_object_value_ml	:	ALIAS_ID value_ml;
 
 

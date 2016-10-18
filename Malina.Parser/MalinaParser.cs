@@ -341,5 +341,21 @@ namespace Malina.Parser
         #endregion
         #endregion
 
+        #region VALUEs NodeContext
+        public partial class Parameter_object_value_inlineContext : INodeContext<Parameter>
+        {
+            public Parameter Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = PARAMETER_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+
+        #endregion
+
+
     }
 }

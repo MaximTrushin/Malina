@@ -5,5 +5,6 @@ namespace Malina.DOM.Antlr
     public interface IValueNode
     {
         IntervalSet IntervalSet { get; set; }
+        object ObjectValue { get; set; }
     }
 }

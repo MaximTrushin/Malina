@@ -42,6 +42,18 @@ namespace Malina.Parser
         }
         #endregion
 
+        #region DOCUMENT context classes
+        public override void EnterDocument_stmt([NotNull] MalinaParser.Document_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitDocument_stmt([NotNull] MalinaParser.Document_stmtContext context)
+        {
+            ExitContext(context);
+        }
+        #endregion
+
         #region ALIAS_DEF context classes
         public override void EnterAlias_def_stmt([NotNull] MalinaParser.Alias_def_stmtContext context)
         {

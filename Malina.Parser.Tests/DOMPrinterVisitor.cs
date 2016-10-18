@@ -21,6 +21,17 @@ namespace Malina.Parser.Tests
             get { return _sb.ToString(); }
         }
 
+        public override void OnDocument(DOM.Document node)
+        {
+            PrintNodeStart(node);
+            _sb.Append(":");
+            _sb.AppendLine();
+            _indent++;
+            base.OnDocument(node);
+            _indent--;
+            _sb.AppendLine();
+
+        }
         public override void OnAliasDefinition(DOM.AliasDefinition node)
         {
             PrintNodeStart(node);

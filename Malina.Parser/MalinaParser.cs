@@ -11,6 +11,21 @@ namespace Malina.Parser
 {
     public partial class MalinaParser
     {
+
+        #region DOCUMENT NodeContext
+        public partial class Document_stmtContext : INodeContext<Document>
+        {
+            public Document Node { get; set; }
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = DOCUMENT_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+        #endregion
+
+
         #region ALIAS_DEF NodeContext
         public partial class Alias_def_stmtContext : INodeContext<AliasDefinition>
         {

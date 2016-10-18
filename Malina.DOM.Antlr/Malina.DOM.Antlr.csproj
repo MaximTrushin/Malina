@@ -47,6 +47,7 @@
     <Compile Include="Alias.cs" />
     <Compile Include="AliasDefinition.cs" />
     <Compile Include="Attribute.cs" />
+    <Compile Include="Document.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="IAntlrCharStreamConsumer.cs" />
     <Compile Include="IValueNode.cs" />

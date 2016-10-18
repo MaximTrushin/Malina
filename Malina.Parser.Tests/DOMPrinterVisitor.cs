@@ -62,6 +62,42 @@ namespace Malina.Parser.Tests
             _sb.AppendLine();
         }
 
+        public override void OnArgument(DOM.Argument node)
+        {
+            PrintNodeStart(node);
+            if (node.ObjectValue is Node)
+            {
+                _sb.Append("= ");
+                _valueNodeExpected.Push(true);
+                Visit(node.ObjectValue as Node);
+                _valueNodeExpected.Pop();
+                _sb.AppendLine();
+            }
+            else if (node.Value != null)
+            {
+                _sb.Append("= `");
+                _sb.Append(node.Value);
+                _sb.Append("`");
+                _sb.AppendLine();
+            }
+            if (node.Attributes.Count + node.Entities.Count > 0)
+            {
+                _sb.AppendLine(":");
+                _indent++;
+            }
+            base.OnArgument(node);
+
+            if (node.Attributes.Count + node.Entities.Count > 0)
+            {
+                _indent--;
+            }
+            else
+            {
+                _sb.AppendLine();
+            }
+
+
+        }
         public override void OnElement(DOM.Element node)
         {
             PrintNodeStart(node);
@@ -152,7 +188,7 @@ namespace Malina.Parser.Tests
             }
             else PrintNodeStart(node);
 
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Attributes.Count + node.Entities.Count + node.Arguments.Count > 0)
             {
                 _sb.AppendLine(":");
                 _indent++;
@@ -160,7 +196,7 @@ namespace Malina.Parser.Tests
 
             base.OnAlias(node);
 
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Attributes.Count + node.Entities.Count + node.Arguments.Count > 0)
             {
                 _indent--;
             }

@@ -69,24 +69,48 @@ block_parameter_inline	: PARAMETER_ID block_inline;
 alias_stmt	:	empty_alias_stmt | value_alias_stmt | block_alias_stmt;
 empty_alias_stmt	:	ALIAS_ID NEWLINE;
 value_alias_stmt	:	ALIAS_ID value NEWLINE;
-block_alias_stmt	:	ALIAS_ID ((block_inline NEWLINE) | block);
+block_alias_stmt	:	ALIAS_ID (((block_inline | argument_block_inline) NEWLINE) | (block | argument_block));
 
 //inline
 alias_inline	:	empty_alias_inline | value_alias_inline | block_alias_inline;
 empty_alias_inline	: ALIAS_ID;
 value_alias_inline	: ALIAS_ID value_inline;
-block_alias_inline	: ALIAS_ID block_inline;
+block_alias_inline	: ALIAS_ID (block_inline | argument_block_inline);
+
+//ARGUMENTS RULES
+//statements
+argument_stmt	:	empty_argument_stmt | value_argument_stmt | block_argument_stmt;
+empty_argument_stmt	:	ARGUMENT_ID NEWLINE;
+value_argument_stmt	:	ARGUMENT_ID value NEWLINE;
+block_argument_stmt	:	ARGUMENT_ID ((block_inline NEWLINE) | block);
+
+argument_inline_stmt	:	argument_inline+ NEWLINE;
+
+//inline
+argument_inline	:	empty_argument_inline | value_argument_inline | block_argument_inline;
+empty_argument_inline	: ARGUMENT_ID;
+value_argument_inline	: ARGUMENT_ID value_inline;
+block_argument_inline	: ARGUMENT_ID block_inline;
+
+//block
+argument_block	:	COLON INDENT (argument_stmt | argument_inline_stmt)+ DEDENT;
+argument_block_inline	:	COLON (argument_inline)+ COMMA?;
+
+
+//VALUES
 
 value	:	 string_value | object_value;
 value_inline	:	string_value_inline | object_value_inline;
 value_ml	:	string_value_ml | object_value_ml;
 
+//string values
 string_value	:	string_value_inline | string_value_ml;
 string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | DQS);
 string_value_ml	:	(EQUAL | DBL_EQUAL) (DQS_ML | open_value_ml);
 
 open_value_ml	:	(OPEN_VALUE | OPEN_VALUE_INDENT) (OPEN_VALUE | OPEN_VALUE_INDENT)+;
 
+//object values
 object_value	:	object_value_ml | object_value_inline;
 
 object_value_ml	:	parameter_object_value_ml | alias_object_value_ml;

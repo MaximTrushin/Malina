@@ -295,8 +295,77 @@ namespace Malina.Parser
         #endregion
         #endregion
 
+        #region ARGUMENT context classes
+        #region STATEMENT context
+        public override void EnterBlock_argument_stmt([NotNull] MalinaParser.Block_argument_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_argument_stmt([NotNull] MalinaParser.Block_argument_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterEmpty_argument_stmt([NotNull] MalinaParser.Empty_argument_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_argument_stmt([NotNull] MalinaParser.Empty_argument_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterValue_argument_stmt([NotNull] MalinaParser.Value_argument_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitValue_argument_stmt([NotNull] MalinaParser.Value_argument_stmtContext context)
+        {
+            ExitContext(context);
+        }
+        #endregion
+
+        #region INLINE context
+        public override void EnterBlock_argument_inline([NotNull] MalinaParser.Block_argument_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_argument_inline([NotNull] MalinaParser.Block_argument_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterEmpty_argument_inline([NotNull] MalinaParser.Empty_argument_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_argument_inline([NotNull] MalinaParser.Empty_argument_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterValue_argument_inline([NotNull] MalinaParser.Value_argument_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitValue_argument_inline([NotNull] MalinaParser.Value_argument_inlineContext context)
+        {
+            ExitContext(context);
+        }
+        #endregion
+        #endregion
+
+
+
+
         #region Value
-         public override void ExitString_value_inline([NotNull] MalinaParser.String_value_inlineContext context)
+        public override void ExitString_value_inline([NotNull] MalinaParser.String_value_inlineContext context)
         {
             var parent = _nodeStack.Peek() as IValueNode;
 

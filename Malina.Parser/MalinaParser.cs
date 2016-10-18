@@ -356,6 +356,103 @@ namespace Malina.Parser
         #endregion
         #endregion
 
+
+        #region ARGUMENT NodeContext
+        #region STATEMENT Context
+        public partial class Empty_argument_stmtContext : INodeContext<Argument>
+        {
+            public Argument Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ARGUMENT_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+
+        public partial class Block_argument_stmtContext : INodeContext<Argument>
+        {
+            public Argument Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ARGUMENT_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+
+        public partial class Value_argument_stmtContext : INodeContext<Argument>
+        {
+            public Argument Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ARGUMENT_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var openValue = value();
+                if (openValue != null)
+                {
+                    Node.IntervalSet = new IntervalSet();
+                    foreach (var item in openValue.children)
+                    {
+                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region INLINE Context
+        public partial class Empty_argument_inlineContext : INodeContext<Argument>
+        {
+            public Argument Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ARGUMENT_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+
+        public partial class Block_argument_inlineContext : INodeContext<Argument>
+        {
+            public Argument Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ARGUMENT_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+
+        public partial class Value_argument_inlineContext : INodeContext<Argument>
+        {
+            public Argument Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ARGUMENT_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var openValue = value_inline();
+                if (openValue != null)
+                {
+                    Node.IntervalSet = new IntervalSet();
+                    foreach (var item in openValue.children)
+                    {
+                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
+                    }
+                }
+            }
+        }
+        #endregion
+        #endregion
+
         #region VALUEs NodeContext
         public partial class Parameter_object_value_inlineContext: INodeContext<Parameter>
         {

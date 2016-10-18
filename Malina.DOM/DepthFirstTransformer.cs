@@ -6,6 +6,9 @@
 
         public virtual void OnAlias(Alias node)
         {
+            Visit(node.Attributes);
+            Visit(node.Entities);
+            Visit(node.Arguments);
         }
 
         public virtual void OnAliasDefinition(AliasDefinition node)

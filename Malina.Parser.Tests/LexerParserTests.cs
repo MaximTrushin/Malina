@@ -152,67 +152,67 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementWithValue()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void EmptyElement()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void EmptyElementWithNamespace()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void InlineElementBody1()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void InlineElementBody2()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void InlineElementBody3()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void InlineElementBody4()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void LineComments()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ModuleNamespaceOverload()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ModuleWithTwoNamespaces()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void MultiLineComments()
         {
             PerformTest();

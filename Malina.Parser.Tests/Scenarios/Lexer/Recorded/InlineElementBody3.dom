@@ -1,0 +1,10 @@
+2:0	Document `MyRequest`:
+3:1		Element `request`:
+4:2			Element `e1`:
+4:7				Attribute `at1`= `val1`
+4:21				Attribute `at2`
+4:26				Element `e2`= 	Alias `a1`
+4:35				Alias `a2`
+4:39				Element `e3`
+5:2			Element `e4`
+

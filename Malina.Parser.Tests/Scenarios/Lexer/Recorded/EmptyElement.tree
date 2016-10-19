@@ -1,0 +1,7 @@
+
+module: ()
+    document_stmt: (DOCUMENT_ID=!a)
+        block: (COLON=:)
+            block_line_stmt: ()
+                element_stmt: ()
+                    empty_element_stmt: (ELEMENT_ID=b)

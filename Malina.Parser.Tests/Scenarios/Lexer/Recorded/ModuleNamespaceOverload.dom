@@ -1,0 +1,12 @@
+2:0	Namespace `ns01`= `http://myNs01.com`
+3:0	Namespace `nsModule`= `http://myNsModule.com`
+5:0	Document `MyRequest`:
+6:1		Namespace `ns11`= `http://myNs11.com`
+7:1		Namespace `nsModule`= `http://myNsDoc1.com`
+9:1		Element `request`
+
+11:0	Document `MyRequest2`:
+12:1		Namespace `ns21`= `http://myNs21.com`
+13:1		Namespace `nsModule`= `http://myNsDoc2.com`
+15:1		Element `request`
+

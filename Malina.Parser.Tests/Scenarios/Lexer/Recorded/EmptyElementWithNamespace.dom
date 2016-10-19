@@ -1,0 +1,4 @@
+2:0	Document `MyRequest`:
+3:1		Namespace `ns1`= `http://myNs1.com`
+5:1		Element `ns1.request`
+

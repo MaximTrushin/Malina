@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Malina.DOM.Antlr;
+﻿using Malina.DOM.Antlr;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime;
 
@@ -185,15 +180,6 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = PARAMETER_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = value();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
             }
         }
 
@@ -232,15 +218,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = PARAMETER_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = value_inline();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
+
             }
         }
 
@@ -295,15 +273,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ALIAS_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = value();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
+
             }
         }
         #endregion
@@ -342,15 +312,6 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ALIAS_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = value_inline();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
             }
         }
         #endregion
@@ -392,15 +353,6 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ARGUMENT_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = value();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
             }
         }
         #endregion
@@ -439,15 +391,6 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ARGUMENT_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                var openValue = value_inline();
-                if (openValue != null)
-                {
-                    Node.IntervalSet = new IntervalSet();
-                    foreach (var item in openValue.children)
-                    {
-                        Node.IntervalSet.Add((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex);
-                    }
-                }
             }
         }
         #endregion

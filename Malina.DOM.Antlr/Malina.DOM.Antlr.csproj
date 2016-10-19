@@ -52,6 +52,7 @@
     <Compile Include="Element.cs" />
     <Compile Include="IAntlrCharStreamConsumer.cs" />
     <Compile Include="IValueNode.cs" />
+    <Compile Include="Namespace.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

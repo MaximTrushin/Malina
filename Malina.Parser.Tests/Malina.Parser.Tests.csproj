@@ -428,7 +428,13 @@
     <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAliasAndNestedAliasDefinition.tree">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.dom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.tree">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\Lexer\Recorded\ElementWithValue.test">

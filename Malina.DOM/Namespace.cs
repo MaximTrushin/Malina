@@ -7,21 +7,31 @@ namespace Malina.DOM
     {
         // Fields
         public bool Derived;
-        public string[] Elements;
-        public string Url;
+        private string value;
 
         // Methods
         public Namespace()
         {
         }
 
-        public Namespace(string name, string url, string[] elements)
+        public Namespace(string name, string value)
         {
             Name = name;
-            Url = url;
-            Elements = elements;
+            Value = value;
         }
 
+        public virtual string Value
+        {
+            get
+            {
+                return value;
+            }
+
+            set
+            {
+                this.value = value;
+            }
+        }
 
         public override void Accept(IDomVisitor visitor)
         {
@@ -33,8 +43,7 @@ namespace Malina.DOM
             base.Assign(node);
             Namespace namespace2 = node as Namespace;
             Name = namespace2.Name;
-            Url = namespace2.Url;
-            Elements = namespace2.Elements;
+            Value = namespace2.Value;
         }
 
         public override Node Clone()

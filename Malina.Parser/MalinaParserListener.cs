@@ -52,6 +52,16 @@ namespace Malina.Parser
         {
             ExitContext(context);
         }
+
+        public override void EnterNamespace_declaration_stmt([NotNull] MalinaParser.Namespace_declaration_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitNamespace_declaration_stmt([NotNull] MalinaParser.Namespace_declaration_stmtContext context)
+        {
+            ExitContext(context);
+        }
         #endregion
 
         #region ALIAS_DEF context classes

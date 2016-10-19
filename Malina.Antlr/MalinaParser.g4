@@ -5,13 +5,15 @@ options { tokenVocab=MalinaLexer; }
 //_inline - inline expression
 //_stmt - declaration statement (always ends with NEWLINE).
 
-module			:	namespace_decl_stmt* (document_stmt | alias_def_stmt)*;
+module			:	namespace_declaration_stmt* (document_stmt | alias_def_stmt)*;
 
-namespace_decl_stmt : NAMESPACE_ID;
+namespace_declaration_stmt	:	NAMESPACE_ID string_value NEWLINE;
 
-document_stmt	:	DOCUMENT_ID ((block_inline NEWLINE) | block);
+document_stmt	:	DOCUMENT_ID ((block_inline NEWLINE) | ns_block | block);
 
-alias_def_stmt	:	ALIAS_DEF_ID ((block_inline NEWLINE) | block);
+alias_def_stmt	:	ALIAS_DEF_ID ((block_inline NEWLINE) | ns_block | block);
+
+ns_block	:	COLON INDENT (namespace_declaration_stmt)+ (block_line_stmt | inline_stmt | hybrid_stmt)* DEDENT;
 
 block	:	COLON INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ DEDENT;
 

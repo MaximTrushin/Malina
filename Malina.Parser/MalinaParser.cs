@@ -20,6 +20,17 @@ namespace Malina.Parser
         }
         #endregion
 
+        public partial class Namespace_declaration_stmtContext : INodeContext<Namespace>
+        {
+            public Namespace Node { get; set; }
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = NAMESPACE_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+        
 
         #region ALIAS_DEF NodeContext
         public partial class Alias_def_stmtContext : INodeContext<AliasDefinition>

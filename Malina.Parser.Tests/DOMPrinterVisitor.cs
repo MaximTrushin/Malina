@@ -21,6 +21,16 @@ namespace Malina.Parser.Tests
             get { return _sb.ToString(); }
         }
 
+        public override void OnNamespace(DOM.Namespace node)
+        {
+            PrintNodeStart(node);
+            _sb.Append("= `");
+            _sb.Append(node.Value);
+            _sb.Append("`");
+            _sb.AppendLine();
+        }
+
+
         public override void OnDocument(DOM.Document node)
         {
             PrintNodeStart(node);

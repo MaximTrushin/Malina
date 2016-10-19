@@ -1,0 +1,13 @@
+
+module: ()
+    document_stmt: (DOCUMENT_ID=!MyRequest)
+        ns_block: (COLON=:)
+            namespace_declaration_stmt: (NAMESPACE_ID=#ns1)
+                string_value: ()
+                    string_value_inline: (EQUAL== , OPEN_VALUE=http://myNs1.com)
+            block_line_stmt: ()
+                element_stmt: ()
+                    value_element_stmt: (ELEMENT_ID=ns1.request)
+                        value: ()
+                            string_value: ()
+                                string_value_inline: (EQUAL== , OPEN_VALUE=value1)

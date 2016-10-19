@@ -1,0 +1,5 @@
+2:0	Document `MyRequest`:
+3:1		Element `ns1.request`:
+4:2			Attribute `name`= 	Alias `alias1`
+5:2			Attribute `ns1.name2`= `name2`
+

@@ -68,79 +68,79 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test,LexerRecorded]
+        [Test,LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithInlineArgumentList2()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithInlineArgumentList3()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithInlineArgumentList4()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithInlineArgumentList5()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithInlineArguments()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementList1()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementWithAlias()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementWithAliasAndAliasDefinition()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementWithAliasedAttribute()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementWithAttributes()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementWithAttributesAndOtherElements()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementWithNestedAlias()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementWithNestedAliasAndNestedAliasDefinition()
         {
             PerformTest();

@@ -1,0 +1,10 @@
+2:0	Document `ParametersTestDoc`:
+3:2		Element `request`:
+4:3			Alias `Customer`:
+5:4				Argument `BillingAddress`:
+5:21					Alias `Addresses.NJ.Paterson`
+6:4				Argument `ServiceAddress`:
+6:21					Alias `Addresses.NY.Albany`
+7:4				Argument `AccountType`:
+7:18					Alias `AccountTypes.NewCustomer`
+

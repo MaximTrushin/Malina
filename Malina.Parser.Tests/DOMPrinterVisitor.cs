@@ -91,12 +91,6 @@ namespace Malina.Parser.Tests
             {
                 _indent--;
             }
-            else
-            {
-                _sb.AppendLine();
-            }
-
-
         }
         public override void OnElement(DOM.Element node)
         {

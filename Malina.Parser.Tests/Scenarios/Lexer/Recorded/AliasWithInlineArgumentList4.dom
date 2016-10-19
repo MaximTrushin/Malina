@@ -1,0 +1,7 @@
+2:0	Document `ParametersTestDoc`:
+3:2		Element `request`:
+4:3			Alias `Customer`:
+5:4				Argument `AccountType`= `Assets`
+5:28				Argument `IsActive`= `True`
+6:3			Alias `Account`
+

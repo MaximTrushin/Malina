@@ -572,9 +572,11 @@
     <None Include="Scenarios\Lexer\Recorded\OneNamespaceNoBrackets.tree">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.dom" />
     <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.tree" />
     <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

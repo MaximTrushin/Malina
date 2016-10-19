@@ -56,5 +56,6 @@
 	13:2	ARGUMENT_ID	`.Description`	 (343,354)
 	13:18	DBL_EQUAL	`== `	 (356,358)
 	13:18	OPEN_VALUE	`Bas Dir W Save $25off-12moterm`	 (359,388)
+	13:48	NEWLINE	`<EOF>`	 (389,389)
 	13:48	DEDENT	`<EOF>`	 (389,389)
 	13:48	DEDENT	`<EOF>`	 (389,389)

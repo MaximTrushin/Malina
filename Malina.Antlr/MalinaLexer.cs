@@ -31,7 +31,12 @@ namespace Malina.Parser
         public override IToken NextToken()
         {
             Token = null;
-
+            //Checking EOF and still mode = IN_VALUE
+            if (_input.La(1) == Eof && _mode == 1) 
+            {
+                EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
+                PopMode();                
+            }
             //Checking if Dedents need to be generated in the EOF
             if (_input.La(1) == Eof && _indents.Peek() > 0)
             {

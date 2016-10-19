@@ -1,0 +1,10 @@
+
+module: ()
+    document_stmt: (DOCUMENT_ID=!MyRequest)
+        block: (COLON=:)
+            block_line_stmt: ()
+                scope_stmt: (NAMESPACE_ID=#ns1)
+                    block: (COLON=:)
+                        block_line_stmt: ()
+                            element_stmt: ()
+                                empty_element_stmt: (ELEMENT_ID=e2)

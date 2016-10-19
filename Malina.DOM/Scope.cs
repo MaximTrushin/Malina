@@ -3,23 +3,23 @@
 namespace Malina.DOM
 {
     [Serializable]
-    public class NamespaceScope : Entity
+    public class Scope : Entity
     {
         // Fields
         private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
 
         // Methods
-        protected NamespaceScope()
+        protected Scope()
         {
         }
 
-        public NamespaceScope(string name)
+        public Scope(string name)
         {
             Name = name;
         }
 
-        public NamespaceScope(string name, NodeCollection<Entity> entities, NodeCollection<Attribute> attributes)
+        public Scope(string name, NodeCollection<Entity> entities, NodeCollection<Attribute> attributes)
         {
             Name = name;
             Entities = entities;
@@ -28,7 +28,7 @@ namespace Malina.DOM
 
         public override void Accept(IDomVisitor visitor)
         {
-            visitor.OnNamespaceScope(this);
+            visitor.OnScope(this);
         }
 
         public override void AppendChild(Node child)
@@ -51,7 +51,7 @@ namespace Malina.DOM
         public override void Assign(Node node)
         {
             base.Assign(node);
-            NamespaceScope scope = node as NamespaceScope;
+            Scope scope = node as Scope;
             Name = scope.Name;
             Entities.AssignNodes(scope.Entities);
             Attributes.AssignNodes(scope.Attributes);
@@ -60,7 +60,7 @@ namespace Malina.DOM
 
         public override Node Clone()
         {
-            NamespaceScope scope = new NamespaceScope();
+            Scope scope = new Scope();
             scope.Assign(this);
             return scope;
         }

@@ -55,6 +55,7 @@
     <Compile Include="Namespace.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scope.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">

@@ -42,12 +42,18 @@ namespace Malina.Parser
         {
             var context = (ParserRuleContext)ctx;
             var node = ctx.Node;
-            if (context.start != null)
-                node.start = new SourceLocation(context.start.Line, context.start.Column, context.start.StartIndex);
-            var isStartValid = (new SourceLocation(context.start.Line, context.start.Column + 1, context.start.StartIndex)).IsValid;
-            if (context.stop != null)
+            SetNodeLocation(node, context.start, context.stop);
+        }
+
+        public static void SetNodeLocation(Node node, IToken start, IToken stop)
+        {
+
+            if (start != null)
+                node.start = new SourceLocation(start.Line, start.Column, start.StartIndex);
+            var isStartValid = (new SourceLocation(start.Line, start.Column + 1, start.StartIndex)).IsValid;
+            if (stop != null)
             {
-                node.end = new SourceLocation(context.stop.Line, context.stop.Column, context.stop.StartIndex);
+                node.end = new SourceLocation(stop.Line, stop.Column, stop.StartIndex);
                 if (!isStartValid)
                     node.start = node.end;
             }

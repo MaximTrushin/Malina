@@ -49,7 +49,7 @@
         {
         }
 
-        public virtual void OnNamespaceScope(NamespaceScope node)
+        public virtual void OnScope(Scope node)
         {
             Visit(node.Attributes);
             Visit(node.Entities);

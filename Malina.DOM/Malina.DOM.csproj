@@ -55,7 +55,7 @@
     <Compile Include="Module.cs" />
     <Compile Include="ModuleMember.cs" />
     <Compile Include="Namespace.cs" />
-    <Compile Include="NamespaceScope.cs" />
+    <Compile Include="Scope.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeCollection.cs" />
     <Compile Include="Parameter.cs" />

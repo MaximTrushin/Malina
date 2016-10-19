@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using Antlr4.Runtime.Tree;
 using Malina.DOM;
 using Malina.DOM.Antlr;
 using System;
@@ -35,6 +36,54 @@ namespace Malina.Parser
             _nodeStack.Push(context.Node);
         }
 
+        public static int FindDot(int start, int stop, ICharStream input)
+        {
+            for (int i = start - input.Index + 1; i <= stop - input.Index; i++)
+            {
+                if (input.La(i) == '.') return input.Index + i;
+            }
+            return -1;
+        }
+
+        private void EnterScopeContext(ParserRuleContext context)
+        {
+            //Creating Scope node, adding to parent, adding to ctx.Node and initializing CharStream
+            (context as INodeContext<DOM.Antlr.Scope>).InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
+
+            //Checking if this is root node and retuning as Listener result
+            if (_nodeStack.Count == 0) _nodes.Add((context as INodeContext<DOM.Antlr.Scope>).Node);
+
+
+            var first = context.Start.Text;
+
+            var dot = FindDot(context.Start.StartIndex, context.Start.StopIndex, context.Start.InputStream);
+            if (dot > -1)
+            {
+                //SCOPE_ID found. Need to create SCOPE and ELEMENT
+
+                //Initializing ELEMENT
+                var element = new DOM.Antlr.Element();
+
+                (context as INodeContext<DOM.Antlr.Scope>).Node.AppendChild(element);
+
+                element.CharStream = context.Start.InputStream;
+
+                _nodeStack.Push(element); //Adding element to node stack. 
+
+            }
+            else
+            {
+                //NAMESPACE_ID found. Need to create SCOPE only
+
+                _nodeStack.Push((context as INodeContext<DOM.Antlr.Scope>).Node);
+            }
+        }
+
+        private void ExitScopeContext(ParserRuleContext context)
+        {
+
+        }
+
         private void ExitContext<T>(INodeContext<T> context) where T : Node, new()
         {
             context.ApplyContext();
@@ -59,6 +108,28 @@ namespace Malina.Parser
         }
 
         public override void ExitNamespace_declaration_stmt([NotNull] MalinaParser.Namespace_declaration_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterScope_stmt([NotNull] MalinaParser.Scope_stmtContext context)
+        {
+            context.NodeStack = _nodeStack;
+            EnterScopeContext(context);
+        }
+
+        public override void ExitScope_stmt([NotNull] MalinaParser.Scope_stmtContext context)
+        {            
+            ExitContext(context);
+        }
+
+        public override void EnterScope_inline([NotNull] MalinaParser.Scope_inlineContext context)
+        {
+            context.NodeStack = _nodeStack;
+            EnterScopeContext(context);
+        }
+
+        public override void ExitScope_inline([NotNull] MalinaParser.Scope_inlineContext context)
         {
             ExitContext(context);
         }

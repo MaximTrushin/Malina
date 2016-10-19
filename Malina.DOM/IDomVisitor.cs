@@ -11,7 +11,7 @@
         void OnElement(Element node);
         void OnModule(Module node);
         void OnNamespace(Namespace node);
-        void OnNamespaceScope(NamespaceScope node);
+        void OnScope(Scope node);
         void OnParameter(Parameter node);
     }
 

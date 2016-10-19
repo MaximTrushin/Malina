@@ -218,25 +218,25 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void NamespaceScope1()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void NamespaceScope2()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void NamespaceScope3()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void OneNamespaceNoBrackets()
         {
             PerformTest();

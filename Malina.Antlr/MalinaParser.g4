@@ -24,10 +24,10 @@ inline_stmt	:	inline_expression+ NEWLINE;
 hybrid_stmt	:	inline_expression+ block_line_stmt;
 
 //Represent inline expression
-inline_expression	:	attr_inline | element_inline | parameter_inline | alias_inline;
+inline_expression	:	attr_inline | element_inline | parameter_inline | alias_inline | scope_inline;
 
 //Represents one line of block. Always ends with NEWLINE
-block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt;
+block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt | scope_stmt;
 
 //ELEMENT RULES 
 
@@ -42,6 +42,11 @@ element_inline	:	empty_element_inline | value_element_inline | block_element_inl
 empty_element_inline	:	ELEMENT_ID;
 value_element_inline	:	ELEMENT_ID value_inline;
 block_element_inline	:	ELEMENT_ID block_inline;
+
+//SCOPE RULES
+
+scope_stmt	:	(SCOPE_ID | NAMESPACE_ID) ((block_inline NEWLINE) | block);
+scope_inline	:	(SCOPE_ID | NAMESPACE_ID) block_inline;
 
 //ATTRIBUTE RULES
 

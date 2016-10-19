@@ -1,6 +1,8 @@
 ﻿using Malina.DOM.Antlr;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime;
+using System;
+using System.Collections.Generic;
 
 namespace Malina.Parser
 {
@@ -16,6 +18,58 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = DOCUMENT_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+
+        public partial class Scope_stmtContext : INodeContext<Scope>
+        {
+            public Stack<DOM.Node> NodeStack;
+            public Scope Node { get; set; }
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                
+                var id = SCOPE_ID();
+                if (id != null)
+                {
+                    Element el = NodeStack.Peek() as Element;
+
+                    NodeContextExtensions.SetNodeLocation(el, this.start, this.stop);
+                    var dot = MalinaParserListener.FindDot(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream);
+                    el.IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
+                    Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
+                }
+                else
+                {
+                    id = NAMESPACE_ID();
+                    Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                }
+                
+            }
+
+        }
+        public partial class Scope_inlineContext : INodeContext<Scope>
+        {
+            public Stack<DOM.Node> NodeStack;
+            public Scope Node { get; set; }
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = SCOPE_ID();
+                if (id != null)
+                {
+                    Element el = NodeStack.Peek() as Element;
+
+                    NodeContextExtensions.SetNodeLocation(el, this.start, this.stop);
+                    var dot = MalinaParserListener.FindDot(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream);
+                    el.IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
+                    Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
+                }
+                else
+                {
+                    id = NAMESPACE_ID();
+                    Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                }
             }
         }
         #endregion

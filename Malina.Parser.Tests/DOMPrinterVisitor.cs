@@ -30,6 +30,15 @@ namespace Malina.Parser.Tests
             _sb.AppendLine();
         }
 
+        public override void OnScope(DOM.Scope node)
+        {
+            PrintNodeStart(node);
+            _sb.Append(":");
+            _sb.AppendLine();
+            _indent++;
+            base.OnScope(node);
+            _indent--;
+        }
 
         public override void OnDocument(DOM.Document node)
         {

@@ -1,0 +1,2 @@
+
+module: (DOCUMENT_ID=!MyRequest, COLON=:, NAMESPACE_ID=#ns1, EQUAL== , DQS="http://myNs1.com", NAMESPACE_ID=#ns2, EQUAL== , DQS="http://myNs2.com", ELEMENT_ID=request)

@@ -30,12 +30,19 @@ namespace Malina.Parser
 
         public override IToken NextToken()
         {
+            //Return previosly generated tokens first
+            if (_tokens.Count > 0)
+            {
+                return _tokens.Dequeue();
+            }
+            
             Token = null;
             //Checking EOF and still mode = IN_VALUE
-            if (_input.La(1) == Eof && _mode == 1) 
+            //Scenario: Open value ends with EOF
+            if (_input.La(1) == Eof && _mode == 1)
             {
                 EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
-                PopMode();                
+                PopMode();
             }
             //Checking if Dedents need to be generated in the EOF
             if (_input.La(1) == Eof && _indents.Peek() > 0)
@@ -58,9 +65,9 @@ namespace Malina.Parser
             }
 
             //Run regular path if there no extra tokens generated in queue
-            if (_tokens.Count == 0)
+            if (_tokens.Count == 0) {
                 return base.NextToken();
-
+            }
             //Return generated tokens
             return _tokens.Dequeue();
         }
@@ -77,9 +84,10 @@ namespace Malina.Parser
         private void IndentDedent()
         {
             //Lexer reached EOF. 
-            if (_input.La(1) == -1)
+            if (_input.La(1) == Eof)
             {
                 //Adding trailing NEWLINE and DEDENTS if neeeded
+                //Scenario: Any indented last node in the file.
                 if (_indents.Count > 1)
                 {
                     EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
@@ -87,7 +95,7 @@ namespace Malina.Parser
                 }
                 else
                 {
-                    //Ignore indents in the end of file if there no DEDENTS have to be reported. See comment above.
+                    //Ignore indents in the end of file if there are no DEDENTS have to be reported. See comment above.
                     Skip();
                     return;
                 }
@@ -99,6 +107,7 @@ namespace Malina.Parser
             if (indent == prevIndent)
             {
                 //Emitting NEWLINE
+                //Scenario: Any node in the end of line and not EOF.
                 if (_tokenStartCharIndex > 0) //Ignore New Line starting in BOF
                 {
                     EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
@@ -114,6 +123,7 @@ namespace Malina.Parser
             else
             {
                 //Adding 1 NEWLINE before DEDENTS
+                //Scenario: Any node in the end of line and not EOF.
                 if (_indents.Count > 1 && _indents.Peek() > indent)
                 {
                     EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
@@ -161,7 +171,12 @@ namespace Malina.Parser
                 if (_input.La(-1) != '=')
                     EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 else
-                    Skip();
+                {
+                    //if value was ended with ==                                       
+                    EmitExtraOSIndent(indent, _currentIndent + 1);//Emitting empty OS Indent to add EOL.
+
+                    if(_input.La(1) == Eof) EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                }
                 PopMode();
             }
             else if (indent > _currentIndent)

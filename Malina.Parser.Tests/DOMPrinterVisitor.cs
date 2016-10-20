@@ -124,7 +124,7 @@ namespace Malina.Parser.Tests
             else if(node.Value != null)
             {
                 _sb.Append("= `");
-                _sb.Append(node.Value);
+                _sb.Append(node.Value.Replace("\r", "\\r").Replace("\n", "\\n"));
                 _sb.Append("`");
             }
             if (node.Attributes.Count + node.Entities.Count > 0)

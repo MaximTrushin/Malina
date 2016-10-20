@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Malina.DOM.Antlr
@@ -8,7 +9,7 @@ namespace Malina.DOM.Antlr
     {
         private ICharStream _charStream;
         private Interval _idInterval;
-        private IntervalSet _intervalSet;
+        private List<Interval> _valueintervals;
 
         public ICharStream CharStream
         {
@@ -26,16 +27,16 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public IntervalSet IntervalSet
+        public List<Interval> ValueIntervals
         {
             get
             {
-                return _intervalSet;
+                return _valueintervals;
             }
 
             set
             {
-                _intervalSet = value;
+                _valueintervals = value;
             }
         }
 
@@ -57,7 +58,7 @@ namespace Malina.DOM.Antlr
         {
             get
             {
-                if (_intervalSet == null) return base.Value;
+                if (_valueintervals == null) return base.Value;
                 return GetValueFromIntervals();
             }
         }
@@ -66,7 +67,7 @@ namespace Malina.DOM.Antlr
         {
             var _sb = new StringBuilder();
             var first = true;
-            foreach (var item in _intervalSet.GetIntervals())
+            foreach (var item in _valueintervals)
             {
                 if (!first) _sb.AppendLine();
                 first = false;

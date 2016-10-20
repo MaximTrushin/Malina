@@ -248,7 +248,7 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded]        
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]        
         public void OpenStringMiltiline()
         {
             PerformTest();

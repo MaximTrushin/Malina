@@ -1,10 +1,11 @@
 ﻿using Antlr4.Runtime.Misc;
+using System.Collections.Generic;
 
 namespace Malina.DOM.Antlr
 {
     public interface IValueNode
     {
-        IntervalSet IntervalSet { get; set; }
+        List<Interval> ValueIntervals { get; set; }
         object ObjectValue { get; set; }
     }
 }

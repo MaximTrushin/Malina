@@ -10,17 +10,7 @@ namespace Malina.DOM
         private string value;
 
         // Methods
-        public Namespace()
-        {
-        }
-
-        public Namespace(string name, string value)
-        {
-            Name = name;
-            Value = value;
-        }
-
-        public virtual string Value
+       public virtual string Value
         {
             get
             {

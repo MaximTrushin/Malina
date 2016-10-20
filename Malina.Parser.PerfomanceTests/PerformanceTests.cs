@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using static Malina.Parser.Tests.TestUtils;
 using Antlr4.Runtime;
+using Malina.Parser.Tests;
 
 namespace Malina.Parser.PerfomanceTests
 {
@@ -31,7 +28,34 @@ namespace Malina.Parser.PerfomanceTests
 
             Console.WriteLine("GetAllTokens Time: {0}", t2 - t1);
             Console.WriteLine("Token Number: {0}", i);
-            Assert.IsTrue(t2 - t1 < 10000);
+            Assert.IsTrue(t2 - t1 < 7000);
+
+            lexer.Reset();
+            var parser = new MalinaParser(new CommonTokenStream(lexer));
+            var malinaListener = new MalinaParserListener();
+            var parserErrorListener = new ErrorListener<IToken>();
+            parser.AddErrorListener(parserErrorListener);
+            //parser.AddParseListener(malinaListener);
+            parser.BuildParseTree = false;
+            t1 = Environment.TickCount;
+            //var module = parser.module();
+            t2 = Environment.TickCount;
+
+            Console.WriteLine("Parse Time: {0}", t2 - t1);
+            Assert.IsTrue(t2 - t1 < 15000);
+            Assert.IsFalse(parserErrorListener.HasErrors);
+
+
+            lexer.Reset();
+            parser.Reset();
+            parser.AddParseListener(malinaListener);            
+            t1 = Environment.TickCount;            
+            //var module = parser.module();
+            t2 = Environment.TickCount;
+            Console.WriteLine("DOM Time: {0}", t2 - t1);
+            Assert.IsTrue(t2 - t1 < 22000);
+            Assert.IsFalse(parserErrorListener.HasErrors);
+
         }
     }
 }

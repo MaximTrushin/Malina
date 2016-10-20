@@ -15,24 +15,6 @@ namespace Malina.DOM
         public ValueType ValueType;
 
         // Methods
-        public Element()
-        {
-        }
-
-        public Element(string ns, string name)
-        {
-            Namespace = ns;
-            Name = name;
-        }
-
-        public Element(string ns, string name, NodeCollection<Entity> entities, NodeCollection<Attribute> attributes, object objectValue)
-        {
-            Namespace = ns;
-            Name = name;
-            Entities = entities;
-            Attributes = attributes;
-            ObjectValue = objectValue;
-        }
 
         public override void Accept(IDomVisitor visitor)
         {

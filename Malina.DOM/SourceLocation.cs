@@ -2,6 +2,7 @@
 
 namespace Malina.DOM
 {
+    [Serializable]
     public class SourceLocation : IComparable<SourceLocation>, IEquatable<SourceLocation>
     {
         // Fields

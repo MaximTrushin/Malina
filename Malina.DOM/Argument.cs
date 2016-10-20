@@ -15,18 +15,6 @@ namespace Malina.DOM
         {
         }
 
-        public Argument(Element e) : base(e.Namespace, e.Name, e.Entities, e.Attributes,  e.ObjectValue)
-        {
-            start = e.start;
-            end = e.end;
-        }
-
-        public Argument(string ns, string name, Alias ofAlias)
-        {
-            Namespace = ns;
-            Name = name;            
-            OfAlias = ofAlias;
-        }
 
         public override void Accept(IDomVisitor visitor)
         {

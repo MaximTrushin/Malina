@@ -11,21 +11,7 @@ namespace Malina.DOM
         public string FileName;
 
         // Methods
-        public Module()
-        {
-        }
 
-        public Module(string name)
-        {
-            Name = name;
-        }
-
-        public Module(string name, NodeCollection<ModuleMember> members, NodeCollection<Namespace> namespaces)
-        {
-            Name = name;
-            Members = members;
-            Namespaces = namespaces;
-        }
 
         public override void Accept(IDomVisitor visitor)
         {

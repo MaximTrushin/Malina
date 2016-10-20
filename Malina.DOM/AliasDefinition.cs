@@ -19,31 +19,6 @@ namespace Malina.DOM
         {
         }
 
-        public AliasDefinition(string name)
-        {
-            Name = name;
-        }
-
-        public AliasDefinition(List<string> ns, string name)
-        {
-            string str = string.Empty;
-            if (ns.Count > 0)
-            {
-                str = string.Join(".", ns) + ".";
-            }
-            Name = str + name;
-        }
-
-        public AliasDefinition(string name, NodeCollection<Namespace> namespaces, NodeCollection<Attribute> attributes, NodeCollection<Entity> entities, NodeCollection<Parameter> parameters, string value)
-        {
-            Name = name;
-            Namespaces = namespaces;
-            Attributes = attributes;
-            Entities = entities;
-            Parameters = parameters;
-            Value = value;
-        }
-
         public override void Accept(IDomVisitor visitor)
         {
             visitor.OnAliasDefinition(this);

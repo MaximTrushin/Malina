@@ -12,23 +12,6 @@ namespace Malina.DOM
         public AliasDefinition OfAliasDefinition;
 
         // Methods
-        public Parameter()
-        {
-        }
-
-        public Parameter(Element e) : base(e.Namespace, e.Name, e.Entities, e.Attributes, e.ObjectValue)
-        {
-            base.start = e.start;
-            base.end = e.end;
-        }
-
-
-        public Parameter(string ns, string name, AliasDefinition ofAliasDefinition)
-        {
-            Namespace = ns;
-            Name = name;
-            OfAliasDefinition = ofAliasDefinition;
-        }
 
         public override void Accept(IDomVisitor visitor)
         {

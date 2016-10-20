@@ -10,22 +10,6 @@ namespace Malina.DOM
         private NodeCollection<Entity> _entities;
 
         // Methods
-        protected Scope()
-        {
-        }
-
-        public Scope(string name)
-        {
-            Name = name;
-        }
-
-        public Scope(string name, NodeCollection<Entity> entities, NodeCollection<Attribute> attributes)
-        {
-            Name = name;
-            Entities = entities;
-            Attributes = attributes;
-        }
-
         public override void Accept(IDomVisitor visitor)
         {
             visitor.OnScope(this);

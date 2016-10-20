@@ -11,24 +11,7 @@ namespace Malina.DOM
         public AliasDefinition ResolvedAliasDefinition;
 
         // Methods
-        public Alias()
-        {
-        }
 
-        public Alias(string name)
-        {
-            Name = name;
-        }
-
-        public Alias(List<string> ns, string name)
-        {
-            string str = string.Empty;
-            if (ns.Count > 0)
-            {
-                str = string.Join(".", ns) + ".";
-            }
-            Name = str + name;
-        }
 
         public override void Accept(IDomVisitor visitor)
         {

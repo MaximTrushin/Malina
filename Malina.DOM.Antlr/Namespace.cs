@@ -59,12 +59,12 @@ namespace Malina.DOM.Antlr
         {
             get
             {
-                throw new NotImplementedException();
+                return Value;
             }
 
             set
             {
-                throw new NotImplementedException();
+                return;
             }
         }
 

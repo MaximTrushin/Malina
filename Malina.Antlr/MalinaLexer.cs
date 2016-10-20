@@ -10,6 +10,11 @@ namespace Malina.Parser
         private Stack<int> _indents = new Stack<int>(new[] { 0 });
         private Queue<IToken> _tokens = new Queue<IToken>();
         private Stack<int> _wsaStack = new Stack<int>();
+
+        /// <summary>
+        /// Problem is that IndentDedent and OsIndentDedent are not called for EOF in some cases.
+        /// I had to add code to add NEWLINE if EOF is reached. This flag is used to not add NEWLINE more than once. 
+        /// </summary>
         private bool _terminalNewLineAdded = false;
 
         private bool InWsaMode

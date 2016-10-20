@@ -15,13 +15,6 @@ namespace Malina.DOM
         {
         }
 
-        public Attribute(string ns, string name, object value)
-        {
-            Namespace = ns;
-            Name = name;
-            ObjectValue = value;
-        }
-
         public override void Accept(IDomVisitor visitor)
         {
             visitor.OnAttribute(this);

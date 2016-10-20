@@ -16,21 +16,6 @@ namespace Malina.DOM
         {
         }
 
-        public Document(string name)
-        {
-            Name = name;
-        }
-
-        public Document(string name, string ext, NodeCollection<Namespace> namespaces, Entity documentElement)
-        {
-            Name = name;
-            if (!string.IsNullOrEmpty(ext))
-            {
-                Name = new StringBuilder().Append(name).Append(".").Append(ext).ToString();
-            }
-            Namespaces = namespaces;
-            DocumentElement = documentElement;
-        }
 
         public override void Accept(IDomVisitor visitor)
         {

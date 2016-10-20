@@ -254,20 +254,20 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void OpenStringSimple()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void TwoNamespaces()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
-        public void WithoutNamespaces()
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void ElementAtEOF()
         {
             PerformTest();
         }

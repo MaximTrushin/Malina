@@ -4,7 +4,7 @@ tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_INDENT, EQUAL, DBL_EQUAL}
 
 WS				:	WsSpaces	-> skip;
 
-INDENT_DEDENT		:	((Eol Spaces)+ | EOF) {IndentDedent();};
+INDENT_DEDENT		:	((Eol Spaces)+) {IndentDedent();};
 
 COLON				:	':';
 

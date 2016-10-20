@@ -10,12 +10,22 @@ namespace Malina.Parser
         private Stack<int> _indents = new Stack<int>(new[] { 0 });
         private Queue<IToken> _tokens = new Queue<IToken>();
         private Stack<int> _wsaStack = new Stack<int>();
+        private bool _terminalNewLineAdded = false;
 
         private bool InWsaMode
         {
             get { return _wsaStack.Count > 0; }
         }
 
+        public override void Reset()
+        {
+            InvalidTokens = new List<IToken>();
+            _indents = new Stack<int>(new[] { 0 });
+            _tokens = new Queue<IToken>();
+            _wsaStack = new Stack<int>();
+            _terminalNewLineAdded = false;
+            base.Reset();
+        }
         public override void Emit(IToken token)
         {
             if (_token == null)
@@ -42,6 +52,7 @@ namespace Malina.Parser
             if (_input.La(1) == Eof && _mode == 1)
             {
                 EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
+                _terminalNewLineAdded = true;
                 PopMode();
             }
             //Checking if Dedents need to be generated in the EOF
@@ -52,6 +63,9 @@ namespace Malina.Parser
                     //If still in WSA mode in the EOF then clear wsa mode.
                     while (_wsaStack.Count > 0) _wsaStack.Pop();
                 }
+
+                if(!_terminalNewLineAdded)
+                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
 
                 while (_indents.Peek() > 0)
                 {
@@ -90,7 +104,8 @@ namespace Malina.Parser
                 //Scenario: Any indented last node in the file.
                 if (_indents.Count > 1)
                 {
-                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
+                    _terminalNewLineAdded = true;
+                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);                    
                     return;
                 }
                 else
@@ -169,13 +184,21 @@ namespace Malina.Parser
             {
                 //Emitting NEWLINE if OS is not ended by ==
                 if (_input.La(-1) != '=')
+                {
                     EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                    if (_input.La(1) == Eof)
+                        _terminalNewLineAdded = true;
+                }
                 else
                 {
                     //if value was ended with ==                                       
                     EmitExtraOSIndent(indent, _currentIndent + 1);//Emitting empty OS Indent to add EOL.
 
-                    if(_input.La(1) == Eof) EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                    if (_input.La(1) == Eof)
+                    {
+                        EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                        _terminalNewLineAdded = true;
+                    }
                 }
                 PopMode();
             }

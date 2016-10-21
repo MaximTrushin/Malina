@@ -215,7 +215,7 @@
     <None Include="Scenarios\Lexer\OpenStringSimple.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\PerformLexerTest.mal">
+    <None Include="Scenarios\Lexer\DoubleQuoteMultilineString.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttrAndElem.dom">
@@ -356,6 +356,8 @@
     <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.tree">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.test" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.tree" />
     <None Include="Scenarios\Lexer\Recorded\ElementAtEOF.dom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

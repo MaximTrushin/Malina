@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Tree;
 using NUnit.Framework;
 using System;
@@ -8,8 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Malina.Parser.Tests
 {
@@ -132,6 +131,7 @@ namespace Malina.Parser.Tests
             //Testing Parse Tree
             lexer.Reset();
             var parser = new MalinaParser(new CommonTokenStream(lexer));
+            parser.Interpreter.PredictionMode = PredictionMode.Sll;
             var malinaListener = new MalinaParserListener();
             var parserErrorListener = new ErrorListener<IToken>();
             parser.AddErrorListener(parserErrorListener);
@@ -197,14 +197,14 @@ namespace Malina.Parser.Tests
             PrintCode(code);
 
             //Lexer Assertions
+            Assert.AreEqual(false, lexerErros.HasErrors);
+
+            Assert.AreEqual(0, lexer.InvalidTokens.Count);
+
             if (recorded != null)
             {
                 Assert.AreEqual(recorded, printedTokens, "LEXER assertion failed");
             }
-
-            Assert.AreEqual(false, lexerErros.HasErrors);
-
-            Assert.AreEqual(0, lexer.InvalidTokens.Count);
 
             //Parse Tree Assertions
             if (recordedParseTree != null)

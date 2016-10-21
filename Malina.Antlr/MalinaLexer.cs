@@ -234,6 +234,11 @@ namespace Malina.Parser
             }
         }
 
+        private void DqIndentDedent()
+        {
+
+        }
+
         private void EmitIndentationToken(int tokenType, int start, int stop)
         {
             if (InWsaMode)

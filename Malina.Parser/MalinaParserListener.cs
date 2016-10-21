@@ -450,11 +450,12 @@ namespace Malina.Parser
         {
             var parent = _nodeStack.Peek() as IValueNode;
 
-            var dqs = context.DQS();
+            var dqs = context.dqs_inline();
             if (dqs != null)
             {
                 parent.ValueIntervals = new List<Interval>();
-                parent.ValueIntervals.Add(new Interval((dqs.Payload as CommonToken).StartIndex + 1, (dqs.Payload as CommonToken).StopIndex - 1));
+                if((dqs.GetChild(1).Payload as CommonToken).Type == MalinaParser.DQS_VALUE)
+                parent.ValueIntervals.Add(new Interval((dqs.GetChild(1).Payload as CommonToken).StartIndex, (dqs.GetChild(1).Payload as CommonToken).StopIndex));
                 return;
             }
 

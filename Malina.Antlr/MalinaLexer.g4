@@ -20,13 +20,15 @@ ATTRIBUTE_ID		:	'@' Name;
 ALIAS_ID			:	'$' Name;
 PARAMETER_ID		:	'%' Name;
 ARGUMENT_ID			:	'.' Name;
-
+EQUAL				:	'=';
+DBL_EQUAL			:	'==';
 ELEMENT_ID			:	ShortName | FullName;
 
-VALUE_BEGIN			:	'='	Spaces {Emit(EQUAL);} -> pushMode(IN_VALUE);
-OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);} -> pushMode(IN_VALUE);
+VALUE_BEGIN			:	EQUAL Spaces {Emit(EQUAL);} -> pushMode(IN_VALUE);
+OPEN_VALUE_BEGIN	:	DBL_EQUAL	Spaces {Emit(DBL_EQUAL);} -> pushMode(IN_VALUE);
 
-//INVALID : . { if (InvalidTokens.Count < 100) InvalidTokens.Add(Token); };
+
+
 
 mode IN_VALUE;
 	//Parameter or Alias assignment
@@ -35,18 +37,22 @@ mode IN_VALUE;
 					|	ALIAS_ID {Emit(ALIAS_ID);}
 					)		-> popMode;
 
-	//Double quoted string
-	DQS			:	
-					(	'"' (~["\r\n] | '""')* '"'	
-					)		-> popMode;
-	//Double quoted string multiline
-	DQS_ML			:	
-					(	'"' (~["] | '""')* '"'	
-					)		-> popMode;
-
 	//Open string and Multi Line Open String
 	OPEN_VALUE_EOL		:	(Eol Spaces)+ '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
 	OPEN_VALUE			:	~[$%"\'\r\n](~[\r\n])*; //Open string content can't start with [$%"\'\r\n]
+	DQS_BEGIN			:	'"'  -> pushMode(IN_DQS);
+
+mode IN_DQS;
+	//Double Quoted String
+	DQS_VALUE		:	(~["\r\n] | '""')+;
+
+	DQS_VALUE_EOL	:	(Eol Spaces)+ '"'? {DqIndentDedent();}; //End of DQS Line or End of DQS
+
+	DQS_END			:	'"' ->  popMode, popMode;
+	//Double quoted string multiline
+	//DQS_ML			:	
+	//				(	'"' (~["] | '""')* '"'	
+	//				)		-> popMode;
 
 fragment	Eol				:	( '\r'? '\n' )
 							;

@@ -33,7 +33,7 @@ namespace Malina.Parser
                     Element el = NodeStack.Peek() as Element;
 
                     NodeContextExtensions.SetNodeLocation(el, this.start, this.stop);
-                    var dot = MalinaParserListener.FindDot(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream);
+                    var dot = MalinaParserListener.FindChar(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream, '.');
                     el.IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
                     Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
                 }
@@ -59,7 +59,7 @@ namespace Malina.Parser
                     Element el = NodeStack.Peek() as Element;
 
                     NodeContextExtensions.SetNodeLocation(el, this.start, this.stop);
-                    var dot = MalinaParserListener.FindDot(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream);
+                    var dot = MalinaParserListener.FindChar(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream, '.');
                     el.IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
                     Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
                 }

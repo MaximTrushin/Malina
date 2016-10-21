@@ -46,7 +46,7 @@ mode IN_DQS;
 	//Double Quoted String
 	DQS_VALUE		:	(~["\r\n] | '""')+;
 
-	DQS_VALUE_EOL	:	(Eol Spaces)+ '"'? {DqIndentDedent();}; //End of DQS Line or End of DQS
+	DQS_VALUE_EOL	:	(Eol Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
 
 	DQS_END			:	'"' ->  popMode, popMode;
 	//Double quoted string multiline

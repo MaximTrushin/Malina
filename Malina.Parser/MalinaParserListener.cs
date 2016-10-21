@@ -36,11 +36,11 @@ namespace Malina.Parser
             _nodeStack.Push(context.Node);
         }
 
-        public static int FindDot(int start, int stop, ICharStream input)
+        public static int FindChar(int start, int stop, ICharStream input, char c)
         {
             for (int i = start - input.Index + 1; i <= stop - input.Index; i++)
             {
-                if (input.La(i) == '.') return input.Index + i;
+                if (input.La(i) == c) return input.Index + i;
             }
             return -1;
         }
@@ -56,7 +56,7 @@ namespace Malina.Parser
 
             var first = context.Start.Text;
 
-            var dot = FindDot(context.Start.StartIndex, context.Start.StopIndex, context.Start.InputStream);
+            var dot = FindChar(context.Start.StartIndex, context.Start.StopIndex, context.Start.InputStream, '.');
             if (dot > -1)
             {
                 //SCOPE_ID found. Need to create SCOPE and ELEMENT
@@ -494,7 +494,31 @@ namespace Malina.Parser
 
                 }
             }
-       }
+            var dqs_ml = context.children[1] as MalinaParser.Dqs_mlContext;
+            if (dqs_ml != null)
+            {
+                parent.ValueIntervals = new List<Interval>();
+                var previousIsIndent = true;
+                foreach (var item in dqs_ml.children)
+                {
+                    if ((item.Payload as CommonToken).Type == MalinaParser.DQS_VALUE)
+                    {
+                        if (!previousIsIndent) parent.ValueIntervals.Add(new Interval(-1, -1));//Adding New Line
+                        parent.ValueIntervals.Add(new Interval((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex));
+                        previousIsIndent = false;
+                    }
+                    else if ((item.Payload as CommonToken).Type == MalinaParser.DQS_VALUE_EOL)
+                    {//DQS_VALUE_EOL
+                        parent.ValueIntervals.Add(new Interval(-1, -1));//Adding New Line
+                        parent.ValueIntervals.Add(new Interval((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex));
+                        previousIsIndent = true;
+                    }
+
+                }
+            }
+
+
+        }
 
         public override void EnterParameter_object_value_inline([NotNull] MalinaParser.Parameter_object_value_inlineContext context)
         {

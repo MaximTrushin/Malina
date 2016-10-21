@@ -356,8 +356,15 @@
     <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.tree">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.test" />
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.tree" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.dom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.test">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.tree">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\Lexer\Recorded\ElementAtEOF.dom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

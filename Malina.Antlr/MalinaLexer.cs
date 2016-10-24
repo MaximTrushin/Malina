@@ -4,12 +4,29 @@ using System.Collections.Generic;
 
 namespace Malina.Parser
 {
+
+    public class MalinaToken: CommonToken
+    {
+        public int TokenIndent;
+        public int StopLine;
+        public int StopColumn;
+
+        public MalinaToken(int type) : base(type)
+        {
+
+        }
+
+        public MalinaToken(Tuple<ITokenSource, ICharStream> source, int type, int channel, int start, int stop) : base(source, type, channel, start, stop)
+        {
+        }
+    }
     partial class MalinaLexer
     {
         public List<IToken> InvalidTokens = new List<IToken>();
         private Stack<int> _indents = new Stack<int>(new[] { 0 });
         private Queue<IToken> _tokens = new Queue<IToken>();
         private Stack<int> _wsaStack = new Stack<int>();
+        private MalinaToken _currentToken = null; //This field is used for tokens created with several lexer rules.
 
 
         /// <summary>
@@ -30,6 +47,7 @@ namespace Malina.Parser
             _tokens = new Queue<IToken>();
             _wsaStack = new Stack<int>();            
             _lastToken = null;
+            _currentToken = null;
             base.Reset();
         }
         public override void Emit(IToken token)
@@ -47,10 +65,12 @@ namespace Malina.Parser
 
         public override IToken NextToken()
         {
+            IToken r;
             //Return previosly generated tokens first
             if (_tokens.Count > 0)
             {
-                return _tokens.Dequeue();
+                r= _tokens.Dequeue();
+                return r;
             }
             
             Token = null;
@@ -86,7 +106,8 @@ namespace Malina.Parser
 
             //Run regular path if there no extra tokens generated in queue
             if (_tokens.Count == 0) {
-                return base.NextToken();
+                r = base.NextToken();
+                return r;
             }
             //Return generated tokens
             return _tokens.Dequeue();
@@ -235,44 +256,25 @@ namespace Malina.Parser
         {
             var _currentIndent = _indents.Peek();
             var indent = CalcOsIndent();
-            
-            if (indent == _currentIndent)
-            {
-                //Checking if this is multiline DQS_VALUE_EOL
-                ProcessDqIndentDedent(_tokenStartCharIndex, CharIndex - 1, _currentIndent);
-                
-                //Emitting NEWLINE 
-                EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
-                PopMode(); PopMode();
-            }
-            else if (indent > _currentIndent)
-            {
-                //Checking if this is multiline DQS_VALUE_EOL
-                var tokenGenerated = ProcessDqIndentDedent(_tokenStartCharIndex, CharIndex - 1, _currentIndent);
 
-                if (indent > _currentIndent + 1)
-                {
-                    //Indent should be included in the Open String Value
-                    EmitExtraDQSIndent(indent, _currentIndent);
-                }
-                else //if not ExtraOSIndent then SKIP
-                    if(!tokenGenerated) Skip();
-            }
-            else
+            if (indent <= _currentIndent)
             {
-                //Adding 1 NEWLINE before DEDENTS
-                if (_indents.Count > 1 && _indents.Peek() > indent)
-                {
-                    EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
-                }
-                //Emitting 1 or more DEDENTS
-                while (_indents.Count > 1 && _indents.Peek() > indent)
-                {
-                    EmitIndentationToken(DEDENT, CharIndex - indent, CharIndex - 1);
-                    _indents.Pop();
-                }
-                PopMode(); PopMode();
+                //Report Lexer Error - missing closing Double Quote.
+                var err = new MalinaError(MalinaErrorCode.ClosingDqMissing,
+                    new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
+                    new DOM.SourceLocation(this._tokenStartLine, this._tokenStartCharPositionInLine, this._tokenStartCharIndex));
+
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Qoute", 
+                    new MalinaException(this, InputStream as ICharStream, err));
+
+
+                //END Multiline DQS
+                _currentToken.StopIndex = this._tokenStartCharIndex - 1;
+                Emit(_currentToken);
+                PopMode();PopMode();
             }
+            else //Continue Multine DQS
+                Skip();
         }
         /// <summary>
         /// Generates additional NEWLINES and indents if DQS_VALUE_EOL consumes more then one line
@@ -391,6 +393,22 @@ namespace Malina.Parser
         {
             if (_wsaStack.Count > 0)
                 _wsaStack.Pop();
+        }
+
+        private void StartDqs()
+        {
+            _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DQS, Channel, _tokenStartCharIndex, -1);
+            _currentToken.TokenIndent = _indents.Peek() + 1;
+
+        }
+
+        private void EndDqs()
+        {
+            _currentToken.StopIndex = this.CharIndex - 1;
+            _currentToken.StopLine = Line;
+            _currentToken.StopColumn = _tokenStartCharPositionInLine;
+            Emit(_currentToken);
+            PopMode();PopMode();
         }
     }
 }

@@ -49,10 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MalinaError.cs" />
+    <Compile Include="MalinaException.cs" />
     <Compile Include="MalinaLexer.cs" />
     <Compile Include="MalinaParser.g4.cs">
       <DependentUpon>MalinaParser.g4</DependentUpon>
     </Compile>
+    <Compile Include="MessageAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +70,12 @@
       <CustomToolNamespace>Malina.Parser</CustomToolNamespace>
     </Antlr4>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
+      <Project>{66e57a03-08ad-491b-9b1d-6cb4a0d37969}</Project>
+      <Name>Malina.DOM</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

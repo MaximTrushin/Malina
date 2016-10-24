@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Malina.Parser.Tests
 {
@@ -46,13 +47,27 @@ namespace Malina.Parser.Tests
             return trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
         }
 
-        public static string LoadRecordedTest()
+        public static string LoadRecordedTest(string printedTokens)
         {
-            var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
-            if (!File.Exists(fileName)) return null;
+            var isLexerRecordedTest = IsLexerRecordedTest();
+            var isLexerRecordTest = IsLexerRecordTest(); //Overwrites existing recording
+            string recorded = null;
+            if (isLexerRecordedTest || isLexerRecordTest)
+            {
+                if (isLexerRecordedTest) {
 
-            return File.ReadAllText(fileName).Replace("\r\n", "\n");
+                    var testCaseName = GetTestCaseName();
+                    var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
+                    if (!File.Exists(fileName)) recorded = null;
+                    else
+                        recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
+                }
+                if (recorded == null || isLexerRecordTest)
+                {
+                    SaveRecordedTest(printedTokens);
+                }
+            }            
+            return recorded;
         }
 
         private static void SaveRecordedTest(string printedTokens)
@@ -100,6 +115,17 @@ namespace Malina.Parser.Tests
             File.WriteAllText(fileName, printedTokens);
         }
 
+
+        private static string SerializeObject<T>(T toSerialize)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(toSerialize.GetType());
+
+            using (StringWriter textWriter = new StringWriter())
+            {
+                xmlSerializer.Serialize(textWriter, toSerialize);
+                return textWriter.ToString();
+            }
+        }
         public static void PerformTest()
         {
             var code = LoadTestCode();
@@ -110,23 +136,17 @@ namespace Malina.Parser.Tests
             MalinaLexer lexer;
             ErrorListener<int> lexerErros;
             IList<IToken> tokens =  GetTokens(code, out lexer, out lexerErros);
+            var s = SerializeObject( lexerErros.Errors);
+
 
             var printedTokens = PrintedTokens(tokens);
+
             Console.WriteLine("");
             Console.WriteLine("Tokens:");
             Console.WriteLine(printedTokens);
 
-            var isLexerRecordedTest = IsLexerRecordedTest();
-            var isLexerRecordTest = IsLexerRecordTest(); //Overwrites existing recording
-            string recorded = null;
-            if (isLexerRecordedTest || isLexerRecordTest)
-            {
-                if (isLexerRecordedTest) recorded = LoadRecordedTest();
-                if (recorded == null || isLexerRecordTest)
-                {
-                    SaveRecordedTest(printedTokens);
-                }
-            }
+
+            string recorded = LoadRecordedTest(printedTokens);
 
             //Testing Parse Tree
             lexer.Reset();
@@ -234,50 +254,50 @@ namespace Malina.Parser.Tests
 
         private static bool IsLexerRecordedTest()
         {
-            var trace = new StackTrace();
-            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(LexerRecordedAttribute))) ||
-                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(LexerRecordedAttribute)));
+            return TestHasAttribute<LexerRecordedAttribute>();
         }
 
         private static bool IsLexerRecordTest()
         {
-            var trace = new StackTrace();
-            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(LexerRecordAttribute))) ||
-                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(LexerRecordAttribute)));
+            return TestHasAttribute<LexerRecordAttribute>();
+        }
+
+        private static bool IsLexerErrorRecordedTest()
+        {
+            return TestHasAttribute<LexerErrorRecordedAttribute>();
+        }
+
+        private static bool IsLexerErrorRecordTest()
+        {
+            return TestHasAttribute<LexerErrorRecordAttribute>();
         }
 
         private static bool IsDomRecordedTest()
         {
-            var trace = new StackTrace();
-            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(DomRecordedAttribute))) ||
-                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(DomRecordedAttribute)));
+            return TestHasAttribute<DomRecordedAttribute>();
         }
 
         private static bool IsDomRecordTest()
         {
-            var trace = new StackTrace();
-            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(DomRecordAttribute))) ||
-                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(DomRecordAttribute)));
+            return TestHasAttribute<DomRecordAttribute>();
         }
 
         private static bool IsParseTreeRecordedTest()
         {
-            var trace = new StackTrace();
-            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(ParseTreeRecordedAttribute))) ||
-                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(ParseTreeRecordedAttribute)));
+            return TestHasAttribute<ParseTreeRecordedAttribute>();
         }
 
         private static bool IsParseTreeRecordTest()
         {
+            return TestHasAttribute<ParseTreeRecordAttribute>();
+        }
+
+        private static bool TestHasAttribute<T>()
+        {
             var trace = new StackTrace();
             var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(ParseTreeRecordAttribute))) ||
-                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(ParseTreeRecordAttribute)));
+            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T))) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T)));
         }
 
         private static void PrintCode(string code)

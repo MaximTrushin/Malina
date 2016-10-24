@@ -47,8 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Malina.Antlr\MalinaError.cs">
+      <Link>MalinaError.cs</Link>
+    </Compile>
+    <Compile Include="..\Malina.Antlr\MalinaException.cs">
+      <Link>MalinaException.cs</Link>
+    </Compile>
     <Compile Include="..\Malina.Antlr\MalinaLexer.cs">
       <Link>MalinaLexer.cs</Link>
+    </Compile>
+    <Compile Include="..\Malina.Antlr\MessageAttribute.cs">
+      <Link>MessageAttribute.cs</Link>
     </Compile>
     <Compile Include="..\Malina.Antlr\obj\Debug\MalinaLexer.cs">
       <Link>Generated\MalinaLexer.cs</Link>

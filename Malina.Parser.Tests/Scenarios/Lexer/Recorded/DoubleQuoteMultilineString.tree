@@ -12,7 +12,8 @@ module: ()
                                         value: ()
                                             string_value: ()
                                                 string_value_ml: (EQUAL== , DQS_ML="bla
-			bla bla)
+			bla bla
+)
                             block_line_stmt: ()
                                 element_stmt: ()
                                     value_element_stmt: (ELEMENT_ID=e2)

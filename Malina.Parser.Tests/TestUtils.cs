@@ -70,19 +70,28 @@ namespace Malina.Parser.Tests
             return recorded;
         }
 
-        public static string LoadLexerErrors(string serialLexerErrors)
+        public static string LoadLexerErrors(ErrorListener<int> lexerErrors, out string serialLexerErrors)
         {
-            var isLexerRecordTest = IsLexerErrorRecordTest(); //Overwrites existing recording
+            var isLexerErrorRecordedTest = IsLexerErrorRecordedTest();
+            var isLexerErrorRecordTest = IsLexerErrorRecordTest(); //Overwrites existing recording
             string recorded = null;
-            var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".le").ToString();
-            if (!File.Exists(fileName)) recorded = null;
-            else
-                recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
-            if (recorded == null || isLexerRecordTest)
+            serialLexerErrors = null;
+            if (isLexerErrorRecordedTest || isLexerErrorRecordTest)
             {
-                SaveLexerErrors(serialLexerErrors);
-                return serialLexerErrors;
+                serialLexerErrors = lexerErrors.Errors.Count > 0 ? SerializeObject(lexerErrors.Errors) : null;
+                if (isLexerErrorRecordedTest)
+                {
+                    var testCaseName = GetTestCaseName();
+                    var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".le").ToString();
+                    if (!File.Exists(fileName)) recorded = null;
+                    else
+                        recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
+                }
+                if (recorded == null || isLexerErrorRecordTest)
+                {
+                    SaveLexerErrors(serialLexerErrors);
+                    return serialLexerErrors;
+                }
             }
             return recorded;
         }
@@ -172,9 +181,13 @@ namespace Malina.Parser.Tests
 
 
             string recorded = LoadRecordedTest(printedTokens);
+            string serialLexerErrors;
+            var recordedLexerErros = LoadLexerErrors(lexerErrors, out serialLexerErrors);
+            Console.WriteLine(recordedLexerErros);
 
             //Testing Parse Tree
             lexer.Reset();
+            lexer.ErrorListeners.Clear();
             var parser = new MalinaParser(new CommonTokenStream(lexer));
             parser.Interpreter.PredictionMode = PredictionMode.Sll;
             var malinaListener = new MalinaParserListener();
@@ -242,14 +255,8 @@ namespace Malina.Parser.Tests
             PrintCode(code);
 
             //LEXER Assertions
-            var isLexerErrorRecordedTest = IsLexerErrorRecordedTest();
-            var isLexerErrorRecordTest = IsLexerErrorRecordTest();
-
-            if (isLexerErrorRecordedTest || isLexerErrorRecordTest)
+            if (recordedLexerErros != null)
             {
-                
-                var serialLexerErrors = lexerErrors.Errors.Count > 0 ? SerializeObject(lexerErrors.Errors) : null;
-                var recordedLexerErros = LoadLexerErrors(serialLexerErrors);
                 Assert.AreEqual(recordedLexerErros, serialLexerErrors);
             }
             else
@@ -357,6 +364,7 @@ namespace Malina.Parser.Tests
                     Console.Write("{0}:\t ", line);
                 }
             }
+            Console.Write(" ({0})", offset);
             Console.WriteLine();
         }
 

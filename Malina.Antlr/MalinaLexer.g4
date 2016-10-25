@@ -24,11 +24,8 @@ EQUAL				:	'=';
 DBL_EQUAL			:	'==';
 ELEMENT_ID			:	ShortName | FullName;
 
-VALUE_BEGIN			:	EQUAL Spaces {Emit(EQUAL);} -> pushMode(IN_VALUE);
-OPEN_VALUE_BEGIN	:	DBL_EQUAL	Spaces {Emit(DBL_EQUAL);} -> pushMode(IN_VALUE);
-
-
-
+VALUE_BEGIN			:	EQUAL Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
+OPEN_VALUE_BEGIN	:	DBL_EQUAL	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
 
 mode IN_VALUE;
 	//Parameter or Alias assignment

@@ -197,8 +197,12 @@ namespace Malina.Parser
                     osIndent++;
                 la = InputStream.La(--i);
             }
-            //return -i - 1;
             return osIndent;
+        }
+
+        private void StartNewMultliLineToken()
+        {
+            _currentToken = null;
         }
 
         //Open String Indents/Dedents processing
@@ -329,8 +333,10 @@ namespace Malina.Parser
             var _currentIndent = _indents.Peek();
             var indent = CalcOsIndent();
 
-            if (indent <= _currentIndent)
+            if (indent <= _currentIndent || _input.La(1) == Eof)
             {
+                //DQS is ended by indentation
+
                 //Report Lexer Error - missing closing Double Quote.
                 var err = new MalinaError(MalinaErrorCode.ClosingDqMissing,
                     new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
@@ -345,6 +351,16 @@ namespace Malina.Parser
                 _currentToken.StopColumn = this._tokenStartCharPositionInLine;
                 Emit(_currentToken);
                 PopMode(); PopMode();
+
+                //Emitting NEWLINE
+                EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                //Emitting 1 or more DEDENTS
+                while (_indents.Count > 1 && _indents.Peek() > indent)
+                {
+                    EmitIndentationToken(DEDENT, CharIndex - indent, CharIndex - 1);
+                    _indents.Pop();
+                }
+
             }
             else //Continue Multine DQS
                 Skip();

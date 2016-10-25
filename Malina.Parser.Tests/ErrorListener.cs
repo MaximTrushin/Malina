@@ -21,7 +21,12 @@ namespace Malina.Parser.Tests
         public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg,
             RecognitionException e)
         {
-            if(e is MalinaException) _errors.Add((e as MalinaException).Error);
+            if (e is MalinaException) _errors.Add((e as MalinaException).Error);
+            else
+            {
+                var me = new MalinaError(MalinaErrorCode.NoViableAltParserException, null, null);
+                //_errors.Add(me);
+            }
             HasErrors = true;
         }
     }

@@ -281,7 +281,7 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
             }
 
-            //Assert.AreEqual(false, parserErrorListener.HasErrors);
+            Assert.AreEqual(false, parserErrorListener.HasErrors);
 
         }
 

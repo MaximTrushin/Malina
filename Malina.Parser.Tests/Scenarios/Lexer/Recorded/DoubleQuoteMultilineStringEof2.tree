@@ -1,0 +1,16 @@
+
+module: ()
+    document_stmt: (DOCUMENT_ID=!MyRequest)
+        block: (COLON=:)
+            block_line_stmt: ()
+                element_stmt: ()
+                    block_element_stmt: (ELEMENT_ID=request)
+                        block: (COLON=:)
+                            block_line_stmt: ()
+                                element_stmt: ()
+                                    value_element_stmt: (ELEMENT_ID=e1)
+                                        value: ()
+                                            string_value: ()
+                                                string_value_ml: (EQUAL== , DQS_ML="bla
+			bla bla
+)

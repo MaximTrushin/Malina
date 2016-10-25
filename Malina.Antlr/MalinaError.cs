@@ -1,4 +1,5 @@
-﻿using Malina.DOM;
+﻿using Antlr4.Runtime;
+using Malina.DOM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,11 @@ namespace Malina.Parser
         [Message("Missing closing Double Qoute")]
         ClosingDqMissing,
 
-        //Parser Errors
 
+
+        //Parser Errors
+        [Message("NoViableAltParserException")]
+        NoViableAltParserException
     }
     [Serializable]
     public class MalinaError
@@ -26,7 +30,7 @@ namespace Malina.Parser
         private MalinaErrorCode _code;
         private SourceLocation _start;
         private SourceLocation _stop;
-
+        
         public SourceLocation Start
         {
             get
@@ -53,6 +57,19 @@ namespace Malina.Parser
             }
             set { _stop = value; }
         }
+
+        //public RecognitionException Exception
+        //{
+        //    get
+        //    {
+        //        return _exception;
+        //    }
+
+        //    set
+        //    {
+        //        _exception = value;
+        //    }
+        //}
 
         public MalinaError() { }
         public MalinaError(MalinaErrorCode code, SourceLocation start, SourceLocation stop)

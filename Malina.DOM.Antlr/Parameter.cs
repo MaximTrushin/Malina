@@ -10,6 +10,7 @@ namespace Malina.DOM.Antlr
         private ICharStream _charStream;
         private Interval _idInterval;
         private List<Interval> _valueIntervals;
+        private int _valueIndent;
 
         public ICharStream CharStream
         {
@@ -26,7 +27,18 @@ namespace Malina.DOM.Antlr
                 _idInterval = value;
             }
         }
+        public int ValueIndent
+        {
+            get
+            {
+                return _valueIndent;
+            }
 
+            set
+            {
+                _valueIndent = value;
+            }
+        }
         public List<Interval> ValueIntervals
         {
             get
@@ -59,22 +71,10 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (_valueIntervals == null) return base.Value;
-                return GetValueFromIntervals();
+                return Element.GetValueFromIntervals(_charStream, _valueIntervals, _valueIndent);
             }
         }
 
-        private string GetValueFromIntervals()
-        {
-            var _sb = new StringBuilder();
-            var first = true;
-            foreach (var item in _valueIntervals)
-            {
-                if (!first) _sb.AppendLine();
-                first = false;
-                _sb.Append(_charStream.GetText(item));
-            }
 
-            return _sb.ToString();
-        }
     }
 }

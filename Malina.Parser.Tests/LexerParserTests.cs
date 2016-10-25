@@ -98,7 +98,7 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        [Test, LexerRecorded, LexerErrorRecorded, ParseTreeRecorded, DomRecorded]
         public void DoubleQuoteMultilineString()
         {
             PerformTest();

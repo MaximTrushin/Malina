@@ -359,6 +359,9 @@
     <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.dom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.le">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.test">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

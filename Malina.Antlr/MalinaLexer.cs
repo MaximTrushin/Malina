@@ -276,85 +276,7 @@ namespace Malina.Parser
             else //Continue Multine DQS
                 Skip();
         }
-        /// <summary>
-        /// Generates additional NEWLINES and indents if DQS_VALUE_EOL consumes more then one line
-        /// </summary>
-        /// <param name="indentStart"></param>
-        /// <param name="indentStop"></param>
-        /// <param name="_currentIndent"></param>
-        /// <returns></returns>
-        private bool ProcessDqIndentDedent(int indentStart, int indentStop, int _currentIndent)
-        {
-            //checking if there is more than one line captured by the interval
-            var lastNL = FindLastNewLine(indentStart, indentStop, this.InputStream);
-            if (lastNL != -1)
-                return GenerateEmptyLines(indentStart, lastNL, _currentIndent);
-            return false;
-        }
 
-        private bool GenerateEmptyLines(int start, int stop, int _currentIndent)
-        {
-            var i = start;
-            var s = InputStream.ToString();
-            //var s1 = s.Substring(start, stop - start + 1);
-            var s1 = s.Substring(start-2, stop - start + 10);
-            var indent = 0;
-
-            var tokenGenerated = false;
-
-
-            //Skipping first /r/n
-            if (InputStream.La(i - CharIndex) == '\r') i++;
-            if (InputStream.La(i - CharIndex) == '\n') i++;
-            var lineStart = i;
-
-            while (i <= stop)
-            {
-                var c = InputStream.La(i - CharIndex);
-                if (c != '\n' && c != '\r')
-                    indent++;
-                if (c == '\n' || c == '\r' || i == stop)
-                {
-                    if(indent > _currentIndent)
-                    {
-                        //Generate line with extra indent
-                        EmitExtraDQSIndentToken(lineStart + _currentIndent + 1, i);
-                        tokenGenerated = true;
-                    }
-                    else
-                    {
-                        //Generate just NEWLINE
-                        EmitExtraDQSIndentToken(i, i-1);
-                        tokenGenerated = true;
-                    }
-
-                    //Reseting indent counter
-                    indent = 0;
-
-                    //Skipping \r \n
-                    if (c == '\r' && InputStream.La(i - CharIndex + 1) == '\n') i++;
-                    //Saving new line start
-                    lineStart = i + 1;
-                }
-
-                i++;
-            }
-            if(!tokenGenerated) EmitExtraDQSIndentToken(start, start - 1);
-            return true;
-        }
-
-        public static int FindLastNewLine(int start, int stop, IIntStream input)
-        {
-            for (int i = stop - input.Index; i >= start - input.Index + 1; i--)
-            {
-                if (input.La(i) == '\r') return input.Index + i;
-                if (input.La(i) == '\n') {
-                    if (i > 0 && input.La(i - 1) != '\r') return input.Index + i;
-                    else return input.Index + i - 1 >= start?input.Index + i - 1:-1;
-                }
-            }
-            return -1;
-        }
 
         private void EmitIndentationToken(int tokenType, int start, int stop)
         {
@@ -376,10 +298,7 @@ namespace Malina.Parser
             EmitIndentationToken(OPEN_VALUE_INDENT, InputStream.Index - indent + currentIndent + 1, InputStream.Index - 1);
         }
 
-        private void EmitExtraDQSIndent(int indent, int currentIndent)
-        {            
-            EmitIndentationToken(DQS_VALUE_EOL, InputStream.Index - indent + currentIndent + 1, InputStream.Index - 1);
-        }
+
         private void EmitExtraDQSIndentToken(int start, int stop)
         {
                 EmitIndentationToken(DQS_VALUE, start, stop);
@@ -397,9 +316,8 @@ namespace Malina.Parser
 
         private void StartDqs()
         {
-            _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DQS, Channel, _tokenStartCharIndex, -1);
+            _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DQS_ML, Channel, _tokenStartCharIndex, -1);
             _currentToken.TokenIndent = _indents.Peek() + 1;
-
         }
 
         private void EndDqs()

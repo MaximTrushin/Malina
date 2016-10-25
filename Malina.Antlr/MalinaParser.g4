@@ -112,11 +112,9 @@ value_ml	:	string_value_ml | object_value_ml;
 
 //string values
 string_value	:	string_value_inline | string_value_ml;
-string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | dqs_inline);
-string_value_ml	:	(EQUAL | DBL_EQUAL) (dqs_ml | open_value_ml);
+string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | DQS);
+string_value_ml	:	(EQUAL | DBL_EQUAL) (DQS_ML | open_value_ml);
 
-dqs_inline	:	DQS_BEGIN DQS_VALUE? DQS_END;
-dqs_ml	:	DQS_BEGIN (DQS_VALUE | DQS_VALUE_EOL)+ DQS_END;
 open_value_ml	:	(OPEN_VALUE | OPEN_VALUE_INDENT) (OPEN_VALUE | OPEN_VALUE_INDENT)+;
 
 //object values

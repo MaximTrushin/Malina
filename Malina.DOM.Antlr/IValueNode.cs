@@ -7,5 +7,6 @@ namespace Malina.DOM.Antlr
     {
         List<Interval> ValueIntervals { get; set; }
         object ObjectValue { get; set; }
+        int ValueIndent { get; set; }
     }
 }

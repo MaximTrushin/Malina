@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ArrayOfMalinaError xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MalinaError>
+    <Start>
+      <Column>8</Column>
+      <Line>3</Line>
+      <Index>29</Index>
+    </Start>
+    <Code>ClosingDqMissing</Code>
+    <Stop>
+      <Column>10</Column>
+      <Line>4</Line>
+      <Index>44</Index>
+    </Stop>
+  </MalinaError>
+  <MalinaError>
+    <Start>
+      <Column>8</Column>
+      <Line>3</Line>
+      <Index>29</Index>
+    </Start>
+    <Code>ClosingDqMissing</Code>
+    <Stop>
+      <Column>10</Column>
+      <Line>4</Line>
+      <Index>44</Index>
+    </Stop>
+  </MalinaError>
+</ArrayOfMalinaError>

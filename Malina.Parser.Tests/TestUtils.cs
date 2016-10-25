@@ -70,6 +70,24 @@ namespace Malina.Parser.Tests
             return recorded;
         }
 
+        public static string LoadLexerErrors(string serialLexerErrors)
+        {
+            var isLexerRecordTest = IsLexerErrorRecordTest(); //Overwrites existing recording
+            string recorded = null;
+            var testCaseName = GetTestCaseName();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".le").ToString();
+            if (!File.Exists(fileName)) recorded = null;
+            else
+                recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
+            if (recorded == null || isLexerRecordTest)
+            {
+                SaveLexerErrors(serialLexerErrors);
+                return serialLexerErrors;
+            }
+            return recorded;
+        }
+
+
         private static void SaveRecordedTest(string printedTokens)
         {
             var testCaseName = GetTestCaseName();
@@ -77,6 +95,15 @@ namespace Malina.Parser.Tests
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, printedTokens);
+        }
+
+        private static void SaveLexerErrors(string serialLexerErrors)
+        {
+            var testCaseName = GetTestCaseName();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".le").ToString();
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+
+            File.WriteAllText(fileName, serialLexerErrors);
         }
 
         public static string LoadRecordedParseTreeTest()
@@ -123,7 +150,7 @@ namespace Malina.Parser.Tests
             using (StringWriter textWriter = new StringWriter())
             {
                 xmlSerializer.Serialize(textWriter, toSerialize);
-                return textWriter.ToString();
+                return textWriter.ToString().Replace("\r\n", "\n");
             }
         }
         public static void PerformTest()
@@ -134,10 +161,8 @@ namespace Malina.Parser.Tests
 
             //Testing Lexer
             MalinaLexer lexer;
-            ErrorListener<int> lexerErros;
-            IList<IToken> tokens =  GetTokens(code, out lexer, out lexerErros);
-            var s = SerializeObject( lexerErros.Errors);
-
+            ErrorListener<int> lexerErrors;
+            IList<IToken> tokens =  GetTokens(code, out lexer, out lexerErrors);
 
             var printedTokens = PrintedTokens(tokens);
 
@@ -216,8 +241,19 @@ namespace Malina.Parser.Tests
 
             PrintCode(code);
 
-            //Lexer Assertions
-            Assert.AreEqual(false, lexerErros.HasErrors);
+            //LEXER Assertions
+            var isLexerErrorRecordedTest = IsLexerErrorRecordedTest();
+            var isLexerErrorRecordTest = IsLexerErrorRecordTest();
+
+            if (isLexerErrorRecordedTest || isLexerErrorRecordTest)
+            {
+                
+                var serialLexerErrors = lexerErrors.Errors.Count > 0 ? SerializeObject(lexerErrors.Errors) : null;
+                var recordedLexerErros = LoadLexerErrors(serialLexerErrors);
+                Assert.AreEqual(recordedLexerErros, serialLexerErrors);
+            }
+            else
+                Assert.AreEqual(false, lexerErrors.HasErrors);
 
             Assert.AreEqual(0, lexer.InvalidTokens.Count);
 

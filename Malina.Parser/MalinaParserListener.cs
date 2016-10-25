@@ -450,12 +450,11 @@ namespace Malina.Parser
         {
             var parent = _nodeStack.Peek() as IValueNode;
 
-            var dqs = context.dqs_inline();
+            var dqs = context.DQS();
             if (dqs != null)
             {
                 parent.ValueIntervals = new List<Interval>();
-                if((dqs.GetChild(1).Payload as CommonToken).Type == MalinaParser.DQS_VALUE)
-                parent.ValueIntervals.Add(new Interval((dqs.GetChild(1).Payload as CommonToken).StartIndex, (dqs.GetChild(1).Payload as CommonToken).StopIndex));
+                parent.ValueIntervals.Add(new Interval((dqs.Payload as CommonToken).StartIndex + 1, (dqs.Payload as CommonToken).StopIndex - 1));
                 return;
             }
 
@@ -494,27 +493,14 @@ namespace Malina.Parser
 
                 }
             }
-            var dqs_ml = context.children[1] as MalinaParser.Dqs_mlContext;
+            var dqs_ml = context.DQS_ML();
             if (dqs_ml != null)
             {
+                var token = dqs_ml.Payload as MalinaToken;
                 parent.ValueIntervals = new List<Interval>();
-                var previousIsIndent = true;
-                foreach (var item in dqs_ml.children)
-                {
-                    if ((item.Payload as CommonToken).Type == MalinaParser.DQS_VALUE)
-                    {
-                        if (!previousIsIndent) parent.ValueIntervals.Add(new Interval(-1, -1));//Adding New Line
-                        parent.ValueIntervals.Add(new Interval((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex));
-                        previousIsIndent = false;
-                    }
-                    else if ((item.Payload as CommonToken).Type == MalinaParser.DQS_VALUE_EOL)
-                    {//DQS_VALUE_EOL
-                        parent.ValueIntervals.Add(new Interval(-1, -1));//Adding New Line
-                        parent.ValueIntervals.Add(new Interval((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex));
-                        previousIsIndent = true;
-                    }
-
-                }
+                parent.ValueIntervals.Add(new Interval(token.StartIndex, token.StopIndex));
+                parent.ValueIndent = token.TokenIndent;
+                return;
             }
 
 

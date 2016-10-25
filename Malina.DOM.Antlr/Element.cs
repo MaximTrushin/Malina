@@ -13,6 +13,7 @@ namespace Malina.DOM.Antlr
         private ICharStream _charStream;
         private Interval _idInterval;
         private List<Interval> _valueIntervals;
+        private int _valueIndent;
 
         public ICharStream CharStream
         {
@@ -62,18 +63,45 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (_valueIntervals == null) return base.Value;
-                return GetValueFromIntervals();
+                return GetValueFromIntervals(_charStream, _valueIntervals, _valueIndent);
             }
         }
 
-        private string GetValueFromIntervals()
+        public int ValueIndent
+        {
+            get
+            {
+                return _valueIndent;
+            }
+
+            set
+            {
+                _valueIndent = value;
+            }
+        }
+
+        public static string GetValueFromIntervals(ICharStream charStream, List<Interval> valueIntervals, int valueIndent)
         {
             var _sb = new StringBuilder();
-            foreach (var item in _valueIntervals)
+            if (valueIndent > 0)
             {
-                if (item.a == -1) { _sb.AppendLine(); continue; };
-                _sb.Append(_charStream.GetText(item));
+                var value = charStream.GetText(valueIntervals[0]);
+                var lines = value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                var first = true;
+                foreach (var item in lines)
+                {
+                    if (first) {_sb.Append(item); first = false; continue; }
+                    if (item.Length <= valueIndent) { _sb.AppendLine();continue; }
+                    _sb.AppendLine();
+                    _sb.Append(item.Substring(valueIndent));                    
+                }
             }
+            else
+                foreach (var item in valueIntervals)
+                {
+                    if (item.a == -1) { _sb.AppendLine(); continue; };
+                    _sb.Append(charStream.GetText(item));
+                }
 
             return _sb.ToString();
         }

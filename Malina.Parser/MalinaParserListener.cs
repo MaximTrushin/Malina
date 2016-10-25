@@ -498,7 +498,7 @@ namespace Malina.Parser
             {
                 var token = dqs_ml.Payload as MalinaToken;
                 parent.ValueIntervals = new List<Interval>();
-                parent.ValueIntervals.Add(new Interval(token.StartIndex, token.StopIndex));
+                parent.ValueIntervals.Add(new Interval(token.StartIndex + 1, token.StopIndex - 1));
                 parent.ValueIndent = token.TokenIndent;
                 return;
             }

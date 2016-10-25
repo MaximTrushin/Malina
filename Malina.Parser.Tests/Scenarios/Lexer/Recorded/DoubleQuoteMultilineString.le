@@ -13,17 +13,4 @@
       <Index>44</Index>
     </Stop>
   </MalinaError>
-  <MalinaError>
-    <Start>
-      <Column>8</Column>
-      <Line>3</Line>
-      <Index>29</Index>
-    </Start>
-    <Code>ClosingDqMissing</Code>
-    <Stop>
-      <Column>10</Column>
-      <Line>4</Line>
-      <Index>44</Index>
-    </Stop>
-  </MalinaError>
 </ArrayOfMalinaError>

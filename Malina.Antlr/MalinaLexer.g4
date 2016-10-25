@@ -45,7 +45,7 @@ mode IN_VALUE;
 
 mode IN_DQS;
 	//Double Quoted String
-	DQS_VALUE		:	(~["\r\n] | '""')+ -> skip;
+	DQS_VALUE		:	(~["\r\n] | '""')+ {EndDqsIfEof();};
 
 	DQS_VALUE_EOL	:	(Eol Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
 

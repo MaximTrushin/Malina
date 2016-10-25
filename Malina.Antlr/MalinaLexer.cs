@@ -252,32 +252,6 @@ namespace Malina.Parser
             }
         }
 
-        private void DqIndentDedent()
-        {
-            var _currentIndent = _indents.Peek();
-            var indent = CalcOsIndent();
-
-            if (indent <= _currentIndent)
-            {
-                //Report Lexer Error - missing closing Double Quote.
-                var err = new MalinaError(MalinaErrorCode.ClosingDqMissing,
-                    new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
-                    new DOM.SourceLocation(this._tokenStartLine, this._tokenStartCharPositionInLine, this._tokenStartCharIndex));
-
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Qoute", 
-                    new MalinaException(this, InputStream as ICharStream, err));
-
-
-                //END Multiline DQS
-                _currentToken.StopIndex = this._tokenStartCharIndex - 1;
-                Emit(_currentToken);
-                PopMode();PopMode();
-            }
-            else //Continue Multine DQS
-                Skip();
-        }
-
-
         private void EmitIndentationToken(int tokenType, int start, int stop)
         {
             if (InWsaMode)
@@ -327,6 +301,53 @@ namespace Malina.Parser
             _currentToken.StopColumn = _tokenStartCharPositionInLine;
             Emit(_currentToken);
             PopMode();PopMode();
+        }
+
+        private void EndDqsIfEof()
+        {
+            if (this._input.La(1) == -1)
+            {
+                //Report Lexer Error - missing closing Double Quote.
+                var err = new MalinaError(MalinaErrorCode.ClosingDqMissing,
+                    new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
+                    new DOM.SourceLocation(Line,Column, CharIndex));
+
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Qoute",
+                    new MalinaException(this, InputStream as ICharStream, err));
+
+                _currentToken.StopIndex = this.CharIndex;
+                _currentToken.StopLine = Line;
+                _currentToken.StopColumn = Column;
+                Emit(_currentToken);
+                PopMode(); PopMode();
+            }
+            else Skip();
+        }
+
+        private void DqIndentDedent()
+        {
+            var _currentIndent = _indents.Peek();
+            var indent = CalcOsIndent();
+
+            if (indent <= _currentIndent)
+            {
+                //Report Lexer Error - missing closing Double Quote.
+                var err = new MalinaError(MalinaErrorCode.ClosingDqMissing,
+                    new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
+                    new DOM.SourceLocation(this._tokenStartLine, this._tokenStartCharPositionInLine, this._tokenStartCharIndex));
+
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Qoute",
+                    new MalinaException(this, InputStream as ICharStream, err));
+
+                //END Multiline DQS
+                _currentToken.StopIndex = this._tokenStartCharIndex;
+                _currentToken.StopLine = this._tokenStartLine;
+                _currentToken.StopColumn = this._tokenStartCharPositionInLine;
+                Emit(_currentToken);
+                PopMode(); PopMode();
+            }
+            else //Continue Multine DQS
+                Skip();
         }
     }
 }

@@ -17,15 +17,16 @@ module: ()
                                     value_element_stmt: (ELEMENT_ID=e2)
                                         value: ()
                                             string_value: ()
-                                                string_value_ml: (EQUAL== )
-                                                    open_value_ml: (OPEN_VALUE=blabla, OPEN_VALUE=bla bla)
+                                                string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+			bla bla)
                             block_line_stmt: ()
                                 element_stmt: ()
                                     value_element_stmt: (ELEMENT_ID=e2_1)
                                         value: ()
                                             string_value: ()
-                                                string_value_ml: (EQUAL== )
-                                                    open_value_ml: (OPEN_VALUE=blabla, OPEN_VALUE=bla bla, OPEN_VALUE_INDENT=		==)
+                                                string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+			bla bla
+					==)
                             block_line_stmt: ()
                                 element_stmt: ()
                                     value_element_stmt: (ELEMENT_ID=e3)
@@ -37,19 +38,24 @@ module: ()
                                     value_element_stmt: (ELEMENT_ID=e4)
                                         value: ()
                                             string_value: ()
-                                                string_value_ml: (EQUAL== )
-                                                    open_value_ml: (OPEN_VALUE=blabla, OPEN_VALUE_INDENT=		, OPEN_VALUE=bla bla, OPEN_VALUE_INDENT=	, OPEN_VALUE=bla)
+                                                string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+					bla bla
+				bla)
                             block_line_stmt: ()
                                 element_stmt: ()
                                     value_element_stmt: (ELEMENT_ID=e5)
                                         value: ()
                                             string_value: ()
-                                                string_value_ml: (EQUAL== )
-                                                    open_value_ml: (OPEN_VALUE=blabla, OPEN_VALUE_INDENT=		, OPEN_VALUE=bla bla, OPEN_VALUE_INDENT=	, OPEN_VALUE=bla)
+                                                string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+					bla bla
+				bla
+)
                             block_line_stmt: ()
                                 element_stmt: ()
                                     value_element_stmt: (ELEMENT_ID=e6)
                                         value: ()
                                             string_value: ()
-                                                string_value_ml: (EQUAL== )
-                                                    open_value_ml: (OPEN_VALUE=blabla, OPEN_VALUE_INDENT=		, OPEN_VALUE=bla bla, OPEN_VALUE_INDENT=	, OPEN_VALUE=bla, OPEN_VALUE_INDENT=<EOF>)
+                                                string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+					bla bla
+				bla
+)

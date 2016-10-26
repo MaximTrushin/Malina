@@ -471,27 +471,15 @@ namespace Malina.Parser
         public override void ExitString_value_ml([NotNull] MalinaParser.String_value_mlContext context)
         {
             var parent = _nodeStack.Peek() as IValueNode;
-            var open_value = context.children[1] as MalinaParser.Open_value_mlContext;
+            var open_value = context.OPEN_VALUE_ML();
             if (open_value != null)
             {
                 parent.ValueIntervals = new List<Interval>();
-                var previousIsIndent = true;
-                foreach (var item in open_value.children)
-                {
-                    if((item.Payload as CommonToken).Type == MalinaParser.OPEN_VALUE)
-                    {
-                        if(!previousIsIndent) parent.ValueIntervals.Add(new Interval(-1, -1));//Adding New Line
-                        parent.ValueIntervals.Add(new Interval((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex));
-                        previousIsIndent = false;
-                    }
-                    else
-                    {//OPEN_VALUE_INDENT
-                        parent.ValueIntervals.Add(new Interval(-1, -1));//Adding New Line
-                        parent.ValueIntervals.Add(new Interval((item.Payload as CommonToken).StartIndex, (item.Payload as CommonToken).StopIndex));
-                        previousIsIndent = true;
-                    }
 
-                }
+                var token = open_value.Payload as MalinaToken;
+                parent.ValueIntervals.Add(new Interval(token.StartIndex, token.StopIndex));
+                parent.ValueIndent = token.TokenIndent;
+
             }
             var dqs_ml = context.DQS_ML();
             if (dqs_ml != null)

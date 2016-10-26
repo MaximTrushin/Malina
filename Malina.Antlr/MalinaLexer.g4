@@ -1,6 +1,6 @@
 lexer grammar MalinaLexer;
 
-tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_INDENT, EQUAL, DBL_EQUAL, DQS, DQS_ML}
+tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML}
 
 WS				:	WsSpaces	-> skip;
 
@@ -36,7 +36,7 @@ mode IN_VALUE;
 
 	//Open string and Multi Line Open String
 	OPEN_VALUE_EOL		:	(Eol Spaces)+ '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
-	OPEN_VALUE			:	~[$%"\'\r\n](~[\r\n])*; //Open string content can't start with [$%"\'\r\n]
+	OPEN_VALUE			:	~[$%"\'\r\n](~[\r\n])* {EndOpenValueIfEof();}; //Open string content can't start with [$%"\'\r\n]
 	DQS					:	'"' (~["\r\n] | '""')+ '"' -> popMode;
 	DQS_ML				:	'"' {StartDqs();} -> skip, pushMode(IN_DQS);
 

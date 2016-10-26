@@ -78,6 +78,13 @@ namespace Malina.Parser
             //Scenario: Open value ends with EOF
             if (_input.La(1) == Eof && _mode == 1)
             {
+                if (_currentToken == null)//Empty Open String
+                {
+                    //Creating Token for Empty OpenString
+                    _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, -1, -1);
+                    _currentToken.Text = "";
+                    Emit(_currentToken);
+                }
                 EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
                 PopMode();
             }
@@ -215,6 +222,14 @@ namespace Malina.Parser
                 //Emitting NEWLINE if OS is not ended by ==
                 if (_input.La(-1) != '=')
                 {
+                    if (_currentToken == null)//Empty Open String
+                    {
+                        //Creating Token for Empty OpenString
+                        _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, -1, -1);
+                        _currentToken.Text = "";
+                    }
+
+
                     Emit(_currentToken);
                     EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 }
@@ -261,6 +276,13 @@ namespace Malina.Parser
             }
             else
             {
+                if (_currentToken == null)//Empty Open String Scenario
+                {
+                    //Creating Token for Empty OpenString
+                    _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, -1, -1);
+                    _currentToken.Text = "";
+                }
+
                 //Adding 1 NEWLINE before DEDENTS
                 //_currentToken.StopIndex = CharIndex - Column;
                 //_currentToken.StopLine = this._tokenStartLine;

@@ -20,12 +20,10 @@ ATTRIBUTE_ID		:	'@' Name;
 ALIAS_ID			:	'$' Name;
 PARAMETER_ID		:	'%' Name;
 ARGUMENT_ID			:	'.' Name;
-EQUAL				:	'=';
-DBL_EQUAL			:	'==';
 ELEMENT_ID			:	ShortName | FullName;
 
-VALUE_BEGIN			:	EQUAL Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
-OPEN_VALUE_BEGIN	:	DBL_EQUAL	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
+VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
+OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
 
 mode IN_VALUE;
 	//Parameter or Alias assignment

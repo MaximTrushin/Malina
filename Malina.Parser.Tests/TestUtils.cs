@@ -275,13 +275,13 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedParseTree, parseTree, "PARSE TREE assertion failed");
             }
 
+            Assert.AreEqual(false, parserErrorListener.HasErrors);
+
             //DOM Assertions
             if (recordedDom != null)
             {
                 Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
             }
-
-            Assert.AreEqual(false, parserErrorListener.HasErrors);
 
         }
 
@@ -374,7 +374,7 @@ namespace Malina.Parser.Tests
             foreach (var token in tokens)
             {
                 //string text = token.text ?? ;
-                string text = token.Text;
+                string text = token.StartIndex > -1? token.Text:"";
                 if (text != null)
                     text = text.Replace("\n", @"\n").Replace("\t", @"\t");
                 

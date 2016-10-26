@@ -99,7 +99,7 @@ namespace Malina.DOM.Antlr
             else
                 foreach (var item in valueIntervals)
                 {
-                    if (item.a == -1) { _sb.AppendLine(); continue; };
+                    if (item.a == -1)continue;//skip interval if Empty String
                     _sb.Append(charStream.GetText(item));
                 }
 

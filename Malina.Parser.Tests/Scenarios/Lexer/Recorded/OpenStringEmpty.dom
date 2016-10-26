@@ -1,0 +1,7 @@
+2:0	Document `MyRequest`:
+3:1		Element `request`:
+4:2			Element `e1`= ``
+5:2			Element `e2`:
+6:3				Element `e3`= ``
+7:2			Element `e4`= ``
+

@@ -16,8 +16,17 @@ namespace Malina.Parser
 
         }
 
-        public MalinaToken(Tuple<ITokenSource, ICharStream> source, int type, int channel, int start, int stop) : base(source, type, channel, start, stop)
+        public MalinaToken(Tuple<ITokenSource, ICharStream> source, int type, int channel, int start, int stop):base(type)
         {
+            if (source.Item1 != null)
+            {
+                Line = source.Item1.Line;
+                Column = source.Item1.Column;
+            }
+            this.source = source;
+            this.channel = channel;
+            this.start = start;
+            this.stop = stop;
         }
     }
     partial class MalinaLexer
@@ -426,6 +435,38 @@ namespace Malina.Parser
             }
             else //Continue Multine DQS
                 Skip();
+        }
+
+        private void EmitIdWithColon(int tokenType)
+        {
+            var _currentIndent = _indents.Peek();
+            if(InputStream.La(-1) == ':')
+            {
+                var token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, _tokenStartCharIndex, CharIndex - 2);
+                token.Line = _tokenStartLine;
+                token.StopLine = _tokenStartLine;
+                token.Column = _tokenStartCharPositionInLine;
+                token.StopColumn = Column - 2;
+
+                Emit(token);
+
+                token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), COLON, Channel, CharIndex - 1, CharIndex - 1);
+                token.Line = _tokenStartLine;
+                token.StopLine = _tokenStartLine;
+                token.Column = Column - 1;
+                token.StopColumn = Column - 1;
+                Emit(token);
+            }
+            else
+            {
+                var token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, _tokenStartCharIndex, CharIndex - 1);
+                token.Line = _tokenStartLine;
+                token.StopLine = _tokenStartLine;
+                token.Column = _tokenStartCharPositionInLine;
+                token.StopColumn = Column - 1;
+
+                Emit(token);
+            }
         }
     }
 }

@@ -1,27 +1,26 @@
 lexer grammar MalinaLexer;
 
-tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML}
+tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON}
 
-WS				:	WsSpaces	-> skip;
+
 
 INDENT_DEDENT		:	((Eol Spaces)+) {IndentDedent();};
 
-COLON				:	':';
-ARRAY_ITEM			:	Spaces ':';
+ARRAY_ITEM			:	':';
 
 LPAREN				:	'('	{EnterWsa();} -> skip;
 RPAREN				:	')'	{ExitWsa();}  -> skip;
 COMMA				:	',';
 
 NAMESPACE_ID		:	'#' ShortName;
-DOCUMENT_ID			:	'!' Name;
-ALIAS_DEF_ID		:	'!$' Name;
-SCOPE_ID			:   '#' FullName |'#.' ShortName ;
+DOCUMENT_ID			:	'!' Name ':'? {EmitIdWithColon(DOCUMENT_ID);};
+ALIAS_DEF_ID		:	'!$' Name ':'? {EmitIdWithColon(ALIAS_DEF_ID);};
+SCOPE_ID			:   ('#' FullName |'#.' ShortName | '#' ShortName) ':'? {EmitIdWithColon(SCOPE_ID);};
 ATTRIBUTE_ID		:	'@' Name;
-ALIAS_ID			:	'$' Name;
-PARAMETER_ID		:	'%' Name;
-ARGUMENT_ID			:	'.' Name;
-ELEMENT_ID			:	ShortName | FullName;
+ALIAS_ID			:	'$' Name ':'? {EmitIdWithColon(ALIAS_ID);};
+PARAMETER_ID		:	'%' Name ':'? {EmitIdWithColon(PARAMETER_ID);};
+ARGUMENT_ID			:	'.' Name ':'? {EmitIdWithColon(ARGUMENT_ID);};
+ELEMENT_ID			:	(ShortName | FullName) ':'? {EmitIdWithColon(ELEMENT_ID);};
 
 VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
 OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
@@ -29,6 +28,8 @@ OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> p
 EMPTY_OBJECT		:	'()';
 EMPTY_ARRAY			:	'(:)';
 
+
+WS				:	WsSpaces	-> skip;
 mode IN_VALUE;
 	//Parameter or Alias assignment
 	OBJECT_VALUE	: 
@@ -49,10 +50,6 @@ mode IN_DQS;
 	DQS_VALUE_EOL	:	(Eol Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
 
 	DQS_END			:	'"' {EndDqs();};
-	//Double quoted string multiline
-	//DQS_ML			:	
-	//				(	'"' (~["] | '""')* '"'	
-	//				)		-> popMode;
 
 fragment	Eol				:	( '\r'? '\n' )
 							;

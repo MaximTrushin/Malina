@@ -289,7 +289,7 @@ namespace Malina.Parser.Tests
         {
             lexer = new MalinaLexer(new AntlrInputStream(code));
             lexerErros = new ErrorListener<int>();
-            lexer.RemoveErrorListeners();
+            //lexer.RemoveErrorListeners();
             lexer.AddErrorListener(lexerErros);
 
             return lexer.GetAllTokens();

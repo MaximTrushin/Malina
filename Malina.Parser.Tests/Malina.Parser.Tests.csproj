@@ -185,6 +185,7 @@
     <None Include="Scenarios\Lexer\InlineElementBody4.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\JsonArray.mal" />
     <None Include="Scenarios\Lexer\LineComments.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

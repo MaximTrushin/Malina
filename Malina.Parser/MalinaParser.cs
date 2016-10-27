@@ -30,19 +30,20 @@ namespace Malina.Parser
                 var id = SCOPE_ID();
                 if (id != null)
                 {
-                    Element el = NodeStack.Peek() as Element;
+                    var el = NodeStack.Peek();
 
                     NodeContextExtensions.SetNodeLocation(el, this.start, this.stop);
                     var dot = MalinaParserListener.FindChar(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream, '.');
-                    el.IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
-                    Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
-                }
-                else
-                {
-                    id = NAMESPACE_ID();
-                    Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
-                }
-                
+                    if (dot > -1)
+                    {
+                        (el as Element).IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
+                        Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
+                    }
+                    else
+                    {
+                        Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                    }                    
+                }                
             }
 
         }
@@ -56,17 +57,19 @@ namespace Malina.Parser
                 var id = SCOPE_ID();
                 if (id != null)
                 {
-                    Element el = NodeStack.Peek() as Element;
+                    var el = NodeStack.Peek();
 
                     NodeContextExtensions.SetNodeLocation(el, this.start, this.stop);
                     var dot = MalinaParserListener.FindChar(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream, '.');
-                    el.IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
-                    Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
-                }
-                else
-                {
-                    id = NAMESPACE_ID();
-                    Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                    if(dot > -1)
+                    {
+                        (el as Element).IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
+                        Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
+                    }
+                    else
+                    {
+                        Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                    }
                 }
             }
         }

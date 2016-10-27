@@ -45,8 +45,8 @@ block_element_inline	:	ELEMENT_ID block_inline;
 
 //SCOPE RULES
 
-scope_stmt	:	(SCOPE_ID | NAMESPACE_ID) ((block_inline NEWLINE) | block);
-scope_inline	:	(SCOPE_ID | NAMESPACE_ID) block_inline;
+scope_stmt	:	SCOPE_ID ((block_inline NEWLINE) | block);
+scope_inline	:	SCOPE_ID block_inline;
 
 //ATTRIBUTE RULES
 

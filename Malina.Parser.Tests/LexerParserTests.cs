@@ -212,6 +212,12 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
+        [Test, LexerRecorded]
+        public void JsonArray()
+        {
+            PerformTest();
+        }
+
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void LineComments()
         {

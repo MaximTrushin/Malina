@@ -7,6 +7,7 @@ WS				:	WsSpaces	-> skip;
 INDENT_DEDENT		:	((Eol Spaces)+) {IndentDedent();};
 
 COLON				:	':';
+ARRAY_ITEM			:	Spaces ':';
 
 LPAREN				:	'('	{EnterWsa();} -> skip;
 RPAREN				:	')'	{ExitWsa();}  -> skip;
@@ -24,6 +25,9 @@ ELEMENT_ID			:	ShortName | FullName;
 
 VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
 OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
+
+EMPTY_OBJECT		:	'()';
+EMPTY_ARRAY			:	'(:)';
 
 mode IN_VALUE;
 	//Parameter or Alias assignment

@@ -227,450 +227,154 @@
     <None Include="Scenarios\Lexer\DoubleQuoteMultilineString.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttrAndElem.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttrAndElem.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttrAndElem.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultBlockParameters.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultBlockParameters.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultBlockParameters.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultInlineBlockParameters.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultInlineBlockParameters.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultInlineBlockParameters.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeParameters.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeParameters.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineParameters.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineParameters.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeParameters.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineParameters.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeParameters.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithSimpleParameters.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithSimpleParameters.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithSimpleParameters.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithArguments.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithArguments.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithArguments.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList2.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList2.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList2.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList3.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList3.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList3.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList4.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList4.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList4.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList5.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList5.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList5.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.le">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof.le">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof2.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof2.le">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof2.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof2.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementAtEOF.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementAtEOF.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementList1.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementList1.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementList1.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAlias.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAlias.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAlias.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasAndAliasDefinition.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasAndAliasDefinition.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasAndAliasDefinition.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasedAttribute.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasedAttribute.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasedAttribute.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributes.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributes.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributes.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributesAndOtherElements.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributesAndOtherElements.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributesAndOtherElements.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAlias.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAlias.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAlias.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAliasAndNestedAliasDefinition.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAliasAndNestedAliasDefinition.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAliasAndNestedAliasDefinition.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithValue.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithValue.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementWithValue.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\EmptyElement.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\EmptyElement.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\EmptyElement.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\EmptyElementWithNamespace.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\EmptyElementWithNamespace.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\EmptyElementWithNamespace.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody1.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody1.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody1.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody2.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody2.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody2.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody3.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody3.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody3.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody4.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody4.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\InlineElementBody4.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\LineComments.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\LineComments.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\LineComments.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ModuleNamespaceOverload.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ModuleNamespaceOverload.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ModuleNamespaceOverload.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ModuleWithTwoNamespaces.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ModuleWithTwoNamespaces.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ModuleWithTwoNamespaces.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\MultiLineComments.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\MultiLineComments.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\MultiLineComments.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope1.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope1.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope1.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope2.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope2.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope2.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope3.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope3.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\NamespaceScope3.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OneNamespaceNoBrackets.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OneNamespaceNoBrackets.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OneNamespaceNoBrackets.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringEmpty.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringEmpty.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringEmpty.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringSimple.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringSimple.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\OpenStringSimple.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\TwoNamespaces.dom">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\TwoNamespaces.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\ElementAtEOF.test">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Scenarios\Lexer\Recorded\TwoNamespaces.tree">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttrAndElem.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttrAndElem.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttrAndElem.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithAttributes.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultBlockParameters.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultBlockParameters.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultBlockParameters.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultInlineBlockParameters.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultInlineBlockParameters.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithDefaultInlineBlockParameters.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeDefaultParameters.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeParameters.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeParameters.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineParameters.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineParameters.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInplaceAttributeParameters.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineParameters.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithInlineAttributeParameters.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithSimpleParameters.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithSimpleParameters.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasDefinitionWithSimpleParameters.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithArguments.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithArguments.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithArguments.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList2.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList2.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList2.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList3.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList3.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList3.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList4.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList4.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList4.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList5.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList5.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArgumentList5.tree" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.dom" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.test" />
+    <None Include="Scenarios\Lexer\Recorded\AliasWithInlineArguments.tree" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.dom" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.le" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.test" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineString.tree" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof.dom" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof.le" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof.test" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof.tree" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof2.dom" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof2.le" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof2.test" />
+    <None Include="Scenarios\Lexer\Recorded\DoubleQuoteMultilineStringEof2.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementAtEOF.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementAtEOF.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementList1.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementList1.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementList1.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAlias.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAlias.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAlias.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasAndAliasDefinition.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasAndAliasDefinition.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasAndAliasDefinition.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasedAttribute.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasedAttribute.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAliasedAttribute.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributes.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributes.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributes.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributesAndOtherElements.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributesAndOtherElements.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithAttributesAndOtherElements.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAlias.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAlias.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAlias.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAliasAndNestedAliasDefinition.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAliasAndNestedAliasDefinition.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithNestedAliasAndNestedAliasDefinition.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithOpenStringValue.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithValue.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithValue.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementWithValue.tree" />
+    <None Include="Scenarios\Lexer\Recorded\EmptyElement.dom" />
+    <None Include="Scenarios\Lexer\Recorded\EmptyElement.test" />
+    <None Include="Scenarios\Lexer\Recorded\EmptyElement.tree" />
+    <None Include="Scenarios\Lexer\Recorded\EmptyElementWithNamespace.dom" />
+    <None Include="Scenarios\Lexer\Recorded\EmptyElementWithNamespace.test" />
+    <None Include="Scenarios\Lexer\Recorded\EmptyElementWithNamespace.tree" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody1.dom" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody1.test" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody1.tree" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody2.dom" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody2.test" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody2.tree" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody3.dom" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody3.test" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody3.tree" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody4.dom" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody4.test" />
+    <None Include="Scenarios\Lexer\Recorded\InlineElementBody4.tree" />
+    <None Include="Scenarios\Lexer\Recorded\LineComments.dom" />
+    <None Include="Scenarios\Lexer\Recorded\LineComments.test" />
+    <None Include="Scenarios\Lexer\Recorded\LineComments.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ModuleNamespaceOverload.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ModuleNamespaceOverload.test" />
+    <None Include="Scenarios\Lexer\Recorded\ModuleNamespaceOverload.tree" />
+    <None Include="Scenarios\Lexer\Recorded\ModuleWithTwoNamespaces.dom" />
+    <None Include="Scenarios\Lexer\Recorded\ModuleWithTwoNamespaces.test" />
+    <None Include="Scenarios\Lexer\Recorded\ModuleWithTwoNamespaces.tree" />
+    <None Include="Scenarios\Lexer\Recorded\MultiLineComments.dom" />
+    <None Include="Scenarios\Lexer\Recorded\MultiLineComments.test" />
+    <None Include="Scenarios\Lexer\Recorded\MultiLineComments.tree" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope1.dom" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope1.test" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope1.tree" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope2.dom" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope2.test" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope2.tree" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope3.dom" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope3.test" />
+    <None Include="Scenarios\Lexer\Recorded\NamespaceScope3.tree" />
+    <None Include="Scenarios\Lexer\Recorded\OneNamespaceNoBrackets.dom" />
+    <None Include="Scenarios\Lexer\Recorded\OneNamespaceNoBrackets.test" />
+    <None Include="Scenarios\Lexer\Recorded\OneNamespaceNoBrackets.tree" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEmpty.dom" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEmpty.test" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEmpty.tree" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.dom" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.test" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringEndOnDedentAndEof.tree" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.dom" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.test" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringMiltiline.tree" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringSimple.dom" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringSimple.test" />
+    <None Include="Scenarios\Lexer\Recorded\OpenStringSimple.tree" />
+    <None Include="Scenarios\Lexer\Recorded\TwoNamespaces.dom" />
+    <None Include="Scenarios\Lexer\Recorded\TwoNamespaces.test" />
+    <None Include="Scenarios\Lexer\Recorded\ElementAtEOF.test" />
+    <None Include="Scenarios\Lexer\Recorded\TwoNamespaces.tree" />
     <None Include="Scenarios\Lexer\TwoNamespaces.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -697,6 +401,11 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rmdir $(TargetDir)Scenarios /s /q
+xcopy $(ProjectDir)Scenarios  $(TargetDir)Scenarios /E /I /Y
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

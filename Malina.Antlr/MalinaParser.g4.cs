@@ -1,6 +1,6 @@
-﻿namespace Malina.Antlr
+﻿namespace Malina.Parser
 {
-    partial class MalinaParser
+    public partial class MalinaParser
     {
     }
 }

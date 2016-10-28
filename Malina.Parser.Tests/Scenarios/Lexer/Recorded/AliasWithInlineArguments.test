@@ -19,6 +19,3 @@
 	7:16	COLON	`:`	 (148,148)
 	7:18	ALIAS_ID	`$AccountTypes.NewCustomer`	 (150,174)
 	8:0	NEWLINE	`<EOF>`	 (176,176)
-	8:0	DEDENT	`<EOF>`	 (176,176)
-	8:0	DEDENT	`<EOF>`	 (176,176)
-	8:0	DEDENT	`<EOF>`	 (176,176)

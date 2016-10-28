@@ -17,5 +17,3 @@
 	6:3	DEDENT	`\t\t\t`	 (94,96)
 	6:3	ALIAS_ID	`$Account`	 (97,104)
 	7:0	NEWLINE	`<EOF>`	 (106,106)
-	7:0	DEDENT	`<EOF>`	 (106,106)
-	7:0	DEDENT	`<EOF>`	 (106,106)

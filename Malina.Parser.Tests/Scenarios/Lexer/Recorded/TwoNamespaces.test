@@ -11,4 +11,3 @@
 	6:1	NEWLINE	`\n`	 (68,68)
 	6:1	ELEMENT_ID	`request`	 (70,76)
 	7:0	NEWLINE	`<EOF>`	 (78,78)
-	7:0	DEDENT	`<EOF>`	 (78,78)

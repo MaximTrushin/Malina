@@ -8,5 +8,3 @@
 	3:7	EQUAL	`= `	 (27,28)
 	3:8	DQS_ML	`<EOF>`	 (29,44)
 	4:10	NEWLINE	`<EOF>`	 (44,44)
-	4:10	DEDENT	`<EOF>`	 (44,44)
-	4:10	DEDENT	`<EOF>`	 (44,44)

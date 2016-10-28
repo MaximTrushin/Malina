@@ -17,5 +17,3 @@
 	6:2	INDENT	`\t\t`	 (65,66)
 	6:2	ELEMENT_ID	`Account`	 (67,73)
 	7:0	NEWLINE	`<EOF>`	 (75,75)
-	7:0	DEDENT	`<EOF>`	 (75,75)
-	7:0	DEDENT	`<EOF>`	 (75,75)

@@ -27,6 +27,3 @@
 	10:3	INDENT	`\t\t\t`	 (137,139)
 	10:3	ALIAS_ID	`$Addresses.PA.Hawley`	 (140,159)
 	12:0	NEWLINE	`<EOF>`	 (162,162)
-	12:0	DEDENT	`<EOF>`	 (162,162)
-	12:0	DEDENT	`<EOF>`	 (162,162)
-	12:0	DEDENT	`<EOF>`	 (162,162)

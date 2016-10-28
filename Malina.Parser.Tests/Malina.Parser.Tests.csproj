@@ -216,6 +216,9 @@
     <None Include="Scenarios\Lexer\OpenStringEndOnDedentAndEof.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Lexer\OpenStringMiltiline2.mal">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\Lexer\OpenStringMiltiline.mal">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -18,5 +18,3 @@
 	4:109	EQUAL	`= `	 (139,140)
 	4:134	ALIAS_ID	`$AccountTypes.NewCustomer`	 (141,165)
 	5:0	NEWLINE	`<EOF>`	 (167,167)
-	5:0	DEDENT	`<EOF>`	 (167,167)
-	5:0	DEDENT	`<EOF>`	 (167,167)

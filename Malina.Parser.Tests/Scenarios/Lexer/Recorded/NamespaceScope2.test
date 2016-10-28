@@ -20,5 +20,3 @@
 	7:10	COLON	`:`	 (56,56)
 	7:12	ELEMENT_ID	`e4`	 (58,59)
 	8:0	NEWLINE	`<EOF>`	 (61,61)
-	8:0	DEDENT	`<EOF>`	 (61,61)
-	8:0	DEDENT	`<EOF>`	 (61,61)

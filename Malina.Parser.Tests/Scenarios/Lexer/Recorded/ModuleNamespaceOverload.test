@@ -33,4 +33,3 @@
 	15:1	NEWLINE	`\n`	 (235,235)
 	15:1	ELEMENT_ID	`request`	 (237,243)
 	17:0	NEWLINE	`<EOF>`	 (247,247)
-	17:0	DEDENT	`<EOF>`	 (247,247)

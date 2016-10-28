@@ -73,17 +73,15 @@ namespace Malina.Parser
         }
 
         public override IToken NextToken()
-        {
-            IToken r;
+        {            
             //Return previosly generated tokens first
             if (_tokens.Count > 0)
             {
-                r= _tokens.Dequeue();
-                return r;
+                return _tokens.Dequeue();
             }
             
             Token = null;
-            //Checking EOF and still mode = IN_VALUE
+            //Checking if EOF and still mode = IN_VALUE then we need to generate OPEN_VALUE
             //Scenario: Open value ends with EOF
             if (_input.La(1) == Eof && _mode == 1)
             {
@@ -93,40 +91,17 @@ namespace Malina.Parser
                     _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, -1, -1);
                     _currentToken.Text = "";
                     Emit(_currentToken);
-                }
-                EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
+                }                
                 PopMode();
             }
-            //Checking if Dedents need to be generated in the EOF
-            if (_input.La(1) == Eof && _indents.Peek() > 0)
-            {
-                if (InWsaMode)
-                {
-                    //If still in WSA mode in the EOF then clear wsa mode.
-                    while (_wsaStack.Count > 0) _wsaStack.Pop();
-                }
-
-                if(_lastToken.Type != NEWLINE)
-                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
-
-                while (_indents.Peek() > 0)
-                {
-                    EmitIndentationToken(DEDENT, CharIndex, CharIndex);
-                    _indents.Pop();
-                }
-
-                //Return one dedent if it was generated. Other dedents could be in _tokens
-                if (Token != null)
-                    return base.NextToken();
+            
+            if (_tokens.Count > 0) {
+                //Return generated tokens
+                return _tokens.Dequeue();
             }
-
+            
             //Run regular path if there no extra tokens generated in queue
-            if (_tokens.Count == 0) {
-                r = base.NextToken();
-                return r;
-            }
-            //Return generated tokens
-            return _tokens.Dequeue();
+            return base.NextToken();
         }
 
         public override void Recover(LexerNoViableAltException e)

@@ -14,6 +14,7 @@ module: ()
                                                 string_value_ml: (EQUAL== , DQS_ML="bla
 			bla bla
 )
+                                        newline: ()
                             block_line_stmt: ()
                                 element_stmt: ()
                                     value_element_stmt: (ELEMENT_ID=e2)
@@ -21,6 +22,7 @@ module: ()
                                             string_value: ()
                                                 string_value_ml: (EQUAL== , DQS_ML="bla
 				 bla bla")
+                                        newline: ()
                             block_line_stmt: ()
                                 element_stmt: ()
                                     value_element_stmt: (ELEMENT_ID=e3)
@@ -29,6 +31,7 @@ module: ()
                                                 string_value_ml: (EQUAL== , DQS_ML="bla
 
 			bla bla")
+                                        newline: ()
                             block_line_stmt: ()
                                 element_stmt: ()
                                     value_element_stmt: (ELEMENT_ID=e4)
@@ -37,3 +40,6 @@ module: ()
                                                 string_value_ml: (EQUAL== , DQS_ML="bla
 				
 			bla bla")
+                                        newline: (EOF=<EOF>)
+                            dedent: (EOF=<EOF>)
+            dedent: (EOF=<EOF>)

@@ -18,5 +18,3 @@
 	5:2	NEWLINE	`\n`	 (65,65)
 	5:2	ELEMENT_ID	`e4`	 (68,69)
 	6:0	NEWLINE	`<EOF>`	 (71,71)
-	6:0	DEDENT	`<EOF>`	 (71,71)
-	6:0	DEDENT	`<EOF>`	 (71,71)

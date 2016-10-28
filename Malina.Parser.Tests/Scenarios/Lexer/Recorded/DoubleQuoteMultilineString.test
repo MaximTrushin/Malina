@@ -19,6 +19,3 @@
 	10:2	ELEMENT_ID	`e4`	 (98,99)
 	10:7	EQUAL	`= `	 (101,102)
 	10:8	DQS_ML	`"bla\n\t\t\t\t\n\t\t\tbla bla"`	 (103,123)
-	12:11	NEWLINE	`<EOF>`	 (124,124)
-	12:11	DEDENT	`<EOF>`	 (124,124)
-	12:11	DEDENT	`<EOF>`	 (124,124)

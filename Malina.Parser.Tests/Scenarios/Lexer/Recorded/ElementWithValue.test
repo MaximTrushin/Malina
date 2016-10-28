@@ -9,4 +9,3 @@
 	5:15	EQUAL	`= `	 (53,54)
 	5:15	DQS	`"value1"`	 (55,62)
 	6:0	NEWLINE	`<EOF>`	 (64,64)
-	6:0	DEDENT	`<EOF>`	 (64,64)

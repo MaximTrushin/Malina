@@ -19,6 +19,3 @@
 	7:2	ELEMENT_ID	`e4`	 (47,48)
 	7:7	EQUAL	`= `	 (50,51)
 	7:7	OPEN_VALUE	``	 (-1,-1)
-	7:7	NEWLINE	`<EOF>`	 (52,52)
-	7:7	DEDENT	`<EOF>`	 (52,52)
-	7:7	DEDENT	`<EOF>`	 (52,52)

@@ -11,5 +11,3 @@
 	4:19	ALIAS_ID	`$a1`	 (39,41)
 	4:20	ALIAS_ID	`$a2`	 (43,45)
 	5:0	NEWLINE	`<EOF>`	 (48,48)
-	5:0	DEDENT	`<EOF>`	 (48,48)
-	5:0	DEDENT	`<EOF>`	 (48,48)

@@ -20,5 +20,3 @@
 	6:17	COLON	`:`	 (125,125)
 	6:19	ALIAS_ID	`$Addresses.PA.Hawley`	 (127,146)
 	7:0	NEWLINE	`<EOF>`	 (148,148)
-	7:0	DEDENT	`<EOF>`	 (148,148)
-	7:0	DEDENT	`<EOF>`	 (148,148)

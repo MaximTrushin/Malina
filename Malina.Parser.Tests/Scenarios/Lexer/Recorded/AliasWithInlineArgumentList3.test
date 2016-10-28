@@ -13,5 +13,3 @@
 	4:50	EQUAL	`= `	 (80,81)
 	4:50	DQS	`"false"`	 (82,88)
 	5:0	NEWLINE	`<EOF>`	 (90,90)
-	5:0	DEDENT	`<EOF>`	 (90,90)
-	5:0	DEDENT	`<EOF>`	 (90,90)

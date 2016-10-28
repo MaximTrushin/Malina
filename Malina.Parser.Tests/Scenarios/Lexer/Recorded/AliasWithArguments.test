@@ -24,7 +24,3 @@
 	10:5	INDENT	`\t\t\t\t\t`	 (160,164)
 	10:5	ALIAS_ID	`$AccountTypes.NewCustomer`	 (165,189)
 	11:0	NEWLINE	`<EOF>`	 (191,191)
-	11:0	DEDENT	`<EOF>`	 (191,191)
-	11:0	DEDENT	`<EOF>`	 (191,191)
-	11:0	DEDENT	`<EOF>`	 (191,191)
-	11:0	DEDENT	`<EOF>`	 (191,191)

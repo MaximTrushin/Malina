@@ -31,6 +31,3 @@
 	18:2	ELEMENT_ID	`e6`	 (190,191)
 	18:7	EQUAL	`= `	 (193,194)
 	19:3	OPEN_VALUE_ML	`blabla\n\t\t\t\t\tbla bla\n\t\t\t\tbla\n`	 (199,226)
-	22:4	NEWLINE	`<EOF>`	 (231,231)
-	22:4	DEDENT	`<EOF>`	 (231,231)
-	22:4	DEDENT	`<EOF>`	 (231,231)

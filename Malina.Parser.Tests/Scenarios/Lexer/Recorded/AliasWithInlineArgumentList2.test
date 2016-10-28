@@ -10,5 +10,3 @@
 	4:30	EQUAL	`= `	 (60,61)
 	4:30	DQS	`"Assets"`	 (62,69)
 	5:0	NEWLINE	`<EOF>`	 (72,72)
-	5:0	DEDENT	`<EOF>`	 (72,72)
-	5:0	DEDENT	`<EOF>`	 (72,72)

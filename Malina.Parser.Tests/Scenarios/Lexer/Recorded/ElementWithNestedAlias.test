@@ -14,5 +14,3 @@
 	6:2	NEWLINE	`\n`	 (60,60)
 	6:2	ALIAS_ID	`$aliasGroup1.aliasName1.AliasName2.AliasName3`	 (63,107)
 	7:0	NEWLINE	`<EOF>`	 (109,109)
-	7:0	DEDENT	`<EOF>`	 (109,109)
-	7:0	DEDENT	`<EOF>`	 (109,109)

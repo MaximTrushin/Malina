@@ -6,13 +6,13 @@ namespace Malina.DOM
     public enum ValueType
     {
         None,
-        String,
+        DoubleQuotedString,
+        SingleQuotedString,
         OpenString,
-        Interpolation,
-        Null,
-        Number,
-        Boolean,
-        EmptyObject
+        ObjectValue, //Parameter or Alias
+        Null, //Json null
+        Number, // Json number literal
+        Boolean, // Json boolean literal
     }
 
 

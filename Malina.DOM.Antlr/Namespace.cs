@@ -56,25 +56,12 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public object ObjectValue
-        {
-            get
-            {
-                return Value;
-            }
-
-            set
-            {
-                return;
-            }
-        }
-
         public override string Value
         {
             get
             {
                 if (_valueIntervals == null) return base.Value;
-                return Element.GetValueFromIntervals(_charStream, _valueIntervals, _valueIndent);
+                return Element.GetValueFromIntervals(_charStream, _valueIntervals, _valueIndent, ValueType);
             }
         }
 

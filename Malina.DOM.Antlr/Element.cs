@@ -49,7 +49,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Name != null) return base.Name;
-                return _charStream.GetText(new Interval(_idInterval.a, _idInterval.b));
+                return _charStream.GetText(_idInterval);
             }
 
             set
@@ -63,7 +63,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (_valueIntervals == null) return base.Value;
-                return GetValueFromIntervals(_charStream, _valueIntervals, _valueIndent);
+                return GetValueFromIntervals(_charStream, _valueIntervals, _valueIndent, ValueType);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public static string GetValueFromIntervals(ICharStream charStream, List<Interval> valueIntervals, int valueIndent)
+        public static string GetValueFromIntervals(ICharStream charStream, List<Interval> valueIntervals, int valueIndent, DOM.ValueType valueType)
         {
             var _sb = new StringBuilder();
             if (valueIndent > 0)
@@ -90,17 +90,29 @@ namespace Malina.DOM.Antlr
                 var first = true;
                 foreach (var item in lines)
                 {
-                    if (first) {_sb.Append(item); first = false; continue; }
-                    if (item.Length <= valueIndent) { _sb.AppendLine();continue; }
+                    string s;
+                    if (valueType == ValueType.OpenString)
+                        s = item.TrimEnd(' ', '\t');
+                    else
+                        s = item;
+
+                    if (first) {_sb.Append(s); first = false; continue; }
+
+                    //Removing indents
+                    if (s.Length <= valueIndent) { _sb.AppendLine();continue; }
                     _sb.AppendLine();
-                    _sb.Append(item.Substring(valueIndent));                    
+                    _sb.Append(s.Substring(valueIndent));                    
                 }
             }
             else
                 foreach (var item in valueIntervals)
                 {
-                    if (item.a == -1)continue;//skip interval if Empty String
-                    _sb.Append(charStream.GetText(item));
+                    if (item.a == -1) continue;//skip interval if Empty String
+                    string s = charStream.GetText(item);
+                    if (valueType == ValueType.OpenString)
+                        s = s.TrimEnd(' ', '\t');
+
+                    _sb.Append(s);
                 }
 
             return _sb.ToString();

@@ -31,7 +31,7 @@ namespace Malina.Parser
             {
                 var node = new T();
                 if (parent != null)
-                    (parent as IValueNode).ObjectValue = node;
+                    (parent as DOM.Antlr.IValueNode).ObjectValue = node;
                 ctx.Node = node;
                 node.CharStream = (ctx as ParserRuleContext).start.InputStream;
             }

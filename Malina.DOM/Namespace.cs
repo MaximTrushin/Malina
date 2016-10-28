@@ -3,23 +3,49 @@
 namespace Malina.DOM
 {
     [Serializable]
-    public class Namespace : Node
+    public class Namespace : Node, IValueNode
     {
         // Fields
-        public bool Derived;
-        private string value;
+        private string _value;
+        private ValueType _valueType;
 
-        // Methods
-       public virtual string Value
+        public object ObjectValue
         {
             get
             {
-                return value;
+                return _value;
             }
 
             set
             {
-                this.value = value;
+                _value = value as string;
+            }
+        }
+
+        // Methods
+        public virtual string Value
+        {
+            get
+            {
+                return _value;
+            }
+
+            set
+            {
+                this._value = value;
+            }
+        }
+
+        public ValueType ValueType
+        {
+            get
+            {
+                return _valueType;
+            }
+
+            set
+            {
+                _valueType = value;
             }
         }
 

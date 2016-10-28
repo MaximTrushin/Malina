@@ -212,6 +212,24 @@ namespace Malina.Parser
             ExitContext(context);
         }
         #endregion
+
+        #region ARRAY_ITEM context classes
+        #region STATEMENT context 
+
+        public override void EnterBlock_array_item_stmt([NotNull] MalinaParser.Block_array_item_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_array_item_stmt([NotNull] MalinaParser.Block_array_item_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+
+        #endregion
+        #endregion
+
         #region INLINE context
         public override void EnterValue_element_inline([NotNull] MalinaParser.Value_element_inlineContext context)
         {
@@ -448,13 +466,14 @@ namespace Malina.Parser
         #region Value
         public override void ExitString_value_inline([NotNull] MalinaParser.String_value_inlineContext context)
         {
-            var parent = _nodeStack.Peek() as IValueNode;
+            var parent = _nodeStack.Peek() as DOM.Antlr.IValueNode;
 
             var dqs = context.DQS();
             if (dqs != null)
             {
                 parent.ValueIntervals = new List<Interval>();
                 parent.ValueIntervals.Add(new Interval((dqs.Payload as CommonToken).StartIndex + 1, (dqs.Payload as CommonToken).StopIndex - 1));
+                (parent as DOM.IValueNode).ValueType = DOM.ValueType.DoubleQuotedString;
                 return;
             }
 
@@ -463,14 +482,14 @@ namespace Malina.Parser
             {
                 parent.ValueIntervals = new List<Interval>();
                 parent.ValueIntervals.Add(new Interval((openValue.Payload as CommonToken).StartIndex, (openValue.Payload as CommonToken).StopIndex));
-
+                (parent as DOM.IValueNode).ValueType = DOM.ValueType.OpenString;
+                return;
             }
-
         }
 
         public override void ExitString_value_ml([NotNull] MalinaParser.String_value_mlContext context)
         {
-            var parent = _nodeStack.Peek() as IValueNode;
+            var parent = _nodeStack.Peek() as DOM.Antlr.IValueNode;
             var open_value = context.OPEN_VALUE_ML();
             if (open_value != null)
             {
@@ -479,6 +498,8 @@ namespace Malina.Parser
                 var token = open_value.Payload as MalinaToken;
                 parent.ValueIntervals.Add(new Interval(token.StartIndex, token.StopIndex));
                 parent.ValueIndent = token.TokenIndent;
+                (parent as DOM.IValueNode).ValueType = DOM.ValueType.OpenString;
+                return;
 
             }
             var dqs_ml = context.DQS_ML();
@@ -488,10 +509,9 @@ namespace Malina.Parser
                 parent.ValueIntervals = new List<Interval>();
                 parent.ValueIntervals.Add(new Interval(token.StartIndex + 1, token.StopIndex - 1));
                 parent.ValueIndent = token.TokenIndent;
+                (parent as DOM.IValueNode).ValueType = DOM.ValueType.DoubleQuotedString;
                 return;
             }
-
-
         }
 
         public override void EnterParameter_object_value_inline([NotNull] MalinaParser.Parameter_object_value_inlineContext context)

@@ -180,6 +180,20 @@ namespace Malina.Parser
         }
         #endregion
 
+        #region ARRAY_ITEM Context
+        public partial class Block_array_item_stmtContext : INodeContext<Element>
+        {
+            public Element Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                Node.IDInterval = new Interval(1, 0);          
+            }
+
+        }
+        #endregion
+
         #region INLINE Context
         public partial class Value_element_inlineContext : INodeContext<Element>
         {

@@ -3,7 +3,7 @@
 namespace Malina.DOM
 {
     [Serializable]
-    public class Element : Entity
+    public class Element : Entity, IValueNode
     {
         // Fields
         private NodeCollection<Attribute> _attributes;
@@ -12,7 +12,7 @@ namespace Malina.DOM
         public bool IsValueElement;
         public string Namespace;
         private object _objectValue;
-        public ValueType ValueType;
+        private ValueType _valueType;
 
         // Methods
 
@@ -66,6 +66,10 @@ namespace Malina.DOM
             {
                 return ((ObjectValue != null) ? (!(ObjectValue is Alias) ? ObjectValue.ToString() : ("$" + (ObjectValue as Alias).Name)) : null);
             }
+            set
+            {
+                _objectValue = value;
+            }
         }
         public NodeCollection<Attribute> Attributes
         {
@@ -113,7 +117,7 @@ namespace Malina.DOM
             }
         }
 
-        public object ObjectValue
+        public virtual object ObjectValue
         {
             get
             {
@@ -123,6 +127,19 @@ namespace Malina.DOM
             set
             {
                 _objectValue = value;
+            }
+        }
+
+        public ValueType ValueType
+        {
+            get
+            {
+                return _valueType;
+            }
+
+            set
+            {
+                _valueType = value;
             }
         }
     }

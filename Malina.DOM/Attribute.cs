@@ -3,12 +3,12 @@
 namespace Malina.DOM
 {
     [Serializable]
-    public class Attribute : Node
+    public class Attribute : Node, IValueNode
     {
         // Fields
         public string Namespace;
         private object _objectValue;
-        public ValueType ValueType;
+        private ValueType _valueType;
 
         // Methods
         public Attribute()
@@ -44,6 +44,10 @@ namespace Malina.DOM
             {
                 return ((ObjectValue != null) ? (!(ObjectValue is Alias) ? ObjectValue.ToString() : ("$" + (ObjectValue as Alias).Name)) : null);
             }
+            set
+            {
+                _objectValue = value;
+            }
         }
 
         public object ObjectValue
@@ -56,6 +60,19 @@ namespace Malina.DOM
             set
             {
                 _objectValue = value;
+            }
+        }
+
+        public ValueType ValueType
+        {
+            get
+            {
+                return _valueType;
+            }
+
+            set
+            {
+                _valueType = value;
             }
         }
     }

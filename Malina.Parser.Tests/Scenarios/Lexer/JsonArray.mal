@@ -1,20 +1,4 @@
-﻿
-!json:
+﻿!json:
 	items:
 		:
 			prop1 = "a"
-			prop2 = "b"
-			sub_items:
-				:
-					prop1 = "a"
-					prop2 = "b"
-				:
-					prop1 = "a"
-					prop2 = "b"					
-		:
-			prop1 = "a"
-			prop2 = "b"
-		:
-			prop1 = "a"
-			prop2 = "b"
-

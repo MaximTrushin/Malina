@@ -40,7 +40,7 @@ namespace Malina.Parser.PerfomanceTests
             //parser.AddParseListener(malinaListener);
             parser.BuildParseTree = false;
             t1 = Environment.TickCount;
-            var module = parser.module();
+            //var module = parser.module();
             t2 = Environment.TickCount;
 
             Console.WriteLine("Parse Time: {0}", t2 - t1);
@@ -52,7 +52,7 @@ namespace Malina.Parser.PerfomanceTests
             parser.Reset();
             parser.AddParseListener(malinaListener);            
             t1 = Environment.TickCount;            
-            module = parser.module();
+            //module = parser.module();
             t2 = Environment.TickCount;
             Console.WriteLine("DOM Time: {0}", t2 - t1);
             Assert.IsTrue(t2 - t1 < 20000);

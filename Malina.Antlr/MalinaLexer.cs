@@ -468,5 +468,27 @@ namespace Malina.Parser
                 Emit(token);
             }
         }
+
+        private void ReportColonError(int tokenType)
+        {
+            if (InputStream.La(-1) == ':')
+            {
+                var token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, _tokenStartCharIndex, CharIndex - 2);
+                token.Line = _tokenStartLine;
+                token.StopLine = _tokenStartLine;
+                token.Column = _tokenStartCharPositionInLine;
+                token.StopColumn = Column - 2;
+
+                Emit(token);
+            }
+
+            var err = new MalinaError(MalinaErrorCode.IncorrectColon,
+                new DOM.SourceLocation(Line, Column - 1, CharIndex - 1),
+                new DOM.SourceLocation(Line, Column - 1, CharIndex - 1));
+
+            ErrorListenerDispatch.SyntaxError(this, 0, this.CharIndex - 1, this.CharIndex - 1, "Incorrect usage of colon.",
+                    new MalinaException(this, InputStream as ICharStream, err));
+
+        }
     }
 }

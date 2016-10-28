@@ -5,17 +5,19 @@ options { tokenVocab=MalinaLexer; }
 //_inline - inline expression
 //_stmt - declaration statement (always ends with NEWLINE).
 
-module			:	namespace_declaration_stmt* (document_stmt | alias_def_stmt)*;
+module	:	namespace_declaration_stmt* (document_stmt | alias_def_stmt)*;
 
 namespace_declaration_stmt	:	NAMESPACE_ID string_value NEWLINE;
 
-document_stmt	:	DOCUMENT_ID ((block_inline NEWLINE) | ns_block | block);
+document_stmt	:	DOCUMENT_ID ((block_inline NEWLINE) | ns_block | block | array);
 
-alias_def_stmt	:	ALIAS_DEF_ID ((block_inline NEWLINE) | ns_block | block);
+alias_def_stmt	:	ALIAS_DEF_ID ((block_inline NEWLINE) | ns_block | block | array);
 
 ns_block	:	COLON INDENT (namespace_declaration_stmt)+ (block_line_stmt | inline_stmt | hybrid_stmt)* DEDENT;
 
 block	:	COLON INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ DEDENT;
+
+array	:	(COLON | ARRAY_ITEM) INDENT (array_item_stmt | alias_stmt)+ DEDENT;
 
 block_inline	:	COLON (inline_expression)+ COMMA?;
 
@@ -34,7 +36,7 @@ block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt | scope
 //statements
 element_stmt	:	block_element_stmt | value_element_stmt | empty_element_stmt;
 value_element_stmt	:	ELEMENT_ID value NEWLINE;
-block_element_stmt	:	ELEMENT_ID ((block_inline NEWLINE) | block);
+block_element_stmt	:	ELEMENT_ID ((block_inline NEWLINE) | block | array );
 empty_element_stmt	:	ELEMENT_ID NEWLINE;
 
 //inline
@@ -43,9 +45,15 @@ empty_element_inline	:	ELEMENT_ID;
 value_element_inline	:	ELEMENT_ID value_inline;
 block_element_inline	:	ELEMENT_ID block_inline;
 
+//ARRAY RULES
+//statements
+array_item_stmt	:	block_array_item_stmt | value_array_item_stmt;
+block_array_item_stmt	:	ARRAY_ITEM INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ DEDENT;
+value_array_item_stmt	:	EQUAL value;
+
 //SCOPE RULES
 
-scope_stmt	:	SCOPE_ID ((block_inline NEWLINE) | block);
+scope_stmt	:	SCOPE_ID ((block_inline NEWLINE) | block | array);
 scope_inline	:	SCOPE_ID block_inline;
 
 //ATTRIBUTE RULES
@@ -63,7 +71,7 @@ empty_attr_inline	: ATTRIBUTE_ID;
 parameter_stmt	:	empty_parameter_stmt | value_parameter_stmt | block_parameter_stmt;
 empty_parameter_stmt	: PARAMETER_ID NEWLINE;
 value_parameter_stmt	: PARAMETER_ID value NEWLINE;
-block_parameter_stmt	: PARAMETER_ID ((block_inline NEWLINE) | block);
+block_parameter_stmt	: PARAMETER_ID ((block_inline NEWLINE) | block | array);
 
 //inline
 parameter_inline	:	empty_parameter_inline | value_parameter_inline | block_parameter_inline;
@@ -76,7 +84,7 @@ block_parameter_inline	: PARAMETER_ID block_inline;
 alias_stmt	:	empty_alias_stmt | value_alias_stmt | block_alias_stmt;
 empty_alias_stmt	:	ALIAS_ID NEWLINE;
 value_alias_stmt	:	ALIAS_ID value NEWLINE;
-block_alias_stmt	:	ALIAS_ID (((block_inline | argument_block_inline) NEWLINE) | (block | argument_block));
+block_alias_stmt	:	ALIAS_ID (((block_inline | argument_block_inline) NEWLINE) | (block | array | argument_block));
 
 //inline
 alias_inline	:	empty_alias_inline | value_alias_inline | block_alias_inline;
@@ -89,7 +97,7 @@ block_alias_inline	: ALIAS_ID (block_inline | argument_block_inline);
 argument_stmt	:	empty_argument_stmt | value_argument_stmt | block_argument_stmt;
 empty_argument_stmt	:	ARGUMENT_ID NEWLINE;
 value_argument_stmt	:	ARGUMENT_ID value NEWLINE;
-block_argument_stmt	:	ARGUMENT_ID ((block_inline NEWLINE) | block);
+block_argument_stmt	:	ARGUMENT_ID ((block_inline NEWLINE) | block | array);
 
 argument_inline_stmt	:	argument_inline+ NEWLINE;
 

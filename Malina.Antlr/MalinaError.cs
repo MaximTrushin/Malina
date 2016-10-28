@@ -15,9 +15,10 @@ namespace Malina.Parser
         NoError = 0,
 
         //Lexer Errors
-        [Message("Missing closing Double Qoute")]
+        [Message("Missing closing Double Qoute.")]
         ClosingDqMissing,
-
+        [Message("Incorrect usage of colon.")]
+        IncorrectColon,
 
 
         //Parser Errors

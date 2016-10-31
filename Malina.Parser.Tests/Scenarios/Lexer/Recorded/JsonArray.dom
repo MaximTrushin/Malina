@@ -1,0 +1,19 @@
+1:0	Document `json`:
+2:1		Element `items`:
+3:2			Element ``:
+4:3				Element `prop1`= `a`
+5:3				Element `prop2`= `b`
+6:3				Element `sub_items`:
+7:4					Element ``:
+8:5						Element `prop1`= `a`
+9:5						Element `prop2`= `b`
+10:4					Element ``:
+11:5						Element `prop1`= `a`
+12:5						Element `prop2`= `b`
+13:2			Element ``:
+14:3				Element `prop1`= `a`
+15:3				Element `prop2`= `b`
+16:2			Element ``:
+17:3				Element `prop1`= `a`
+18:3				Element `prop2`= `b`
+

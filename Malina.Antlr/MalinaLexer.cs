@@ -179,6 +179,7 @@ namespace Malina.Parser
         //Calculates Indent for Multiline Open String
         private int CalcOsIndent()
         {
+            if (InWsaMode) return 0;
             var i = -1;
             var osIndent = 0;
             int la = InputStream.La(i);
@@ -199,7 +200,7 @@ namespace Malina.Parser
         //Open String Indents/Dedents processing
         private void OsIndentDedent()
         {
-            var _currentIndent = _indents.Peek();
+            var _currentIndent = InWsaMode ? 0 : _indents.Peek();
             var indent = CalcOsIndent();
             if (indent == _currentIndent)
             {
@@ -219,6 +220,11 @@ namespace Malina.Parser
                 }
                 else
                 {
+                    if (_currentToken == null)
+                    {
+                        //Creating Token 
+                        _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, _tokenStartCharIndex, -1);
+                    }
                     //if value was ended with ==  then we need to add \n                                     
                     _currentToken.StopIndex = CharIndex - Column - 1;
                     _currentToken.StopLine = this._tokenStartLine;
@@ -350,7 +356,7 @@ namespace Malina.Parser
             else Skip();
         }
 
-        private void EndOpenValueIfEof()
+        private void EndOpenValueIfEofOrWsa()
         {
             if(_currentToken == null)
             {
@@ -363,7 +369,7 @@ namespace Malina.Parser
             _currentToken.StopLine = Line;
             _currentToken.StopColumn = Column - 1;
 
-            if (this._input.La(1) == -1)
+            if (this._input.La(1) == -1 || InWsaMode)
             {
                 Emit(_currentToken);
                 PopMode();
@@ -376,7 +382,7 @@ namespace Malina.Parser
 
         private void DqIndentDedent()
         {
-            var _currentIndent = _indents.Peek();
+            var _currentIndent = InWsaMode ? 0 : _indents.Peek();
             var indent = CalcOsIndent();
 
             if (indent <= _currentIndent || _input.La(1) == Eof)

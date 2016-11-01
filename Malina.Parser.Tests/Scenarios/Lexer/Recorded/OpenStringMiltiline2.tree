@@ -11,6 +11,14 @@ module: ()
                                     value_element_stmt: (ELEMENT_ID=e1)
                                         value: ()
                                             string_value: ()
+                                                string_value_ml: (EQUAL==, OPEN_VALUE_ML=
+)
+                                        newline: ()
+                            block_line_stmt: ()
+                                element_stmt: ()
+                                    value_element_stmt: (ELEMENT_ID=e2)
+                                        value: ()
+                                            string_value: ()
                                                 string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
 					bla bla
 				bla)

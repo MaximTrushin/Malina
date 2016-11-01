@@ -39,9 +39,13 @@ mode IN_VALUE;
 
 	//Open string and Multi Line Open String
 	OPEN_VALUE_EOL		:	(Eol Spaces)+ '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
-	OPEN_VALUE			:	~[$%"\'\r\n](~[\r\n])* {EndOpenValueIfEof();}; //Open string content can't start with [$%"\'\r\n]
+	OPEN_VALUE			:	~[$%"\'\r\n](~[\r\n])* {EndOpenValueIfEofOrWsa();}; //Open string content can't start with [$%"\'\r\n]
+	
+	//Double Qoute String (DQS) and Multiline DQS
 	DQS					:	'"' (~["\r\n] | '""')+ '"' -> popMode;
 	DQS_ML				:	'"' {StartDqs();} -> skip, pushMode(IN_DQS);
+
+
 
 mode IN_DQS;
 	//Double Quoted String

@@ -19,4 +19,3 @@
 	6:2	PARAMETER_ID	`%BillingAddress`	 (110,124)
 	6:17	COLON	`:`	 (125,125)
 	6:19	ALIAS_ID	`$Addresses.PA.Hawley`	 (127,146)
-	7:0	NEWLINE	`<EOF>`	 (148,148)

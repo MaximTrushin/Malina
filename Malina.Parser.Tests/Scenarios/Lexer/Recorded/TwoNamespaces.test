@@ -10,4 +10,3 @@
 	4:8	DQS	`"http://myNs2.com"`	 (48,65)
 	6:1	NEWLINE	`\n`	 (68,68)
 	6:1	ELEMENT_ID	`request`	 (70,76)
-	7:0	NEWLINE	`<EOF>`	 (78,78)

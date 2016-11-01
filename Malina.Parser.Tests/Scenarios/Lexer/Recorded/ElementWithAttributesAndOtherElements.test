@@ -19,4 +19,3 @@
 	7:2	ELEMENT_ID	`ns1.tag2`	 (82,89)
 	7:13	EQUAL	`= `	 (91,92)
 	7:13	DQS	`"tag2"`	 (93,98)
-	8:0	NEWLINE	`<EOF>`	 (100,100)

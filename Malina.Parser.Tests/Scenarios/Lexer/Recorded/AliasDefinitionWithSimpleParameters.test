@@ -13,4 +13,3 @@
 	6:2	PARAMETER_ID	`%ServiceAddress`	 (53,67)
 	7:2	NEWLINE	`\n`	 (68,68)
 	7:2	PARAMETER_ID	`%BillingAddress`	 (71,85)
-	8:0	NEWLINE	`<EOF>`	 (87,87)

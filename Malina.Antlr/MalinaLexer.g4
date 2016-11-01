@@ -3,7 +3,6 @@ lexer grammar MalinaLexer;
 tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON}
 
 
-
 INDENT_DEDENT		:	((Eol Spaces)+) {IndentDedent();};
 
 ARRAY_ITEM			:	':';
@@ -28,8 +27,8 @@ OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> p
 EMPTY_OBJECT		:	'()';
 EMPTY_ARRAY			:	'(:)';
 
-
 WS				:	WsSpaces	-> skip;
+
 mode IN_VALUE;
 	//Parameter or Alias assignment
 	OBJECT_VALUE	: 
@@ -43,13 +42,12 @@ mode IN_VALUE;
 	
 	//Double Qoute String (DQS) and Multiline DQS
 	DQS					:	'"' (~["\r\n] | '""')+ '"' -> popMode;
-	DQS_ML				:	'"' {StartDqs();} -> skip, pushMode(IN_DQS);
-
+	DQS_ML				:	'"' (~["\r\n] | '""')* {StartDqsMl();} -> skip, pushMode(IN_DQS);
 
 
 mode IN_DQS;
 	//Double Quoted String
-	DQS_VALUE		:	(~["\r\n] | '""')+ {EndDqsIfEof();};
+	DQS_VALUE		:	(~["\r\n] | '""')+ {EndDqsIfEofOrWsa();};
 
 	DQS_VALUE_EOL	:	(Eol Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
 

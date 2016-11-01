@@ -15,4 +15,3 @@
 	7:2	NEWLINE	`\n`	 (76,76)
 	7:2	DEDENT	`\t\t`	 (77,78)
 	7:2	PARAMETER_ID	`%Address`	 (79,86)
-	9:0	NEWLINE	`<EOF>`	 (91,91)

@@ -9,4 +9,3 @@
 	4:15	ARGUMENT_ID	`.AccountType`	 (47,58)
 	4:30	EQUAL	`= `	 (60,61)
 	4:30	DQS	`"Assets"`	 (62,69)
-	5:0	NEWLINE	`<EOF>`	 (72,72)

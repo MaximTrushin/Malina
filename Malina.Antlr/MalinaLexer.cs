@@ -118,19 +118,8 @@ namespace Malina.Parser
             //Lexer reached EOF. 
             if (_input.La(1) == Eof)
             {
-                //Adding trailing NEWLINE and DEDENTS if neeeded
-                //Scenario: Any indented last node in the file.
-                if (_indents.Count > 1)
-                {
-                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);                    
-                    return;
-                }
-                else
-                {
-                    //Ignore indents in the end of file if there are no DEDENTS have to be reported. See comment above.
-                    Skip();
-                    return;
-                }
+                Skip();
+                return;
             }
 
             //Lexer hasn't reached EOF
@@ -292,9 +281,6 @@ namespace Malina.Parser
 
         private void EmitIndentationToken(int tokenType, int start, int stop)
         {
-            if (InWsaMode)
-                Skip();
-            else
                 Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, start, stop));
         }
 
@@ -318,10 +304,13 @@ namespace Malina.Parser
                 _wsaStack.Pop();
         }
 
-        private void StartDqs()
+        private void StartDqsMl()
         {
-            _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DQS_ML, Channel, _tokenStartCharIndex, -1);
+            _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DQS, Channel, _tokenStartCharIndex, -1);
             _currentToken.TokenIndent = _indents.Peek() + 1;
+            _currentToken.Column = _tokenStartCharPositionInLine + 1;
+            EndDqsIfEofOrWsa();
+            _currentToken.Type = DQS_ML;
         }
 
         private void EndDqs()
@@ -333,9 +322,9 @@ namespace Malina.Parser
             PopMode();PopMode();
         }
 
-        private void EndDqsIfEof()
+        private void EndDqsIfEofOrWsa()
         {
-            if (this._input.La(1) == -1)
+            if (this._input.La(1) == -1 || InWsaMode)
             {
                 //Report Lexer Error - missing closing Double Quote.
                 var err = new MalinaError(MalinaErrorCode.ClosingDqMissing,

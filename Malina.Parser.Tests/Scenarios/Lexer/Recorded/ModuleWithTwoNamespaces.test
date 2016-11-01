@@ -32,4 +32,3 @@
 	13:9	DQS	`"http://myNs22.com"`	 (194,212)
 	15:1	NEWLINE	`\n`	 (215,215)
 	15:1	ELEMENT_ID	`request`	 (217,223)
-	17:0	NEWLINE	`<EOF>`	 (227,227)

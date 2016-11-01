@@ -32,4 +32,3 @@
 	13:13	DQS	`"http://myNsDoc2.com"`	 (212,232)
 	15:1	NEWLINE	`\n`	 (235,235)
 	15:1	ELEMENT_ID	`request`	 (237,243)
-	17:0	NEWLINE	`<EOF>`	 (247,247)

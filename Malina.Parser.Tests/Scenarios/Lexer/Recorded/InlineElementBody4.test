@@ -9,4 +9,3 @@
 	4:7	ELEMENT_ID	`e2`	 (30,31)
 	4:12	EQUAL	`= `	 (33,34)
 	4:12	DQS	`"test"`	 (35,40)
-	5:0	NEWLINE	`<EOF>`	 (43,43)

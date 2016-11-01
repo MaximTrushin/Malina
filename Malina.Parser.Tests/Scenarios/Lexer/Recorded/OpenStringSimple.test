@@ -15,4 +15,3 @@
 	6:2	ELEMENT_ID	`e3`	 (51,52)
 	6:7	EQUAL	`= `	 (54,55)
 	6:7	DQS	`"blablabla"`	 (56,66)
-	7:0	NEWLINE	`<EOF>`	 (68,68)

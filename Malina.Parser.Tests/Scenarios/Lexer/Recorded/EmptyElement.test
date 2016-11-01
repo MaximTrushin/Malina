@@ -2,4 +2,3 @@
 	2:2	COLON	`:`	 (3,3)
 	3:1	INDENT	`\t`	 (5,5)
 	3:1	ELEMENT_ID	`b`	 (6,6)
-	5:0	NEWLINE	`<EOF>`	 (9,9)

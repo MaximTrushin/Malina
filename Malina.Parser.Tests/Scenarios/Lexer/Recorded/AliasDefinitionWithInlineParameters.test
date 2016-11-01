@@ -17,4 +17,3 @@
 	6:15	PARAMETER_ID	`%AccountType`	 (86,97)
 	7:2	NEWLINE	`\n`	 (98,98)
 	7:2	PARAMETER_ID	`%Address`	 (101,108)
-	9:0	NEWLINE	`<EOF>`	 (113,113)

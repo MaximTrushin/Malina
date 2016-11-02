@@ -8,7 +8,7 @@ INDENT_DEDENT		:	((Eol Spaces)+) {IndentDedent();};
 ARRAY_ITEM			:	':';
 
 LPAREN				:	'('	{EnterWsa();} -> skip;
-RPAREN				:	')'	{ExitWsa();}  -> skip;
+RPAREN				:	')' Spaces	{ExitWsa();}  -> skip;
 COMMA				:	',';
 
 NAMESPACE_ID		:	'#' ShortName;

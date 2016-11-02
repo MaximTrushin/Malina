@@ -3,7 +3,7 @@ parser grammar MalinaParser;
 options { tokenVocab=MalinaLexer; }
 
 //_inline - inline expression
-//_stmt - declaration statement (always ends with NEWLINE).
+//_stmt - declaration statement (always ends with NEWLINE or EOF).
 
 dedent	:	DEDENT | EOF;
 newline	:	NEWLINE | EOF;

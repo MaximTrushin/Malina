@@ -1,5 +1,5 @@
-2:0	Document `ParametersTestDoc`:
-3:2		Element `request`:
-4:3			Alias `Customer`:
-4:15				Argument `AccountType`= `Assets`
+02:00	Document `ParametersTestDoc`:
+03:02		Element `request`:
+04:03			Alias `Customer`:
+04:15				Argument `AccountType`= `Assets`
 

@@ -1,5 +1,5 @@
-2:0	Document `MyRequest`:
-3:1		Namespace `ns1`= `http://myNs1.com`
-4:1		Namespace `ns2`= `http://myNs2.com`
-6:1		Element `request`
+02:00	Document `MyRequest`:
+03:01		Namespace `ns1`= `http://myNs1.com`
+04:01		Namespace `ns2`= `http://myNs2.com`
+06:01		Element `request`
 

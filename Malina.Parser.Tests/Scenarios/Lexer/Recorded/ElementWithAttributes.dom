@@ -1,6 +1,6 @@
-1:0	Document `MyRequest`:
-2:1		Element `ns1.request`:
-3:2			Attribute `inactive`
-4:2			Attribute `name`= `name1`
-5:2			Attribute `ns1.name2`= `name2`
+01:00	Document `MyRequest`:
+02:01		Element `ns1.request`:
+03:02			Attribute `inactive`
+04:02			Attribute `name`= `name1`
+05:02			Attribute `ns1.name2`= `name2`
 

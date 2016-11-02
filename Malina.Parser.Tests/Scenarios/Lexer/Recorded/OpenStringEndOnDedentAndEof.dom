@@ -1,17 +1,17 @@
-1:0	AliasDefinition `Indicators.Batch1`:
-2:1		Alias `indicator`:
-3:2			Argument `Name`= `274933_BP215`
-4:2			Argument `SKU`= `274933`
-4:18			Argument `Indicator`= `274933`
-5:2			Argument `Description`= `Bas Dir W Save $25off-12moterm`
-6:1		Alias `indicator`:
-7:2			Argument `Name`= `274933_BP215`
-8:2			Argument `SKU`= `274933`
-8:18			Argument `Indicator`= `274933`
-9:2			Argument `Description`= `Bas Dir W Save $25off-12moterm`
-10:1		Alias `indicator`:
-11:2			Argument `Name`= `274933_BP215`
-12:2			Argument `SKU`= `274933`
+01:00	AliasDefinition `Indicators.Batch1`:
+02:01		Alias `indicator`:
+03:02			Argument `Name`= `274933_BP215`
+04:02			Argument `SKU`= `274933`
+04:18			Argument `Indicator`= `274933`
+05:02			Argument `Description`= `Bas Dir W Save $25off-12moterm`
+06:01		Alias `indicator`:
+07:02			Argument `Name`= `274933_BP215`
+08:02			Argument `SKU`= `274933`
+08:18			Argument `Indicator`= `274933`
+09:02			Argument `Description`= `Bas Dir W Save $25off-12moterm`
+10:01		Alias `indicator`:
+11:02			Argument `Name`= `274933_BP215`
+12:02			Argument `SKU`= `274933`
 12:18			Argument `Indicator`= `274933`
-13:2			Argument `Description`= `Bas Dir W Save $25off-12moterm`
+13:02			Argument `Description`= `Bas Dir W Save $25off-12moterm`
 

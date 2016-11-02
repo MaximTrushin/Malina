@@ -31,7 +31,7 @@
         public virtual void OnDocument(Document node)
         {
             Visit(node.Namespaces);
-            VisitNode(node.DocumentElement);
+            Visit(node.Entities);
         }
 
         public virtual void OnElement(Element node)

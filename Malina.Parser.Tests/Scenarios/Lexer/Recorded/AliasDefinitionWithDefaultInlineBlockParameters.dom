@@ -1,10 +1,10 @@
-2:0	AliasDefinition `Customer`:
-3:1		Element `Customer`:
-4:2			Element `Account`:
-4:11				Parameter `AccountType`:
-4:25					Element `Type`= `NewCustomer`
-5:2			Parameter `ServiceAddress`:
-5:19				Alias `Addresses.PA.Hawley`
-6:2			Parameter `BillingAddress`:
-6:19				Alias `Addresses.PA.Hawley`
+02:00	AliasDefinition `Customer`:
+03:01		Element `Customer`:
+04:02			Element `Account`:
+04:11				Parameter `AccountType`:
+04:25					Element `Type`= `NewCustomer`
+05:02			Parameter `ServiceAddress`:
+05:19				Alias `Addresses.PA.Hawley`
+06:02			Parameter `BillingAddress`:
+06:19				Alias `Addresses.PA.Hawley`
 

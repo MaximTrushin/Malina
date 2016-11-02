@@ -1,6 +1,6 @@
-2:0	AliasDefinition `Address.UK.Cambridge`:
-3:1		Attribute `xsi.type`= `ipo:EU-Address`
+02:00	AliasDefinition `Address.UK.Cambridge`:
+03:01		Attribute `xsi.type`= `ipo:EU-Address`
 
-8:0	AliasDefinition `Address.UK.Cambridge`:
-9:1		Attribute `xsi.type`= `ipo:EU-Address`
+08:00	AliasDefinition `Address.UK.Cambridge`:
+09:01		Attribute `xsi.type`= `ipo:EU-Address`
 

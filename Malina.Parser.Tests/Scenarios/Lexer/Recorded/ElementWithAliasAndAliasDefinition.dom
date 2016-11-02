@@ -1,16 +1,16 @@
-2:0	Document `MyRequest`:
-3:1		Element `ns1.request`:
-4:2			Element `tag1`= `tag1`
-5:2			Element `ns1.tag2`= `tag2`
-6:2			Alias `aliasGroup1.aliasName1`
+02:00	Document `MyRequest`:
+03:01		Element `ns1.request`:
+04:02			Element `tag1`= `tag1`
+05:02			Element `ns1.tag2`= `tag2`
+06:02			Alias `aliasGroup1.aliasName1`
 
-8:0	AliasDefinition `aliasGroup1.aliasName1`:
-9:1		Element `tag3`= `tag3`
-10:1		Element `tag4`= `tag4`
-11:1		Element `ns1.tag3`= `tag3`
+08:00	AliasDefinition `aliasGroup1.aliasName1`:
+09:01		Element `tag3`= `tag3`
+10:01		Element `tag4`= `tag4`
+11:01		Element `ns1.tag3`= `tag3`
 
-13:0	AliasDefinition `aliasName2`:
-14:1		Element `tag3`= `tag3`
-15:1		Element `tag4`= `tag4`
-16:1		Element `ns1.tag3`= `tag3`
+13:00	AliasDefinition `aliasName2`:
+14:01		Element `tag3`= `tag3`
+15:01		Element `tag4`= `tag4`
+16:01		Element `ns1.tag3`= `tag3`
 

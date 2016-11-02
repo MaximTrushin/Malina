@@ -1,19 +1,19 @@
-1:0	Document `json`:
-2:1		Element `items`:
-3:2			Element ``:
-4:3				Element `prop1`= `a`
-5:3				Element `prop2`= `b`
-6:3				Element `sub_items`:
-7:4					Element ``:
-8:5						Element `prop1`= `a`
-9:5						Element `prop2`= `b`
-10:4					Element ``:
-11:5						Element `prop1`= `a`
-12:5						Element `prop2`= `b`
-13:2			Element ``:
-14:3				Element `prop1`= `a`
-15:3				Element `prop2`= `b`
-16:2			Element ``:
-17:3				Element `prop1`= `a`
-18:3				Element `prop2`= `b`
+01:00	Document `json`:
+02:01		Element `items`:
+03:02			Element ``:
+04:03				Element `prop1`= `a`
+05:03				Element `prop2`= `b`
+06:03				Element `sub_items`:
+07:04					Element ``:
+08:05						Element `prop1`= `a`
+09:05						Element `prop2`= `b`
+10:04					Element ``:
+11:05						Element `prop1`= `a`
+12:05						Element `prop2`= `b`
+13:02			Element ``:
+14:03				Element `prop1`= `a`
+15:03				Element `prop2`= `b`
+16:02			Element ``:
+17:03				Element `prop1`= `a`
+18:03				Element `prop2`= `b`
 

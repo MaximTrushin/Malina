@@ -187,7 +187,7 @@ namespace Malina.Parser.Tests
 
             //Testing Parse Tree
             lexer.Reset();
-            lexer.ErrorListeners.Clear();
+            //lexer.ErrorListeners.Clear();
             var parser = new MalinaParser(new CommonTokenStream(lexer));
             parser.Interpreter.PredictionMode = PredictionMode.Sll;
             var malinaListener = new MalinaParserListener();

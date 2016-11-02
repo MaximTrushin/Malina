@@ -1,7 +1,7 @@
-2:0	AliasDefinition `Customer`:
-3:1		Attribute `attr1`= `1`
-4:1		Attribute `attr2`= `2`
-4:14		Attribute `attr3`= `3`
-5:1		Element `Customer`:
-6:2			Element `Account`
+02:00	AliasDefinition `Customer`:
+03:01		Attribute `attr1`= `1`
+04:01		Attribute `attr2`= `2`
+04:14		Attribute `attr3`= `3`
+05:01		Element `Customer`:
+06:02			Element `Account`
 

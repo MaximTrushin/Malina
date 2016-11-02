@@ -226,9 +226,9 @@ namespace Malina.Parser.Tests
 
         private void PrintNodeStart(DOM.Node node)
         {
-            _sb.Append(node.start.Line);
+            _sb.Append(node.start.Line.ToString().PadLeft(2, '0'));
             _sb.Append(":");
-            _sb.Append(node.start.Column);
+            _sb.Append(node.start.Column.ToString().PadLeft(2, '0'));
             _sb.Append('\t', _indent);
             _sb.Append("\t");
             _sb.Append(node.GetType().Name);

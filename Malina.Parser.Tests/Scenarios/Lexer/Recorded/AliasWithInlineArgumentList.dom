@@ -1,9 +1,9 @@
-2:0	Document `ParametersTestDoc`:
-3:2		Element `request`:
-4:3			Alias `Customer`:
-4:14				Argument `BillingAddress`:
-4:31					Alias `Addresses.NJ.Paterson`
-4:55				Argument `ServiceAddress`:
-4:72					Alias `Addresses.NY.Albany`
-4:94				Argument `AccountType`= 	Alias `AccountTypes.NewCustomer`
+02:00	Document `ParametersTestDoc`:
+03:02		Element `request`:
+04:03			Alias `Customer`:
+04:14				Argument `BillingAddress`:
+04:31					Alias `Addresses.NJ.Paterson`
+04:55				Argument `ServiceAddress`:
+04:72					Alias `Addresses.NY.Albany`
+04:94				Argument `AccountType`= 	Alias `AccountTypes.NewCustomer`
 

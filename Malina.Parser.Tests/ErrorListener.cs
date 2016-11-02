@@ -25,7 +25,7 @@ namespace Malina.Parser.Tests
             else
             {
                 var me = new MalinaError(MalinaErrorCode.NoViableAltParserException, null, null);
-                //_errors.Add(me);
+                _errors.Add(me);
             }
             HasErrors = true;
         }

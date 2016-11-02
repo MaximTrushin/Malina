@@ -1,7 +1,7 @@
-2:0	AliasDefinition `Customer`:
-3:1		Element `Customer`:
-4:2			Element `Account`:
-5:3				Parameter `AccountType`
-6:2			Parameter `ServiceAddress`
-7:2			Parameter `BillingAddress`
+02:00	AliasDefinition `Customer`:
+03:01		Element `Customer`:
+04:02			Element `Account`:
+05:03				Parameter `AccountType`
+06:02			Parameter `ServiceAddress`
+07:02			Parameter `BillingAddress`
 

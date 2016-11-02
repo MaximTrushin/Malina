@@ -1,3 +1,18 @@
-2:0	Document `MyRequest.json`:
-3:4		Element `b`
+02:00	Document `MyRequest.json`:
+03:02		Element `a`
+03:04		Element `b`
+04:02		Element `a`= `true`
+05:00		Element `b`= `2`
+06:02		Element `state`= `active`
+07:03		Element `c`= `true`
+08:03		Element `d`= `false e = .02`
+10:01		Element `items`:
+11:02			Element ``:
+12:04				Element `a`= `true`
+13:04				Element `b`= `2 state = active`
+14:02				Element `c`= `true d = false e = .02`
+16:01		Element `ns1.request`:
+17:03			Element `a`= `true b= 2 state = active)`
+18:03			Element `a`= `true b= 2 state = active`
+19:01			Element `c`= `true d = false e = .02`
 

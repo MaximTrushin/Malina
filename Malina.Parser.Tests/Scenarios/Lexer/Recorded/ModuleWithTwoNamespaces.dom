@@ -1,12 +1,12 @@
-2:0	Namespace `ns01`= `http://myNs01.com`
-3:0	Namespace `ns02`= `http://myNs02.com`
-5:0	Document `MyRequest`:
-6:1		Namespace `ns11`= `http://myNs11.com`
-7:1		Namespace `ns12`= `http://myNs12.com`
-9:1		Element `request`
+02:00	Namespace `ns01`= `http://myNs01.com`
+03:00	Namespace `ns02`= `http://myNs02.com`
+05:00	Document `MyRequest`:
+06:01		Namespace `ns11`= `http://myNs11.com`
+07:01		Namespace `ns12`= `http://myNs12.com`
+09:01		Element `request`
 
-11:0	Document `MyRequest2`:
-12:1		Namespace `ns21`= `http://myNs21.com`
-13:1		Namespace `ns22`= `http://myNs22.com`
-15:1		Element `request`
+11:00	Document `MyRequest2`:
+12:01		Namespace `ns21`= `http://myNs21.com`
+13:01		Namespace `ns22`= `http://myNs22.com`
+15:01		Element `request`
 

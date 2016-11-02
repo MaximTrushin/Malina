@@ -1,7 +1,7 @@
-1:0	Document `MyRequest`:
-2:1		Element `request`:
-3:2			Element `e1`= `bla\r\nbla bla`
-5:2			Element `e2`= `bla\r\n\t bla bla`
-7:2			Element `e3`= `bla\r\n\r\nbla bla`
-10:2			Element `e4`= `bla\r\n\t\r\nbla bla`
+01:00	Document `MyRequest`:
+02:01		Element `request`:
+03:02			Element `e1`= `bla\r\nbla bla`
+05:02			Element `e2`= `bla\r\n\t bla bla`
+07:02			Element `e3`= `bla\r\n\r\nbla bla`
+10:02			Element `e4`= `bla\r\n\t\r\nbla bla`
 

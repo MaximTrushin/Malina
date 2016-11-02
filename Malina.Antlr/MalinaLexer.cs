@@ -124,12 +124,12 @@ namespace Malina.Parser
 
             //Lexer hasn't reached EOF
             var indent = CalcIndent();
-            int prevIndent = _indents.Peek();
+            var prevIndent = InWsaMode ? 0 : _indents.Peek();
             if (indent == prevIndent)
             {
                 //Emitting NEWLINE
                 //Scenario: Any node in the end of line and not EOF.
-                if (_tokenStartCharIndex > 0) //Ignore New Line starting in BOF
+                if (_tokenStartCharIndex > 0 && !InWsaMode) //Ignore New Line starting in BOF
                 {
                     EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 }
@@ -160,6 +160,7 @@ namespace Malina.Parser
 
         private int CalcIndent()
         {
+            if (InWsaMode) return 0;
             var i = -1;
             while (InputStream.La(i) != '\n' && InputStream.La(i) != -1 && InputStream.La(i) != '\r') i--;
             return -i - 1;
@@ -203,9 +204,9 @@ namespace Malina.Parser
                         _currentToken.Text = "";
                     }
 
-
                     Emit(_currentToken);
-                    EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
+                    if (!InWsaMode)
+                        EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 }
                 else
                 {
@@ -340,7 +341,8 @@ namespace Malina.Parser
                 Emit(_currentToken);
                 PopMode(); PopMode();
                 //Emitting NEWLINE
-                EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
+                if(!InWsaMode)
+                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
             }
             else Skip();
         }
@@ -363,7 +365,8 @@ namespace Malina.Parser
                 Emit(_currentToken);
                 PopMode();
                 //Emitting NEWLINE
-                EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
+                if(!InWsaMode)
+                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
             }
             else Skip();
 

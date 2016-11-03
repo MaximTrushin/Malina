@@ -12,11 +12,17 @@ namespace Malina.Console
             {
                 var compilerParameters = new CompilerParameters();
                 compilerParameters.Pipeline = new CompileToFiles();
-                new ArgumentsParser(args, compilerParameters);
+                ArgumentsParser.Parse(args, compilerParameters);
 
                 var compiler = new MalinaCompiler(compilerParameters);
                 compiler.Run();
                 result = 0;
+            }
+            catch (ArgumentsParserException e)
+            {
+                System.Console.WriteLine(string.Format("Fatal error: {0}", e.Message));
+                ArgumentsParser.Help();
+
             }
             catch (System.Exception e)
             {

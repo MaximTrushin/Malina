@@ -1,4 +1,5 @@
 ﻿using Malina.Compiler;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,24 +8,21 @@ namespace Malina.Console
 
     public class ArgumentsParser
     {
-        private static class ParameterErrors
+        public static class ParameterErrors
         {
             public const string InvalidDirectory = "Invalid directory. Directory doesn't exist.";
             public const string InvalidFile = "Invalid file name. File doesn't exist.";
+            public const string NoInput = "No input files or directories specified.";
         }
 
-
-        private CompilerParameters _compilerParameters;
-        public ArgumentsParser(string[] args, CompilerParameters compilerParameters)
+        public static void Parse(string[] args, CompilerParameters compilerParameters)
         {
-            _compilerParameters = compilerParameters;
-
             foreach (var arg in args)
             {
                 if (!IsFlag(arg))
                 {
                     if (File.Exists(arg))
-                        _compilerParameters.Files.Add(arg);
+                        compilerParameters.Files.Add(arg);
                     else InvalidOption(arg, ParameterErrors.InvalidFile);
                     continue;
                 }
@@ -37,7 +35,7 @@ namespace Malina.Console
                             {
                                 var dir = arg.Substring(3);
                                 if (Directory.Exists(dir))
-                                    _compilerParameters.OutputDirectory = dir;
+                                    compilerParameters.OutputDirectory = dir;
                                 else InvalidOption(arg, ParameterErrors.InvalidDirectory);
 
                             }
@@ -46,7 +44,12 @@ namespace Malina.Console
                         }
                 }
             }
+            if (compilerParameters.Files.Count == 0) throw new ArgumentsParserException(ParameterErrors.NoInput);
         }
+
+
+
+
 
 
         static bool IsFlag(string arg)
@@ -54,22 +57,24 @@ namespace Malina.Console
             return arg[0] == '-';
         }
 
-        static void Help()
+        public static void Help()
         {
             System.Console.WriteLine(
-                    "Usage: mlc [options] [inputFiles] ...\n" +
+                    "Options: mlc [options] [inputFiles] ...\n\n" +
+                    "Compiles a set of files in Malina format into XML or Json.\n\n" +
+                    "You many specify one or many files of type .mlx and .mlj or directories.\n\n" +
                     "Options:\n" +
-                    " -o=DIR           Output directory\n" 
+                    " -o=DIR           Output directory\n"
                     );
         }
 
 
-        void InvalidOption(string arg)
+        static void InvalidOption(string arg)
         {
             InvalidOption(arg, null);
         }
 
-        void InvalidOption(string arg, string message)
+        static void InvalidOption(string arg, string message)
         {
             System.Console.Error.WriteLine("Invalid command line argument: {0}. {1}", arg, message);
         }

@@ -3,27 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Antlr", "Malina.Antlr\Malina.Antlr.csproj", "{AFE59F0F-200A-44EE-A2EE-E0454A654563}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Antlr", "src\Malina.Antlr\Malina.Antlr.csproj", "{AFE59F0F-200A-44EE-A2EE-E0454A654563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.DOM", "Malina.DOM\Malina.DOM.csproj", "{66E57A03-08AD-491B-9B1D-6CB4A0D37969}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.DOM", "src\Malina.DOM\Malina.DOM.csproj", "{66E57A03-08AD-491B-9B1D-6CB4A0D37969}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Parser", "Malina.Parser\Malina.Parser.csproj", "{78D74FB6-FADA-405B-9494-EDE7688491ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Parser", "src\Malina.Parser\Malina.Parser.csproj", "{78D74FB6-FADA-405B-9494-EDE7688491ED}"
 	ProjectSection(ProjectDependencies) = postProject
 		{66E57A03-08AD-491B-9B1D-6CB4A0D37969} = {66E57A03-08AD-491B-9B1D-6CB4A0D37969}
 		{AFE59F0F-200A-44EE-A2EE-E0454A654563} = {AFE59F0F-200A-44EE-A2EE-E0454A654563}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Parser.Tests", "Malina.Parser.Tests\Malina.Parser.Tests.csproj", "{66C5A6D0-FFDC-4DA6-9421-E6AE76E5718A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Parser.Tests", "src\Malina.Parser.Tests\Malina.Parser.Tests.csproj", "{66C5A6D0-FFDC-4DA6-9421-E6AE76E5718A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Parser.PerfomanceTests", "Malina.Parser.PerfomanceTests\Malina.Parser.PerfomanceTests.csproj", "{754BF2F1-7D39-4627-8851-68CB9A5EA050}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Parser.PerfomanceTests", "src\Malina.Parser.PerfomanceTests\Malina.Parser.PerfomanceTests.csproj", "{754BF2F1-7D39-4627-8851-68CB9A5EA050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.DOM.Antlr", "Malina.DOM.Antlr\Malina.DOM.Antlr.csproj", "{902E7778-7DE3-4D1A-BEB7-9E13B8E525D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.DOM.Antlr", "src\Malina.DOM.Antlr\Malina.DOM.Antlr.csproj", "{902E7778-7DE3-4D1A-BEB7-9E13B8E525D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Compiler", "Malina.Compiler\Malina.Compiler.csproj", "{6807E668-DA17-4871-9620-08682C940405}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Compiler", "src\Malina.Compiler\Malina.Compiler.csproj", "{6807E668-DA17-4871-9620-08682C940405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console", "Malina.Console\Malina.Console.csproj", "{878C0CB0-9E45-4961-9347-8A7656BC60F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console", "src\Malina.Console\Malina.Console.csproj", "{878C0CB0-9E45-4961-9347-8A7656BC60F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console.Tests", "Malina.Console.Tests\Malina.Console.Tests.csproj", "{FA7EF547-D386-4415-8363-7D6E99D8C870}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console.Tests", "src\Malina.Console.Tests\Malina.Console.Tests.csproj", "{FA7EF547-D386-4415-8363-7D6E99D8C870}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

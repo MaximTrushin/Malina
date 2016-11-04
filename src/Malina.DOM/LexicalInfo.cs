@@ -30,56 +30,76 @@ using System;
 
 namespace Malina.DOM
 {
-    [Serializable]
-    public class SourceLocation : IComparable<SourceLocation>, IEquatable<SourceLocation>
+    public class LexicalInfo : SourceLocation, IEquatable<LexicalInfo>, IComparable<LexicalInfo>
     {
-        // Fields
-        public int Column { get; private set; }
-        public int Line { get; private set; }
-        public int Index { get; private set; }
+        public static readonly LexicalInfo Empty = new LexicalInfo(null, -1, -1, -1);
 
-        // Methods
-        public SourceLocation(int line, int column, int index)
+        private readonly string _filename;
+
+        private string _fullPath;
+
+        public LexicalInfo(string filename, int line, int column, int index)
+            : base(line, column, index)
         {
-            Line = line;
-            Column = column;
-            Index = index;
+            _filename = filename;
         }
 
-        public SourceLocation() { }
-
-        public int CompareTo(SourceLocation other)
+        public LexicalInfo(string filename) : this(filename, -1, -1, -1)
         {
-            int num = Line.CompareTo(other.Line);
-            if (num != 0)
-            {
-                return num;
-            }
-            return Column.CompareTo(other.Column);
         }
 
-        public bool Equals(SourceLocation other)
+        public LexicalInfo(LexicalInfo other) : this(other.FileName, other.Line, other.Column, other.Index)
         {
-            return (CompareTo(other) == 0);
         }
 
-        public override string ToString()
+        override public bool IsValid
         {
-            return string.Format("({0},{1},{2})", Line, Column, Index);
+            get { return null != _filename && base.IsValid; }
         }
 
-        // Properties
+        public string FileName
+        {
+            get { return _filename; }
+        }
 
-        public virtual bool IsValid
+        public string FullPath
         {
             get
             {
-                return ((Line > 0) && (Column > 0));
+                if (null != _fullPath) return _fullPath;
+                _fullPath = SafeGetFullPath(_filename);
+                return _fullPath;
             }
         }
 
+        override public string ToString()
+        {
+            return _filename + base.ToString();
+        }
 
+        private static string SafeGetFullPath(string fname)
+        {
+            try
+            {
+                return System.IO.Path.GetFullPath(fname);
+            }
+            catch (Exception)
+            {
+            }
+            return fname;
+        }
+
+        public int CompareTo(LexicalInfo other)
+        {
+            int result = base.CompareTo(other);
+            if (result != 0) return result;
+
+            return string.Compare(_filename, other._filename);
+        }
+
+        public bool Equals(LexicalInfo other)
+        {
+            return CompareTo(other) == 0;
+        }
     }
-
-
 }

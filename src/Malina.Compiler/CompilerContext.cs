@@ -9,13 +9,18 @@ namespace Malina.Compiler
 {
     public class CompilerContext
     {
-        private CompileUnit compileUnit;
-        private CompilerParameters parameters;
+        private CompileUnit _compileUnit;
+        public CompilerParameters Parameters { get; private set; }
+
+        public List<CompilerError> Errors { get; private set; }
 
         public CompilerContext(CompilerParameters parameters, CompileUnit compileUnit)
         {
-            this.parameters = parameters;
-            this.compileUnit = compileUnit;
+            Parameters = parameters;
+            _compileUnit = compileUnit;
+            Errors = new List<Compiler.CompilerError>();
         }
+
+
     }
 }

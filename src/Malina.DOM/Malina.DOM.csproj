@@ -54,6 +54,7 @@
     <Compile Include="IntString.cs" />
     <Compile Include="IntToken.cs" />
     <Compile Include="IValueNode.cs" />
+    <Compile Include="LexicalInfo.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="ModuleMember.cs" />
     <Compile Include="Namespace.cs" />

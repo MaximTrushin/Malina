@@ -3,7 +3,7 @@ lexer grammar MalinaLexer;
 tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON}
 
 
-INDENT_DEDENT		:	((Eol Spaces)+) {IndentDedent();};
+INDENT_DEDENT		:	(Eol {RecordCharIndex();} Spaces)+ {IndentDedent();};
 
 ARRAY_ITEM			:	':';
 
@@ -49,7 +49,7 @@ mode IN_DQS;
 	//Double Quoted String
 	DQS_VALUE		:	(~["\r\n] | '""')+ {EndDqsIfEofOrWsa();};
 
-	DQS_VALUE_EOL	:	(Eol Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
+	DQS_VALUE_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
 
 	DQS_END			:	'"' {EndDqs();};
 

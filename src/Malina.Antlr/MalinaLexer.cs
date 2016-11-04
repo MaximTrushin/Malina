@@ -36,13 +36,8 @@ namespace Malina.Parser
         private Queue<IToken> _tokens = new Queue<IToken>();
         private Stack<int> _wsaStack = new Stack<int>();
         private MalinaToken _currentToken = null; //This field is used for tokens created with several lexer rules.
+        private int _recordedIndex;
 
-
-        /// <summary>
-        /// Problem is that IndentDedent and OsIndentDedent are not called for EOF in some cases.
-        /// I had to add code to add NEWLINE if EOF is reached. This field is used to not add NEWLINE more than once. 
-        /// </summary>
-        private IToken _lastToken = null;
 
         private bool InWsaMode
         {
@@ -55,7 +50,6 @@ namespace Malina.Parser
             _indents = new Stack<int>(new[] { 0 });
             _tokens = new Queue<IToken>();
             _wsaStack = new Stack<int>();            
-            _lastToken = null;
             _currentToken = null;
             base.Reset();
         }
@@ -69,7 +63,6 @@ namespace Malina.Parser
             {
                 _tokens.Enqueue(token);
             }
-            _lastToken = token;
         }
 
         public override IToken NextToken()
@@ -158,18 +151,25 @@ namespace Malina.Parser
             }
         }
 
+        private void RecordCharIndex()
+        {
+            _recordedIndex = CharIndex;
+        }
+
+
         private int CalcIndent()
         {
             if (InWsaMode) return 0;
-            var i = -1;
-            while (InputStream.La(i) != '\n' && InputStream.La(i) != -1 && InputStream.La(i) != '\r') i--;
-            return -i - 1;
+
+            return CharIndex - _recordedIndex;
+
         }
 
         //Calculates Indent for Multiline Open String
         private int CalcOsIndent()
         {
             if (InWsaMode) return 0;
+
             var i = -1;
             var osIndent = 0;
             int la = InputStream.La(i);
@@ -181,6 +181,7 @@ namespace Malina.Parser
             }
             return osIndent;
         }
+
 
         private void StartNewMultliLineToken()
         {
@@ -375,7 +376,7 @@ namespace Malina.Parser
         private void DqIndentDedent()
         {
             var _currentIndent = InWsaMode ? 0 : _indents.Peek();
-            var indent = CalcOsIndent();
+            var indent = CalcIndent();
 
             if (indent <= _currentIndent || _input.La(1) == Eof)
             {

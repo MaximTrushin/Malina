@@ -7,6 +7,7 @@
         void OnAliasDefinition(AliasDefinition node);
         void OnArgument(Argument node);
         void OnAttribute(Attribute node);
+        void OnCompileUnit(CompileUnit node);
         void OnDocument(Document node);
         void OnElement(Element node);
         void OnModule(Module node);

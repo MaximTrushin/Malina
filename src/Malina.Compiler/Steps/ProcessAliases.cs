@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Malina.Compiler.Steps
 {
-    public class CreateAliases : ICompilerStep    
+    public class ProcessAliases : ICompilerStep    
     {
         CompilerContext _context;
         public void Initialize(CompilerContext context)

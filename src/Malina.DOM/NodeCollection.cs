@@ -31,20 +31,11 @@ namespace Malina.DOM
 
         public NodeCollection<T> AddRange(IEnumerable<T> items)
         {
-            AssertNotNull("items", items);
             foreach (T local in items)
             {
                 Add(local);
             }
             return this;
-        }
-
-        private static void AssertNotNull(string description, object o)
-        {
-            if (o == null)
-            {
-                throw new ArgumentException(string.Format("null reference for: {0}", description));
-            }
         }
 
         public void AssignNodes(IEnumerable<Node> nodes)
@@ -83,7 +74,6 @@ namespace Malina.DOM
 
         public void Initialize(T item)
         {
-            AssertNotNull("item", item);
             (item as Node).InitializeParent(_parent);
         }
 
@@ -124,7 +114,6 @@ namespace Malina.DOM
 
         public bool Replace(T existing, T newItem)
         {
-            AssertNotNull("existing", existing);
             int index = _list.IndexOf(existing);
             if (newItem == null)
             {

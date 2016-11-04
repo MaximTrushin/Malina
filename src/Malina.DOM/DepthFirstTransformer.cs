@@ -1,4 +1,6 @@
-﻿namespace Malina.DOM
+﻿using System;
+
+namespace Malina.DOM
 {
     public class MalinaDepthFirstTransformer : IDomVisitor
     {
@@ -28,6 +30,10 @@
 
         }
 
+        public void OnCompileUnit(CompileUnit node)
+        {
+            Visit(node.Modules);
+        }
         public virtual void OnDocument(Document node)
         {
             Visit(node.Namespaces);
@@ -112,5 +118,6 @@
             _resultingNode = saved;
             return result;
         }
+
     }
 }

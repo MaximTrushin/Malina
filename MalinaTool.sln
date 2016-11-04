@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console", "src\Malin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console.Tests", "src\Malina.Console.Tests\Malina.Console.Tests.csproj", "{FA7EF547-D386-4415-8363-7D6E99D8C870}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Compiler.Tests", "src\Malina.Compiler.Tests\Malina.Compiler.Tests.csproj", "{FD22DBF6-4EC4-4742-916F-88EBB8E59008}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -181,6 +183,22 @@ Global
 		{FA7EF547-D386-4415-8363-7D6E99D8C870}.Release|x64.Build.0 = Release|Any CPU
 		{FA7EF547-D386-4415-8363-7D6E99D8C870}.Release|x86.ActiveCfg = Release|Any CPU
 		{FA7EF547-D386-4415-8363-7D6E99D8C870}.Release|x86.Build.0 = Release|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Debug|x64.Build.0 = Debug|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Debug|x86.Build.0 = Debug|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|ARM.Build.0 = Release|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|x64.ActiveCfg = Release|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|x64.Build.0 = Release|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|x86.ActiveCfg = Release|Any CPU
+		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

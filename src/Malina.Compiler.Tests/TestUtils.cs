@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Malina.Compiler;
 using Malina.Compiler.Pipelines;
+using Malina.Compiler.IO;
 
 namespace Malina.Compiler.Tests
 {
@@ -32,7 +33,7 @@ namespace Malina.Compiler.Tests
             {
                 if (fileName.EndsWith(".mlx"))
                 {
-                    compilerParameters.Files.Add(dir + fileName);
+                    compilerParameters.Input.Add(new FileInput(dir + fileName));
                 }
             } 
 

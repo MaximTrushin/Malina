@@ -1,4 +1,5 @@
 ﻿using Malina.Compiler;
+using Malina.Compiler.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +23,7 @@ namespace Malina.Console
                 if (!IsFlag(arg))
                 {
                     if (File.Exists(arg))
-                        compilerParameters.Files.Add(arg);
+                        compilerParameters.Input.Add(new FileInput(arg));
                     else InvalidOption(arg, ParameterErrors.InvalidFile);
                     continue;
                 }
@@ -44,13 +45,8 @@ namespace Malina.Console
                         }
                 }
             }
-            if (compilerParameters.Files.Count == 0) throw new ArgumentsParserException(ParameterErrors.NoInput);
+            if (compilerParameters.Input.Count == 0) throw new ArgumentsParserException(ParameterErrors.NoInput);
         }
-
-
-
-
-
 
         static bool IsFlag(string arg)
         {

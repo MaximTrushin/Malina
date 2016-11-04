@@ -41,6 +41,16 @@ namespace Malina.Parser.Tests
             return File.ReadAllText(fileName);
         }
 
+        public static TextReader GetTestCodeReader()
+        {
+            var testCaseName = GetTestCaseName();
+
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\").Append(testCaseName).Append(".mal").ToString();
+
+            return File.OpenText(fileName);
+        }
+
+
         private static string GetTestCaseName()
         {
             var trace = new StackTrace();

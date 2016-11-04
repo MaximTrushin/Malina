@@ -43,7 +43,11 @@
     <Compile Include="CompilerContext.cs" />
     <Compile Include="CompilerParameters.cs" />
     <Compile Include="CompilerPipeline.cs" />
+    <Compile Include="ICompilerInput.cs" />
     <Compile Include="ICompilerStep.cs" />
+    <Compile Include="IO\FileInput.cs" />
+    <Compile Include="IO\ReaderInput.cs" />
+    <Compile Include="IO\StringInput.cs" />
     <Compile Include="MalinaCompiler.cs" />
     <Compile Include="Pipelines\CompileToFiles.cs" />
     <Compile Include="Project.cs" />

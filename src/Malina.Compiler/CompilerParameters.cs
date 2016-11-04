@@ -8,10 +8,17 @@ namespace Malina.Compiler
 {
     public class CompilerParameters
     {
-        public readonly List<string> Files = new List<string>();
+        private readonly List<ICompilerInput> _input = new List<ICompilerInput>();
         public string OutputDirectory { get; set; }
 
         public CompilerPipeline Pipeline { get; set; }
+
+
+        public List<ICompilerInput> Input
+        {
+            get { return _input; }
+        }
+
 
     }
 }

@@ -79,6 +79,13 @@ namespace Malina.Parser
             _start = start;
             _stop = stop;
         }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append(string.Format("Code={0}, Start={1}, Stop={2}", _code, _start, _stop));
+            return sb.ToString();
+        }
     }
 
 

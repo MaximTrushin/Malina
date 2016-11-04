@@ -88,7 +88,7 @@ namespace Malina.Parser.Tests
             serialLexerErrors = null;
             if (isLexerErrorRecordedTest || isLexerErrorRecordTest)
             {
-                serialLexerErrors = lexerErrors.Errors.Count > 0 ? SerializeObject(lexerErrors.Errors) : null;
+                serialLexerErrors = lexerErrors.Errors.Count > 0 ? SerializeErrors(lexerErrors.Errors) : null;
                 if (isLexerErrorRecordedTest)
                 {
                     var testCaseName = GetTestCaseName();
@@ -162,15 +162,16 @@ namespace Malina.Parser.Tests
         }
 
 
-        private static string SerializeObject<T>(T toSerialize)
+        private static string SerializeErrors(List<MalinaError> errors)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(toSerialize.GetType());
-
-            using (StringWriter textWriter = new StringWriter())
+            var sb = new StringBuilder();
+            foreach (var item in errors)
             {
-                xmlSerializer.Serialize(textWriter, toSerialize);
-                return textWriter.ToString().Replace("\r\n", "\n");
+                sb.AppendLine(item.ToString());
             }
+
+            return sb.ToString().Replace("\r\n", "\n");
+
         }
         public static void PerformTest()
         {

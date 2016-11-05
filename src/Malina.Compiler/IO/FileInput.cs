@@ -58,11 +58,11 @@ namespace Malina.Compiler.IO
             }
             catch (System.IO.FileNotFoundException)
             {
-                throw; //CompilerErrorFactory.FileNotFound(_fname);
+                throw CompilerErrorFactory.FileNotFound(_fname);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;// CompilerErrorFactory.InputError(_fname, e);
+                throw CompilerErrorFactory.InputError(_fname, e);
             }
         }
     }

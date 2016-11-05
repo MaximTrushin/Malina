@@ -9,7 +9,7 @@ namespace Malina.Compiler
 {
     public class CompilerContext
     {
-        private CompileUnit _compileUnit;
+        public CompileUnit CompileUnit { get; private set; }
         public CompilerParameters Parameters { get; private set; }
 
         public List<CompilerError> Errors { get; private set; }
@@ -17,7 +17,7 @@ namespace Malina.Compiler
         public CompilerContext(CompilerParameters parameters, CompileUnit compileUnit)
         {
             Parameters = parameters;
-            _compileUnit = compileUnit;
+            CompileUnit = compileUnit;
             Errors = new List<Compiler.CompilerError>();
         }
 

@@ -20,6 +20,21 @@ namespace Malina.Compiler
             return new CompilerError(code, location, error, args);
         }
 
+        private static CompilerError Instantiate(string code, LexicalInfo location, params object[] args)
+        {
+            return new CompilerError(code, location, Array.ConvertAll<object, string>(args, DisplayStringFor));
+        }
 
+        internal static string DisplayStringFor(object o)
+        {
+            if (o == null) return "";
+
+            return  o.ToString();
+        }
+
+        internal static Exception FileNotFound(string fileName)
+        {
+            return Instantiate("MCE0002", new LexicalInfo(fileName), fileName);
+        }
     }
 }

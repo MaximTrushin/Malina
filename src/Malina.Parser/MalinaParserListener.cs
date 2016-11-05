@@ -24,7 +24,7 @@ namespace Malina.Parser
                 return _nodes;
             }
         }
-        private void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, IAntlrCharStreamConsumer, new()
+        protected virtual void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, IAntlrCharStreamConsumer, new()
         {
             if(!valueNode)
                 context.InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
@@ -45,7 +45,7 @@ namespace Malina.Parser
             return -1;
         }
 
-        private void EnterScopeContext(ParserRuleContext context)
+        protected virtual void EnterScopeContext(ParserRuleContext context)
         {
             //Creating Scope node, adding to parent, adding to ctx.Node and initializing CharStream
             (context as INodeContext<DOM.Antlr.Scope>).InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
@@ -79,12 +79,8 @@ namespace Malina.Parser
             }
         }
 
-        private void ExitScopeContext(ParserRuleContext context)
-        {
 
-        }
-
-        private void ExitContext<T>(INodeContext<T> context) where T : Node, new()
+        protected virtual void ExitContext<T>(INodeContext<T> context) where T : Node, new()
         {
             context.ApplyContext();
             _nodeStack.Pop();

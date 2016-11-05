@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Antlr4.Runtime;
+using Antlr4.Runtime.Atn;
+using Malina.DOM;
+using Malina.Parser;
+using System;
 using System.IO;
 
 namespace Malina.Compiler.Steps
@@ -26,9 +30,9 @@ namespace Malina.Compiler.Steps
                     using (var reader = input.Open())
                         DoProcessAliases(input.Name, reader);
                 }
-                catch (Exception x)
+                catch (Exception ex)
                 {
-                    _context.Errors.Add(CompilerErrorFactory.InputError(input.Name, x));
+                    _context.Errors.Add(CompilerErrorFactory.InputError(input.Name, ex));
                 }
             }
 
@@ -36,7 +40,19 @@ namespace Malina.Compiler.Steps
 
         private void DoProcessAliases(string name, TextReader reader)
         {
-            throw new NotImplementedException();
+            var lexer = new MalinaLexer(new AntlrInputStream(reader));
+
+            lexer.RemoveErrorListeners();            
+            lexer.AddErrorListener(new LexerParserErrorListener<int>(_context));
+
+            var parser = new MalinaParser(new CommonTokenStream(lexer));
+            parser.Interpreter.PredictionMode = PredictionMode.Sll;
+            var malinaListener = new AliasResolvingListener(_context);
+           
+            parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context));
+            parser.AddParseListener(malinaListener);
+
+
         }
     }
 }

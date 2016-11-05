@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Malina.Compiler</RootNamespace>
     <AssemblyName>Malina.Compiler</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr4.Runtime, Version=4.5.0.0, Culture=neutral, PublicKeyToken=09abb75b9ed49849, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Antlr4.Runtime.4.5.3\lib\net45\Antlr4.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +50,8 @@
     <Compile Include="CompilerParameters.cs" />
     <Compile Include="CompilerPipeline.cs" />
     <Compile Include="ErrorCodes.cs" />
+    <Compile Include="Steps\AliasResolvingListener.cs" />
+    <Compile Include="Steps\LexerParserErrorListener.cs" />
     <Compile Include="ICompilerComponent.cs" />
     <Compile Include="ICompilerInput.cs" />
     <Compile Include="ICompilerStep.cs" />
@@ -60,10 +67,21 @@
     <Compile Include="Steps\ProcessAliases.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Malina.DOM.Antlr\Malina.DOM.Antlr.csproj">
+      <Project>{902e7778-7de3-4d1a-beb7-9e13b8e525d2}</Project>
+      <Name>Malina.DOM.Antlr</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
       <Project>{66E57A03-08AD-491B-9B1D-6CB4A0D37969}</Project>
       <Name>Malina.DOM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Malina.Parser\Malina.Parser.csproj">
+      <Project>{78d74fb6-fada-405b-9494-ede7688491ed}</Project>
+      <Name>Malina.Parser</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,6 +7,18 @@ namespace Malina.Parser
     public partial class MalinaParser
     {
 
+        #region MODULE NodeContext
+        public partial class ModuleContext : INodeContext<Module>
+        {
+            public Module Node { get; set; }
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+            }
+        }
+        #endregion
+
+
         #region DOCUMENT NodeContext
         public partial class Document_stmtContext : INodeContext<Document>
         {

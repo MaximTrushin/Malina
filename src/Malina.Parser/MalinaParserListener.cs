@@ -15,7 +15,7 @@ namespace Malina.Parser
     {
         #region Class members
         private List<Node> _nodes = new List<Node>();
-        private Stack<Node> _nodeStack = new Stack<Node>();
+        protected Stack<Node> _nodeStack = new Stack<Node>();
 
         public List<Node> Nodes
         {

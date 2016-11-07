@@ -27,7 +27,7 @@ namespace Malina.Parser.Tests
         {
             var testCaseName = GetTestCaseName();
 
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\").Append(testCaseName).Append(".mal").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\").Append(testCaseName).Append(".mlx").ToString();
 
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
         }
@@ -36,7 +36,7 @@ namespace Malina.Parser.Tests
         {
             var testCaseName = GetTestCaseName();
 
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\").Append(testCaseName).Append(".mal").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\").Append(testCaseName).Append(".mlx").ToString();
 
             return File.ReadAllText(fileName);
         }
@@ -45,7 +45,7 @@ namespace Malina.Parser.Tests
         {
             var testCaseName = GetTestCaseName();
 
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\").Append(testCaseName).Append(".mal").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\").Append(testCaseName).Append(".mlx").ToString();
 
             return File.OpenText(fileName);
         }
@@ -92,7 +92,7 @@ namespace Malina.Parser.Tests
                 if (isLexerErrorRecordedTest)
                 {
                     var testCaseName = GetTestCaseName();
-                    var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".le").ToString();
+                    var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".le").ToString();
                     if (!File.Exists(fileName)) recorded = null;
                     else
                         recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
@@ -110,7 +110,7 @@ namespace Malina.Parser.Tests
         private static void SaveRecordedTest(string printedTokens)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Recorded\").Append(testCaseName).Append(".test").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, printedTokens);
@@ -119,7 +119,7 @@ namespace Malina.Parser.Tests
         private static void SaveLexerErrors(string serialLexerErrors)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".le").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Recorded\").Append(testCaseName).Append(".le").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, serialLexerErrors);
@@ -128,7 +128,7 @@ namespace Malina.Parser.Tests
         public static string LoadRecordedParseTreeTest()
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".tree").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".tree").ToString();
             if (!File.Exists(fileName)) return null;
 
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
@@ -137,7 +137,7 @@ namespace Malina.Parser.Tests
         private static void SaveRecordedParseTreeTest(string parseTree)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".tree").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Recorded\").Append(testCaseName).Append(".tree").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, parseTree);
@@ -146,7 +146,7 @@ namespace Malina.Parser.Tests
         public static string LoadRecordedDomTest()
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".dom").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".dom").ToString();
             if (!File.Exists(fileName)) return null;
 
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
@@ -155,7 +155,7 @@ namespace Malina.Parser.Tests
         private static void SaveRecordedDomTest(string printedTokens)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".dom").ToString();
+            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Recorded\").Append(testCaseName).Append(".dom").ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, printedTokens);

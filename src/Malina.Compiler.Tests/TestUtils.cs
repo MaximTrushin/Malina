@@ -6,6 +6,8 @@ using System.Reflection;
 using Malina.Compiler;
 using Malina.Compiler.Pipelines;
 using Malina.Compiler.IO;
+using Malina.Parser.Tests;
+using System;
 
 namespace Malina.Compiler.Tests
 {
@@ -20,6 +22,19 @@ namespace Malina.Compiler.Tests
 
         }
 
+        public static void PerformProcessAliasesTest()
+        {
+            var compilerParameters = CreateCompilerParameters();
+            var compiler = new MalinaCompiler(compilerParameters);
+
+            var context = compiler.Run();
+            var printerVisitor = new DOMPrinterVisitor();
+            printerVisitor.VisitNode(context.CompileUnit);
+            Console.WriteLine(printerVisitor.Text);
+
+
+
+        }
         private static CompilerParameters CreateCompilerParameters()
         {
             var compilerParameters = new CompilerParameters();
@@ -33,7 +48,7 @@ namespace Malina.Compiler.Tests
             {
                 if (fileName.EndsWith(".mlx"))
                 {
-                    compilerParameters.Input.Add(new FileInput(dir + fileName));
+                    compilerParameters.Input.Add(new FileInput(fileName));
                 }
             } 
 

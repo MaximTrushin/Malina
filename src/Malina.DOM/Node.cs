@@ -9,7 +9,6 @@ namespace Malina.DOM
         // Fields
         private Node _parent;
         public SourceLocation end;
-        public Module OwnerModule;
         public SourceLocation start;
         private string _name;
 
@@ -40,7 +39,6 @@ namespace Malina.DOM
         public virtual void Assign(Node node)
         {
             _parent = node._parent;
-            OwnerModule = node.OwnerModule;
             start = node.start;
             end = node.end;
         }

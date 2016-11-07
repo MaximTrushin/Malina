@@ -51,6 +51,7 @@ namespace Malina.Compiler.Steps
            
             parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context));
             parser.AddParseListener(malinaListener);
+            parser.module();
 
 
         }

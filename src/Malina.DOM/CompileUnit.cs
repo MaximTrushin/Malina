@@ -1,9 +1,4 @@
-﻿using Malina.DOM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Malina.DOM
 {
@@ -40,12 +35,24 @@ namespace Malina.DOM
 
         public override void Accept(IDomVisitor visitor)
         {
-            throw new NotImplementedException();
+            visitor.OnCompileUnit(this);
         }
 
         public override Node Clone()
         {
             throw new NotImplementedException();
+        }
+
+        public override void AppendChild(Node child)
+        {
+            if (child is Module)
+            {
+                Modules.Add((Module)child);
+            }
+            else
+            {
+                base.AppendChild(child);
+            }
         }
     }
 }

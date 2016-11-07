@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompilerTestFixture.cs" />
+    <Compile Include="ProcessAliasesStepTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils.cs" />
   </ItemGroup>
@@ -60,11 +61,23 @@
       <Project>{6807e668-da17-4871-9620-08682c940405}</Project>
       <Name>Malina.Compiler</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
+      <Project>{66E57A03-08AD-491B-9B1D-6CB4A0D37969}</Project>
+      <Name>Malina.DOM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Malina.Parser.Tests\Malina.Parser.Tests.csproj">
+      <Project>{66c5a6d0-ffdc-4da6-9421-e6ae76e5718a}</Project>
+      <Name>Malina.Parser.Tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rmdir $(TargetDir)Scenarios /s /q
+xcopy $(ProjectDir)Scenarios  $(TargetDir)Scenarios /E /I /Y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

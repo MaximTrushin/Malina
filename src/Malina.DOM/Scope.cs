@@ -17,7 +17,6 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            child.OwnerModule = OwnerModule;
             if (child is Attribute)
             {
                 Attributes.Add((Attribute)child);

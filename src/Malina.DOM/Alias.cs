@@ -20,7 +20,6 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            child.OwnerModule = OwnerModule;
             if (child is Argument)
             {
                 Arguments.Add((Argument)child);

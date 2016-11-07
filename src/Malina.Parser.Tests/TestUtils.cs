@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace Malina.Parser.Tests
 {
@@ -143,19 +142,26 @@ namespace Malina.Parser.Tests
             File.WriteAllText(fileName, parseTree);
         }
 
-        public static string LoadRecordedDomTest()
+        public static string LoadRecordedDomTest(bool scenarioHasFolder = false)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".dom").ToString();
+            var sb = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName);
+            if (scenarioHasFolder) sb.Append('\\').Append(testCaseName);
+            sb.Append(".dom");
+
+            var fileName = sb.ToString();
             if (!File.Exists(fileName)) return null;
 
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
         }
 
-        private static void SaveRecordedDomTest(string printedTokens)
+        public static void SaveRecordedDomTest(string printedTokens, bool scenarioHasFolder = false)
         {
             var testCaseName = GetTestCaseName();
-            var fileName = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Recorded\").Append(testCaseName).Append(".dom").ToString();
+            var sb = new StringBuilder(AssemblyDirectory + @"\..\..\Scenarios\Recorded\").Append(testCaseName);
+            if (scenarioHasFolder) sb.Append('\\').Append(testCaseName);
+            sb.Append(".dom");
+            var fileName = sb.ToString();
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
             File.WriteAllText(fileName, printedTokens);
@@ -326,12 +332,12 @@ namespace Malina.Parser.Tests
             return TestHasAttribute<LexerErrorRecordAttribute>();
         }
 
-        private static bool IsDomRecordedTest()
+        public static bool IsDomRecordedTest()
         {
             return TestHasAttribute<DomRecordedAttribute>();
         }
 
-        private static bool IsDomRecordTest()
+        public static bool IsDomRecordTest()
         {
             return TestHasAttribute<DomRecordAttribute>();
         }
@@ -354,7 +360,7 @@ namespace Malina.Parser.Tests
                 method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T)));
         }
 
-        private static void PrintCode(string code)
+        public static void PrintCode(string code)
         {
             int line = 1;
             Console.WriteLine("Code:");
@@ -362,6 +368,7 @@ namespace Malina.Parser.Tests
             int offset = 0;
             foreach (var c in code)
             {
+                if (c == '\r') continue;
                 if (c == '\n')
                 {
                     Console.Write(" ({0})", offset);

@@ -48,6 +48,7 @@ namespace Malina.DOM
 
         public virtual void OnModule(Module node)
         {
+            Visit(node.Namespaces);
             Visit(node.Members);
         }
 

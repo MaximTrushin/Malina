@@ -4,6 +4,7 @@ using static Malina.Parser.Tests.TestUtils;
 using Antlr4.Runtime;
 using Malina.Parser.Tests;
 using Antlr4.Runtime.Atn;
+using Malina.DOM;
 
 namespace Malina.Parser.PerfomanceTests
 {
@@ -110,6 +111,14 @@ namespace Malina.Parser.PerfomanceTests
             Console.WriteLine("DOM Time: {0}", t2 - t1);
             Assert.Less(t2 - t1, 20000);
             Assert.IsFalse(parserErrorListener.HasErrors);
+
+            t1 = Environment.TickCount;
+            var visitor = new DOMPrinterVisitor();
+            visitor.VisitNode(malinaListener.CompileUnit);
+            Console.WriteLine(visitor.Text);
+            t2 = Environment.TickCount;
+            Console.WriteLine("Visitor Time: {0}", t2 - t1);
+
 
         }
 

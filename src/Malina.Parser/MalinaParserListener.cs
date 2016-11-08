@@ -1,27 +1,33 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
 using Malina.DOM;
 using Malina.DOM.Antlr;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Malina.Parser
 {
     public class MalinaParserListener: MalinaParserBaseListener
     {
         #region Class members
-        private List<Node> _nodes = new List<Node>();
+        private CompileUnit _compileUnit;
         protected Stack<Node> _nodeStack = new Stack<Node>();
 
-        public List<Node> Nodes
+
+        public MalinaParserListener(CompileUnit compileUnit)
+        {
+            _compileUnit = compileUnit;
+            _nodeStack.Push(_compileUnit);
+        }
+
+        public MalinaParserListener(): this(new CompileUnit())
+        {
+        }
+
+        public CompileUnit CompileUnit
         {
             get
             {
-                return _nodes;
+                return _compileUnit;
             }
         }
         protected virtual void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, IAntlrCharStreamConsumer, new()
@@ -30,9 +36,6 @@ namespace Malina.Parser
                 context.InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
             else
                 context.InitValueNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
-
-            if (_nodeStack.Count == 0) _nodes.Add(context.Node);
-
             _nodeStack.Push(context.Node);
         }
 
@@ -51,8 +54,6 @@ namespace Malina.Parser
             (context as INodeContext<DOM.Antlr.Scope>).InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
 
             //Checking if this is root node and retuning as Listener result
-            if (_nodeStack.Count == 0) _nodes.Add((context as INodeContext<DOM.Antlr.Scope>).Node);
-
 
             var first = context.Start.Text;
 
@@ -84,6 +85,18 @@ namespace Malina.Parser
         {
             context.ApplyContext();
             _nodeStack.Pop();
+        }
+        #endregion
+
+        #region MODULE context classes
+        public override void EnterModule([NotNull] MalinaParser.ModuleContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitModule([NotNull] MalinaParser.ModuleContext context)
+        {
+            ExitContext(context);
         }
         #endregion
 

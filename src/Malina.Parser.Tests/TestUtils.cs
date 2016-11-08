@@ -249,10 +249,9 @@ namespace Malina.Parser.Tests
 
             var printerVisitor = new DOMPrinterVisitor();
             //module.
-            foreach (var item in malinaListener.Nodes)
-            {
-                printerVisitor.VisitNode(item);
-            }
+
+            printerVisitor.VisitNode(malinaListener.CompileUnit);
+
 
             Console.WriteLine(printerVisitor.Text);
 

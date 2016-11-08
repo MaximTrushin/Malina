@@ -250,7 +250,7 @@ namespace Malina.Parser.Tests
             var printerVisitor = new DOMPrinterVisitor();
             //module.
 
-            printerVisitor.VisitNode(malinaListener.CompileUnit);
+            printerVisitor.Visit(malinaListener.CompileUnit);
 
 
             Console.WriteLine(printerVisitor.Text);

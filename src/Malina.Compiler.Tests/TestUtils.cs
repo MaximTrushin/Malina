@@ -25,7 +25,7 @@ namespace Malina.Compiler.Tests
             var context = compiler.Run();
 
             var printerVisitor = new DOMPrinterVisitor();
-            printerVisitor.VisitNode(context.CompileUnit);
+            printerVisitor.Visit(context.CompileUnit);
             Console.WriteLine();
             Console.WriteLine(printerVisitor.Text);
 
@@ -52,7 +52,7 @@ namespace Malina.Compiler.Tests
 
             var context = compiler.Run();
             var printerVisitor = new DOMPrinterVisitor();
-            printerVisitor.VisitNode(context.CompileUnit);
+            printerVisitor.Visit(context.CompileUnit);
             Console.WriteLine();
             Console.WriteLine(printerVisitor.Text);
 

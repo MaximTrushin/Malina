@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Malina.Parser.Tests
 {
-    public class DOMPrinterVisitor: MalinaDepthFirstTransformer
+    public class DOMPrinterVisitor: MalinaDepthFirstVisitor
     {
         private int _indent = 0;
         private StringBuilder _sb = new StringBuilder();

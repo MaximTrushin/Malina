@@ -46,7 +46,7 @@
     <Compile Include="Argument.cs" />
     <Compile Include="Attribute.cs" />
     <Compile Include="CompileUnit.cs" />
-    <Compile Include="DepthFirstTransformer.cs" />
+    <Compile Include="MalinaDepthFirstVisitor.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Entity.cs" />

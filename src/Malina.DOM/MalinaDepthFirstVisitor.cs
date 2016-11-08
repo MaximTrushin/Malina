@@ -2,7 +2,7 @@
 
 namespace Malina.DOM
 {
-    public class MalinaDepthFirstTransformer : IDomVisitor
+    public class MalinaDepthFirstVisitor : IDomVisitor
     {
         private Node _resultingNode;
 
@@ -90,35 +90,20 @@ namespace Malina.DOM
             }
         }
 
-        public Node Visit(Node node)
+        public void Visit(Node node)
         {
-            return VisitNode(node);
+            OnNode(node);
         }
 
         public void Visit<T>(NodeCollection<T> items) where T : Node
         {
             if (items == null) return;
             
-            var nodes = items.ToArray();
-           
-            foreach (var currentNode in nodes)
-            {
-                var resultingNode = VisitNode(currentNode);
-                if (currentNode != resultingNode)
-                    ReplaceNode(items, currentNode, resultingNode);
-            }
+            foreach (var node in items)
+                OnNode(node);
+
         }
 
-        public virtual Node VisitNode(Node node)
-        {
-            if (node == null) return null;
-            var saved = _resultingNode;
-            _resultingNode = node;
-            OnNode(node);
-            var result = _resultingNode;
-            _resultingNode = saved;
-            return result;
-        }
 
     }
 }

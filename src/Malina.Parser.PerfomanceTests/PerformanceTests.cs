@@ -59,6 +59,12 @@ namespace Malina.Parser.PerfomanceTests
             Assert.Less(t2 - t1 , 25000);
             Assert.IsFalse(parserErrorListener.HasErrors);
 
+            t1 = Environment.TickCount;
+            var visitor = new DOMPrinterVisitor();
+            visitor.Visit(malinaListener.CompileUnit);
+            t2 = Environment.TickCount;
+            Console.WriteLine("Visitor Time: {0}", t2 - t1);
+
         }
 
         [Test]
@@ -114,12 +120,9 @@ namespace Malina.Parser.PerfomanceTests
 
             t1 = Environment.TickCount;
             var visitor = new DOMPrinterVisitor();
-            visitor.VisitNode(malinaListener.CompileUnit);
-            Console.WriteLine(visitor.Text);
+            visitor.Visit(malinaListener.CompileUnit);            
             t2 = Environment.TickCount;
             Console.WriteLine("Visitor Time: {0}", t2 - t1);
-
-
         }
 
     }

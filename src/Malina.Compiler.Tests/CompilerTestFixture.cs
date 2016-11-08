@@ -9,7 +9,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void ModuleWithDocumentAndAlias()
         {
-            PerformTest();
+            PerformCompilerTest();
         }
     }
 }

@@ -11,7 +11,8 @@ namespace Malina.Compiler.Pipelines
     {
         public CompileToFiles()
         {
-            Steps.Add(new ProcessAliases());
+            Steps.Add(new ProcessAliasesAndNamespaces());
+            Steps.Add(new CompileDocumentsToFiles());
         }
     }
 }

@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace Malina.Compiler.Steps
 {
-    public class AliasResolvingListener : MalinaParserListener
+    public class AliasesAndNamespacesResolvingListener : MalinaParserListener
     {
         #region CLASS members
         private CompilerContext _context;
         private bool _inDocument = false;
 
-        public AliasResolvingListener(CompilerContext context)
+        public AliasesAndNamespacesResolvingListener(CompilerContext context)
         {
             _context = context;
             _nodeStack.Push(_context.CompileUnit);

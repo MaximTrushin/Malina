@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Malina.Compiler.Steps
 {
-    public class ProcessAliases : ICompilerStep    
+    public class ProcessAliasesAndNamespaces : ICompilerStep    
     {
         CompilerContext _context;
 
@@ -28,7 +28,7 @@ namespace Malina.Compiler.Steps
                 try
                 {
                     using (var reader = input.Open())
-                        DoProcessAliases(input.Name, reader);
+                        DoProcessAliasesAndNamespaces(input.Name, reader);
                 }
                 catch (Exception ex)
                 {
@@ -38,7 +38,7 @@ namespace Malina.Compiler.Steps
 
         }
 
-        private void DoProcessAliases(string name, TextReader reader)
+        private void DoProcessAliasesAndNamespaces(string name, TextReader reader)
         {
             var lexer = new MalinaLexer(new AntlrInputStream(reader));
 
@@ -47,7 +47,7 @@ namespace Malina.Compiler.Steps
 
             var parser = new MalinaParser(new CommonTokenStream(lexer));
             parser.Interpreter.PredictionMode = PredictionMode.Sll;
-            var malinaListener = new AliasResolvingListener(_context);
+            var malinaListener = new AliasesAndNamespacesResolvingListener(_context);
            
             parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context));
             parser.AddParseListener(malinaListener);

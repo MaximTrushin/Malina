@@ -19,7 +19,7 @@ ATTRIBUTE_ID		:	'@' Name;
 ALIAS_ID			:	'$' Name ':'? {EmitIdWithColon(ALIAS_ID);};
 PARAMETER_ID		:	'%' Name ':'? {EmitIdWithColon(PARAMETER_ID);};
 ARGUMENT_ID			:	'.' Name ':'? {EmitIdWithColon(ARGUMENT_ID);};
-ELEMENT_ID			:	(ShortName | FullName) ':'? {EmitIdWithColon(ELEMENT_ID);};
+ELEMENT_ID			:	Name ':'? {EmitIdWithColon(ELEMENT_ID);};
 
 VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
 OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);

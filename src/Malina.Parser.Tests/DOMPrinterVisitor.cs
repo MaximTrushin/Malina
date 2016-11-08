@@ -123,7 +123,7 @@ namespace Malina.Parser.Tests
             else if(node.Value != null)
             {
                 _sb.Append("= `");
-                PrnitValue(node);
+                PrintValue(node);
                 _sb.Append("`");
             }
             if (node.Attributes.Count + node.Entities.Count > 0)
@@ -144,9 +144,9 @@ namespace Malina.Parser.Tests
             }
         }
 
-        private void PrnitValue(DOM.Element node)
+        private void PrintValue(DOM.Element node)
         {
-            _sb.Append(node.Value.Replace("\r", "\\r").Replace("\n", "\\n").Replace("\t", "\\t"));
+            _sb.Append(node.Value.Replace("\r\n", "\n").Replace("\n", "\\n").Replace("\t", "\\t"));
         }
 
         public override void OnParameter(DOM.Parameter node)

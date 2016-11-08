@@ -9,7 +9,7 @@ namespace Malina.DOM.Antlr
     {
         private ICharStream _charStream;
         private Interval _idInterval;
-        private List<Interval> _valueIntervals;
+        private Interval _valueInterval = Interval.Invalid;
         private int _valueIndent;
 
         public ICharStream CharStream
@@ -39,16 +39,16 @@ namespace Malina.DOM.Antlr
                 _valueIndent = value;
             }
         }
-        public List<Interval> ValueIntervals
+        public Interval ValueInterval
         {
             get
             {
-                return _valueIntervals;
+                return _valueInterval;
             }
 
             set
             {
-                _valueIntervals = value;
+                _valueInterval = value;
             }
         }
 
@@ -70,8 +70,8 @@ namespace Malina.DOM.Antlr
         {
             get
             {
-                if (_valueIntervals == null) return base.Value;
-                return Element.GetValueFromIntervals(_charStream, _valueIntervals, _valueIndent, ValueType);
+                if (base.Value != null) return base.Value;
+                return Element.GetValueFromIntervals(_charStream, _valueInterval, _valueIndent, ValueType);
             }
         }
 

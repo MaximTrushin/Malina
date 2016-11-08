@@ -1,10 +1,10 @@
 02:00	Document `MyRequest`:
 03:01		Element `request`:
 04:02			Element `e1`= `bla`
-05:02			Element `e2`= `blabla\r\nbla bla`
-07:02			Element `e2_1`= `blabla\r\nbla bla\r\n\t\t==`
+05:02			Element `e2`= `blabla\nbla bla`
+07:02			Element `e2_1`= `blabla\nbla bla\n\t\t==`
 10:02			Element `e3`= `blablabla`
-11:02			Element `e4`= `blabla\r\n\t\tbla bla\r\n\tbla`
-14:02			Element `e5`= `blabla\r\n\t\tbla bla\r\n\tbla\r\n`
-18:02			Element `e6`= `blabla\r\n\t\tbla bla\r\n\tbla\r\n`
+11:02			Element `e4`= `blabla\n\t\tbla bla\n\tbla`
+14:02			Element `e5`= `blabla\n\t\tbla bla\n\tbla\n`
+18:02			Element `e6`= `blabla\n\t\tbla bla\n\tbla\n`
 

@@ -21,6 +21,10 @@ namespace Malina.DOM.Antlr
             {
                 _idInterval = value;
             }
+            get
+            {
+                return _idInterval;
+            }
         }
 
         public override string Name

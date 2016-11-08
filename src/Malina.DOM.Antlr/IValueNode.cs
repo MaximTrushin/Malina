@@ -5,7 +5,7 @@ namespace Malina.DOM.Antlr
 {
     public interface IValueNode
     {
-        List<Interval> ValueIntervals { get; set; }
+        Interval ValueInterval { get; set; }
         object ObjectValue { get; set; }
         int ValueIndent { get; set; }
     }

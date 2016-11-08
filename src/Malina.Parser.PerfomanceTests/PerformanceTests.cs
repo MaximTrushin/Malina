@@ -55,7 +55,7 @@ namespace Malina.Parser.PerfomanceTests
             var module = parser.module();
             t2 = Environment.TickCount;
             Console.WriteLine("DOM Time: {0}", t2 - t1);
-            Assert.Less(t2 - t1 , 20000);
+            Assert.Less(t2 - t1 , 25000);
             Assert.IsFalse(parserErrorListener.HasErrors);
 
         }

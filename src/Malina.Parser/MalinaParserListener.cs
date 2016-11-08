@@ -467,8 +467,8 @@ namespace Malina.Parser
             var dqs = context.DQS();
             if (dqs != null)
             {
-                parent.ValueIntervals = new List<Interval>();
-                parent.ValueIntervals.Add(new Interval((dqs.Payload as CommonToken).StartIndex + 1, (dqs.Payload as CommonToken).StopIndex - 1));
+                
+                parent.ValueInterval = new Interval((dqs.Payload as CommonToken).StartIndex + 1, (dqs.Payload as CommonToken).StopIndex - 1);
                 (parent as DOM.IValueNode).ValueType = DOM.ValueType.DoubleQuotedString;
                 return;
             }
@@ -476,8 +476,7 @@ namespace Malina.Parser
             var openValue = context.OPEN_VALUE();
             if (openValue != null)
             {
-                parent.ValueIntervals = new List<Interval>();
-                parent.ValueIntervals.Add(new Interval((openValue.Payload as CommonToken).StartIndex, (openValue.Payload as CommonToken).StopIndex));
+                parent.ValueInterval = new Interval((openValue.Payload as CommonToken).StartIndex, (openValue.Payload as CommonToken).StopIndex);
                 (parent as DOM.IValueNode).ValueType = DOM.ValueType.OpenString;
                 return;
             }
@@ -489,10 +488,8 @@ namespace Malina.Parser
             var open_value = context.OPEN_VALUE_ML();
             if (open_value != null)
             {
-                parent.ValueIntervals = new List<Interval>();
-
                 var token = open_value.Payload as MalinaToken;
-                parent.ValueIntervals.Add(new Interval(token.StartIndex, token.StopIndex));
+                parent.ValueInterval = new Interval(token.StartIndex, token.StopIndex);
                 parent.ValueIndent = token.TokenIndent;
                 (parent as DOM.IValueNode).ValueType = DOM.ValueType.OpenString;
                 return;
@@ -502,8 +499,7 @@ namespace Malina.Parser
             if (dqs_ml != null)
             {
                 var token = dqs_ml.Payload as MalinaToken;
-                parent.ValueIntervals = new List<Interval>();
-                parent.ValueIntervals.Add(new Interval(token.StartIndex + 1, token.StopIndex - 1));
+                parent.ValueInterval = new Interval(token.StartIndex + 1, token.StopIndex - 1);
                 parent.ValueIndent = token.TokenIndent;
                 (parent as DOM.IValueNode).ValueType = DOM.ValueType.DoubleQuotedString;
                 return;

@@ -12,7 +12,7 @@ namespace Malina.DOM.Antlr
     {
         private ICharStream _charStream;
         private Interval _idInterval;
-        private List<Interval> _valueIntervals;
+        private Interval _valueInterval = Interval.Invalid;
         private int _valueIndent;
 
         public ICharStream CharStream
@@ -31,16 +31,16 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public List<Interval> ValueIntervals
+        public Interval ValueInterval
         {
             get
             {
-                return _valueIntervals;
+                return _valueInterval;
             }
 
             set
             {
-                _valueIntervals = value;
+                _valueInterval = value;
             }
         }
 
@@ -62,8 +62,8 @@ namespace Malina.DOM.Antlr
         {
             get
             {
-                if (_valueIntervals == null) return base.Value;
-                return GetValueFromIntervals(_charStream, _valueIntervals, _valueIndent, ValueType);
+                if (base.Value != null) return base.Value;
+                return GetValueFromIntervals(_charStream, _valueInterval, _valueIndent, ValueType);
             }
         }
 
@@ -80,40 +80,29 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public static string GetValueFromIntervals(ICharStream charStream, List<Interval> valueIntervals, int valueIndent, DOM.ValueType valueType)
+        public static string GetValueFromIntervals(ICharStream charStream, Interval valueInterval, int valueIndent, DOM.ValueType valueType)
         {
+            if (valueInterval.Length == 0) return null;
+            if (valueInterval.a == -1) return "";
             var _sb = new StringBuilder();
-            if (valueIndent > 0)
+            var value = charStream.GetText(valueInterval);
+            var lines = value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            var first = true;
+            foreach (var item in lines)
             {
-                var value = charStream.GetText(valueIntervals[0]);
-                var lines = value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                var first = true;
-                foreach (var item in lines)
-                {
-                    string s;
-                    if (valueType == ValueType.OpenString)
-                        s = item.TrimEnd(' ', '\t');
-                    else
-                        s = item;
+                string s;
+                if (valueType == ValueType.OpenString)
+                    s = item.TrimEnd(' ', '\t');
+                else
+                    s = item;
 
-                    if (first) {_sb.Append(s); first = false; continue; }
+                if (first) {_sb.Append(s); first = false; continue; }
 
-                    //Removing indents
-                    if (s.Length <= valueIndent) { _sb.AppendLine();continue; }
-                    _sb.AppendLine();
-                    _sb.Append(s.Substring(valueIndent));                    
-                }
+                //Removing indents
+                if (s.Length <= valueIndent) { _sb.AppendLine();continue; }
+                _sb.AppendLine();
+                _sb.Append(s.Substring(valueIndent));                    
             }
-            else
-                foreach (var item in valueIntervals)
-                {
-                    if (item.a == -1) continue;//skip interval if Empty String
-                    string s = charStream.GetText(item);
-                    if (valueType == ValueType.OpenString)
-                        s = s.TrimEnd(' ', '\t');
-
-                    _sb.Append(s);
-                }
 
             return _sb.ToString();
         }

@@ -9,7 +9,7 @@ namespace Malina.DOM
         private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
         public bool DefaultNamespace;
-        public bool IsValueElement;
+        //public bool IsValueElement;
         public string Namespace;
         private object _objectValue;
         private ValueType _valueType;

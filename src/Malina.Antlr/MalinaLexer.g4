@@ -15,11 +15,11 @@ NAMESPACE_ID		:	'#' ShortName;
 DOCUMENT_ID			:	'!' Name ':'? {EmitIdWithColon(DOCUMENT_ID);};
 ALIAS_DEF_ID		:	'!$' Name ':'? {EmitIdWithColon(ALIAS_DEF_ID);};
 SCOPE_ID			:   ('#' FullName |'#.' ShortName | '#' ShortName) ':'? {EmitIdWithColon(SCOPE_ID);};
-ATTRIBUTE_ID		:	'@' Name;
+ATTRIBUTE_ID		:	'@' NsName;
 ALIAS_ID			:	'$' Name ':'? {EmitIdWithColon(ALIAS_ID);};
-PARAMETER_ID		:	'%' Name ':'? {EmitIdWithColon(PARAMETER_ID);};
-ARGUMENT_ID			:	'.' Name ':'? {EmitIdWithColon(ARGUMENT_ID);};
-ELEMENT_ID			:	Name ':'? {EmitIdWithColon(ELEMENT_ID);};
+PARAMETER_ID		:	'%' ShortName ':'? {EmitIdWithColon(PARAMETER_ID);};
+ARGUMENT_ID			:	'.' ShortName ':'? {EmitIdWithColon(ARGUMENT_ID);};
+ELEMENT_ID			:	NsName ':'? {EmitIdWithColon(ELEMENT_ID);};
 
 VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
 OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
@@ -73,14 +73,21 @@ fragment	BlockComment	:   '/*' .*? '*/'
 fragment	LineComment		:   '//' ~[\r\n]*
 							;
 
-fragment	Name			:	FullName | ShortName
+fragment	Name			:	LongName | ShortName
 							;
 
-fragment	FullName		:	(ShortName '.')+ ShortName
+fragment	FullName		:	(ShortName '.') ShortName
 							;
 
 fragment	ShortName		:	NameStartChar NameChar*
 							;
+
+fragment	LongName		:	(ShortName '.')+ ShortName
+							;
+
+fragment	NsName		:	FullName | ShortName //Name with optional namespace prefix
+							;
+
 
 //http://www.w3.org/TR/REC-xml/							
 //[4a]   	NameChar	   ::=   	NameStartChar | "-" | "." | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]

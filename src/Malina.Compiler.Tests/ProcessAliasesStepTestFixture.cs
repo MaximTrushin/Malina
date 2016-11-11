@@ -10,7 +10,9 @@ namespace Malina.Compiler.Tests
         [Test, DomRecorded]
         public void ModuleWithDocumentAndAlias()
         {
-            TestUtils.PerformProcessAliasesTest();
+            var cc = TestUtils.PerformProcessAliasesTest();
+
+
         }
     }
 }

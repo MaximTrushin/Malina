@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Atn;
+using Malina.DOM;
 using Malina.Parser;
 using System;
 using System.Collections.Generic;
@@ -25,34 +26,18 @@ namespace Malina.Compiler.Steps
 
         public void Run()
         {
-            foreach (var input in _context.Parameters.Input)
+            foreach (var module in _context.CompileUnit.Modules)
             {
-                try
-                {
-                    using (var reader = input.Open())
-                        DoCompileDocumentsToFile(input.Name, reader);
-                }
-                catch (Exception ex)
-                {
-                    _context.Errors.Add(CompilerErrorFactory.InputError(input.Name, ex));
-                }
+                DoCompileDocumentsToFile(module, _context);
             }
         }
 
-        private void DoCompileDocumentsToFile(string name, TextReader reader)
+        private void DoCompileDocumentsToFile(Module module, CompilerContext context)
         {
-            var lexer = new MalinaLexer(new AntlrInputStream(reader));
+            Directory.CreateDirectory(context.Parameters.OutputDirectory);
 
-            lexer.RemoveErrorListeners();
-            lexer.AddErrorListener(new LexerParserErrorListener<int>(_context));
-
-            var parser = new MalinaParser(new CommonTokenStream(lexer));
-            parser.Interpreter.PredictionMode = PredictionMode.Sll;
-            var malinaListener = new AliasesAndNamespacesResolvingListener(_context);
-
-            parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context));
-            //parser.AddParseListener(malinaListener);
-            parser.module();
+            var visitor = new CompilingToFileVisitor(context);
+            visitor.OnModule(module);
         }
     }
 }

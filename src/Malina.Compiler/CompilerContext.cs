@@ -12,6 +12,8 @@ namespace Malina.Compiler
         public CompileUnit CompileUnit { get; private set; }
         public CompilerParameters Parameters { get; private set; }
 
+        public Dictionary<string, AliasDefinition> AliasDefinitions { get; private set; }
+
         public List<CompilerError> Errors { get; private set; }
 
         public CompilerContext(CompilerParameters parameters, CompileUnit compileUnit)
@@ -19,6 +21,7 @@ namespace Malina.Compiler
             Parameters = parameters;
             CompileUnit = compileUnit;
             Errors = new List<Compiler.CompilerError>();
+            AliasDefinitions = new Dictionary<string, AliasDefinition>();
         }
 
 

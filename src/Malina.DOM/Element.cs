@@ -3,7 +3,7 @@
 namespace Malina.DOM
 {
     [Serializable]
-    public class Element : Entity, IValueNode
+    public class Element : Entity, IValueNode, INsNode
     {
         // Fields
         private NodeCollection<Attribute> _attributes;

@@ -1,3 +1,9 @@
+01:00	Document `PurchaseOrder`:
+02:01		Element `purchaseOrder`:
+03:02			Attribute `orderDate`= `2001-12-12`
+04:02			Element `shipTo`:
+05:03				Alias `Address.UK.Cambridge`
+
 07:00	AliasDefinition `Address.UK.Cambridge`:
 08:01		Attribute `export-code`= `1`
 09:01		Element `name`= `Helen Zoe`

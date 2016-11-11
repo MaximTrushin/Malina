@@ -53,7 +53,7 @@ namespace Malina.Parser.PerfomanceTests
             parser.Reset();
             parser.AddParseListener(malinaListener);            
             t1 = Environment.TickCount;            
-            var module = parser.module();
+            //module = parser.module();
             t2 = Environment.TickCount;
             Console.WriteLine("DOM Time: {0}", t2 - t1);
             Assert.Less(t2 - t1 , 25000);
@@ -61,10 +61,22 @@ namespace Malina.Parser.PerfomanceTests
 
             t1 = Environment.TickCount;
             var visitor = new DOMPrinterVisitor();
-            visitor.Visit(malinaListener.CompileUnit);
+            //visitor.Visit(malinaListener.CompileUnit);
             t2 = Environment.TickCount;
             Console.WriteLine("Visitor Time: {0}", t2 - t1);
 
+
+            //GetAllTokens Time: 5625
+            //Token Number: 7764705
+            //Parse Time: 0
+            //DOM Time: 23516
+            //Visitor Time: 6828
+
+            //GetAllTokens Time: 5734
+            //Token Number: 7764705
+            //Parse Time: 14391
+            //DOM Time: 12375
+            //Visitor Time: 6046
         }
 
         [Test]

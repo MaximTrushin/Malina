@@ -52,7 +52,7 @@
     <Compile Include="ErrorCodes.cs" />
     <Compile Include="Steps\AliasesAndNamespacesResolvingListener.cs" />
     <Compile Include="Steps\CompileDocumentsToFiles.cs" />
-    <Compile Include="Steps\CompilingDocumentsToFileListener.cs" />
+    <Compile Include="Steps\CompilingToFileVisitor.cs" />
     <Compile Include="Steps\LexerParserErrorListener.cs" />
     <Compile Include="ICompilerComponent.cs" />
     <Compile Include="ICompilerInput.cs" />

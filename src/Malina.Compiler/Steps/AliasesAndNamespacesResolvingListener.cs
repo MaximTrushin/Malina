@@ -3,6 +3,9 @@ using Malina.DOM;
 using Malina.DOM.Antlr;
 using Malina.Parser;
 using System.Collections.Generic;
+using Antlr4.Runtime.Misc;
+using System;
+using System.Linq;
 
 namespace Malina.Compiler.Steps
 {
@@ -10,82 +13,78 @@ namespace Malina.Compiler.Steps
     {
         #region CLASS members
         private CompilerContext _context;
-        private bool _inDocument = false;
+        private Module _module; //Current module
+        private DOM.Document _document; //Current document
+        private DOM.AliasDefinition _aliasDefinition; //Current Alias Definition
 
-        public AliasesAndNamespacesResolvingListener(CompilerContext context)
+
+        public AliasesAndNamespacesResolvingListener(CompilerContext context): base(context.CompileUnit)
         {
             _context = context;
-            _nodeStack.Push(_context.CompileUnit);
         }
-
-        protected override void EnterContext<T>(INodeContext<T> context, bool valueNode = false)
-        {
-            if (_inDocument) return;
-            base.EnterContext(context, valueNode);
-        }
-
-        protected override void ExitContext<T>(INodeContext<T> context)
-        {
-            if (_inDocument) return;
-            base.ExitContext(context);
-        }
-
-        public override void ExitString_value_inline( MalinaParser.String_value_inlineContext context)
-        {
-            if (_inDocument) return;
-            base.ExitString_value_inline(context);
-        }
-
-        public override void ExitString_value_ml(MalinaParser.String_value_mlContext context)
-        {
-            if (_inDocument) return;
-            base.ExitString_value_ml(context);
-        }
-
-        public override void EnterString_value_inline(MalinaParser.String_value_inlineContext context)
-        {
-            if (_inDocument) return;
-            base.EnterString_value_inline(context);
-        }
-
-        public override void EnterString_value_ml(MalinaParser.String_value_mlContext context)
-        {
-            if (_inDocument) return;
-            base.EnterString_value_ml(context);
-        }
-
-
-        protected override void EnterScopeContext(ParserRuleContext context)
-        {
-            if (_inDocument) return;
-            base.EnterScopeContext(context);
-        }
-
         #endregion
 
-        #region MODULE context classes
         public override void EnterModule(MalinaParser.ModuleContext context)
         {
-            EnterContext(context);
+            base.EnterModule(context);
+            _module = context.Node;
         }
 
-        public override void ExitModule(MalinaParser.ModuleContext context)
+        public override void EnterDocument_stmt([NotNull] MalinaParser.Document_stmtContext context)
         {
-            ExitContext(context);
+            base.EnterDocument_stmt(context);
+
+            //Set document as context
+            _document = context.Node;
+            _aliasDefinition = null;
         }
-        #endregion
 
-
-        #region DOCUMENT context classes
-        public override void EnterDocument_stmt(MalinaParser.Document_stmtContext context)
+        public override void EnterAlias_def_stmt([NotNull] MalinaParser.Alias_def_stmtContext context)
         {
-            _inDocument = true;
+            base.EnterAlias_def_stmt(context);
+
+            //Set AliasDef as context
+            _aliasDefinition = context.Node;
+            _document = null;
+
         }
 
-        public override void ExitDocument_stmt(MalinaParser.Document_stmtContext context)
+        public override void ExitAlias_def_stmt(MalinaParser.Alias_def_stmtContext context)
         {
-            _inDocument = false;
+            base.ExitAlias_def_stmt(context);
+            _context.AliasDefinitions.Add(context.Node.Name, context.Node);
         }
-        #endregion
+
+        public override void ExitEveryRule([NotNull] ParserRuleContext context)
+        {
+            base.ExitEveryRule(context);
+            if (context is INodeContext<DOM.Antlr.Element>) CheckNameSpacePrefix(context as INodeContext<DOM.Antlr.Element>);
+            if (context is INodeContext<DOM.Antlr.Attribute>) CheckNameSpacePrefix(context as INodeContext<DOM.Antlr.Attribute>);
+
+        }
+
+        private void CheckNameSpacePrefix<T>(INodeContext<T> context) where T : Node
+        {
+            var node = context.Node as INsNode;
+
+            if(node.NsPrefix != null && !node.NsPrefix.StartsWith("xml", StringComparison.OrdinalIgnoreCase) && !PrefixExists(node.NsPrefix))
+            {
+                _context.Errors.Add(CompilerErrorFactory.NsPrefixNotDefined(context.Node, _module.FileName));
+            }
+        }
+
+        private bool PrefixExists(string nsPrefix)
+        {
+            if (_document != null && _document.Namespaces.Any(n => n.Name == nsPrefix))
+                 return true;
+
+            if (_aliasDefinition != null && _aliasDefinition.Namespaces.Any(n => n.Name == nsPrefix))
+                return true;
+
+            if (_module.Namespaces.Any(n => n.Name == nsPrefix))
+                return true;
+
+            return false;
+        }
     }
 }

@@ -36,5 +36,10 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0002", new LexicalInfo(fileName), fileName);
         }
+
+        internal static CompilerError NsPrefixNotDefined<T>(T node, string fileName) where T : Node
+        {
+            return Instantiate("MCE0003", new LexicalInfo(fileName, node.start.Line, node.start.Column, node.start.Index), (node as INsNode).NsPrefix);
+        }
     }
 }

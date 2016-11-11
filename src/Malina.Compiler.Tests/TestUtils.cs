@@ -10,6 +10,7 @@ using static Malina.Parser.Tests.TestUtils;
 using System;
 using Malina.Parser.Tests;
 using System.Text;
+using Malina.DOM;
 
 namespace Malina.Compiler.Tests
 {
@@ -41,9 +42,15 @@ namespace Malina.Compiler.Tests
                 }
             }
 
+            //DOM Assertions
+            if (recordedDom != null)
+            {
+                Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
+            }
+
         }
 
-        public static void PerformProcessAliasesTest()
+        public static CompilerContext PerformProcessAliasesTest()
         {
             PrintTestScenario();
 
@@ -73,6 +80,8 @@ namespace Malina.Compiler.Tests
             {
                 Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
             }
+
+            return context;
 
         }
 

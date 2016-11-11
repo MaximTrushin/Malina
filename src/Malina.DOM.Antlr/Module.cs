@@ -7,11 +7,11 @@ using Antlr4.Runtime;
 
 namespace Malina.DOM.Antlr
 {
-    public class Module : DOM.Module, IAntlrCharStreamConsumer
-    {
-        public ICharStream CharStream
-        {
-            set {}
-        }
-    }
+    //public class Module : DOM.Module, IAntlrCharStreamConsumer
+    //{
+    //    public ICharStream CharStream
+    //    {
+    //        set {}
+    //    }
+    //}
 }

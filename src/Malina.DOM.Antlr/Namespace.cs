@@ -61,7 +61,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Value != null) return base.Value;
-                return Element.GetValueFromIntervals(_charStream, _valueInterval, _valueIndent, ValueType);
+                return Element.GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
             }
         }
 

@@ -8,9 +8,7 @@ namespace Malina.DOM
         // Fields
         private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
-        public bool DefaultNamespace;
-        //public bool IsValueElement;
-        public string Namespace;
+        private string _nsPrefix;
         private object _objectValue;
         private ValueType _valueType;
 
@@ -41,9 +39,8 @@ namespace Malina.DOM
         {
             base.Assign(node);
             Element element = node as Element;
-            Namespace = element.Namespace;
-            ObjectValue = element.ObjectValue;
-            DefaultNamespace = element.DefaultNamespace;
+            NsPrefix = element.NsPrefix;
+            ObjectValue = element.ObjectValue;            
             ValueType = element.ValueType;
             Entities.AssignNodes(element.Entities);
             Attributes.AssignNodes(element.Attributes);
@@ -139,6 +136,19 @@ namespace Malina.DOM
             set
             {
                 _valueType = value;
+            }
+        }
+
+        public virtual string NsPrefix
+        {
+            get
+            {
+                return _nsPrefix;
+            }
+
+            set
+            {
+                _nsPrefix = value;
             }
         }
     }

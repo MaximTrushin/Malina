@@ -15,11 +15,11 @@ NAMESPACE_ID		:	'#' ShortName;
 DOCUMENT_ID			:	'!' Name ':'? {EmitIdWithColon(DOCUMENT_ID);};
 ALIAS_DEF_ID		:	'!$' Name ':'? {EmitIdWithColon(ALIAS_DEF_ID);};
 SCOPE_ID			:   ('#' FullName |'#.' ShortName | '#' ShortName) ':'? {EmitIdWithColon(SCOPE_ID);};
-ATTRIBUTE_ID		:	'@' NsName;
+ATTRIBUTE_ID		:	'@' ((ShortName '.' {RecordCharIndex();})? ShortName) {EmitIdWithColon(ATTRIBUTE_ID);};
 ALIAS_ID			:	'$' Name ':'? {EmitIdWithColon(ALIAS_ID);};
 PARAMETER_ID		:	'%' ShortName ':'? {EmitIdWithColon(PARAMETER_ID);};
 ARGUMENT_ID			:	'.' ShortName ':'? {EmitIdWithColon(ARGUMENT_ID);};
-ELEMENT_ID			:	NsName ':'? {EmitIdWithColon(ELEMENT_ID);};
+ELEMENT_ID			:	((ShortName '.' {RecordCharIndex();})? ShortName) ':'? {EmitIdWithColon(ELEMENT_ID);};
 
 VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
 OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
@@ -83,9 +83,6 @@ fragment	ShortName		:	NameStartChar NameChar*
 							;
 
 fragment	LongName		:	(ShortName '.')+ ShortName
-							;
-
-fragment	NsName		:	FullName | ShortName //Name with optional namespace prefix
 							;
 
 

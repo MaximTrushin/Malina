@@ -8,9 +8,9 @@ namespace Malina.Parser
     {
 
         #region MODULE NodeContext
-        public partial class ModuleContext : INodeContext<Module>
+        public partial class ModuleContext : INodeContext<DOM.Module>
         {
-            public Module Node { get; set; }
+            public DOM.Module Node { get; set; }
             public void ApplyContext()
             {
                 this.SetNodeLocation();
@@ -122,7 +122,9 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ATTRIBUTE_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
             }
         }
 
@@ -134,7 +136,10 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ATTRIBUTE_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
+
             }
         }
 
@@ -145,7 +150,10 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ATTRIBUTE_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);                
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
+
             }
         }
         #endregion
@@ -161,7 +169,9 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
             }
         }
 
@@ -173,7 +183,9 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);                
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
             }
 
         }
@@ -186,7 +198,9 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
             }
 
         }
@@ -215,7 +229,9 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
             }
 
         }
@@ -228,7 +244,9 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
             }
 
         }
@@ -241,7 +259,9 @@ namespace Malina.Parser
             {
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
-                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                var mt = id.Symbol as MalinaToken;
+                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.NsSeparator = mt.DotInId;
             }
 
         }

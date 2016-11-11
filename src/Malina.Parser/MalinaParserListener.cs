@@ -30,7 +30,7 @@ namespace Malina.Parser
                 return _compileUnit;
             }
         }
-        protected virtual void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, IAntlrCharStreamConsumer, new()
+        protected virtual void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, new()
         {
             if(!valueNode)
                 context.InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());

@@ -13,6 +13,7 @@ namespace Malina.DOM.Antlr
         private Interval _idInterval;
         private Interval _valueInterval = Interval.Invalid;
         private int _valueIndent;
+        private int _nsSeparator;
 
         public ICharStream CharStream
         {
@@ -48,7 +49,13 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Name != null) return base.Name;
+                if (NsSeparator > 0)
+                {
+                    return _charStream.GetText(new Interval(NsSeparator, _idInterval.b));
+                }
                 return _charStream.GetText(new Interval(_idInterval.a + 1, _idInterval.b));
+
+
             }
 
             set
@@ -62,7 +69,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Value != null) return base.Value;
-                return Element.GetValueFromIntervals(_charStream, _valueInterval, _valueIndent, ValueType);
+                return Element.GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
             }
         }
 
@@ -80,6 +87,32 @@ namespace Malina.DOM.Antlr
             set
             {
                 _valueIndent = value;
+            }
+        }
+
+        public int NsSeparator
+        {
+            get
+            {
+                return _nsSeparator;
+            }
+
+            set
+            {
+                _nsSeparator = value;
+            }
+        }
+
+        public override string NsPrefix
+        {
+            get
+            {
+                if (base.NsPrefix != null) return base.NsPrefix;
+                if (NsSeparator > 0)
+                {
+                    return _charStream.GetText(new Interval(_idInterval.a + 1, NsSeparator - 2));
+                }
+                return null;
             }
         }
     }

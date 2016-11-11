@@ -1,6 +1,7 @@
 ﻿using Malina.DOM;
 using System.Collections.Generic;
 using System.Text;
+using Malina.DOM.Antlr;
 
 namespace Malina.Parser.Tests
 {
@@ -232,10 +233,34 @@ namespace Malina.Parser.Tests
             _sb.Append("\t");
             _sb.Append(node.GetType().Name);
             _sb.Append(" `");
+            PrintNsPrefix(node);
             _sb.Append(node.Name);
             _sb.Append("`");
         }
 
+        private void PrintNsPrefix(Node node)
+        {
+            if (node is DOM.Antlr.Element)
+            {
+                var el = node as DOM.Antlr.Element;
+                if (el.NsPrefix != null)
+                {
+                    _sb.Append(el.NsPrefix);
+                    _sb.Append(".");
+                }
+            }
+
+            if (node is DOM.Antlr.Attribute)
+            {
+                var at = node as DOM.Antlr.Attribute;
+                if (at.NsPrefix != null)
+                {
+                    _sb.Append(at.NsPrefix);
+                    _sb.Append(".");
+                }
+            }
+
+        }
     }
 
 }

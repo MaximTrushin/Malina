@@ -9,6 +9,7 @@ namespace Malina.DOM
         public string Namespace;
         private object _objectValue;
         private ValueType _valueType;
+        private string _nsPrefix;
 
         // Methods
         public Attribute()
@@ -73,6 +74,19 @@ namespace Malina.DOM
             set
             {
                 _valueType = value;
+            }
+        }
+
+        public virtual string NsPrefix
+        {
+            get
+            {
+                return _nsPrefix;
+            }
+
+            set
+            {
+                _nsPrefix = value;
             }
         }
     }

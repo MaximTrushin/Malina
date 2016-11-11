@@ -14,6 +14,7 @@ namespace Malina.DOM.Antlr
         private Interval _idInterval;
         private Interval _valueInterval = Interval.Invalid;
         private int _valueIndent;
+        private int _nsSeparator;        
 
         public ICharStream CharStream
         {
@@ -49,6 +50,10 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Name != null) return base.Name;
+                if (NsSeparator > 0)
+                {
+                    return _charStream.GetText(new Interval(NsSeparator, _idInterval.b));
+                }
                 return _charStream.GetText(_idInterval);
             }
 
@@ -58,12 +63,25 @@ namespace Malina.DOM.Antlr
             }
         }
 
+        public override string NsPrefix
+        {
+            get
+            {
+                if (base.NsPrefix != null) return base.NsPrefix;
+                if (NsSeparator > 0)
+                {
+                    return _charStream.GetText(new Interval(_idInterval.a, NsSeparator - 2));
+                }
+                return null;
+            }
+        }
+
         public override string Value
         {
             get
             {
                 if (base.Value != null) return base.Value;
-                return GetValueFromIntervals(_charStream, _valueInterval, _valueIndent, ValueType);
+                return GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
             }
         }
 
@@ -80,7 +98,20 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public static string GetValueFromIntervals(ICharStream charStream, Interval valueInterval, int valueIndent, DOM.ValueType valueType)
+        public int NsSeparator
+        {
+            get
+            {
+                return _nsSeparator;
+            }
+
+            set
+            {
+                _nsSeparator = value;
+            }
+        }
+
+        public static string GetValueFromValueInterval(ICharStream charStream, Interval valueInterval, int valueIndent, DOM.ValueType valueType)
         {
             if (valueInterval.Length == 0) return null;
             if (valueInterval.a == -1) return "";
@@ -92,7 +123,7 @@ namespace Malina.DOM.Antlr
             {
                 string s;
                 if (valueType == ValueType.OpenString)
-                    s = item.TrimEnd(' ', '\t');
+                    s = item.TrimEnd(' ', '\t'); //ignoring trailing whitespace for open strings
                 else
                     s = item;
 

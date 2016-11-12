@@ -48,6 +48,7 @@
     <Compile Include="CompilerTestFixture.cs" />
     <Compile Include="ProcessAliasesStepTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecordedTestAttribute.cs" />
     <Compile Include="TestUtils.cs" />
   </ItemGroup>
   <ItemGroup>

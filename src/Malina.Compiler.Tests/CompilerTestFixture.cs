@@ -6,7 +6,7 @@ namespace Malina.Compiler.Tests
     [TestFixture]
     public class CompilerTestFixture
     {
-        [Test]
+        [Test, RecordedTest]
         public void ModuleWithDocumentAndAlias()
         {
             PerformCompilerTest();

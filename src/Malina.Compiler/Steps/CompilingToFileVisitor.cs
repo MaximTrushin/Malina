@@ -49,7 +49,6 @@ namespace Malina.Compiler.Steps
                 _xmlTextWriter.WriteStartElement(node.NsPrefix, node.Name, null);
             } 
             base.OnElement(node);
-
         }
 
         public override void OnAlias(Alias node)

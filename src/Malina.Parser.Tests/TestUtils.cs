@@ -351,6 +351,8 @@ namespace Malina.Parser.Tests
             return TestHasAttribute<ParseTreeRecordAttribute>();
         }
 
+
+
         private static bool TestHasAttribute<T>()
         {
             var trace = new StackTrace();

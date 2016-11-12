@@ -48,6 +48,47 @@ namespace Malina.Compiler.Tests
                 Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
             }
 
+
+            if (IsRecordedTest() || IsRecordTest())
+                CompareResultAndRecordedFiles(IsRecordTest());
+
+        }
+
+        private static void CompareResultAndRecordedFiles(bool record)
+        {
+            var testCaseName = GetTestCaseName();
+            var resultDir = AssemblyDirectory + '\\' + "Scenarios" + '\\' + testCaseName + "\\Result\\";
+            var recordedDir = AssemblyDirectory + @"\Scenarios\Recorded\" + testCaseName + @"\Compiler\";
+
+            if (record)
+            {
+                var recordDir = AssemblyDirectory + @"\..\..\Scenarios\Recorded\" + testCaseName + @"\Compiler\";
+                if(Directory.Exists(recordDir)) Directory.Delete(recordDir);
+                Directory.CreateDirectory(recordDir);
+                foreach(var file in Directory.GetFiles(resultDir))
+                {
+                    var newFile = recordDir + Path.GetFileName(file);
+                    File.Copy(file, newFile, true);
+                }               
+            }
+            else
+            {
+                Assert.IsTrue(Directory.Exists(resultDir), "Directory {0} doesn't exist", resultDir);
+                Assert.IsTrue(Directory.Exists(recordedDir), "Directory {0} doesn't exist", recordedDir);
+
+                //Equal number of files
+                Assert.AreEqual(Directory.GetFiles(recordedDir).Count(), Directory.GetFiles(resultDir).Count(), "Number of files {0} in '{1}' should be equal {2}", Directory.GetFiles(resultDir).Count(), resultDir, Directory.GetFiles(recordedDir).Count());
+
+                foreach (var file in Directory.GetFiles(recordedDir))
+                {
+                    var recordedFileName = Path.GetFileName(file);
+                    var resultFileName = resultDir + recordedFileName;
+                    var result = File.ReadAllText(resultFileName).Replace("\r\n", "\n");
+                    var recorded = File.ReadAllText(file).Replace("\r\n", "\n");
+                    Assert.AreEqual(recorded, result);
+                }
+            }
+
         }
 
         public static CompilerContext PerformProcessAliasesTest()
@@ -108,7 +149,7 @@ namespace Malina.Compiler.Tests
 
             var dir = AssemblyDirectory + '\\' + "Scenarios" + '\\' + GetTestCaseName() + '\\';
 
-            compilerParameters.OutputDirectory = dir + "Recorded" + '\\';
+            compilerParameters.OutputDirectory = dir + "Result" + '\\';
 
             foreach (var fileName in Directory.EnumerateFiles(dir))
             {
@@ -142,6 +183,17 @@ namespace Malina.Compiler.Tests
             return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T))) ||
                 method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T)));
         }
-  
+
+        public static bool IsRecordedTest()
+        {
+            return TestHasAttribute<RecordedTestAttribute>();
+        }
+
+        public static bool IsRecordTest()
+        {
+            return TestHasAttribute<RecordTestAttribute>();
+        }
+
+
     }
 }

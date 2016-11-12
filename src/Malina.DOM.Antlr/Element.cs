@@ -14,7 +14,7 @@ namespace Malina.DOM.Antlr
         private Interval _idInterval;
         private Interval _valueInterval = Interval.Invalid;
         private int _valueIndent;
-        private int _nsSeparator;        
+        private int _nsSeparator = -2;        
 
         public ICharStream CharStream
         {
@@ -68,12 +68,28 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.NsPrefix != null) return base.NsPrefix;
+
                 if (NsSeparator > 0)
                 {
                     return _charStream.GetText(new Interval(_idInterval.a, NsSeparator - 2));
                 }
+
                 return null;
             }
+        }
+
+        public static int CalcNsSeparator(ICharStream _charStream, Interval _idInterval)
+        {
+            var s = _charStream.GetText(_idInterval);
+            for (int i = 0; i < s.Length - 1; i++)
+            {
+                if(s[i] == '.')
+                {
+                    if (s[i + 1] != '.') return _idInterval.a + i + 1;
+                    else i++;
+                }
+            }
+            return -1;
         }
 
         public override string Value
@@ -102,6 +118,11 @@ namespace Malina.DOM.Antlr
         {
             get
             {
+                if (_nsSeparator == -2)
+                {
+                    //Calsulate NsSeparator
+                    _nsSeparator = CalcNsSeparator(_charStream, _idInterval);
+                }
                 return _nsSeparator;
             }
 

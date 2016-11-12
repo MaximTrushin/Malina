@@ -177,6 +177,12 @@ namespace Malina.Parser.Tests
         }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void ElementWithNamespace()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void EmptyElement()
         {
             PerformTest();

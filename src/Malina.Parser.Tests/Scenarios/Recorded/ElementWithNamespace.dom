@@ -1,0 +1,8 @@
+01:00	Namespace `ipo`= `http://www.example.com/myipo`
+03:00	Document `PurchaseOrder`:
+04:01		Namespace `ipo2`= `http://www.example.com/myipo`
+05:01		Element `ipo.purchaseOrder`:
+06:02			Attribute `orderDate`= `2001-12-12`
+07:02			Element `ipo2.shipTo`:
+08:03				Alias `Address.UK.Cambridge`
+

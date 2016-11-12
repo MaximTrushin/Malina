@@ -53,7 +53,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Scenarios\ModuleWithDocumentAndAlias\ModuleWithDocumentAndAlias.mlx">
+    <None Include="Scenarios\ModulesWithNsDocumentAndNsAlias\ModuleWithDocument.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\ModulesWithNsDocumentAndNsAlias\ModuleWithAlias.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\TwoModulesWithDocumentAndAlias\ModuleWithAlias.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\TwoModulesWithDocumentAndAlias\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

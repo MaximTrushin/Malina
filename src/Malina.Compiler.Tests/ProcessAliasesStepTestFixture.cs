@@ -8,7 +8,7 @@ namespace Malina.Compiler.Tests
     class ProcessAliasesStepTestFixture
     {
         [Test, DomRecorded]
-        public void ModuleWithDocumentAndAlias()
+        public void TwoModulesWithDocumentAndAlias()
         {
             var cc = TestUtils.PerformProcessAliasesTest();
 

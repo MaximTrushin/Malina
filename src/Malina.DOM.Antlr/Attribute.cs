@@ -13,7 +13,7 @@ namespace Malina.DOM.Antlr
         private Interval _idInterval;
         private Interval _valueInterval = Interval.Invalid;
         private int _valueIndent;
-        private int _nsSeparator;
+        private int _nsSeparator = -2;
 
         public ICharStream CharStream
         {
@@ -94,6 +94,11 @@ namespace Malina.DOM.Antlr
         {
             get
             {
+                if (_nsSeparator == -2)
+                {
+                    //Calsulate NsSeparator
+                    _nsSeparator = Element.CalcNsSeparator(_charStream, _idInterval);
+                }
                 return _nsSeparator;
             }
 

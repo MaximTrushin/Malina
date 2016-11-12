@@ -10,7 +10,6 @@ namespace Malina.Parser
         public int TokenIndent;
         public int StopLine;
         public int StopColumn;
-        public int DotInId;
 
         public MalinaToken(int type) : base(type)
         {
@@ -156,7 +155,6 @@ namespace Malina.Parser
         {
             _recordedIndex = CharIndex;
         }
-
 
         private int CalcIndent()
         {
@@ -422,7 +420,6 @@ namespace Malina.Parser
                 token.StopLine = _tokenStartLine;
                 token.Column = _tokenStartCharPositionInLine;
                 token.StopColumn = Column - 2;
-                if (_recordedIndex > _tokenStartCharIndex) token.DotInId = _recordedIndex;
 
                 Emit(token);
 
@@ -440,7 +437,6 @@ namespace Malina.Parser
                 token.StopLine = _tokenStartLine;
                 token.Column = _tokenStartCharPositionInLine;
                 token.StopColumn = Column - 1;
-                if (_recordedIndex > _tokenStartCharIndex) token.DotInId = _recordedIndex;
                 Emit(token);
             }
         }

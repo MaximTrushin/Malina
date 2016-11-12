@@ -11,15 +11,16 @@ LPAREN				:	'('	{EnterWsa();} -> skip;
 RPAREN				:	')' Spaces	{ExitWsa();}  -> skip;
 COMMA				:	',';
 
+
 NAMESPACE_ID		:	'#' ShortName;
 DOCUMENT_ID			:	'!' Name ':'? {EmitIdWithColon(DOCUMENT_ID);};
 ALIAS_DEF_ID		:	'!$' Name ':'? {EmitIdWithColon(ALIAS_DEF_ID);};
 SCOPE_ID			:   ('#' FullName |'#.' ShortName | '#' ShortName) ':'? {EmitIdWithColon(SCOPE_ID);};
-ATTRIBUTE_ID		:	'@' ((ShortName '.' {RecordCharIndex();})? ShortName) {EmitIdWithColon(ATTRIBUTE_ID);};
+ATTRIBUTE_ID		:	'@' ((ShortName '.')? ShortName) {EmitIdWithColon(ATTRIBUTE_ID);};
 ALIAS_ID			:	'$' Name ':'? {EmitIdWithColon(ALIAS_ID);};
 PARAMETER_ID		:	'%' ShortName ':'? {EmitIdWithColon(PARAMETER_ID);};
 ARGUMENT_ID			:	'.' ShortName ':'? {EmitIdWithColon(ARGUMENT_ID);};
-ELEMENT_ID			:	((ShortName '.' {RecordCharIndex();})? ShortName) ':'? {EmitIdWithColon(ELEMENT_ID);};
+ELEMENT_ID			:	((ShortName '.')? ShortName) ':'? {EmitIdWithColon(ELEMENT_ID);};
 
 VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
 OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
@@ -28,6 +29,7 @@ EMPTY_OBJECT		:	'()';
 EMPTY_ARRAY			:	'(:)';
 
 WS				:	WsSpaces	-> skip;
+
 
 mode IN_VALUE;
 	//Parameter or Alias assignment

@@ -63,7 +63,7 @@ namespace Malina.Compiler.Tests
             if (record)
             {
                 var recordDir = AssemblyDirectory + @"\..\..\Scenarios\Recorded\" + testCaseName + @"\Compiler\";
-                if(Directory.Exists(recordDir)) Directory.Delete(recordDir);
+                if(Directory.Exists(recordDir)) Directory.Delete(recordDir, true);
                 Directory.CreateDirectory(recordDir);
                 foreach(var file in Directory.GetFiles(resultDir))
                 {
@@ -88,6 +88,7 @@ namespace Malina.Compiler.Tests
                     Assert.AreEqual(recorded, result);
                 }
             }
+            Directory.Delete(resultDir, true);
 
         }
 

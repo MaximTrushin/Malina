@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Malina.DOM
@@ -8,7 +9,7 @@ namespace Malina.DOM
     {
         // Fields
         private NodeCollection<Entity> _entities;
-        private NodeCollection<Namespace> _namespaces;
+        private Dictionary<string, Namespace> _namespaces;
         public Entity DocumentElement;
 
         // Methods
@@ -32,7 +33,7 @@ namespace Malina.DOM
             }
             else if (child is Namespace)
             {
-                Namespaces.Add((Namespace)child);
+                Namespaces.Add(((Namespace)(child)).Name, (Namespace)child );
             }
             else
             {
@@ -44,7 +45,7 @@ namespace Malina.DOM
         {
             base.Assign(node);
             Document document = node as Document;
-            Namespaces.AssignNodes(document.Namespaces);
+            //Namespaces. AssignNodes(document.Namespaces);
             DocumentElement = (Entity)document.DocumentElement.Clone();
 
         }
@@ -88,13 +89,13 @@ namespace Malina.DOM
             }
         }
 
-        public NodeCollection<Namespace> Namespaces
+        public Dictionary<string, Namespace> Namespaces
         {
             get
             {
                 if (_namespaces == null)
                 {
-                    _namespaces = new NodeCollection<Namespace>(this);
+                    _namespaces = new Dictionary<string, Namespace>();
                 }
                 return _namespaces;
             }
@@ -102,10 +103,6 @@ namespace Malina.DOM
             {
                 if (value != _namespaces)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
                     _namespaces = value;
                 }
             }

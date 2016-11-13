@@ -26,6 +26,7 @@ namespace Malina.Compiler.Steps
             using (_xmlTextWriter = new XmlTextWriter(fileName, Encoding.UTF8) { Formatting = System.Xml.Formatting.Indented, Namespaces = true })
             {
                 _xmlTextWriter.WriteStartDocument();
+
                 base.OnDocument(node);
                 _xmlTextWriter.WriteEndDocument();
 
@@ -42,11 +43,11 @@ namespace Malina.Compiler.Steps
         {
             if (node.Value != null)
             {
-                if (node.Value is string) { _xmlTextWriter.WriteElementString(node.NsPrefix, node.Name, null, node.Value); }
+                if (node.Value is string) { _xmlTextWriter.WriteElementString(null, node.Name, null, node.Value); }
             }
             else
             {
-                _xmlTextWriter.WriteStartElement(node.NsPrefix, node.Name, null);
+                _xmlTextWriter.WriteStartElement(null, node.Name, null);
             } 
             base.OnElement(node);
         }

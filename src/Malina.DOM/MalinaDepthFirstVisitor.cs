@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Malina.DOM
 {
@@ -101,6 +102,15 @@ namespace Malina.DOM
             
             foreach (var node in items)
                 OnNode(node);
+
+        }
+
+        public void Visit<T>(Dictionary<string,T> items) where T : Node
+        {
+            if (items == null) return;
+
+            foreach (var item in items)
+                OnNode(item.Value);
 
         }
 

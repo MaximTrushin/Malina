@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using System.Collections.Generic;
 
 namespace Malina.DOM.Antlr
 {

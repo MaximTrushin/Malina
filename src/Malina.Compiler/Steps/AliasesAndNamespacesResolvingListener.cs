@@ -9,6 +9,11 @@ using System.Linq;
 
 namespace Malina.Compiler.Steps
 {
+    /// <summary>
+    /// Creates Malina DOM structure (because it is inherited fron MalinaParserListener).
+    /// Populates list of AliasDefinitions in the CompilerContext.
+    /// Resolves namespaces for documents
+    /// </summary>
     public class AliasesAndNamespacesResolvingListener : MalinaParserListener
     {
         #region CLASS members
@@ -75,7 +80,7 @@ namespace Malina.Compiler.Steps
 
         private bool PrefixExists(string nsPrefix)
         {
-            if (_document != null && _document.Namespaces.Any(n => n.Name == nsPrefix))
+            if (_document != null && _document.Namespaces.ContainsKey(nsPrefix))
                  return true;
 
             if (_aliasDefinition != null && _aliasDefinition.Namespaces.Any(n => n.Name == nsPrefix))

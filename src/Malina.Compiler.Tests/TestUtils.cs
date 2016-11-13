@@ -25,6 +25,9 @@ namespace Malina.Compiler.Tests
 
             var context = compiler.Run();
 
+            Assert.IsTrue(context.Errors.Count() == 0, "Compilation Errors Number is {0}", context.Errors.Count());
+
+
             var printerVisitor = new DOMPrinterVisitor();
             printerVisitor.Visit(context.CompileUnit);
             Console.WriteLine();

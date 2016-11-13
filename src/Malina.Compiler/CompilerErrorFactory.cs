@@ -15,6 +15,11 @@ namespace Malina.Compiler
             return Instantiate("MCE0001", lexicalInfo, error, lexicalInfo.FileName, error.Message);
         }
 
+        internal static CompilerError FatalError(Exception ex)
+        {
+            return new CompilerError("MCE0000", ex, ex.Message);
+        }
+
         private static CompilerError Instantiate(string code, LexicalInfo location, Exception error, params object[] args)
         {
             return new CompilerError(code, location, error, args);
@@ -41,5 +46,7 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0003", new LexicalInfo(fileName, node.start.Line, node.start.Column, node.start.Index), (node as INsNode).NsPrefix);
         }
+
+
     }
 }

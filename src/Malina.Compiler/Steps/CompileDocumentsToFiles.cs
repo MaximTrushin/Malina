@@ -26,18 +26,34 @@ namespace Malina.Compiler.Steps
 
         public void Run()
         {
-            foreach (var module in _context.CompileUnit.Modules)
+            try
             {
-                DoCompileDocumentsToFile(module, _context);
+                foreach (var module in _context.CompileUnit.Modules)
+                {
+                    DoCompileDocumentsToFile(module, _context);
+                }
             }
+            catch (Exception ex)
+            {
+
+                _context.Errors.Add(CompilerErrorFactory.FatalError(ex));
+            }
+
         }
 
         private void DoCompileDocumentsToFile(Module module, CompilerContext context)
         {
-            Directory.CreateDirectory(context.Parameters.OutputDirectory);
+            try
+            {
+                Directory.CreateDirectory(context.Parameters.OutputDirectory);
 
-            var visitor = new CompilingToFileVisitor(context);
-            visitor.OnModule(module);
+                var visitor = new CompilingToFileVisitor(context);
+                visitor.OnModule(module);
+            }
+            catch (Exception ex)
+            {
+                _context.Errors.Add(CompilerErrorFactory.FatalError(ex));
+            }
         }
     }
 }

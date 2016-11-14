@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Malina.DOM
@@ -45,7 +46,7 @@ namespace Malina.DOM
         {
             base.Assign(node);
             Document document = node as Document;
-            //Namespaces. AssignNodes(document.Namespaces);
+            Namespaces = document.Namespaces.ToDictionary(entry => entry.Key, entry => entry.Value.Clone() as Namespace);
             DocumentElement = (Entity)document.DocumentElement.Clone();
 
         }

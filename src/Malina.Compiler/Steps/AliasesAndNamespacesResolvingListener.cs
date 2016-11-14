@@ -83,10 +83,10 @@ namespace Malina.Compiler.Steps
             if (_document != null && _document.Namespaces.ContainsKey(nsPrefix))
                  return true;
 
-            if (_aliasDefinition != null && _aliasDefinition.Namespaces.Any(n => n.Name == nsPrefix))
+            if (_aliasDefinition != null && _aliasDefinition.Namespaces.ContainsKey(nsPrefix))
                 return true;
 
-            if (_module.Namespaces.Any(n => n.Name == nsPrefix))
+            if (_module.Namespaces.ContainsKey(nsPrefix))
                 return true;
 
             return false;

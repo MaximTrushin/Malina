@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Malina.DOM
 {
@@ -9,7 +10,7 @@ namespace Malina.DOM
         // Fields
         private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
-        private NodeCollection<Namespace> _namespaces;
+        private Dictionary<string, Namespace> _namespaces;
         private NodeCollection<Parameter> _parameters;
         public string Value;
         public ValueType ValueType;
@@ -37,7 +38,7 @@ namespace Malina.DOM
             }
             else if (child is Namespace)
             {
-                Namespaces.Add((Namespace)child);
+                Namespaces.Add(((Namespace)(child)).Name, (Namespace)child);
             }
             else if (child is Entity)
             {
@@ -54,7 +55,7 @@ namespace Malina.DOM
             base.Assign(node);
             AliasDefinition definition = node as AliasDefinition;
             Value = definition.Value;
-            Namespaces.AssignNodes(definition.Namespaces);
+            Namespaces = definition.Namespaces.ToDictionary(entry => entry.Key, entry => entry.Value.Clone() as Namespace);
             Entities.AssignNodes(definition.Entities);
             Attributes.AssignNodes(definition.Attributes);
             Parameters.AssignNodes(definition.Parameters);
@@ -123,13 +124,13 @@ namespace Malina.DOM
             }
         }
 
-        public NodeCollection<Namespace> Namespaces
+        public Dictionary<string, Namespace> Namespaces
         {
             get
             {
                 if (_namespaces == null)
                 {
-                    _namespaces = new NodeCollection<Namespace>(this);
+                    _namespaces = new Dictionary<string, Namespace>();
                 }
                 return _namespaces;
             }
@@ -137,10 +138,6 @@ namespace Malina.DOM
             {
                 if (value != _namespaces)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
                     _namespaces = value;
                 }
             }

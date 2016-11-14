@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Malina.DOM
 {
@@ -7,7 +9,7 @@ namespace Malina.DOM
     {
         // Fields
         private NodeCollection<ModuleMember> _member;
-        private NodeCollection<Namespace> _namespaces;
+        private Dictionary<string, Namespace> _namespaces;
         public string FileName;
 
         // Methods
@@ -26,7 +28,7 @@ namespace Malina.DOM
             }
             else if (child is Namespace)
             {
-                Namespaces.Add((Namespace)child);
+                Namespaces.Add(((Namespace)(child)).Name, (Namespace)child);
             }
             else
             {
@@ -40,8 +42,7 @@ namespace Malina.DOM
             Module module = node as Module;
             Name = module.Name;
             Members.AssignNodes(module.Members);
-            Namespaces.AssignNodes(module.Namespaces);
-
+            Namespaces = module.Namespaces.ToDictionary(entry => entry.Key, entry => entry.Value.Clone() as Namespace);
         }
 
         public override Node Clone()
@@ -75,13 +76,13 @@ namespace Malina.DOM
             }
         }
 
-        public NodeCollection<Namespace> Namespaces
+        public Dictionary<string, Namespace> Namespaces
         {
             get
             {
                 if (_namespaces == null)
                 {
-                    _namespaces = new NodeCollection<Namespace>(this);
+                    _namespaces = new Dictionary<string, Namespace>();
                 }
                 return _namespaces;
             }
@@ -89,10 +90,6 @@ namespace Malina.DOM
             {
                 if (value != _namespaces)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
                     _namespaces = value;
                 }
             }

@@ -1,9 +1,5 @@
 ﻿using Malina.DOM;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Malina.Compiler
 {
@@ -14,14 +10,17 @@ namespace Malina.Compiler
 
         public Dictionary<string, AliasDefinition> AliasDefinitions { get; private set; }
 
+        public NamespaceResolver NamespaceResolver { get; private set; }
+
         public List<CompilerError> Errors { get; private set; }
 
         public CompilerContext(CompilerParameters parameters, CompileUnit compileUnit)
         {
             Parameters = parameters;
             CompileUnit = compileUnit;
-            Errors = new List<Compiler.CompilerError>();
+            Errors = new List<CompilerError>();
             AliasDefinitions = new Dictionary<string, AliasDefinition>();
+            NamespaceResolver = new NamespaceResolver(this);
         }
 
 

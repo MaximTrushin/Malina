@@ -17,38 +17,28 @@ namespace Malina.Compiler.Steps
     public class AliasesAndNamespacesResolvingListener : MalinaParserListener
     {
         private CompilerContext _context;
-        private NamespaceResolver _nsResolver;
 
-        public NamespaceResolver NsResolver
-        {
-            get
-            {
-                return _nsResolver;
-            }
-        }
-
-        public AliasesAndNamespacesResolvingListener(CompilerContext context): base(context.CompileUnit)
+        public AliasesAndNamespacesResolvingListener(CompilerContext context) : base(context.CompileUnit)
         {
             _context = context;
-            _nsResolver = new NamespaceResolver(context);
         }
 
         public override void EnterModule(MalinaParser.ModuleContext context)
         {
             base.EnterModule(context);
-            NsResolver.EnterModule(context.Node);
+            _context.NamespaceResolver.EnterModule(context.Node);
         }
 
         public override void EnterDocument_stmt([NotNull] MalinaParser.Document_stmtContext context)
         {            
             base.EnterDocument_stmt(context);
-            NsResolver.EnterDocument(context.Node);
+            _context.NamespaceResolver.EnterDocument(context.Node);
         }
 
         public override void EnterAlias_def_stmt([NotNull] MalinaParser.Alias_def_stmtContext context)
         {
             base.EnterAlias_def_stmt(context);
-            NsResolver.EnterAliasDef(context.Node);
+            _context.NamespaceResolver.EnterAliasDef(context.Node);
         }
 
         public override void ExitAlias_def_stmt(MalinaParser.Alias_def_stmtContext context)
@@ -61,9 +51,9 @@ namespace Malina.Compiler.Steps
         {
             base.ExitEveryRule(context);
 
-            if (context is INodeContext<DOM.Antlr.Element>) NsResolver.ProcessNsPrefix((context as INodeContext<DOM.Antlr.Element>).Node);
-            if (context is INodeContext<DOM.Antlr.Attribute>) NsResolver.ProcessNsPrefix((context as INodeContext<DOM.Antlr.Attribute>).Node);
-            if (context is INodeContext<DOM.Antlr.Alias>) NsResolver.ProcessAlias((context as INodeContext<DOM.Antlr.Alias>).Node);
+            if (context is INodeContext<DOM.Antlr.Element>) _context.NamespaceResolver.ProcessNsPrefix((context as INodeContext<DOM.Antlr.Element>).Node);
+            if (context is INodeContext<DOM.Antlr.Attribute>) _context.NamespaceResolver.ProcessNsPrefix((context as INodeContext<DOM.Antlr.Attribute>).Node);
+            if (context is INodeContext<DOM.Antlr.Alias>) _context.NamespaceResolver.ProcessAlias((context as INodeContext<DOM.Antlr.Alias>).Node);
 
         }
     }

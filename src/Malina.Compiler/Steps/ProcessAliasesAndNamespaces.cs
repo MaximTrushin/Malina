@@ -23,19 +23,26 @@ namespace Malina.Compiler.Steps
 
         public void Run()
         {
-            foreach (var input in _context.Parameters.Input)
-            {
-                try
+            try
+            {                
+                foreach (var input in _context.Parameters.Input)
                 {
-                    using (var reader = input.Open())
-                        DoProcessAliasesAndNamespaces(input.Name, reader);
+                    try
+                    {
+                        using (var reader = input.Open())
+                            DoProcessAliasesAndNamespaces(input.Name, reader);
+                    }
+                    catch (Exception ex)
+                    {
+                        _context.Errors.Add(CompilerErrorFactory.InputError(input.Name, ex));
+                    }
                 }
-                catch (Exception ex)
-                {
-                    _context.Errors.Add(CompilerErrorFactory.InputError(input.Name, ex));
-                }
+                _context.NamespaceResolver.ResolveAliasesInDocuments();
             }
-
+            catch (Exception ex)
+            {
+                _context.Errors.Add(CompilerErrorFactory.FatalError(ex));
+            }
         }
 
         private void DoProcessAliasesAndNamespaces(string name, TextReader reader)
@@ -49,20 +56,18 @@ namespace Malina.Compiler.Steps
 
                 var parser = new MalinaParser(new CommonTokenStream(lexer));
                 parser.Interpreter.PredictionMode = PredictionMode.Sll;
+
                 var resolvingListener = new AliasesAndNamespacesResolvingListener(_context);
 
                 parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context));
                 parser.AddParseListener(resolvingListener);
                 parser.module();
-                resolvingListener.NsResolver.ResolveAliasesInDocuments();
+
             }
             catch(Exception ex)
             {
                 _context.Errors.Add(CompilerErrorFactory.FatalError(ex));
             }
-
-
-
         }
     }
 }

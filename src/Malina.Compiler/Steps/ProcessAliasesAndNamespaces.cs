@@ -49,11 +49,12 @@ namespace Malina.Compiler.Steps
 
                 var parser = new MalinaParser(new CommonTokenStream(lexer));
                 parser.Interpreter.PredictionMode = PredictionMode.Sll;
-                var malinaListener = new AliasesAndNamespacesResolvingListener(_context);
+                var resolvingListener = new AliasesAndNamespacesResolvingListener(_context);
 
                 parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context));
-                parser.AddParseListener(malinaListener);
+                parser.AddParseListener(resolvingListener);
                 parser.module();
+                resolvingListener.NsResolver.ResolveAliasesInDocuments();
             }
             catch(Exception ex)
             {

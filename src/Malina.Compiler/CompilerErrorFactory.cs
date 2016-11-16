@@ -47,6 +47,16 @@ namespace Malina.Compiler
             return Instantiate("MCE0003", new LexicalInfo(fileName, node.start.Line, node.start.Column, node.start.Index), (node as INsNode).NsPrefix);
         }
 
+        internal static CompilerError AliasIsNotDefined(Alias alias, string fileName)
+        {
+            return Instantiate("MCE0004", new LexicalInfo(fileName, alias.start.Line, alias.start.Column, alias.start.Index), alias.Name);
+        }
 
+        internal static CompilerError AliasDefHasCircularReference(NamespaceResolver.NsInfo aliasDefNsInfo)
+        {
+            var aliasDef = aliasDefNsInfo.ModuleMember as AliasDefinition;
+            return Instantiate("MCE0005", new LexicalInfo(aliasDef.Module.FileName,
+                aliasDef.start.Line, aliasDef.start.Column, aliasDef.start.Index), aliasDef.Name);
+        }
     }
 }

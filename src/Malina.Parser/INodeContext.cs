@@ -12,12 +12,13 @@ namespace Malina.Parser
 
     public static class NodeContextExtensions
     {
-        public static T InitNode<T>(this INodeContext<T> ctx) where T : Node, new()
+        public static T InitNode<T>(this INodeContext<T> ctx, Node parent) where T : Node, new()
         {
             if (ctx.Node == null)
             {
                 var node = new T();
-
+                if (parent != null)
+                    parent.AppendChild(node);
                 ctx.Node = node;
                 var csc = node as IAntlrCharStreamConsumer;
                 if (csc != null)
@@ -26,12 +27,13 @@ namespace Malina.Parser
             return ctx.Node;
         }
 
-        public static T InitValueNode<T>(this INodeContext<T> ctx) where T : Node, new()
+        public static T InitValueNode<T>(this INodeContext<T> ctx, Node parent) where T : Node, new()
         {
             if (ctx.Node == null)
             {
                 var node = new T();
-
+                if (parent != null)
+                    (parent as DOM.Antlr.IValueNode).ObjectValue = node;
                 ctx.Node = node;
                 var csc = node as IAntlrCharStreamConsumer;
                 if (csc != null)

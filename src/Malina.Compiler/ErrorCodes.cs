@@ -12,6 +12,9 @@ namespace Malina.Compiler
         public const string MCE0001 = "Error reading from '{0}': '{1}'.";
         public const string MCE0002 = "File '{0}' was not found.";
         public const string MCE0003 = "Namespace prefix '{0}' is not defined.";
+        public const string MCE0004 = "Alias '{0}' is not defined.";
+        public const string MCE0005 = "Alias Definition '{0}' has circular reference.";
+       
 
 
         public static string Format(string name, params object[] args)

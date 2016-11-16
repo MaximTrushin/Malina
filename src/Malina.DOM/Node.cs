@@ -7,11 +7,10 @@ namespace Malina.DOM
     public abstract class Node
     {
         // Fields
-        private Node _parent;
-        public SourceLocation end;
-        public SourceLocation start;
         private string _name;
-
+        private Node _parent;
+        public SourceLocation start;
+        public SourceLocation end;
 
         public virtual string Name
         {
@@ -41,6 +40,7 @@ namespace Malina.DOM
             _parent = node._parent;
             start = node.start;
             end = node.end;
+            _name = node.Name;
         }
 
         public abstract Node Clone();
@@ -58,7 +58,4 @@ namespace Malina.DOM
             }
         }
     }
-
-
-
 }

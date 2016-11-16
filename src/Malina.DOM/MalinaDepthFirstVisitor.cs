@@ -105,15 +105,6 @@ namespace Malina.DOM
 
         }
 
-        public void Visit<T>(Dictionary<string,T> items) where T : Node
-        {
-            if (items == null) return;
-
-            foreach (var item in items)
-                OnNode(item.Value);
-
-        }
-
 
     }
 }

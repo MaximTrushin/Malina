@@ -33,9 +33,12 @@ namespace Malina.Parser
                 return _compileUnit;
             }
         }
-        protected virtual void EnterContext<T>(INodeContext<T> context) where T : Node, new()
+        protected virtual void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, new()
         {
-            context.InitNode();
+            if (!valueNode)
+                context.InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
+            else
+                context.InitValueNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
             _nodeStack.Push(context.Node);
         }
 
@@ -51,7 +54,7 @@ namespace Malina.Parser
         protected virtual void EnterScopeContext(ParserRuleContext context)
         {
             //Creating Scope node, adding to parent, adding to ctx.Node and initializing CharStream
-            (context as INodeContext<DOM.Antlr.Scope>).InitNode();
+            (context as INodeContext<DOM.Antlr.Scope>).InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
 
             //Checking if this is root node and retuning as Listener result
 
@@ -81,19 +84,10 @@ namespace Malina.Parser
         }
 
 
-        protected virtual void ExitContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, new()
+        protected virtual void ExitContext<T>(INodeContext<T> context) where T : Node, new()
         {
             context.ApplyContext();
             _nodeStack.Pop();
-            var parent = _nodeStack.Peek();
-
-            if (parent != null)
-            {
-                if (!valueNode)
-                    parent.AppendChild(context.Node);
-                else
-                    (parent as DOM.Antlr.IValueNode).ObjectValue = context.Node;
-            }
         }
         #endregion
 
@@ -540,12 +534,12 @@ namespace Malina.Parser
 
         public override void EnterAlias_object_value_inline([NotNull] MalinaParser.Alias_object_value_inlineContext context)
         {
-            EnterContext(context);
+            EnterContext(context, true);
         }
 
         public override void ExitAlias_object_value_inline([NotNull] MalinaParser.Alias_object_value_inlineContext context)
         {
-            ExitContext(context, true);
+            ExitContext(context);
         }
 
         #endregion

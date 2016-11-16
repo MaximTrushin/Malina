@@ -10,7 +10,6 @@ namespace Malina.DOM
         // Fields
         private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
-        private Dictionary<string, Namespace> _namespaces;
         private NodeCollection<Parameter> _parameters;
         public string Value;
         public ValueType ValueType;
@@ -38,7 +37,7 @@ namespace Malina.DOM
             }
             else if (child is Namespace)
             {
-                Namespaces.Add(((Namespace)(child)).Name, (Namespace)child);
+                Namespaces.Add((Namespace)child);
             }
             else if (child is Entity)
             {
@@ -55,7 +54,7 @@ namespace Malina.DOM
             base.Assign(node);
             AliasDefinition definition = node as AliasDefinition;
             Value = definition.Value;
-            Namespaces = definition.Namespaces.ToDictionary(entry => entry.Key, entry => entry.Value.Clone() as Namespace);
+            Namespaces.AssignNodes(definition.Namespaces);
             Entities.AssignNodes(definition.Entities);
             Attributes.AssignNodes(definition.Attributes);
             Parameters.AssignNodes(definition.Parameters);
@@ -112,33 +111,6 @@ namespace Malina.DOM
                         value.InitializeParent(this);
                     }
                     _entities = value;
-                }
-            }
-        }
-
-        public Module Module
-        {
-            get
-            {
-                return (Parent as Module);
-            }
-        }
-
-        public Dictionary<string, Namespace> Namespaces
-        {
-            get
-            {
-                if (_namespaces == null)
-                {
-                    _namespaces = new Dictionary<string, Namespace>();
-                }
-                return _namespaces;
-            }
-            set
-            {
-                if (value != _namespaces)
-                {
-                    _namespaces = value;
                 }
             }
         }

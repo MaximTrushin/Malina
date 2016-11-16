@@ -96,7 +96,28 @@ namespace Malina.Compiler
 
         private void MergeNsInfo(NsInfo destNsInfo, NsInfo nsInfo)
         {
-            throw new NotImplementedException();
+            foreach(var ns in nsInfo.Namespaces)
+            {
+                var uri = ns.Value;
+                var destNs = destNsInfo.Namespaces.FirstOrDefault(n => n.Value == uri);
+
+                if (destNs != null) continue;
+
+                var prefix = FindFreePrefix(destNs.Name, destNsInfo.Namespaces);
+
+                destNsInfo.Namespaces.Add(new DOM.Namespace() { Name = prefix, Value = ns.Value });
+            }
+        }
+
+        private string FindFreePrefix(string name, List<DOM.Namespace> namespaces)
+        {
+            var i = 1;
+            while (namespaces.Any(n => n.Name == name))
+            {
+                name = name + i++.ToString();
+            }
+
+            return name;
         }
 
         private NsInfo ResolveAliasInDocument(DOM.Alias alias, NsInfo documentNsInfo)
@@ -170,13 +191,7 @@ namespace Malina.Compiler
                 if (_currentModuleMemberNsInfo != null && _currentModuleMemberNsInfo.ModuleMember == _currentModuleMember) return _currentModuleMemberNsInfo;
 
                 var result = ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == _currentModuleMember);
-
-                if (result == null)
-                {
-                    result = new NsInfo(_currentModuleMember);
-                    _currentModuleMemberNsInfo = result;
-                    _moduleMembersNsInfo.Add(result);
-                }
+                _currentModuleMemberNsInfo = result;
                 return result;
             }
         }
@@ -190,11 +205,16 @@ namespace Malina.Compiler
         public void EnterDocument(DOM.Antlr.Document node)
         {
             _currentModuleMember = node;
+            _currentModuleMemberNsInfo = new NsInfo(_currentModuleMember);
+            ModuleMembersNsInfo.Add(_currentModuleMemberNsInfo);
         }
 
         public void EnterAliasDef(DOM.Antlr.AliasDefinition node)
         {
             _currentModuleMember = node;
+            _currentModuleMemberNsInfo = new NsInfo(_currentModuleMember);
+            ModuleMembersNsInfo.Add(_currentModuleMemberNsInfo);
+
         }
 
         public void EnterModule(Module node)
@@ -207,6 +227,7 @@ namespace Malina.Compiler
         /// For the Namespace Prefix of the Node:
         /// - reports error if it is not defined
         /// - finds Namespace DOM object in the Module or ModuleMember and adds it to NsINFo of the current ModuleMember
+        /// if the namespace is not added yet
         /// </summary>
         /// <param name="node"></param>
         internal void ProcessNsPrefix(Node node)
@@ -222,7 +243,8 @@ namespace Malina.Compiler
                     return;
                 }
 
-                CurrentModuleMemberNsInfo.Namespaces.Add(ns);
+                if (!CurrentModuleMemberNsInfo.Namespaces.Any(n => n.Value == ns.Value))
+                    CurrentModuleMemberNsInfo.Namespaces.Add(ns);
 
             }
         }

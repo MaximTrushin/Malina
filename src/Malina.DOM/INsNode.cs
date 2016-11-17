@@ -2,6 +2,6 @@
 {
     public interface INsNode
     {
-        string NsPrefix { get; }
+        string NsPrefix { get; set; }
     }
 }

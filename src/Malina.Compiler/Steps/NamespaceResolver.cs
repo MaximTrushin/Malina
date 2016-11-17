@@ -52,6 +52,8 @@ namespace Malina.Compiler
         }
 
         private List<NsInfo> _moduleMembersNsInfo;
+
+
         private ModuleMember _currentModuleMember;
         private Module _currentModule;
         private readonly CompilerContext _context;
@@ -243,8 +245,11 @@ namespace Malina.Compiler
                     return;
                 }
 
-                if (!CurrentModuleMemberNsInfo.Namespaces.Any(n => n.Value == ns.Value))
+                var foundNs = CurrentModuleMemberNsInfo.Namespaces.FirstOrDefault(n => n.Value == ns.Value);
+
+                if (foundNs == null)
                     CurrentModuleMemberNsInfo.Namespaces.Add(ns);
+                else if (foundNs.Name != nsPrefix) (node as INsNode).NsPrefix = foundNs.Name;
 
             }
         }
@@ -257,14 +262,82 @@ namespace Malina.Compiler
         private DOM.Namespace LookupNamespace(string nsPrefix)
         {
             DOM.Namespace ns = null;
+            //Looking up in the ModuleMember (Document/AliasDef)
             if ((ns = _currentModuleMember.Namespaces.FirstOrDefault(n => n.Name == nsPrefix)) != null)
                 return ns;
 
+            //Looking up in the ModuleMember
             if ((ns = _currentModule.Namespaces.FirstOrDefault(n => n.Name == nsPrefix)) != null)
+            {
+                //Checking if this namespace can be replaced by ns from ModuleMember because it has same URI
+                DOM.Namespace ns2 = null;
+                if ((ns2 = _currentModuleMember.Namespaces.FirstOrDefault(n => n.Value == ns.Value)) != null)
+                    return ns2;
+
                 return ns;
+            }
+                
 
             return null;
         }
+
+        public void GetPrefixAndNs(INsNode node, DOM.Document document, DOM.AliasDefinition aliasDef, out string prefix, out string ns)
+        {
+            prefix = null;
+            ns = null;
+
+            if (node.NsPrefix == null) return;
+
+            var targetNsInfo = ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == document);
+
+            if(aliasDef == null)
+            {//Resolving based on document's NsInfo
+                prefix = node.NsPrefix;
+
+                var domNamespace = targetNsInfo.Namespaces.FirstOrDefault(n => n.Name == node.NsPrefix);
+                if (domNamespace != null)
+                {
+                    prefix = domNamespace.Name;
+                    ns = domNamespace.Value;
+                }
+                else
+                {
+                    //Prefix is defined in Module. Resolving using module namespaces
+                    //Finding uri first
+                    var moduleNamespace = document.Module.Namespaces.First(n => n.Name == node.NsPrefix);
+                    ns = moduleNamespace.Value;
+
+                    //Finding effective prefix in the Document Namespace
+                    domNamespace = targetNsInfo.Namespaces.FirstOrDefault(n => n.Value == moduleNamespace.Value);
+                    prefix = domNamespace.Name;
+                }
+            }
+            else
+            {
+                //Resolving ns first using aliasDef context NsInfo
+                var contextNsInfo = ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == aliasDef);
+                var domNamespace = contextNsInfo.Namespaces.FirstOrDefault(n => n.Name == node.NsPrefix);
+
+                
+                if (domNamespace == null)
+                {
+                    //Prefix was defined in the module. Looking up in the module.
+                    var moduleNamespace = aliasDef.Module.Namespaces.First(n => n.Name == node.NsPrefix);
+                    ns = moduleNamespace.Value;
+                }
+                else
+                {
+                    ns = domNamespace.Value;
+                }
+                //Resolving prefix using Document's NsInfo
+                var ns1 = ns;
+                prefix = targetNsInfo.Namespaces.First(n => n.Value == ns1).Name;
+            }
+
+            
+
+        }
+
 
     }
 }

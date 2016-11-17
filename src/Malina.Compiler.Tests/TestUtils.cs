@@ -81,13 +81,17 @@ namespace Malina.Compiler.Tests
 
                 //Equal number of files
                 Assert.AreEqual(Directory.GetFiles(recordedDir).Count(), Directory.GetFiles(resultDir).Count(), "Number of files {0} in '{1}' should be equal {2}", Directory.GetFiles(resultDir).Count(), resultDir, Directory.GetFiles(recordedDir).Count());
-
+                Console.WriteLine();
+                Console.WriteLine("Generated Files:");
                 foreach (var file in Directory.GetFiles(recordedDir))
                 {
                     var recordedFileName = Path.GetFileName(file);
                     var resultFileName = resultDir + recordedFileName;
                     var result = File.ReadAllText(resultFileName).Replace("\r\n", "\n");
                     var recorded = File.ReadAllText(file).Replace("\r\n", "\n");
+
+                    Console.WriteLine(string.Format("File {0}:", file));
+                    Console.WriteLine(result);
                     Assert.AreEqual(recorded, result);
                 }
             }

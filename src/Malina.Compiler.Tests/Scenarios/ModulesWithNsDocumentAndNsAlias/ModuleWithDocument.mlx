@@ -3,7 +3,7 @@
 !PurchaseOrder:
 	#ipo2 = http://www.example.com/myipo
 	ipo.purchaseOrder:
-		@orderDate = 2001-12-12
+		@ipo.orderDate = 2001-12-12
 		ipo2.shipTo:
 			$Address.UK.Cambridge
 

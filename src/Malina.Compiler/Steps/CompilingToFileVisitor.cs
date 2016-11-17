@@ -1,9 +1,6 @@
 ﻿using Malina.DOM;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Malina.Compiler.Steps
@@ -12,7 +9,26 @@ namespace Malina.Compiler.Steps
     {
         private CompilerContext _context;
         private Document _currentDocument;
-        private XmlTextWriter _xmlTextWriter;
+        private XmlWriter _xmlTextWriter;
+        private Stack<AliasDefinition> _aliasDefinitionContext;
+
+        public Stack<AliasDefinition> AliasDefinitionContext
+        {
+            get
+            {
+                if (_aliasDefinitionContext == null)
+                {
+                    _aliasDefinitionContext = new Stack<AliasDefinition>();
+                    _aliasDefinitionContext.Push(null);
+                }
+                return _aliasDefinitionContext;
+            }
+
+            set
+            {
+                _aliasDefinitionContext = value;
+            }
+        }
 
         public CompilingToFileVisitor(CompilerContext context)
         {
@@ -23,7 +39,7 @@ namespace Malina.Compiler.Steps
         {
             _currentDocument = node;
             var fileName = _context.Parameters.OutputDirectory + node.Name + ".xml";
-            using (_xmlTextWriter = new XmlTextWriter(fileName, Encoding.UTF8) { Formatting = System.Xml.Formatting.Indented, Namespaces = true })
+            using (_xmlTextWriter = XmlWriter.Create(new XmlTextWriter(fileName, Encoding.UTF8) { Formatting = System.Xml.Formatting.Indented, Namespaces = true }))
             {
                 _xmlTextWriter.WriteStartDocument();
 
@@ -36,20 +52,23 @@ namespace Malina.Compiler.Steps
 
         public override void OnAttribute(DOM.Attribute node)
         {
-            _xmlTextWriter.WriteAttributeString(node.NsPrefix, node.Name, null, node.Value);
+            string prefix, ns;
+            _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument, AliasDefinitionContext.Peek(), out prefix, out ns);
+
+            _xmlTextWriter.WriteAttributeString(prefix, node.Name, ns, node.Value);
             base.OnAttribute(node);
         }
         public override void OnElement(Element node)
         {
-            if (node.Value != null)
-            {
-                if (node.Value is string) { _xmlTextWriter.WriteElementString(null, node.Name, null, node.Value); }
-            }
-            else
-            {
-                _xmlTextWriter.WriteStartElement(null, node.Name, null);
-            } 
+            string prefix, ns;
+            _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument, AliasDefinitionContext.Peek(), out prefix, out ns);
+
+            _xmlTextWriter.WriteStartElement(prefix, node.Name, ns);
+
+            if (node.Value is string) { _xmlTextWriter.WriteString(node.Value); }
             base.OnElement(node);
+
+            _xmlTextWriter.WriteEndElement();
         }
 
         public override void OnAlias(Alias node)
@@ -57,11 +76,14 @@ namespace Malina.Compiler.Steps
             var aliasName = node.Name;
             base.OnAlias(node);
             var aliasDef = _context.AliasDefinitions[node.Name];
+            AliasDefinitionContext.Push(aliasDef);
             base.OnAliasDefinition(aliasDef);
+            AliasDefinitionContext.Pop();
         }
 
         public override void OnAliasDefinition(AliasDefinition node)
-        {            
+        {
+                        
         }
     }
 }

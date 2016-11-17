@@ -52,8 +52,8 @@ namespace Malina.Compiler.Steps
             base.ExitEveryRule(context);
 
             if (context is INodeContext<DOM.Antlr.Element>) _context.NamespaceResolver.ProcessNsPrefix((context as INodeContext<DOM.Antlr.Element>).Node);
-            if (context is INodeContext<DOM.Antlr.Attribute>) _context.NamespaceResolver.ProcessNsPrefix((context as INodeContext<DOM.Antlr.Attribute>).Node);
-            if (context is INodeContext<DOM.Antlr.Alias>) _context.NamespaceResolver.ProcessAlias((context as INodeContext<DOM.Antlr.Alias>).Node);
+            else if (context is INodeContext<DOM.Antlr.Attribute>) _context.NamespaceResolver.ProcessNsPrefix((context as INodeContext<DOM.Antlr.Attribute>).Node);
+            else if (context is INodeContext<DOM.Antlr.Alias>) _context.NamespaceResolver.ProcessAlias((context as INodeContext<DOM.Antlr.Alias>).Node);
 
         }
     }

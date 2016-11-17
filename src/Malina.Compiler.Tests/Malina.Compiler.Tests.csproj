@@ -59,6 +59,15 @@
     <None Include="Scenarios\ModulesWithNsDocumentAndNsAlias\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\NestedAliases\ModuleWithAlias2.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\NestedAliases\ModuleWithAlias1.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\NestedAliases\ModuleWithDocument.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\TwoModulesWithDocumentAndAlias\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

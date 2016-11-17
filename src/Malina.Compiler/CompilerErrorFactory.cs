@@ -1,5 +1,6 @@
 ﻿using Malina.DOM;
 using System;
+using Antlr4.Runtime;
 
 namespace Malina.Compiler
 {
@@ -18,6 +19,11 @@ namespace Malina.Compiler
         internal static CompilerError FatalError(Exception ex)
         {
             return new CompilerError("MCE0000", ex, ex.Message);
+        }
+
+        internal static CompilerError FatalError(Exception ex, string message)
+        {
+            return new CompilerError("MCE0000", ex, message);
         }
 
         private static CompilerError Instantiate(string code, LexicalInfo location, Exception error, params object[] args)
@@ -57,6 +63,16 @@ namespace Malina.Compiler
             var aliasDef = aliasDefNsInfo.ModuleMember as AliasDefinition;
             return Instantiate("MCE0005", new LexicalInfo(aliasDef.Module.FileName,
                 aliasDef.start.Line, aliasDef.start.Column, aliasDef.start.Index), aliasDef.Name);
+        }
+
+        internal static CompilerError LexerError(Exception e, string message, string fileName, int line, int column)
+        {
+            return Instantiate("MCE0006", new LexicalInfo(fileName, line, column, 0), message);
+        }
+
+        internal static CompilerError ParserError(Exception e, string message, string fileName, int line, int column)
+        {
+            return Instantiate("MCE0007", new LexicalInfo(fileName, line, column, 0), message);
         }
     }
 }

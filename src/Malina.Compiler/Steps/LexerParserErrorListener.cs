@@ -8,10 +8,12 @@ namespace Malina.Compiler
     {
         private CompilerContext _context;
         private List<MalinaError> _errors = new List<MalinaError>();
+        private string _fileName;
 
-        public LexerParserErrorListener(CompilerContext _context)
+        public LexerParserErrorListener(CompilerContext context, string fileName)
         {
-            this._context = _context;
+            _context = context;
+            _fileName = fileName;
         }
 
         public List<MalinaError> Errors 
@@ -29,8 +31,18 @@ namespace Malina.Compiler
             if (e is MalinaException) _errors.Add((e as MalinaException).Error);
             else
             {
-                var me = new MalinaError(MalinaErrorCode.NoViableAltParserException, null, null);
-                _errors.Add(me);
+                if(recognizer is MalinaParser)
+                {
+                    _context.Errors.Add(CompilerErrorFactory.ParserError(e, msg, _fileName, line, charPositionInLine));
+                }
+                else if(recognizer is MalinaLexer)
+                {
+                    _context.Errors.Add(CompilerErrorFactory.LexerError(e, msg, _fileName, line, charPositionInLine));
+                }
+                else
+                {
+                    _context.Errors.Add(CompilerErrorFactory.FatalError(e, msg));
+                }
             }
         }
     }

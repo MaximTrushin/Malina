@@ -11,6 +11,7 @@ using System;
 using Malina.Parser.Tests;
 using System.Text;
 using Malina.DOM;
+using System.Collections.Generic;
 
 namespace Malina.Compiler.Tests
 {
@@ -24,6 +25,11 @@ namespace Malina.Compiler.Tests
             var compiler = new MalinaCompiler(compilerParameters);
 
             var context = compiler.Run();
+
+            if (context.Errors.Count() > 0)
+            {
+                PrintCompilerErrors(context.Errors);
+            }
 
             Assert.IsTrue(context.Errors.Count() == 0, "Compilation Errors Number is {0}", context.Errors.Count());
 
@@ -55,6 +61,20 @@ namespace Malina.Compiler.Tests
             if (IsRecordedTest() || IsRecordTest())
                 CompareResultAndRecordedFiles(IsRecordTest());
 
+        }
+
+        private static void PrintCompilerErrors(List<CompilerError> errors)
+        {
+            Console.WriteLine("Compiler Errors:");
+
+            foreach (var error in errors)
+            {
+                Console.WriteLine();
+                Console.Write(error.LexicalInfo + ": ");
+                Console.WriteLine(error.Message);
+                if (error.InnerException != null)
+                    Console.WriteLine(error.InnerException.StackTrace);
+            }
         }
 
         private static void CompareResultAndRecordedFiles(bool record)
@@ -144,6 +164,8 @@ namespace Malina.Compiler.Tests
             {
                 if (fileName.EndsWith(".mlx"))
                 {
+                    Console.WriteLine();
+                    Console.WriteLine(Path.GetFileName(fileName));
                     var code = File.ReadAllText(fileName);
                     PrintCode(code);
                 }

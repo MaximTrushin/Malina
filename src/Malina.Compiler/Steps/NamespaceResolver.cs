@@ -292,7 +292,6 @@ namespace Malina.Compiler
 
             if(aliasDef == null)
             {//Resolving based on document's NsInfo
-                prefix = node.NsPrefix;
 
                 var domNamespace = targetNsInfo.Namespaces.FirstOrDefault(n => n.Name == node.NsPrefix);
                 if (domNamespace != null)
@@ -304,12 +303,15 @@ namespace Malina.Compiler
                 {
                     //Prefix is defined in Module. Resolving using module namespaces
                     //Finding uri first
-                    var moduleNamespace = document.Module.Namespaces.First(n => n.Name == node.NsPrefix);
-                    ns = moduleNamespace.Value;
+                    var moduleNamespace = document.Module.Namespaces.FirstOrDefault(n => n.Name == node.NsPrefix);
+                    if (moduleNamespace!= null)
+                    {
+                        ns = moduleNamespace.Value;
 
-                    //Finding effective prefix in the Document Namespace
-                    domNamespace = targetNsInfo.Namespaces.FirstOrDefault(n => n.Value == moduleNamespace.Value);
-                    prefix = domNamespace.Name;
+                        //Finding effective prefix in the Document Namespace
+                        domNamespace = targetNsInfo.Namespaces.FirstOrDefault(n => n.Value == moduleNamespace.Value);
+                        prefix = domNamespace.Name;
+                    }
                 }
             }
             else
@@ -317,27 +319,25 @@ namespace Malina.Compiler
                 //Resolving ns first using aliasDef context NsInfo
                 var contextNsInfo = ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == aliasDef);
                 var domNamespace = contextNsInfo.Namespaces.FirstOrDefault(n => n.Name == node.NsPrefix);
-
                 
                 if (domNamespace == null)
                 {
                     //Prefix was defined in the module. Looking up in the module.
-                    var moduleNamespace = aliasDef.Module.Namespaces.First(n => n.Name == node.NsPrefix);
-                    ns = moduleNamespace.Value;
+                    var moduleNamespace = aliasDef.Module.Namespaces.FirstOrDefault(n => n.Name == node.NsPrefix);
+                    if (moduleNamespace != null)
+                        ns = moduleNamespace.Value;
                 }
                 else
                 {
                     ns = domNamespace.Value;
                 }
                 //Resolving prefix using Document's NsInfo
-                var ns1 = ns;
-                prefix = targetNsInfo.Namespaces.First(n => n.Value == ns1).Name;
+                if(ns != null)
+                {
+                    var ns1 = ns;
+                    prefix = targetNsInfo.Namespaces.First(n => n.Value == ns1).Name;
+                }
             }
-
-            
-
         }
-
-
     }
 }

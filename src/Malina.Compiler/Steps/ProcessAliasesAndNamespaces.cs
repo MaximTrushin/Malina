@@ -52,14 +52,14 @@ namespace Malina.Compiler.Steps
                 var lexer = new MalinaLexer(new AntlrInputStream(reader));
 
                 lexer.RemoveErrorListeners();
-                lexer.AddErrorListener(new LexerParserErrorListener<int>(_context));
+                lexer.AddErrorListener(new LexerParserErrorListener<int>(_context, name));
 
                 var parser = new MalinaParser(new CommonTokenStream(lexer));
                 parser.Interpreter.PredictionMode = PredictionMode.Sll;
 
                 var resolvingListener = new AliasesAndNamespacesResolvingListener(_context);
 
-                parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context));
+                parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context, name));
                 parser.AddParseListener(resolvingListener);
                 parser.module();
 

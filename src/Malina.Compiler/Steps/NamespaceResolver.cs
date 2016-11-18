@@ -92,6 +92,7 @@ namespace Malina.Compiler
             foreach (var alias in documentNsInfo.Aliases)
             {
                 NsInfo aliasNsInfo = ResolveAliasInDocument(alias, documentNsInfo);
+                if (aliasNsInfo == null) continue;
                 MergeNsInfo(documentNsInfo, aliasNsInfo);
             }            
         }
@@ -125,7 +126,8 @@ namespace Malina.Compiler
         private NsInfo ResolveAliasInDocument(DOM.Alias alias, NsInfo documentNsInfo)
         {
             //Finding AliasDef
-            var aliasDef = _context.AliasDefinitions[alias.Name];
+            DOM.AliasDefinition aliasDef = null;
+            _context.AliasDefinitions.TryGetValue(alias.Name, out aliasDef);
             if(aliasDef == null)
             {
                 //Report Error
@@ -161,6 +163,7 @@ namespace Malina.Compiler
             foreach (var alias in aliasDefNsInfo.Aliases)
             {
                 NsInfo aliasNsInfo = ResolveAliasInAliasDefinition(alias, aliasDefNsInfo);
+                if (aliasNsInfo == null) continue;
                 MergeNsInfo(aliasDefNsInfo, aliasNsInfo);
             }
 
@@ -174,7 +177,8 @@ namespace Malina.Compiler
         private NsInfo ResolveAliasInAliasDefinition(DOM.Alias alias, NsInfo aliasDefNsInfo)
         {
             //Finding AliasDef
-            var aliasDef = _context.AliasDefinitions[alias.Name];
+            DOM.AliasDefinition aliasDef = null;
+            _context.AliasDefinitions.TryGetValue(alias.Name, out aliasDef);
             if (aliasDef == null)
             {
                 //Report Error

@@ -17,7 +17,7 @@ namespace Malina.Compiler.Tests
 {
     public class TestUtils
     {
-        public static void PerformCompilerTest()
+        public static void PerformCompilerTest(List<CompilerError> errors = null)
         {
             PrintTestScenario();
 
@@ -31,7 +31,18 @@ namespace Malina.Compiler.Tests
                 PrintCompilerErrors(context.Errors);
             }
 
-            Assert.IsTrue(context.Errors.Count() == 0, "Compilation Errors Number is {0}", context.Errors.Count());
+            if (errors == null)
+                Assert.AreEqual(0, context.Errors.Count(), "Compilation Errors Number is {0}", context.Errors.Count());
+            else
+            {
+                Assert.AreEqual(errors.Count(), context.Errors.Count(), "Expected Errors Number is {0}", errors.Count());
+                var i = 0;
+                foreach (var item in errors)
+                {
+                    CompareErrors(errors[i], context.Errors[i++]);
+                }
+            }
+
 
 
             var printerVisitor = new DOMPrinterVisitor();
@@ -61,6 +72,12 @@ namespace Malina.Compiler.Tests
             if (IsRecordedTest() || IsRecordTest())
                 CompareResultAndRecordedFiles(IsRecordTest());
 
+        }
+
+        private static void CompareErrors(CompilerError compilerError1, CompilerError compilerError2)
+        {
+            Assert.AreEqual(compilerError1.LexicalInfo.ToString(), compilerError2.LexicalInfo.ToString());
+            Assert.AreEqual(compilerError1.Message, compilerError2.Message);
         }
 
         private static void PrintCompilerErrors(List<CompilerError> errors)

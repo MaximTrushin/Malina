@@ -75,7 +75,11 @@ namespace Malina.Compiler.Steps
         {
             var aliasName = node.Name;
             base.OnAlias(node);
-            var aliasDef = _context.AliasDefinitions[node.Name];
+            AliasDefinition aliasDef = null;
+            _context.AliasDefinitions.TryGetValue(node.Name, out aliasDef);
+
+            if (aliasDef == null) return;
+
             AliasDefinitionContext.Push(aliasDef);
             base.OnAliasDefinition(aliasDef);
             AliasDefinitionContext.Pop();

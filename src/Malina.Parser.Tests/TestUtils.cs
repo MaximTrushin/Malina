@@ -66,7 +66,7 @@ namespace Malina.Parser.Tests
                 if (isLexerRecordedTest) {
 
                     var testCaseName = GetTestCaseName();
-                    var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Lexer\Recorded\").Append(testCaseName).Append(".test").ToString();
+                    var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".test").ToString();
                     if (!File.Exists(fileName)) recorded = null;
                     else
                         recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");

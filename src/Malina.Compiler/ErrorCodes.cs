@@ -8,7 +8,7 @@ namespace Malina.Compiler
 {
     public static class ErrorCodes
     {
-        public const string MCE0000 = "'{0}'";
+        public const string MCE0000 = "'Fatal error - {0}'";
         public const string MCE0001 = "Error reading from '{0}': '{1}'.";
         public const string MCE0002 = "File '{0}' was not found.";
         public const string MCE0003 = "Namespace prefix '{0}' is not defined.";
@@ -17,6 +17,7 @@ namespace Malina.Compiler
         public const string MCE0006 = "LexerError - '{0}'.";
         public const string MCE0007 = "ParserError - '{0}'.";
         public const string MCE0008 = "Duplicate document name - '{0}'.";
+        public const string MCE0009 = "Document '{0}' must have{1} one root element.";        
 
         public static string Format(string name, params object[] args)
         {

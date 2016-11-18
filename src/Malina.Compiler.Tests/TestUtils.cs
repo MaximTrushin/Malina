@@ -91,7 +91,7 @@ namespace Malina.Compiler.Tests
             foreach (var error in errors)
             {
                 Console.WriteLine();
-                Console.Write(error.LexicalInfo + ": ");
+                Console.Write(error.Code + " " + error.LexicalInfo + ": ");
                 Console.WriteLine(error.Message);
                 if (error.InnerException != null)
                     Console.WriteLine(error.InnerException.StackTrace);

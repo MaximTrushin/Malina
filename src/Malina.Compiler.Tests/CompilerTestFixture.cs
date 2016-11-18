@@ -74,5 +74,20 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
-    }
+
+        [Test]
+        public void ExtraRootElementInDocument()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 2, 1,-1), "Document 'PurchaseOrder' must have only one root element."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 12, 1,-1), "Document 'PurchaseOrder2' must have only one root element."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 22, 1,-1), "Alias Definition 'Address1' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 26, 1,-1), "Alias Definition 'Address2' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 30, 1,-1), "Document 'PurchaseOrder3' must have only one root element."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 34, 1,-1), "Document 'PurchaseOrder4' must have at least one root element."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+      }
 }

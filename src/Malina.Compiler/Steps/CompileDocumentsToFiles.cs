@@ -30,6 +30,7 @@ namespace Malina.Compiler.Steps
             {
                 foreach (var module in _context.CompileUnit.Modules)
                 {
+                    if (_context.Errors.Count > 0) break;
                     DoCompileDocumentsToFile(module, _context);
                 }
             }

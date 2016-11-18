@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Malina.DOM;
 using Malina.DOM.Antlr;
+using System.IO;
 
 namespace Malina.Compiler
 {
@@ -67,6 +68,9 @@ namespace Malina.Compiler
             _aliasStack = new Stack<NsInfo>();
         }
 
+        /// <summary>
+        /// NsInfo for all Module Members (Documents and AliasDef)
+        /// </summary>
         private List<NsInfo> ModuleMembersNsInfo
         {
             get
@@ -81,17 +85,83 @@ namespace Malina.Compiler
         }
 
 
-        public void ResolveAliases()
+        public void ResolveAliasesAndDoChecks()
         {
             foreach(var nsInfo in ModuleMembersNsInfo)
             {
-                foreach (var alias in nsInfo.Aliases)
+                CheckDocument(nsInfo);
+
+                ResolveAliases(nsInfo);
+            }
+        }
+
+        private void ResolveAliases(NsInfo nsInfo)
+        {
+            foreach (var alias in nsInfo.Aliases)
+            {
+                NsInfo aliasNsInfo = ResolveAliasInDocument(alias, nsInfo);
+                if (aliasNsInfo == null) continue;
+                MergeNsInfo(nsInfo, aliasNsInfo);
+            }
+        }
+
+        private void CheckDocument(NsInfo nsInfo)
+        {
+            var document = nsInfo.ModuleMember as DOM.Document;
+            if (document != null)
+            {
+                if (Path.GetExtension(document.Module.FileName) == ".mlx")
+                    CheckDocumentElement(document);
+            }
+        }
+
+        /// <summary>
+        /// Checks if XML document has one root element
+        /// </summary>
+        /// <param name="document"></param>
+        private void CheckDocumentElement(DOM.Document document)
+        {
+            int rootElementCount = 0;
+            foreach (var entity in document.Entities)
+            {
+                if (entity is DOM.Element) rootElementCount++;
+
+                if (entity is DOM.Alias) rootElementCount += CalcNumOfRootElements(entity as DOM.Alias, null);
+
+                if (rootElementCount > 1)
                 {
-                    NsInfo aliasNsInfo = ResolveAliasInDocument(alias, nsInfo);
-                    if (aliasNsInfo == null) continue;
-                    MergeNsInfo(nsInfo, aliasNsInfo);
+                    _context.Errors.Add(CompilerErrorFactory.DocumentMustHaveOneRootElement(document, document.Module.FileName, " only"));
+                    break;
                 }
             }
+            if (rootElementCount == 0)
+            {
+                _context.Errors.Add(CompilerErrorFactory.DocumentMustHaveOneRootElement(document, document.Module.FileName, " at least"));
+            }
+
+
+        }
+
+        private int CalcNumOfRootElements(DOM.Alias alias, List<DOM.AliasDefinition> aliasList)
+        {
+            int result = 0;
+            var aliasDef = LookupAliasDef(alias);
+            if (aliasDef == null) return 0;
+
+            //Checking if there is circular reference to prevent infinite loop.
+            if (aliasList == null) aliasList = new List<DOM.AliasDefinition>();
+
+            if (aliasList.Any(n => n == aliasDef)) return 0;
+
+            aliasList.Add(aliasDef);
+
+            foreach (var entity in aliasDef.Entities)
+            {
+                if (entity is DOM.Element) result++;
+                if (entity is DOM.Alias) result += CalcNumOfRootElements(entity as DOM.Alias, aliasList);
+            }
+
+            return result;
         }
 
         private void MergeNsInfo(NsInfo destNsInfo, NsInfo nsInfo)
@@ -124,14 +194,21 @@ namespace Malina.Compiler
         {
             //Finding AliasDef
             DOM.AliasDefinition aliasDef = null;
-            _context.AliasDefinitions.TryGetValue(alias.Name, out aliasDef);
-            if(aliasDef == null)
+            aliasDef = LookupAliasDef(alias);
+            if (aliasDef == null)
             {
                 //Report Error
                 _context.Errors.Add(CompilerErrorFactory.AliasIsNotDefined(alias, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
                 return null;
             }
-            return ResolveAliasesInAliasDefinition(aliasDef);          
+            return ResolveAliasesInAliasDefinition(aliasDef);
+        }
+
+        private DOM.AliasDefinition LookupAliasDef(DOM.Alias alias)
+        {
+            DOM.AliasDefinition result = null;
+            _context.AliasDefinitions.TryGetValue(alias.Name, out result);
+            return result;
         }
 
         private NsInfo ResolveAliasesInAliasDefinition(DOM.AliasDefinition aliasDef)

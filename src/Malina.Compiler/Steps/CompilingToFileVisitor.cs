@@ -87,7 +87,7 @@ namespace Malina.Compiler.Steps
 
         public override void OnAliasDefinition(AliasDefinition node)
         {
-                        
+             //Doing nothing for Alias Definition        
         }
     }
 }

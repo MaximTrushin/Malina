@@ -79,5 +79,10 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0008", new LexicalInfo(fileName, document.start.Line, document.start.Column + 1, document.start.Index), document.Name);
         }
+
+        internal static CompilerError DocumentMustHaveOneRootElement(Document document, string fileName, string only)
+        {
+            return Instantiate("MCE0009", new LexicalInfo(fileName, document.start.Line, document.start.Column + 1, document.start.Index), document.Name, only);
+        }
     }
 }

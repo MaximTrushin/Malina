@@ -37,9 +37,9 @@ namespace Malina.Compiler.Tests
             {
                 Assert.AreEqual(errors.Count(), context.Errors.Count(), "Expected Errors Number is {0}", errors.Count());
                 var i = 0;
-                foreach (var item in errors)
+                foreach (var contextError in context.Errors)
                 {
-                    CompareErrors(errors[i], context.Errors[i++]);
+                    CompareErrors(errors[i++], contextError);
                 }
             }
 
@@ -76,11 +76,15 @@ namespace Malina.Compiler.Tests
 
         private static void CompareErrors(CompilerError compilerError1, CompilerError compilerError2)
         {
-            Assert.AreEqual(compilerError1.LexicalInfo.ToString(), compilerError2.LexicalInfo.ToString());
+            Assert.AreEqual(Path.GetFileName(compilerError1.LexicalInfo.FileName), Path.GetFileName(compilerError2.LexicalInfo.FileName));
+            Assert.AreEqual(compilerError1.LexicalInfo.Line, compilerError2.LexicalInfo.Line);
+            Assert.AreEqual(compilerError1.LexicalInfo.Column, compilerError2.LexicalInfo.Column);
+
+
             Assert.AreEqual(compilerError1.Message, compilerError2.Message);
         }
 
-        private static void PrintCompilerErrors(List<CompilerError> errors)
+        private static void PrintCompilerErrors(IEnumerable<CompilerError> errors)
         {
             Console.WriteLine("Compiler Errors:");
 

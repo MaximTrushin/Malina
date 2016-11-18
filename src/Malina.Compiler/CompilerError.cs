@@ -36,7 +36,7 @@ namespace Malina.Compiler
     /// A compilation error.
     /// </summary>
     [Serializable]
-    public class CompilerError : ApplicationException
+    public class CompilerError : ApplicationException, IComparable<CompilerError>
     {
         private readonly LexicalInfo _lexicalInfo;
         private readonly string _code;
@@ -73,13 +73,6 @@ namespace Malina.Compiler
         {
         }
 
-        //public CompilerError(Node node, string message, Exception cause) : this(node.start, message, cause)
-        //{
-        //}
-
-        //public CompilerError(Node node, string message) : this(node, message, null)
-        //{
-        //}
 
         public CompilerError(LexicalInfo data, string message) : this(data, message, null)
         {
@@ -129,6 +122,14 @@ namespace Malina.Compiler
             {
                 _verbose = saved;
             }
+        }
+
+        public int CompareTo(CompilerError other)
+        {
+            var result = LexicalInfo.CompareTo(other.LexicalInfo);
+            if (result != 0) return result;
+
+            return string.Compare(Code, other.Code);
         }
 
         [ThreadStatic]

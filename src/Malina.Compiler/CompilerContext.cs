@@ -12,13 +12,13 @@ namespace Malina.Compiler
 
         public NamespaceResolver NamespaceResolver { get; private set; }
 
-        public List<CompilerError> Errors { get; private set; }
+        public SortedSet<CompilerError> Errors { get; private set; }
 
         public CompilerContext(CompilerParameters parameters, CompileUnit compileUnit)
         {
             Parameters = parameters;
             CompileUnit = compileUnit;
-            Errors = new List<CompilerError>();
+            Errors = new SortedSet<CompilerError>();
             AliasDefinitions = new Dictionary<string, AliasDefinition>();
             NamespaceResolver = new NamespaceResolver(this);
         }

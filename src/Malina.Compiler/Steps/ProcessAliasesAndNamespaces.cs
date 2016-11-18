@@ -45,21 +45,21 @@ namespace Malina.Compiler.Steps
             }
         }
 
-        private void DoProcessAliasesAndNamespaces(string name, TextReader reader)
+        private void DoProcessAliasesAndNamespaces(string fileName, TextReader reader)
         {
             try
             {
                 var lexer = new MalinaLexer(new AntlrInputStream(reader));
 
                 lexer.RemoveErrorListeners();
-                lexer.AddErrorListener(new LexerParserErrorListener<int>(_context, name));
+                lexer.AddErrorListener(new LexerParserErrorListener<int>(_context, fileName));
 
                 var parser = new MalinaParser(new CommonTokenStream(lexer));
                 parser.Interpreter.PredictionMode = PredictionMode.Sll;
 
-                var resolvingListener = new AliasesAndNamespacesResolvingListener(_context);
+                var resolvingListener = new AliasesAndNamespacesResolvingListener(_context, fileName);
 
-                parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context, name));
+                parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context, fileName));
                 parser.AddParseListener(resolvingListener);
                 parser.module();
 

@@ -17,15 +17,18 @@ namespace Malina.Compiler.Steps
     public class AliasesAndNamespacesResolvingListener : MalinaParserListener
     {
         private CompilerContext _context;
+        private string _fileName;
 
-        public AliasesAndNamespacesResolvingListener(CompilerContext context) : base(context.CompileUnit)
+        public AliasesAndNamespacesResolvingListener(CompilerContext context, string fileName) : base(context.CompileUnit)
         {
             _context = context;
+            _fileName = fileName;
         }
 
         public override void EnterModule(MalinaParser.ModuleContext context)
         {
             base.EnterModule(context);
+            context.Node.FileName = _fileName;
             _context.NamespaceResolver.EnterModule(context.Node);
         }
 

@@ -91,10 +91,10 @@ namespace Malina.DOM
 
         public int CompareTo(LexicalInfo other)
         {
-            int result = base.CompareTo(other);
+            int result = string.Compare(_filename, other._filename);
             if (result != 0) return result;
 
-            return string.Compare(_filename, other._filename);
+            return base.CompareTo(other); 
         }
 
         public bool Equals(LexicalInfo other)

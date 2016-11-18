@@ -47,5 +47,16 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+
+        [Test]
+        public void DuplicateDocumentName()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 2,1,-1), "Duplicate document name - 'PurchaseOrder'."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument2.mlx", 2,1,-1), "Duplicate document name - 'PurchaseOrder'.")
+            };
+            PerformCompilerTest(errorsExpected);
+        }
     }
 }

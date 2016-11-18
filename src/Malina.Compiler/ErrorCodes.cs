@@ -16,6 +16,7 @@ namespace Malina.Compiler
         public const string MCE0005 = "Alias Definition '{0}' has circular reference.";
         public const string MCE0006 = "LexerError - '{0}'.";
         public const string MCE0007 = "ParserError - '{0}'.";
+        public const string MCE0008 = "Duplicate document name - '{0}'.";
 
         public static string Format(string name, params object[] args)
         {

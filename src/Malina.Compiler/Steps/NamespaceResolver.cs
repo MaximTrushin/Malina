@@ -9,7 +9,7 @@ namespace Malina.Compiler
     public class NamespaceResolver
     {
         /// <summary>
-        /// Class is used to collect a list of used namespace in the ModuleMember (Document or AliasDef)
+        /// Collects a list of used namespaces and aliases in the ModuleMember (Document or AliasDef)
         /// </summary>
         public class NsInfo
         {
@@ -55,6 +55,8 @@ namespace Malina.Compiler
 
 
         private ModuleMember _currentModuleMember;
+
+
         private Module _currentModule;
         private readonly CompilerContext _context;
         private Stack<NsInfo> _aliasStack;
@@ -214,6 +216,24 @@ namespace Malina.Compiler
             _currentModuleMemberNsInfo = new NsInfo(_currentModuleMember);
             ModuleMembersNsInfo.Add(_currentModuleMemberNsInfo);
         }
+
+        public void ExitDocument(DOM.Antlr.Document node)
+        {
+            //Checking if the document's name is unique
+            var sameNameDocuments = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.Document && (n.ModuleMember as DOM.Document).Name == node.Name));
+            if (sameNameDocuments.Count > 1)
+            {
+                if (sameNameDocuments.Count == 2)
+                {
+                    //Reporting error for 2 documents (existing and new)
+                    var prevDoc = sameNameDocuments[0].ModuleMember as DOM.Document;
+                    _context.Errors.Add(CompilerErrorFactory.DuplicateDocumentName(prevDoc, prevDoc.Module.FileName));
+                }
+                _context.Errors.Add(CompilerErrorFactory.DuplicateDocumentName(node, _currentModule.FileName));
+
+            }
+        }
+
 
         public void EnterAliasDef(DOM.Antlr.AliasDefinition node)
         {

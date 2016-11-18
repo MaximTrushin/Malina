@@ -33,7 +33,13 @@ namespace Malina.Compiler
             {
                 if(recognizer is MalinaParser)
                 {
-                    _context.Errors.Add(CompilerErrorFactory.ParserError(e, msg, _fileName, line, charPositionInLine));
+                    if (e is NoViableAltException)
+                    {
+                        var ex = e as NoViableAltException;
+                        _context.Errors.Add(CompilerErrorFactory.ParserError(e, msg, _fileName, ex.StartToken.Line, ex.StartToken.Column));
+                    }
+                    else
+                        _context.Errors.Add(CompilerErrorFactory.ParserError(e, msg, _fileName, charPositionInLine, charPositionInLine));
                 }
                 else if(recognizer is MalinaLexer)
                 {

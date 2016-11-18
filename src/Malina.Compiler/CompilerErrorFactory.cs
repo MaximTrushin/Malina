@@ -62,7 +62,7 @@ namespace Malina.Compiler
         {
             var aliasDef = aliasDefNsInfo.ModuleMember as AliasDefinition;
             return Instantiate("MCE0005", new LexicalInfo(aliasDef.Module.FileName,
-                aliasDef.start.Line, aliasDef.start.Column, aliasDef.start.Index), aliasDef.Name);
+                aliasDef.start.Line, aliasDef.start.Column + 1, aliasDef.start.Index), aliasDef.Name);
         }
 
         internal static CompilerError LexerError(Exception e, string message, string fileName, int line, int column)

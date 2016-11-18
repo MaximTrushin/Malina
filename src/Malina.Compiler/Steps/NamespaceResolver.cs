@@ -81,22 +81,17 @@ namespace Malina.Compiler
         }
 
 
-        public void ResolveAliasesInDocuments()
+        public void ResolveAliases()
         {
             foreach(var nsInfo in ModuleMembersNsInfo)
             {
-                if (nsInfo.ModuleMember is DOM.Document) ResolveAliasesInDocument(nsInfo);
+                foreach (var alias in nsInfo.Aliases)
+                {
+                    NsInfo aliasNsInfo = ResolveAliasInDocument(alias, nsInfo);
+                    if (aliasNsInfo == null) continue;
+                    MergeNsInfo(nsInfo, aliasNsInfo);
+                }
             }
-        }
-
-        private void ResolveAliasesInDocument(NsInfo documentNsInfo)
-        {
-            foreach (var alias in documentNsInfo.Aliases)
-            {
-                NsInfo aliasNsInfo = ResolveAliasInDocument(alias, documentNsInfo);
-                if (aliasNsInfo == null) continue;
-                MergeNsInfo(documentNsInfo, aliasNsInfo);
-            }            
         }
 
         private void MergeNsInfo(NsInfo destNsInfo, NsInfo nsInfo)
@@ -156,7 +151,11 @@ namespace Malina.Compiler
             if (_aliasStack.Any(n => n == aliasDefNsInfo))
             {
                 //Report Error
-                _context.Errors.Add(CompilerErrorFactory.AliasDefHasCircularReference(aliasDefNsInfo));
+                foreach (var info in _aliasStack)
+                {
+                    _context.Errors.Add(CompilerErrorFactory.AliasDefHasCircularReference(info));
+                    if (info == aliasDefNsInfo) break;
+                }                
                 return aliasDefNsInfo;
             }
 

@@ -37,7 +37,7 @@ namespace Malina.Compiler.Steps
                         _context.Errors.Add(CompilerErrorFactory.InputError(input.Name, ex));
                     }
                 }
-                _context.NamespaceResolver.ResolveAliasesInDocuments();
+                _context.NamespaceResolver.ResolveAliases();
             }
             catch (Exception ex)
             {

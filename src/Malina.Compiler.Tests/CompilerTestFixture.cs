@@ -58,5 +58,21 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
+
+
+        [Test]
+        public void AliasHasCircularReference()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 2,1,-1), "Alias Definition 'Address1' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 9,1,-1), "Alias Definition 'Address3' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 16,1,-1), "Alias Definition 'Address4' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 2,1,-1), "Alias Definition 'Address2' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 9,1,-1), "Alias Definition 'Address5' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 17,1,-1), "Alias Definition 'Address6' has circular reference.")
+            };
+            PerformCompilerTest(errorsExpected);
+        }
     }
 }

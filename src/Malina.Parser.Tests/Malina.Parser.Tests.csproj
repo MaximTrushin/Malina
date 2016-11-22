@@ -95,6 +95,9 @@
     <None Include="Scenarios\AliasDefinitionWithDefaultBlockParameters.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\AliasDefinitionWithDefaultValueParameters.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\AliasDefinitionWithDefaultInlineBlockParameters.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

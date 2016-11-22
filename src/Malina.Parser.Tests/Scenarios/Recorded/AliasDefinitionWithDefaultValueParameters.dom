@@ -1,0 +1,7 @@
+01:00	Namespace `ipo`= `http://www.example.com/myipo`
+03:00	AliasDefinition `Address`:
+04:01		Element `ipo.name`= 	Parameter `name`= `Helen Zoe`
+05:01		Element `ipo.street`= 	Parameter `street`= `47 Eden Street`
+06:01		Element `ipo.city`= 	Parameter `city`= `Cambridge`
+07:01		Element `ipo.postcode`= 	Parameter `postcode`= `126`
+

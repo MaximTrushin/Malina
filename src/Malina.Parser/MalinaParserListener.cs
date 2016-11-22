@@ -524,7 +524,7 @@ namespace Malina.Parser
 
         public override void EnterParameter_object_value_inline([NotNull] MalinaParser.Parameter_object_value_inlineContext context)
         {
-            EnterContext(context);
+            EnterContext(context, true);
         }
 
         public override void ExitParameter_object_value_inline([NotNull] MalinaParser.Parameter_object_value_inlineContext context)

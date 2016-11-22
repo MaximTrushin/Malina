@@ -9,6 +9,7 @@ namespace Malina.DOM
         private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
         private string _nsPrefix;
+        private string _value;
         private object _objectValue;
         private ValueType _valueType;
 
@@ -60,11 +61,11 @@ namespace Malina.DOM
         {
             get
             {
-                return ((ObjectValue != null) ? (!(ObjectValue is Alias) ? ObjectValue.ToString() : ("$" + (ObjectValue as Alias).Name)) : null);
+                return _value;
             }
             set
             {
-                _objectValue = value;
+                _value = value;
             }
         }
         public NodeCollection<Attribute> Attributes

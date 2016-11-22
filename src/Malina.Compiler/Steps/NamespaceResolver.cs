@@ -105,6 +105,11 @@ namespace Malina.Compiler
             }
         }
 
+        public NsInfo GetNsInfo(ModuleMember document)
+        {
+            return ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == document);
+        }
+
         private void CheckDocument(NsInfo nsInfo)
         {
             var document = nsInfo.ModuleMember as DOM.Document;
@@ -173,7 +178,7 @@ namespace Malina.Compiler
 
                 if (destNs != null) continue;
 
-                var prefix = FindFreePrefix(destNs.Name, destNsInfo.Namespaces);
+                var prefix = FindFreePrefix(ns.Name, destNsInfo.Namespaces);
 
                 destNsInfo.Namespaces.Add(new DOM.Namespace() { Name = prefix, Value = ns.Value });
             }

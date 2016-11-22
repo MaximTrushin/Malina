@@ -50,6 +50,7 @@
     <Compile Include="CompilerParameters.cs" />
     <Compile Include="CompilerPipeline.cs" />
     <Compile Include="ErrorCodes.cs" />
+    <Compile Include="Steps\AliasContext.cs" />
     <Compile Include="Steps\AliasesAndNamespacesResolvingListener.cs" />
     <Compile Include="Steps\CompileDocumentsToFiles.cs" />
     <Compile Include="Steps\CompilingToFileVisitor.cs" />

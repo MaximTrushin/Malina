@@ -282,7 +282,7 @@ namespace Malina.Parser
 
         private void EmitIndentationToken(int tokenType, int start, int stop)
         {
-                Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, start, stop));
+                Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, start, stop) { Text =  _SymbolicNames[tokenType]});
         }
 
         private void Emit(int tokenType)

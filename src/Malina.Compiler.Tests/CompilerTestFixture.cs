@@ -1,4 +1,5 @@
 ﻿using Malina.DOM;
+using Malina.Parser.Tests;
 using NUnit.Framework;
 using System.Collections.Generic;
 using static Malina.Compiler.Tests.TestUtils;
@@ -105,5 +106,16 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
+
+        [Test]
+        public void AliasWithIncorrectBlock()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 9, 5,-1), "ParserError - 'Unexpected token ELEMENT_ID<'City'>'."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
     }
 }

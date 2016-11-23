@@ -117,5 +117,16 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+        [Test]
+        public void AliasWithDuplicateArguments()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 6, 5,-1), "Duplicate argument name - 'name'."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 7, 5,-1), "Duplicate argument name - 'name'."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
     }
 }

@@ -90,5 +90,9 @@ namespace Malina.Compiler
             return Instantiate("MCE0010", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
         }
 
+        internal static CompilerError DuplicateArgumentName(Argument argument, string fileName)
+        {
+            return Instantiate("MCE0011", new LexicalInfo(fileName, argument.start.Line, argument.start.Column + 1, argument.start.Index), argument.Name);
+        }
     }
 }

@@ -293,9 +293,17 @@ namespace Malina.Compiler
 
         public void ProcessAlias(DOM.Antlr.Alias node)
         {
+            CheckDuplicateArguments(node);
             CurrentModuleMemberNsInfo.Aliases.Add(node);
         }
 
+        private void CheckDuplicateArguments(DOM.Antlr.Alias alias)
+        {
+            var dups = alias.Arguments.GroupBy(a => a.Name).Where(g => g.Count() > 1).SelectMany(g => g).ToList();
+            dups.ForEach(a => _context.Errors.Add(CompilerErrorFactory.DuplicateArgumentName(a, _currentModule.FileName)));
+
+
+        }
 
         public void EnterDocument(DOM.Antlr.Document node)
         {

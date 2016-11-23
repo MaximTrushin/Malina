@@ -78,6 +78,7 @@
       <Link>Generated\MalinaParserVisitor.cs</Link>
     </Compile>
     <Compile Include="INodeContext.cs" />
+    <Compile Include="MalinaErrorStrategy.cs" />
     <Compile Include="MalinaParser.cs" />
     <Compile Include="MalinaParserListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

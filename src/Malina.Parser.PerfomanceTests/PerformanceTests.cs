@@ -33,7 +33,7 @@ namespace Malina.Parser.PerfomanceTests
             Assert.Less(t2 - t1, 7000);
 
             lexer.Reset();
-            var parser = new MalinaParser(new CommonTokenStream(lexer));
+            var parser = MalinaParser.Create(new CommonTokenStream(lexer));
             parser.Interpreter.PredictionMode = PredictionMode.Sll;
             var malinaListener = new MalinaParserListener();
             var parserErrorListener = new ErrorListener<IToken>();
@@ -101,7 +101,7 @@ namespace Malina.Parser.PerfomanceTests
             Assert.Less(t2 - t1, 7000);
 
             lexer.Reset();
-            var parser = new MalinaParser(new CommonTokenStream(lexer));
+            var parser = MalinaParser.Create(new CommonTokenStream(lexer));
             parser.Interpreter.PredictionMode = PredictionMode.Sll;
             var malinaListener = new MalinaParserListener();
             var parserErrorListener = new ErrorListener<IToken>();

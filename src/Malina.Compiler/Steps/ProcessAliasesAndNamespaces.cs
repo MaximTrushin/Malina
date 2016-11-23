@@ -54,7 +54,7 @@ namespace Malina.Compiler.Steps
                 lexer.RemoveErrorListeners();
                 lexer.AddErrorListener(new LexerParserErrorListener<int>(_context, fileName));
 
-                var parser = new MalinaParser(new CommonTokenStream(lexer));
+                var parser = MalinaParser.Create(new CommonTokenStream(lexer));
                 parser.Interpreter.PredictionMode = PredictionMode.Sll;
 
                 var resolvingListener = new AliasesAndNamespacesResolvingListener(_context, fileName);

@@ -1,11 +1,21 @@
 ﻿using Malina.DOM.Antlr;
 using Antlr4.Runtime.Misc;
 using System.Collections.Generic;
+using Antlr4.Runtime;
 
 namespace Malina.Parser
 {
     public partial class MalinaParser
     {
+
+        public static MalinaParser Create(ITokenStream stream, IAntlrErrorStrategy strategy = null)
+        {
+            var parser = new MalinaParser(stream);
+            if (strategy == null)
+                strategy = new MalinaErrorStrategy();
+            parser.ErrorHandler = strategy;
+            return parser;
+        }
 
         #region MODULE NodeContext
         public partial class ModuleContext : INodeContext<DOM.Module>

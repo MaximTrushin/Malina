@@ -122,7 +122,7 @@ namespace Malina.Parser
             {
                 //Emitting NEWLINE
                 //Scenario: Any node in the end of line and not EOF.
-                if (_tokenStartCharIndex > 0 && !InWsaMode) //Ignore New Line starting in BOF
+                if (!InWsaMode)
                 {
                     EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 }

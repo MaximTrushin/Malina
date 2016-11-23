@@ -1,3 +1,4 @@
+	2:0	NEWLINE	`NEWLINE`	 (0,0)
 	2:0	DOCUMENT_ID	`!a`	 (1,2)
 	2:2	COLON	`:`	 (3,3)
 	3:1	INDENT	`INDENT`	 (5,5)

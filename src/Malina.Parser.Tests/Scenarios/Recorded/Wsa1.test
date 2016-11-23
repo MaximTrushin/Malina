@@ -1,3 +1,4 @@
+	2:0	NEWLINE	`NEWLINE`	 (0,0)
 	2:0	DOCUMENT_ID	`!MyRequest.json`	 (1,15)
 	2:15	COLON	`:`	 (16,16)
 	3:1	INDENT	`INDENT`	 (18,18)

@@ -2,14 +2,15 @@ parser grammar MalinaParser;
 
 options { tokenVocab=MalinaLexer; }
 
-//_inline - inline expression
-//_stmt - declaration statement (always ends with NEWLINE or EOF).
+// Naming conventions:
+// _inline - inline expression
+// _stmt - declaration statement (always ends with NEWLINE or EOF).
 
 dedent	:	DEDENT | EOF;
 newline	:	NEWLINE | EOF;
 
 //MODULE
-module	:	namespace_declaration_stmt* (document_stmt | alias_def_stmt)*;
+module	: NEWLINE* namespace_declaration_stmt* (document_stmt | alias_def_stmt)* NEWLINE*;
 
 namespace_declaration_stmt	:	NAMESPACE_ID string_value newline;
 

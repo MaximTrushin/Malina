@@ -17,7 +17,8 @@ namespace Malina.Compiler
         public const string MCE0006 = "LexerError - '{0}'.";
         public const string MCE0007 = "ParserError - '{0}'.";
         public const string MCE0008 = "Duplicate document name - '{0}'.";
-        public const string MCE0009 = "Document '{0}' must have{1} one root element.";        
+        public const string MCE0009 = "Document '{0}' must have{1} one root element.";
+        public const string MCE0010 = "Parameters can't be declared in documents.";
 
         public static string Format(string name, params object[] args)
         {

@@ -95,6 +95,9 @@
     <None Include="Scenarios\NestedAliases\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\ParameterInDocument\ModuleWithDocument.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\TwoModulesWithDocumentAndAlias\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

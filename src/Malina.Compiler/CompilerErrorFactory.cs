@@ -1,6 +1,7 @@
 ﻿using Malina.DOM;
 using System;
-using Antlr4.Runtime;
+
+
 
 namespace Malina.Compiler
 {
@@ -75,14 +76,19 @@ namespace Malina.Compiler
             return Instantiate("MCE0007", new LexicalInfo(fileName, line, column, 0), message);
         }
 
-        internal static CompilerError DuplicateDocumentName(Document document, string fileName)
+        internal static CompilerError DuplicateDocumentName(DOM.Document document, string fileName)
         {
             return Instantiate("MCE0008", new LexicalInfo(fileName, document.start.Line, document.start.Column + 1, document.start.Index), document.Name);
         }
 
-        internal static CompilerError DocumentMustHaveOneRootElement(Document document, string fileName, string only)
+        internal static CompilerError DocumentMustHaveOneRootElement(DOM.Document document, string fileName, string only)
         {
             return Instantiate("MCE0009", new LexicalInfo(fileName, document.start.Line, document.start.Column + 1, document.start.Index), document.Name, only);
         }
+        internal static CompilerError ParametersCantBeDeclaredInDocuments(DOM.Parameter node, string fileName)
+        {
+            return Instantiate("MCE0010", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
+        }
+
     }
 }

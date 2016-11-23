@@ -105,6 +105,14 @@ namespace Malina.Compiler
             }
         }
 
+        internal void ProcessParameter(DOM.Antlr.Parameter node)
+        {
+            if(_currentModuleMember is DOM.Document)
+            {
+                _context.Errors.Add(CompilerErrorFactory.ParametersCantBeDeclaredInDocuments(node, _currentModule.FileName));
+            }
+        }
+
         public NsInfo GetNsInfo(ModuleMember document)
         {
             return ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == document);
@@ -143,8 +151,6 @@ namespace Malina.Compiler
             {
                 _context.Errors.Add(CompilerErrorFactory.DocumentMustHaveOneRootElement(document, document.Module.FileName, " at least"));
             }
-
-
         }
 
         private int CalcNumOfRootElements(DOM.Alias alias, List<DOM.AliasDefinition> aliasList)
@@ -381,7 +387,6 @@ namespace Malina.Compiler
 
                 return ns;
             }
-                
 
             return null;
         }

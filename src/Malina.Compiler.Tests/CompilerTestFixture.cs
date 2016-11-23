@@ -95,5 +95,15 @@ namespace Malina.Compiler.Tests
         {
             PerformCompilerTest();
         }
+
+        [Test]
+        public void ParameterInDocument()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 7, 4,-1), "Parameters can't be declared in documents."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
     }
 }

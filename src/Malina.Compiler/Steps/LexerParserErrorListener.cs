@@ -36,10 +36,14 @@ namespace Malina.Compiler
                     if (e is NoViableAltException)
                     {
                         var ex = e as NoViableAltException;
-                        _context.Errors.Add(CompilerErrorFactory.ParserError(e, msg, _fileName, ex.StartToken.Line, ex.StartToken.Column));
+                        var tokenName = (recognizer as MalinaParser).Vocabulary.GetDisplayName((offendingSymbol as CommonToken).Type);
+                        _context.Errors.Add(CompilerErrorFactory.ParserError(e, string.Format("Unexpected token {0}<'{1}'>", tokenName, (offendingSymbol as CommonToken).Text), 
+                            _fileName, (offendingSymbol as CommonToken).Line, (offendingSymbol as CommonToken).Column + 1));
                     }
                     else
-                        _context.Errors.Add(CompilerErrorFactory.ParserError(e, msg, _fileName, charPositionInLine, charPositionInLine));
+                    {
+                        _context.Errors.Add(CompilerErrorFactory.ParserError(e, msg, _fileName, line, charPositionInLine + 1));
+                    }
                 }
                 else if(recognizer is MalinaLexer)
                 {

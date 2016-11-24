@@ -20,7 +20,8 @@ namespace Malina.Compiler
         public const string MCE0009 = "Document '{0}' must have{1} one root element.";
         public const string MCE0010 = "Parameters can't be declared in documents.";
         public const string MCE0011 = "Duplicate argument name - '{0}'.";
-        
+        public const string MCE0012 = "Duplicate alias definition name - '{0}'.";
+
 
         public static string Format(string name, params object[] args)
         {

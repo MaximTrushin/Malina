@@ -153,6 +153,13 @@ namespace Malina.Compiler
             }
         }
 
+        public DOM.AliasDefinition GetAliasDefinition(string name)
+        {
+            NsInfo resultInfo = ModuleMembersNsInfo.FirstOrDefault(a => (a.ModuleMember is DOM.AliasDefinition) && a.ModuleMember.Name == name);
+            if(resultInfo == null) return null;
+            return resultInfo.ModuleMember as DOM.AliasDefinition;
+        }
+
         private int CalcNumOfRootElements(DOM.Alias alias, List<DOM.AliasDefinition> aliasList)
         {
             int result = 0;
@@ -218,7 +225,7 @@ namespace Malina.Compiler
         private DOM.AliasDefinition LookupAliasDef(DOM.Alias alias)
         {
             DOM.AliasDefinition result = null;
-            _context.AliasDefinitions.TryGetValue(alias.Name, out result);
+            result = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
             return result;
         }
 
@@ -267,7 +274,7 @@ namespace Malina.Compiler
         {
             //Finding AliasDef
             DOM.AliasDefinition aliasDef = null;
-            _context.AliasDefinitions.TryGetValue(alias.Name, out aliasDef);
+            aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
             if (aliasDef == null)
             {
                 //Report Error
@@ -325,6 +332,24 @@ namespace Malina.Compiler
                     _context.Errors.Add(CompilerErrorFactory.DuplicateDocumentName(prevDoc, prevDoc.Module.FileName));
                 }
                 _context.Errors.Add(CompilerErrorFactory.DuplicateDocumentName(node, _currentModule.FileName));
+
+            }
+        }
+
+
+        public void ExitAliasDef(DOM.Antlr.AliasDefinition node)
+        {
+            //Checking if the alias definition name is unique
+            var sameNameAliasDef = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.AliasDefinition && (n.ModuleMember as DOM.AliasDefinition).Name == node.Name));
+            if (sameNameAliasDef.Count > 1)
+            {
+                if (sameNameAliasDef.Count == 2)
+                {
+                    //Reporting error for 2 documents (existing and new)
+                    var prevAliasDef = sameNameAliasDef[0].ModuleMember as DOM.AliasDefinition;
+                    _context.Errors.Add(CompilerErrorFactory.DuplicateAliasDefName(prevAliasDef, prevAliasDef.Module.FileName));
+                }
+                _context.Errors.Add(CompilerErrorFactory.DuplicateAliasDefName(node, _currentModule.FileName));
 
             }
         }

@@ -8,8 +8,6 @@ namespace Malina.Compiler
         public CompileUnit CompileUnit { get; private set; }
         public CompilerParameters Parameters { get; private set; }
 
-        public Dictionary<string, AliasDefinition> AliasDefinitions { get; private set; }
-
         public NamespaceResolver NamespaceResolver { get; private set; }
 
         public SortedSet<CompilerError> Errors { get; private set; }
@@ -18,8 +16,7 @@ namespace Malina.Compiler
         {
             Parameters = parameters;
             CompileUnit = compileUnit;
-            Errors = new SortedSet<CompilerError>();
-            AliasDefinitions = new Dictionary<string, AliasDefinition>();
+            Errors = new SortedSet<CompilerError>();            
             NamespaceResolver = new NamespaceResolver(this);
         }
 

@@ -60,6 +60,16 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+        [Test]
+        public void DuplicateAliasDefinition()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithAliasDef1.mlx", 1,1,-1), "Duplicate alias definition name - 'Address'."),
+                new CompilerError(new LexicalInfo("ModuleWithAliasDef2.mlx", 2,1,-1), "Duplicate alias definition name - 'Address'.")
+            };
+            PerformCompilerTest(errorsExpected);
+        }
 
         [Test]
         public void AliasHasCircularReference()

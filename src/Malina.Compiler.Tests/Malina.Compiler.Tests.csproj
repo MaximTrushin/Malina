@@ -71,6 +71,12 @@
     <None Include="Scenarios\AliasWithIncorrectBlock\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\DuplicateAliasDefinition\ModuleWithAliasDef2.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\DuplicateAliasDefinition\ModuleWithAliasDef1.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\DuplicateDocumentName\ModuleWithDocument2.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

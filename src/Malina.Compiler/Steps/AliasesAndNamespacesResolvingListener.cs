@@ -53,7 +53,7 @@ namespace Malina.Compiler.Steps
         public override void ExitAlias_def_stmt(MalinaParser.Alias_def_stmtContext context)
         {
             base.ExitAlias_def_stmt(context);
-            _context.AliasDefinitions.Add(context.Node.Name, context.Node);
+            _context.NamespaceResolver.ExitAliasDef(context.Node);
         }
 
         public override void ExitEveryRule([NotNull] ParserRuleContext context)

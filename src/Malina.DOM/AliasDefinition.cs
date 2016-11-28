@@ -10,7 +10,6 @@ namespace Malina.DOM
         // Fields
         private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
-        private NodeCollection<Parameter> _parameters;
         public string Value;
         public ValueType ValueType;
 
@@ -33,7 +32,6 @@ namespace Malina.DOM
             else if (child is Parameter)
             {
                 Entities.Add((Entity)child);
-                Parameters.Add((Parameter)child);
             }
             else if (child is Namespace)
             {
@@ -57,8 +55,6 @@ namespace Malina.DOM
             Namespaces.AssignNodes(definition.Namespaces);
             Entities.AssignNodes(definition.Entities);
             Attributes.AssignNodes(definition.Attributes);
-            Parameters.AssignNodes(definition.Parameters);
-
         }
 
         public override Node Clone()
@@ -115,28 +111,6 @@ namespace Malina.DOM
             }
         }
 
-        public NodeCollection<Parameter> Parameters
-        {
-            get
-            {
-                if (_parameters == null)
-                {
-                    _parameters = new NodeCollection<Parameter>(this);
-                }
-                return _parameters;
-            }
-            set
-            {
-                if (value != _parameters)
-                {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
-                    _parameters = value;
-                }
-            }
-        }
     }
 
 

@@ -84,7 +84,7 @@ namespace Malina.Compiler
             }
         }
 
-
+        //This method is called from ProcessAliasesAndNamespaces step after the all Nodes are visited.
         public void ResolveAliasesAndDoChecks()
         {
             foreach(var nsInfo in ModuleMembersNsInfo)
@@ -110,6 +110,10 @@ namespace Malina.Compiler
             if(_currentModuleMember is DOM.Document)
             {
                 _context.Errors.Add(CompilerErrorFactory.ParametersCantBeDeclaredInDocuments(node, _currentModule.FileName));
+            }
+            else
+            {
+                (_currentModuleMember as DOM.Antlr.AliasDefinition).Parameters.Add(node);
             }
         }
 
@@ -211,21 +215,38 @@ namespace Malina.Compiler
         private NsInfo ResolveAliasInDocument(DOM.Alias alias, NsInfo documentNsInfo)
         {
             //Finding AliasDef
-            DOM.AliasDefinition aliasDef = null;
+            DOM.Antlr.AliasDefinition aliasDef = null;
             aliasDef = LookupAliasDef(alias);
+
             if (aliasDef == null)
             {
-                //Report Error
+                //Report Error if alias is not defined
                 _context.Errors.Add(CompilerErrorFactory.AliasIsNotDefined(alias, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
                 return null;
             }
+
+            CheckAliasArguments(alias, aliasDef, documentNsInfo);
+
             return ResolveAliasesInAliasDefinition(aliasDef);
         }
 
-        private DOM.AliasDefinition LookupAliasDef(DOM.Alias alias)
+        private void CheckAliasArguments(DOM.Alias alias, DOM.Antlr.AliasDefinition aliasDef, NsInfo documentNsInfo)
+        {            
+            foreach (DOM.Parameter parameter in aliasDef.Parameters)
+            {
+                DOM.Argument argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name && a.IsValueArgument == parameter.IsValueParameter);
+                if (argument == null)
+                {
+                    //Report Error if argument is missing
+                    _context.Errors.Add(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                }
+            }
+        }
+
+        private DOM.Antlr.AliasDefinition LookupAliasDef(DOM.Alias alias)
         {
-            DOM.AliasDefinition result = null;
-            result = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            DOM.Antlr.AliasDefinition result = null;
+            result = (DOM.Antlr.AliasDefinition)_context.NamespaceResolver.GetAliasDefinition(alias.Name);
             return result;
         }
 

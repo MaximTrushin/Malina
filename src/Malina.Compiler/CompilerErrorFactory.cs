@@ -99,5 +99,10 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0012", new LexicalInfo(fileName, aliasDef.start.Line, aliasDef.start.Column + 1, aliasDef.start.Index), aliasDef.Name);
         }
+
+        internal static CompilerError ArgumentIsMissing(Alias alias, string argumentName, string fileName)
+        {
+            return Instantiate("MCE0013", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index), argumentName);
+        }
     }
 }

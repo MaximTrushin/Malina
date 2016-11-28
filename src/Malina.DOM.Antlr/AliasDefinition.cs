@@ -1,13 +1,17 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 
 namespace Malina.DOM.Antlr
 {
-    public class AliasDefinition : DOM.AliasDefinition, IAntlrCharStreamConsumer
+    public class AliasDefinition : DOM.AliasDefinition, IAntlrCharStreamConsumer, IValueNode
     {
         private NodeCollection<Parameter> _parameters;
         private ICharStream _charStream;
         private Interval _idInterval;
+        private Interval _valueInterval;
+        private int _valueIndent;
+
         public ICharStream CharStream
         {
             set
@@ -54,6 +58,43 @@ namespace Malina.DOM.Antlr
                 {
                     _parameters = value;
                 }
+            }
+        }
+
+        public Interval ValueInterval
+        {
+            get
+            {
+                return _valueInterval;
+            }
+
+            set
+            {
+                _valueInterval = value;
+            }
+        }
+
+
+        public int ValueIndent
+        {
+            get
+            {
+                return _valueIndent;
+            }
+
+            set
+            {
+                _valueIndent = value;
+            }
+        }
+
+        public override string Value
+        {
+            get
+            {
+                if (base.Value != null) return base.Value;
+                if (ValueType == ValueType.None) return null;
+                return Element.GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
             }
         }
     }

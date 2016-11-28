@@ -54,13 +54,32 @@ namespace Malina.Parser.Tests
         public override void OnAliasDefinition(DOM.AliasDefinition node)
         {
             PrintNodeStart(node);
-            _sb.Append(":");
-            _sb.AppendLine();
-            _indent++;
+            if (node.ObjectValue is Node)
+            {
+                _sb.Append("= ");
+                _valueNodeExpected.Push(true);
+                Visit(node.ObjectValue as Node);
+                _valueNodeExpected.Pop();
+            }
+            else if (node.Value != null)
+            {
+                _sb.Append("= `");
+                PrintValue(node);
+                _sb.Append("`");
+            }
+
+            if (node.Attributes.Count + node.Entities.Count > 0)
+            {
+                _sb.AppendLine(":");
+                _indent++;
+            }
             base.OnAliasDefinition(node);
-            _indent--;
+            if (node.Attributes.Count + node.Entities.Count > 0)
+            {
+                _indent--;
+            }
             _sb.AppendLine();
-            
+
         }
         public override void OnAttribute(DOM.Attribute node)
         {
@@ -145,7 +164,7 @@ namespace Malina.Parser.Tests
             }
         }
 
-        private void PrintValue(DOM.Element node)
+        private void PrintValue(DOM.IValueNode node)
         {
             _sb.Append(node.Value.Replace("\r\n", "\n").Replace("\n", "\\n").Replace("\t", "\\t"));
         }

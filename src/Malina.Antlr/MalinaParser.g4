@@ -16,7 +16,7 @@ namespace_declaration_stmt	:	NAMESPACE_ID string_value newline;
 
 document_stmt	:	DOCUMENT_ID ((block_inline newline) | ns_block | block | array);
 
-alias_def_stmt	:	ALIAS_DEF_ID ((block_inline newline) | ns_block | block | array);
+alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (block_inline newline) | ns_block | block | array);
 
 
 //BLOCKS

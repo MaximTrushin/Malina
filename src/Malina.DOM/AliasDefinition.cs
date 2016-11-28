@@ -5,13 +5,14 @@ using System.Linq;
 namespace Malina.DOM
 {
     [Serializable]
-    public class AliasDefinition : ModuleMember
+    public class AliasDefinition : ModuleMember, IValueNode
     {
         // Fields
         private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
-        public string Value;
-        public ValueType ValueType;
+        private object _objectValue;
+        private ValueType _valueType;
+        private string _value;
 
         // Methods
         public AliasDefinition()
@@ -111,6 +112,51 @@ namespace Malina.DOM
             }
         }
 
+        public virtual string Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+
+        public virtual object ObjectValue
+        {
+            get
+            {
+                return _objectValue;
+            }
+
+            set
+            {
+                _objectValue = value;
+            }
+        }
+
+        public ValueType ValueType
+        {
+            get
+            {
+                return _valueType;
+            }
+
+            set
+            {
+                _valueType = value;
+            }
+        }
+
+        public bool IsValueNode
+        {
+            get
+            {
+                return _valueType != ValueType.None;
+            }
+        }
     }
 
 

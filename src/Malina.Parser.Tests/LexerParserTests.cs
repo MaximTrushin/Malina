@@ -314,6 +314,13 @@ namespace Malina.Parser.Tests
         }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void ValueAliasDefinition()
+        {
+            PerformTest();
+        }
+
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ElementAtEOF()
         {
             PerformTest();

@@ -32,6 +32,8 @@ namespace Malina.Parser
             if (ctx.Node == null)
             {
                 var node = new T();
+                (node as DOM.IValueNode).ValueType = ValueType.Empty; 
+
                 if (parent != null)
                     (parent as DOM.Antlr.IValueNode).ObjectValue = node;
                 ctx.Node = node;

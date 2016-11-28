@@ -234,12 +234,26 @@ namespace Malina.Compiler
         {            
             foreach (DOM.Parameter parameter in aliasDef.Parameters)
             {
-                DOM.Argument argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name && a.IsValueArgument == parameter.IsValueParameter);
+                DOM.Argument argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
                 if (argument == null)
                 {
                     //Report Error if argument is missing
-                    _context.Errors.Add(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                    if (parameter.Value == null) _context.Errors.Add(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                    continue;
                 }
+
+                if (argument.IsValueNode != parameter.IsValueNode)
+                {
+                    if (parameter.IsValueNode)
+                    {
+                        _context.Errors.Add(CompilerErrorFactory.ValueArgumentIsExpected(argument, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                    }
+                    else
+                    {
+                        _context.Errors.Add(CompilerErrorFactory.BlockArgumentIsExpected(argument, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                    }
+                }
+
             }
         }
 

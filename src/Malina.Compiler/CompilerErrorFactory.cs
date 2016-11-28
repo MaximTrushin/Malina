@@ -104,5 +104,15 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0013", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index), argumentName);
         }
+
+        internal static CompilerError ValueArgumentIsExpected(Argument argument, string fileName)
+        {
+            return Instantiate("MCE0014", new LexicalInfo(fileName, argument.start.Line, argument.start.Column + 1, argument.start.Index));
+        }
+
+        internal static CompilerError BlockArgumentIsExpected(Argument argument, string fileName)
+        {
+            return Instantiate("MCE0015", new LexicalInfo(fileName, argument.start.Line, argument.start.Column + 1, argument.start.Index));
+        }
     }
 }

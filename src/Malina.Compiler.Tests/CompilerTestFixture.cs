@@ -132,7 +132,7 @@ namespace Malina.Compiler.Tests
         {
             var errorsExpected = new List<CompilerError>()
             {
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 4,-1), "Argument 'name' is missing."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 4,-1), "Argument 'street' is missing."),
             };
             PerformCompilerTest(errorsExpected);
         }
@@ -153,8 +153,8 @@ namespace Malina.Compiler.Tests
         {
             var errorsExpected = new List<CompilerError>()
             {
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 6, 5,-1), "Duplicate argument name - 'name'."),
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 7, 5,-1), "Duplicate argument name - 'name'."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 5,-1), "Value argument is expected."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 7, 5,-1), "Block argument is expected."),
             };
             PerformCompilerTest(errorsExpected);
         }

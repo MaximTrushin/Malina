@@ -5,7 +5,8 @@ namespace Malina.DOM
     [Serializable]
     public enum ValueType
     {
-        None,
+        None = 0, //Node is not Value Node
+        Empty, //Node is Value Node but Value is not defined (value parameter for ex.)
         DoubleQuotedString,
         SingleQuotedString,
         OpenString,

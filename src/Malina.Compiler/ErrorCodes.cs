@@ -22,9 +22,8 @@ namespace Malina.Compiler
         public const string MCE0011 = "Duplicate argument name - '{0}'.";
         public const string MCE0012 = "Duplicate alias definition name - '{0}'.";
         public const string MCE0013 = "Argument '{0}' is missing.";
-
-
-
+        public const string MCE0014 = "Value argument is expected.";
+        public const string MCE0015 = "Block argument is expected.";
 
         public static string Format(string name, params object[] args)
         {

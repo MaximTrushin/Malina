@@ -9,4 +9,4 @@
 
 !$Address:
 	name = %name =  Helen Zoe
-	street = %street
+	street: %street

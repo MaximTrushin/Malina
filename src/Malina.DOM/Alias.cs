@@ -172,6 +172,14 @@ namespace Malina.DOM
                 }
             }
         }
+
+        public bool IsValueNode
+        {
+            get
+            {
+                return _valueType != ValueType.None;
+            }
+        }
     }
 
 

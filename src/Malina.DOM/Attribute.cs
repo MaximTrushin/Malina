@@ -89,6 +89,14 @@ namespace Malina.DOM
                 _nsPrefix = value;
             }
         }
+
+        public bool IsValueNode
+        {
+            get
+            {
+                return _valueType != ValueType.None;
+            }
+        }
     }
 
 

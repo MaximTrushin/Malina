@@ -126,6 +126,16 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
+        
+        [Test]
+        public void AliasWithMissedArgument()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 4,-1), "Argument 'name' is missing."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
 
         [Test]
         public void AliasWithDuplicateArguments()

@@ -9,48 +9,7 @@ namespace Malina.Compiler
 {
     public class NamespaceResolver
     {
-        /// <summary>
-        /// Collects a list of used namespaces and aliases in the ModuleMember (Document or AliasDef)
-        /// </summary>
-        public class NsInfo
-        {
-            public ModuleMember ModuleMember { get; private set; }
-            public bool AliasesResolved { get; internal set; }
-            private List<DOM.Namespace> _namespaces;
-            private List<DOM.Alias> _aliases;
-
-            public List<DOM.Namespace> Namespaces
-            {
-                get
-                {                    
-                    return _namespaces??(_namespaces = new List<DOM.Namespace>());
-                }
-
-                set
-                {
-                    _namespaces = value;
-                }
-            }
-
-            public List<DOM.Alias> Aliases
-            {
-                get
-                {
-
-                    return _aliases??(_aliases = new List<DOM.Alias>());
-                }
-
-                set
-                {
-                    _aliases = value;
-                }
-            }
-
-            public NsInfo(ModuleMember currentDocument)
-            {
-                ModuleMember = currentDocument;                
-            }
-        }
+ 
 
         private List<NsInfo> _moduleMembersNsInfo;
 
@@ -251,6 +210,7 @@ namespace Malina.Compiler
                     continue;
                 }
 
+                //Report error if type of argument (value/block) mismatch the type of parameter
                 if (argument.IsValueNode != parameter.IsValueNode)
                 {
                     if (parameter.IsValueNode)
@@ -345,6 +305,14 @@ namespace Malina.Compiler
         public void ProcessAlias(DOM.Antlr.Alias node)
         {
             CheckDuplicateArguments(node);
+        }
+
+        /// <summary>
+        /// Adds Alias to the Namespace Info of the current Module Member.
+        /// </summary>
+        /// <param name="node"></param>
+        public void AddAlias(DOM.Antlr.Alias node)
+        {
             CurrentModuleMemberNsInfo.Aliases.Add(node);
         }
 
@@ -473,8 +441,9 @@ namespace Malina.Compiler
             prefix = null;
             ns = null;
 
-            if (node.NsPrefix == null) return;
+            if (node.NsPrefix == null) return;//No prefix no cry
 
+            //Getting namespace info for the generated document.
             var targetNsInfo = ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == document);
 
             if(aliasDef == null)

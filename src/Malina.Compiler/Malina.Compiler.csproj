@@ -68,6 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CompilerErrorFactory.cs" />
     <Compile Include="Steps\NamespaceResolver.cs" />
+    <Compile Include="Steps\NsInfo.cs" />
     <Compile Include="Steps\ProcessAliasesAndNamespaces.cs" />
   </ItemGroup>
   <ItemGroup>

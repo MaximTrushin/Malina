@@ -107,7 +107,7 @@ namespace Malina.Compiler.Steps
 
         private void WritePendingNamespaceDeclarations(string uri)
         {
-            NamespaceResolver.NsInfo nsInfo = _context.NamespaceResolver.GetNsInfo(_currentDocument);
+            NsInfo nsInfo = _context.NamespaceResolver.GetNsInfo(_currentDocument);
             if (nsInfo == null) return;
 
             foreach (var ns in nsInfo.Namespaces)
@@ -121,7 +121,6 @@ namespace Malina.Compiler.Steps
         public override void OnAlias(Alias node)
         {
             var aliasName = node.Name;
-            base.OnAlias(node);
             var aliasDef = _context.NamespaceResolver.GetAliasDefinition(node.Name);
 
             if (aliasDef == null) return;
@@ -131,7 +130,7 @@ namespace Malina.Compiler.Steps
             AliasContext.Pop();
         }
 
-        private NamespaceResolver.NsInfo GetContextNsInfo()
+        private NsInfo GetContextNsInfo()
         {
             if (AliasContext.Peek() == null)
             {

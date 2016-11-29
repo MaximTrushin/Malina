@@ -45,28 +45,30 @@ namespace Malina.Compiler.Tests
 
 
 
-            var printerVisitor = new DOMPrinterVisitor();
-            printerVisitor.Visit(context.CompileUnit);
-            Console.WriteLine();
-            Console.WriteLine(printerVisitor.Text);
-
             var isDomRecordedTest = IsDomRecordedTest();
             var isDomRecordTest = IsDomRecordTest(); //Overwrites existing recording
             string recordedDom = null;
             if (isDomRecordedTest || isDomRecordTest)
             {
+                var printerVisitor = new DOMPrinterVisitor();
+                printerVisitor.Visit(context.CompileUnit);
+                Console.WriteLine();
+                Console.WriteLine(printerVisitor.Text);
+
                 if (isDomRecordedTest) recordedDom = LoadRecordedDomTest(true);
                 if (recordedDom == null || isDomRecordTest)
                 {
                     SaveRecordedDomTest(printerVisitor.Text, true);
                 }
+
+                //DOM Assertions
+                if (recordedDom != null)
+                {
+                    Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
+                }
+
             }
 
-            //DOM Assertions
-            if (recordedDom != null)
-            {
-                Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
-            }
 
 
             if (IsRecordedTest() || IsRecordTest())
@@ -98,6 +100,10 @@ namespace Malina.Compiler.Tests
             }
         }
 
+        /// <summary>
+        /// Record result file or compare it with previously recorded result
+        /// </summary>
+        /// <param name="record">If true then result file is recorded not compared.</param>
         private static void CompareResultAndRecordedFiles(bool record)
         {
             var testCaseName = GetTestCaseName();

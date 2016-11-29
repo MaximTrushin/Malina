@@ -66,5 +66,13 @@ namespace Malina.Compiler.Steps
             else if (context is INodeContext<DOM.Antlr.Parameter>) _context.NamespaceResolver.ProcessParameter((context as INodeContext<DOM.Antlr.Parameter>).Node);
 
         }
+
+        protected override void EnterContext<T>(INodeContext<T> context, bool valueNode = false)
+        {
+            base.EnterContext(context, valueNode);
+            if (context is INodeContext<DOM.Antlr.Alias>)
+                _context.NamespaceResolver.AddAlias((context as INodeContext<DOM.Antlr.Alias>).Node);
+        }
+
     }
 }

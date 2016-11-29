@@ -59,7 +59,7 @@ namespace Malina.Compiler
             return Instantiate("MCE0004", new LexicalInfo(fileName, alias.start.Line, alias.start.Column, alias.start.Index), alias.Name);
         }
 
-        internal static CompilerError AliasDefHasCircularReference(NamespaceResolver.NsInfo aliasDefNsInfo)
+        internal static CompilerError AliasDefHasCircularReference(NsInfo aliasDefNsInfo)
         {
             var aliasDef = aliasDefNsInfo.ModuleMember as AliasDefinition;
             return Instantiate("MCE0005", new LexicalInfo(aliasDef.Module.FileName,

@@ -24,6 +24,9 @@ namespace Malina.Compiler
         public const string MCE0013 = "Argument '{0}' is missing.";
         public const string MCE0014 = "Value argument is expected.";
         public const string MCE0015 = "Block argument is expected.";
+        public const string MCE0016 = "Can not use value alias in the block.";
+        public const string MCE0017 = "Can not use block alias as value.";
+
 
         public static string Format(string name, params object[] args)
         {

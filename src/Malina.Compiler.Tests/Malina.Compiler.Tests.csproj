@@ -74,6 +74,9 @@
     <None Include="Scenarios\AliasWithIncorrectBlock\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\AliasWithIncorrectType\ModuleWithDocument.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\AliasWithMissedArgument\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

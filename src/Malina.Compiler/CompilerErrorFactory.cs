@@ -114,5 +114,15 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0015", new LexicalInfo(fileName, argument.start.Line, argument.start.Column + 1, argument.start.Index));
         }
+
+        internal static CompilerError CantUseValueAliasInTheBlock(Alias alias, string fileName)
+        {
+            return Instantiate("MCE0016", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index));
+        }
+
+        internal static CompilerError CantUseBlockAliasAsValue(Alias alias, string fileName)
+        {
+            return Instantiate("MCE0017", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index));
+        }
     }
 }

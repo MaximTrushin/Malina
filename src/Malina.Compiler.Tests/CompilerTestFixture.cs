@@ -126,7 +126,20 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
-        
+
+        [Test]
+        public void AliasWithIncorrectType()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 4,-1), "Can not use value alias in the block."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 12, 11,-1), "Can not use block alias as value."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+
+
         [Test]
         public void AliasWithMissedArgument()
         {

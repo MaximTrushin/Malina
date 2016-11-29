@@ -91,15 +91,15 @@ namespace Malina.Compiler
             {
                 CheckDocument(nsInfo);
 
-                ResolveAliases(nsInfo);
+                ResolveAliasesInModuleMember(nsInfo);
             }
         }
 
-        private void ResolveAliases(NsInfo nsInfo)
+        private void ResolveAliasesInModuleMember(NsInfo nsInfo)
         {
             foreach (var alias in nsInfo.Aliases)
             {
-                NsInfo aliasNsInfo = ResolveAliasInDocument(alias, nsInfo);
+                NsInfo aliasNsInfo = ResolveAliasInModuleMember(alias, nsInfo);
                 if (aliasNsInfo == null) continue;
                 MergeNsInfo(nsInfo, aliasNsInfo);
             }
@@ -212,7 +212,7 @@ namespace Malina.Compiler
             return name;
         }
 
-        private NsInfo ResolveAliasInDocument(DOM.Alias alias, NsInfo documentNsInfo)
+        private NsInfo ResolveAliasInModuleMember(DOM.Alias alias, NsInfo memberNsInfo)
         {
             //Finding AliasDef
             DOM.Antlr.AliasDefinition aliasDef = null;
@@ -221,11 +221,20 @@ namespace Malina.Compiler
             if (aliasDef == null)
             {
                 //Report Error if alias is not defined
-                _context.Errors.Add(CompilerErrorFactory.AliasIsNotDefined(alias, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                _context.Errors.Add(CompilerErrorFactory.AliasIsNotDefined(alias, memberNsInfo.ModuleMember.Module.FileName));
                 return null;
             }
 
-            CheckAliasArguments(alias, aliasDef, documentNsInfo);
+            if (aliasDef.IsValueNode != alias.IsValueNode)
+            {
+                if (aliasDef.IsValueNode)
+                    _context.Errors.Add(CompilerErrorFactory.CantUseValueAliasInTheBlock(alias, memberNsInfo.ModuleMember.Module.FileName));
+                else
+                    _context.Errors.Add(CompilerErrorFactory.CantUseBlockAliasAsValue(alias, memberNsInfo.ModuleMember.Module.FileName));
+            }
+
+
+            CheckAliasArguments(alias, aliasDef, memberNsInfo);
 
             return ResolveAliasesInAliasDefinition(aliasDef);
         }
@@ -238,7 +247,7 @@ namespace Malina.Compiler
                 if (argument == null)
                 {
                     //Report Error if argument is missing
-                    if (parameter.Value == null) _context.Errors.Add(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                    if (parameter.Value == null) _context.Errors.Add(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, documentNsInfo.ModuleMember.Module.FileName));
                     continue;
                 }
 
@@ -246,11 +255,11 @@ namespace Malina.Compiler
                 {
                     if (parameter.IsValueNode)
                     {
-                        _context.Errors.Add(CompilerErrorFactory.ValueArgumentIsExpected(argument, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                        _context.Errors.Add(CompilerErrorFactory.ValueArgumentIsExpected(argument, documentNsInfo.ModuleMember.Module.FileName));
                     }
                     else
                     {
-                        _context.Errors.Add(CompilerErrorFactory.BlockArgumentIsExpected(argument, (documentNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                        _context.Errors.Add(CompilerErrorFactory.BlockArgumentIsExpected(argument, documentNsInfo.ModuleMember.Module.FileName));
                     }
                 }
 
@@ -313,7 +322,7 @@ namespace Malina.Compiler
             if (aliasDef == null)
             {
                 //Report Error
-                _context.Errors.Add(CompilerErrorFactory.AliasIsNotDefined(alias, (aliasDefNsInfo.ModuleMember as DOM.Document).Module.FileName));
+                _context.Errors.Add(CompilerErrorFactory.AliasIsNotDefined(alias, aliasDefNsInfo.ModuleMember.Module.FileName));
                 return null;
             }
             return ResolveAliasesInAliasDefinition(aliasDef);

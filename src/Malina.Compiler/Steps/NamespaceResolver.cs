@@ -200,8 +200,8 @@ namespace Malina.Compiler
                 DOM.Argument argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
                 if (argument == null)
                 {
-                    //Report Error if argument is missing
-                    if (parameter.Value == null) _context.Errors.Add(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, documentNsInfo.ModuleMember.Module.FileName));
+                    //Report Error if argument is missing and there is no default value for the parameter
+                    if (parameter.Value == null && parameter.Attributes.Count == 0 && parameter.Entities.Count == 0) _context.Errors.Add(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, documentNsInfo.ModuleMember.Module.FileName));
                     continue;
                 }
 

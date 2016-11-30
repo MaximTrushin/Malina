@@ -1,5 +1,4 @@
 ﻿#ipo3 = http://www.example.com/myipo
-#xsi = http://www.w3.org/2001/XMLSchema-instance
 
 !$UKAddress:
 	$Templates.UKAddress:

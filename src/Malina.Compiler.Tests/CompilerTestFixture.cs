@@ -93,6 +93,13 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest();
         }
 
+
+        [Test, RecordedTest]
+        public void AliasWithDefaultBlockParameters()
+        {
+            PerformCompilerTest();
+        }
+
         [Test]
         public void ExtraRootElementInDocument()
         {

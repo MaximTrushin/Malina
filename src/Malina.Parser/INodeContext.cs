@@ -1,4 +1,5 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+using Antlr4.Runtime;
 using Malina.DOM;
 using Malina.DOM.Antlr;
 
@@ -27,15 +28,25 @@ namespace Malina.Parser
             return ctx.Node;
         }
 
+        /// <summary>
+        /// This method is called by method EnterContext for Parameter or Alias object value 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ctx"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
         public static T InitValueNode<T>(this INodeContext<T> ctx, Node parent) where T : Node, new()
         {
             if (ctx.Node == null)
             {
                 var node = new T();
-                (node as DOM.IValueNode).ValueType = ValueType.Empty; 
+                (node as DOM.IValueNode).ValueType = DOM.ValueType.Empty;
 
                 if (parent != null)
+                {
                     (parent as DOM.Antlr.IValueNode).ObjectValue = node;
+                    (parent as DOM.IValueNode).ValueType = DOM.ValueType.ObjectValue;
+                }
                 ctx.Node = node;
                 var csc = node as IAntlrCharStreamConsumer;
                 if (csc != null)

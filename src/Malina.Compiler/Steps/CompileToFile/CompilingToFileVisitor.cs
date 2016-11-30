@@ -86,15 +86,40 @@ namespace Malina.Compiler.Steps
 
         private string ResolveValueAlias(Alias alias)
         {
-            throw new NotImplementedException();
+            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+
+            if (aliasDef.ObjectValue == null) return aliasDef.Value;
+
+            return ResolveObjectValue(aliasDef.ObjectValue);
+
+        }
+
+        private string ResolveObjectValue(object objectValue)
+        {
+            if (objectValue is Parameter)
+            {
+                return ResolveValueParameter(objectValue as Parameter);
+            }
+
+            if (objectValue is Alias)
+            {
+                return ResolveValueAlias(objectValue as Alias);
+            }
+            return null;
         }
 
         private string ResolveValueParameter(Parameter parameter)
         {
             var aliasContext = AliasContext.Peek();
             var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
-
-            if (argument != null) return argument.Value;
+            if (argument != null)
+            {
+                if(argument.ObjectValue != null)
+                {
+                    return ResolveObjectValue(argument.ObjectValue);
+                }
+                return argument.Value;
+            } 
 
             //if argument is not found lookup default value in the Alias Definition
             var paramDef = (aliasContext.AliasDefinition as DOM.Antlr.AliasDefinition).Parameters.First(p => p.Name == parameter.Name);
@@ -102,14 +127,8 @@ namespace Malina.Compiler.Steps
             //If parameteres default value is Parameter or Alias then resolve it
             if (paramDef.ObjectValue != null)
             {
-                if (paramDef.ObjectValue is Parameter)
-                {
-                    return ResolveValueParameter(paramDef.ObjectValue as Parameter);
-                }
-                else if (paramDef.ObjectValue is Alias)
-                {
-                    return ResolveValueAlias(paramDef.ObjectValue as Alias);
-                }
+                return ResolveObjectValue(paramDef.ObjectValue);
+
             }
 
             return paramDef.Value;
@@ -144,7 +163,11 @@ namespace Malina.Compiler.Steps
             }
             else if (node.ObjectValue is Parameter)
             {
-                ResolveValueParameter(node.ObjectValue as Parameter, AliasContext.Peek());
+                _xmlTextWriter.WriteString(ResolveValueParameter(node.ObjectValue as Parameter));
+            }
+            else if (node.ObjectValue is Alias)
+            {
+                _xmlTextWriter.WriteString(ResolveValueAlias(node.ObjectValue as Alias));
             }
 
             Visit(node.Entities);
@@ -186,25 +209,6 @@ namespace Malina.Compiler.Steps
             }
         }
 
-        private void ResolveValueParameter(Parameter parameter, AliasContext aliasContext)
-        {
-            //throw new NotImplementedException();
-            var alias = aliasContext.Alias;
-
-            var argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
-
-            if (argument != null)
-            {
-                _xmlTextWriter.WriteString(argument.Value);
-            }
-            else
-            {
-                if (parameter.Value != null) _xmlTextWriter.WriteString(parameter.Value);
-            }
-
-
-        }
-
         private void WritePendingNamespaceDeclarations(string uri)
         {
             NsInfo nsInfo = _context.NamespaceResolver.GetNsInfo(_currentDocument);
@@ -218,14 +222,11 @@ namespace Malina.Compiler.Steps
             }
         }
 
-        public override void OnAlias(Alias node)
+        public override void OnAlias(Alias alias)
         {
-            var aliasName = node.Name;
-            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(node.Name);
+            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
 
-            if (aliasDef == null) return;
-
-            AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = node, AliasNsInfo = GetContextNsInfo() });
+            AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
             base.OnAliasDefinition(aliasDef);
             AliasContext.Pop();
         }

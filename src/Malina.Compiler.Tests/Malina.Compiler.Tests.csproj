@@ -59,10 +59,22 @@
     <None Include="Scenarios\AliasHasCircularReference\ModuleWithAlias1.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\AliasWithArguments\ModuleWithAlias3.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\AliasWithArguments\ModuleWithAlias2.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\AliasWithArguments\ModuleWithAlias.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\AliasWithDefaultValueParameters\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\AliasWithDefaultValueParameters\ModuleWithDocument.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\AliasWithArguments\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\AliasWithDuplicateArguments\ModuleWithDocument.mlx">

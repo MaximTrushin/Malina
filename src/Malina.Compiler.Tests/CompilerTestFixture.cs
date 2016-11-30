@@ -1,6 +1,7 @@
 ﻿using Malina.DOM;
 using Malina.Parser.Tests;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using static Malina.Compiler.Tests.TestUtils;
 
@@ -84,6 +85,12 @@ namespace Malina.Compiler.Tests
                 new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 17,1,-1), "Alias Definition 'Address6' has circular reference.")
             };
             PerformCompilerTest(errorsExpected);
+        }
+
+        [Test, RecordedTest]
+        public void AliasWithArguments()
+        {
+            PerformCompilerTest();
         }
 
         [Test]

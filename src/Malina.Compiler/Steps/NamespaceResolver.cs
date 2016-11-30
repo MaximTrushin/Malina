@@ -4,19 +4,14 @@ using System.Linq;
 using Malina.DOM;
 using Malina.DOM.Antlr;
 using System.IO;
+using Malina.Compiler.Steps;
 
 namespace Malina.Compiler
 {
     public class NamespaceResolver
     {
- 
-
         private List<NsInfo> _moduleMembersNsInfo;
-
-
         private ModuleMember _currentModuleMember;
-
-
         private Module _currentModule;
         private readonly CompilerContext _context;
         private Stack<NsInfo> _aliasStack;
@@ -436,15 +431,18 @@ namespace Malina.Compiler
             return null;
         }
 
-        public void GetPrefixAndNs(INsNode node, DOM.Document document, DOM.AliasDefinition aliasDef, out string prefix, out string ns)
+        public void GetPrefixAndNs(INsNode node, DOM.Document document, Func<DOM.AliasDefinition> getAliasDef, out string prefix, out string ns)
         {
             prefix = null;
             ns = null;
 
             if (node.NsPrefix == null) return;//No prefix no cry
 
+
             //Getting namespace info for the generated document.
             var targetNsInfo = ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == document);
+
+            var aliasDef = getAliasDef();
 
             if(aliasDef == null)
             {//Resolving based on document's NsInfo

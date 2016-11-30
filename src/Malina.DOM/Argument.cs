@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Text;
 
 namespace Malina.DOM
 {
     [Serializable]
     public class Argument : Element
     {
-        // Fields
-        public bool IsValueArgument;
-        public Alias OfAlias;
 
         // Methods
         public Argument()
@@ -25,7 +21,6 @@ namespace Malina.DOM
         {
             base.Assign(node);
             Argument argument = node as Argument;
-            OfAlias = argument.OfAlias;
         }
 
         public override Node Clone()
@@ -35,10 +30,6 @@ namespace Malina.DOM
             return argument;
         }
 
-        public override string ToString()
-        {
-            return new StringBuilder().Append(OfAlias.Name).Append(":").Append(Name).ToString();
-        }
     }
 
 

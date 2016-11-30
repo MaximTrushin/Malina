@@ -5,7 +5,6 @@ namespace Malina.DOM
 {
     public class MalinaDepthFirstVisitor : IDomVisitor
     {
-        private Node _resultingNode;
 
         public virtual void OnAlias(Alias node)
         {
@@ -74,29 +73,13 @@ namespace Malina.DOM
             Visit(node.Entities);
         }
 
-        protected virtual void ReplaceCurrentNode(Node replacement)
-        {
-            _resultingNode = replacement;
-        }
-
-        protected virtual void ReplaceNode<T>(NodeCollection<T> items, Node current, Node replacement) where T : Node
-        {
-            if (replacement == null)
-            {
-                items.Remove((T)current);
-            }
-            else
-            {
-                items.Replace((T)current, (T)replacement);
-            }
-        }
 
         public void Visit(Node node)
         {
             OnNode(node);
         }
 
-        public void Visit<T>(NodeCollection<T> items) where T : Node
+        public void Visit<T>(IEnumerable<T> items) where T : Node
         {
             if (items == null) return;
             

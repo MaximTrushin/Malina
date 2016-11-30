@@ -50,11 +50,11 @@
     <Compile Include="CompilerParameters.cs" />
     <Compile Include="CompilerPipeline.cs" />
     <Compile Include="ErrorCodes.cs" />
-    <Compile Include="Steps\AliasContext.cs" />
-    <Compile Include="Steps\AliasesAndNamespacesResolvingListener.cs" />
-    <Compile Include="Steps\CompileDocumentsToFiles.cs" />
-    <Compile Include="Steps\CompilingToFileVisitor.cs" />
-    <Compile Include="Steps\LexerParserErrorListener.cs" />
+    <Compile Include="Steps\CompileToFile\AliasContext.cs" />
+    <Compile Include="Steps\ProcessAliasesAndNamespaces\AliasesAndNamespacesResolvingListener.cs" />
+    <Compile Include="Steps\CompileToFile\CompileDocumentsToFiles.cs" />
+    <Compile Include="Steps\CompileToFile\CompilingToFileVisitor.cs" />
+    <Compile Include="Steps\ProcessAliasesAndNamespaces\LexerParserErrorListener.cs" />
     <Compile Include="ICompilerComponent.cs" />
     <Compile Include="ICompilerInput.cs" />
     <Compile Include="ICompilerStep.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="CompilerErrorFactory.cs" />
     <Compile Include="Steps\NamespaceResolver.cs" />
     <Compile Include="Steps\NsInfo.cs" />
-    <Compile Include="Steps\ProcessAliasesAndNamespaces.cs" />
+    <Compile Include="Steps\ProcessAliasesAndNamespaces\ProcessAliasesAndNamespaces.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Malina.DOM.Antlr\Malina.DOM.Antlr.csproj">

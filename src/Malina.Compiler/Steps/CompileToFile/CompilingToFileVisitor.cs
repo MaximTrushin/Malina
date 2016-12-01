@@ -150,9 +150,9 @@ namespace Malina.Compiler.Steps
             if (!_rootElementAdded)
             {
                 WritePendingNamespaceDeclarations(ns);
+                _rootElementAdded = true;
             }
 
-            _rootElementAdded = true;
 
             //Write attributes            
             ResolveAttributes(node.Attributes, node.Entities);
@@ -182,17 +182,53 @@ namespace Malina.Compiler.Steps
             ResolveAttributes(entities);
         }
 
+        /// <summary>
+        /// Go through all entities and resolve attributes for the current node.
+        /// </summary>
+        /// <param name="entities">List of entities. Looking for alias or parameter because they potentialy can hold the attributes.</param>
         private void ResolveAttributes(IEnumerable<Entity> entities)
         {
             // todo: Create Attribute resolving visitor to write all attributes first
+            foreach (var entity in entities)
+            {
+                if(entity is Alias)
+                {
+                    ResolveAttributesInAlias(entity as Alias);
+                }
+                else if (entity is Parameter)
+                {
+                    ResolveAttributesInParameter(entity as Parameter);
+                }
+            }
         }
 
-        public override void OnParameter(Parameter node)
+        private void ResolveAttributesInParameter(Parameter parameter)
         {
-            ResolveBlockParameter(node);
+            var aliasContext = AliasContext.Peek();
+            var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
+            if (argument != null)
+            {
+                //Resolve using argument's block
+                ResolveAttributes(argument.Attributes, argument.Entities);
+            }
+            else
+            {
+                //Resolve using parameter's default block
+                ResolveAttributes(parameter.Attributes, parameter.Entities);
+            }
         }
 
-        private void ResolveBlockParameter(Parameter parameter)
+        private void ResolveAttributesInAlias(Alias alias)
+        {
+            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
+            ResolveAttributes(aliasDef.Attributes, aliasDef.Entities);
+            AliasContext.Pop();
+
+
+        }
+
+        public override void OnParameter(Parameter parameter)
         {
             var aliasContext = AliasContext.Peek();
             var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
@@ -208,6 +244,7 @@ namespace Malina.Compiler.Steps
                 Visit(parameter.Entities);
             }
         }
+
 
         private void WritePendingNamespaceDeclarations(string uri)
         {
@@ -227,7 +264,7 @@ namespace Malina.Compiler.Steps
             var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
 
             AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
-            base.OnAliasDefinition(aliasDef);
+            Visit(aliasDef.Entities);
             AliasContext.Pop();
         }
 

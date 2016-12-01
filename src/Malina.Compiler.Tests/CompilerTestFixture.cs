@@ -163,7 +163,13 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
-        
+
+        [Test, RecordedTest]
+        public void AliasWithAttributes()
+        {
+            PerformCompilerTest();
+        }
+
         [Test, RecordedTest]
         public void ArgumentWithObjectValue()
         {

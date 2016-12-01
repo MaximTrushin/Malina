@@ -26,16 +26,16 @@ namespace Malina.Compiler.Tests
 
             var context = compiler.Run();
 
-            if (context.Errors.Count() > 0)
+            if (context.Errors.Count > 0)
             {
                 PrintCompilerErrors(context.Errors);
             }
 
             if (errors == null)
-                Assert.AreEqual(0, context.Errors.Count(), "Compilation Errors Number is {0}", context.Errors.Count());
+                Assert.AreEqual(0, context.Errors.Count, "Compilation Errors Number is {0}", context.Errors.Count);
             else
             {
-                Assert.AreEqual(errors.Count(), context.Errors.Count(), "Expected Errors Number is {0}", errors.Count());
+                Assert.AreEqual(errors.Count, context.Errors.Count, "Expected Errors Number is {0}", errors.Count);
                 var i = 0;
                 foreach (var contextError in context.Errors)
                 {
@@ -86,7 +86,7 @@ namespace Malina.Compiler.Tests
             Assert.AreEqual(compilerError1.Message, compilerError2.Message);
         }
 
-        private static void PrintCompilerErrors(IEnumerable<CompilerError> errors)
+        public static void PrintCompilerErrors(IEnumerable<CompilerError> errors)
         {
             Console.WriteLine("Compiler Errors:");
 

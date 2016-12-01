@@ -5,6 +5,10 @@ using Antlr4.Runtime;
 using Malina.Parser.Tests;
 using Antlr4.Runtime.Atn;
 using Malina.DOM;
+using Malina.Compiler;
+using Malina.Compiler.Pipelines;
+using System.IO;
+using Malina.Compiler.IO;
 
 namespace Malina.Parser.PerfomanceTests
 {
@@ -45,18 +49,18 @@ namespace Malina.Parser.PerfomanceTests
             t2 = Environment.TickCount;
 
             Console.WriteLine("Parse Time: {0}", t2 - t1);
-            Assert.Less(t2 - t1,15000);
+            Assert.Less(t2 - t1, 15000);
             Assert.IsFalse(parserErrorListener.HasErrors);
 
 
             lexer.Reset();
             parser.Reset();
-            parser.AddParseListener(malinaListener);            
-            t1 = Environment.TickCount;            
+            parser.AddParseListener(malinaListener);
+            t1 = Environment.TickCount;
             //module = parser.module();
             t2 = Environment.TickCount;
             Console.WriteLine("DOM Time: {0}", t2 - t1);
-            Assert.Less(t2 - t1 , 25000);
+            Assert.Less(t2 - t1, 25000);
             Assert.IsFalse(parserErrorListener.HasErrors);
 
             t1 = Environment.TickCount;
@@ -132,10 +136,37 @@ namespace Malina.Parser.PerfomanceTests
 
             t1 = Environment.TickCount;
             var visitor = new DOMPrinterVisitor();
-            visitor.Visit(malinaListener.CompileUnit);            
+            visitor.Visit(malinaListener.CompileUnit);
             t2 = Environment.TickCount;
             Console.WriteLine("Visitor Time: {0}", t2 - t1);
         }
 
+        [Test]//, Ignore("")]
+        public void BigFileCompilation()
+        {
+            var compilerParameters = CreateCompilerParameters("BigFileCompilation.mlx");
+            var compiler = new MalinaCompiler(compilerParameters);
+
+            var context = compiler.Run();
+
+            if (context.Errors.Count > 0)
+            {
+                Malina.Compiler.Tests.TestUtils.PrintCompilerErrors(context.Errors);
+            }
+        }
+
+        private CompilerParameters CreateCompilerParameters(string fileName)
+        {
+            var compilerParameters = new CompilerParameters();
+            compilerParameters.Pipeline = new CompileToFiles();
+
+            var dir = AssemblyDirectory + '\\' + "Scenarios" + '\\';
+
+            compilerParameters.OutputDirectory = dir + "Result" + '\\';
+
+            compilerParameters.Input.Add(new FileInput(dir + fileName));
+
+            return compilerParameters;
+        }
     }
 }

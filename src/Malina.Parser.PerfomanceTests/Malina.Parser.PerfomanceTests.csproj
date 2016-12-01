@@ -56,11 +56,22 @@
     <None Include="Scenarios\BigFile.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\BigFileCompilation.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\BigFile2.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Malina.Compiler.Tests\Malina.Compiler.Tests.csproj">
+      <Project>{fd22dbf6-4ec4-4742-916f-88ebb8e59008}</Project>
+      <Name>Malina.Compiler.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Malina.Compiler\Malina.Compiler.csproj">
+      <Project>{6807e668-da17-4871-9620-08682c940405}</Project>
+      <Name>Malina.Compiler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
       <Project>{66e57a03-08ad-491b-9b1d-6cb4a0d37969}</Project>
       <Name>Malina.DOM</Name>

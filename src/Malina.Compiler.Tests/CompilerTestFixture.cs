@@ -11,12 +11,6 @@ namespace Malina.Compiler.Tests
     public class CompilerTestFixture
     {
         [Test, RecordedTest]
-        public void TwoModulesWithDocumentAndAlias()
-        {
-            PerformCompilerTest();
-        }
-
-        [Test, RecordedTest]
         public void ModulesWithNsDocumentAndNsAlias()
         {
             PerformCompilerTest();
@@ -198,6 +192,22 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+        [Test, RecordedTest]
+        public void TwoModulesWithDocumentAndAlias()
+        {
+            PerformCompilerTest();
+        }
+
+        [Test]
+        public void UndeclaredNamespace()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 2, 1,-1), "Namespace prefix 'ipo' is not defined."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 1,-1), "Namespace prefix 'ipo2' is not defined."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
 
     }
 }

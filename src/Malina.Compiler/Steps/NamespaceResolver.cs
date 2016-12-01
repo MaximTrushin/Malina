@@ -63,7 +63,7 @@ namespace Malina.Compiler
         {
             if(_currentModuleMember is DOM.Document)
             {
-                _context.Errors.Add(CompilerErrorFactory.ParametersCantBeDeclaredInDocuments(node, _currentModule.FileName));
+                _context.AddError(CompilerErrorFactory.ParametersCantBeDeclaredInDocuments(node, _currentModule.FileName));
             }
             else
             {
@@ -101,13 +101,13 @@ namespace Malina.Compiler
 
                 if (rootElementCount > 1)
                 {
-                    _context.Errors.Add(CompilerErrorFactory.DocumentMustHaveOneRootElement(document, document.Module.FileName, " only"));
+                    _context.AddError(CompilerErrorFactory.DocumentMustHaveOneRootElement(document, document.Module.FileName, " only"));
                     break;
                 }
             }
             if (rootElementCount == 0)
             {
-                _context.Errors.Add(CompilerErrorFactory.DocumentMustHaveOneRootElement(document, document.Module.FileName, " at least"));
+                _context.AddError(CompilerErrorFactory.DocumentMustHaveOneRootElement(document, document.Module.FileName, " at least"));
             }
         }
 
@@ -175,16 +175,16 @@ namespace Malina.Compiler
             if (aliasDef == null)
             {
                 //Report Error if alias is not defined
-                _context.Errors.Add(CompilerErrorFactory.AliasIsNotDefined(alias, memberNsInfo.ModuleMember.Module.FileName));
+                _context.AddError(CompilerErrorFactory.AliasIsNotDefined(alias, memberNsInfo.ModuleMember.Module.FileName));
                 return null;
             }
 
             if (aliasDef.IsValueNode != alias.IsValueNode)
             {
                 if (aliasDef.IsValueNode)
-                    _context.Errors.Add(CompilerErrorFactory.CantUseValueAliasInTheBlock(alias, memberNsInfo.ModuleMember.Module.FileName));
+                    _context.AddError(CompilerErrorFactory.CantUseValueAliasInTheBlock(alias, memberNsInfo.ModuleMember.Module.FileName));
                 else
-                    _context.Errors.Add(CompilerErrorFactory.CantUseBlockAliasAsValue(alias, memberNsInfo.ModuleMember.Module.FileName));
+                    _context.AddError(CompilerErrorFactory.CantUseBlockAliasAsValue(alias, memberNsInfo.ModuleMember.Module.FileName));
             }
 
 
@@ -201,7 +201,7 @@ namespace Malina.Compiler
                 if (argument == null)
                 {
                     //Report Error if argument is missing and there is no default value for the parameter
-                    if (parameter.Value == null && parameter.Attributes.Count == 0 && parameter.Entities.Count == 0) _context.Errors.Add(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, documentNsInfo.ModuleMember.Module.FileName));
+                    if (parameter.Value == null && parameter.Attributes.Count == 0 && parameter.Entities.Count == 0) _context.AddError(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, documentNsInfo.ModuleMember.Module.FileName));
                     continue;
                 }
 
@@ -210,11 +210,11 @@ namespace Malina.Compiler
                 {
                     if (parameter.IsValueNode)
                     {
-                        _context.Errors.Add(CompilerErrorFactory.ValueArgumentIsExpected(argument, documentNsInfo.ModuleMember.Module.FileName));
+                        _context.AddError(CompilerErrorFactory.ValueArgumentIsExpected(argument, documentNsInfo.ModuleMember.Module.FileName));
                     }
                     else
                     {
-                        _context.Errors.Add(CompilerErrorFactory.BlockArgumentIsExpected(argument, documentNsInfo.ModuleMember.Module.FileName));
+                        _context.AddError(CompilerErrorFactory.BlockArgumentIsExpected(argument, documentNsInfo.ModuleMember.Module.FileName));
                     }
                 }
 
@@ -247,7 +247,7 @@ namespace Malina.Compiler
                 //Report Error
                 foreach (var info in _aliasStack)
                 {
-                    _context.Errors.Add(CompilerErrorFactory.AliasDefHasCircularReference(info));
+                    _context.AddError(CompilerErrorFactory.AliasDefHasCircularReference(info));
                     if (info == aliasDefNsInfo) break;
                 }                
                 return aliasDefNsInfo;
@@ -277,7 +277,7 @@ namespace Malina.Compiler
             if (aliasDef == null)
             {
                 //Report Error
-                _context.Errors.Add(CompilerErrorFactory.AliasIsNotDefined(alias, aliasDefNsInfo.ModuleMember.Module.FileName));
+                _context.AddError(CompilerErrorFactory.AliasIsNotDefined(alias, aliasDefNsInfo.ModuleMember.Module.FileName));
                 return null;
             }
             return ResolveAliasesInAliasDefinition(aliasDef);
@@ -314,7 +314,7 @@ namespace Malina.Compiler
         private void CheckDuplicateArguments(DOM.Antlr.Alias alias)
         {
             var dups = alias.Arguments.GroupBy(a => a.Name).Where(g => g.Count() > 1).SelectMany(g => g).ToList();
-            dups.ForEach(a => _context.Errors.Add(CompilerErrorFactory.DuplicateArgumentName(a, _currentModule.FileName)));
+            dups.ForEach(a => _context.AddError(CompilerErrorFactory.DuplicateArgumentName(a, _currentModule.FileName)));
 
 
         }
@@ -336,9 +336,9 @@ namespace Malina.Compiler
                 {
                     //Reporting error for 2 documents (existing and new)
                     var prevDoc = sameNameDocuments[0].ModuleMember as DOM.Document;
-                    _context.Errors.Add(CompilerErrorFactory.DuplicateDocumentName(prevDoc, prevDoc.Module.FileName));
+                    _context.AddError(CompilerErrorFactory.DuplicateDocumentName(prevDoc, prevDoc.Module.FileName));
                 }
-                _context.Errors.Add(CompilerErrorFactory.DuplicateDocumentName(node, _currentModule.FileName));
+                _context.AddError(CompilerErrorFactory.DuplicateDocumentName(node, _currentModule.FileName));
 
             }
         }
@@ -354,9 +354,9 @@ namespace Malina.Compiler
                 {
                     //Reporting error for 2 documents (existing and new)
                     var prevAliasDef = sameNameAliasDef[0].ModuleMember as DOM.AliasDefinition;
-                    _context.Errors.Add(CompilerErrorFactory.DuplicateAliasDefName(prevAliasDef, prevAliasDef.Module.FileName));
+                    _context.AddError(CompilerErrorFactory.DuplicateAliasDefName(prevAliasDef, prevAliasDef.Module.FileName));
                 }
-                _context.Errors.Add(CompilerErrorFactory.DuplicateAliasDefName(node, _currentModule.FileName));
+                _context.AddError(CompilerErrorFactory.DuplicateAliasDefName(node, _currentModule.FileName));
 
             }
         }
@@ -392,7 +392,7 @@ namespace Malina.Compiler
                 var ns = LookupNamespace(nsPrefix);
                 if (ns == null)
                 {
-                    _context.Errors.Add(CompilerErrorFactory.NsPrefixNotDefined(node, _currentModule.FileName));
+                    _context.AddError(CompilerErrorFactory.NsPrefixNotDefined(node, _currentModule.FileName));
                     return;
                 }
 

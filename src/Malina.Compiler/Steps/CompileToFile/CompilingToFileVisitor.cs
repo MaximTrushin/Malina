@@ -56,7 +56,6 @@ namespace Malina.Compiler.Steps
         public override void OnAttribute(DOM.Attribute node)
         {
             string prefix, ns;
-
             
             _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument, 
                 () => { var aliasContext = AliasContext.Peek(); return aliasContext == null ? null : aliasContext.AliasDefinition; }, 
@@ -224,8 +223,6 @@ namespace Malina.Compiler.Steps
             AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
             ResolveAttributes(aliasDef.Attributes, aliasDef.Entities);
             AliasContext.Pop();
-
-
         }
 
         public override void OnParameter(Parameter parameter)

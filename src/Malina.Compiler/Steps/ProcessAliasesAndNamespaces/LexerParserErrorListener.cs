@@ -37,21 +37,21 @@ namespace Malina.Compiler
                     {
                         var ex = e as NoViableAltException;
                         var tokenName = (recognizer as MalinaParser).Vocabulary.GetDisplayName((offendingSymbol as CommonToken).Type);
-                        _context.Errors.Add(CompilerErrorFactory.ParserError(e, string.Format("Unexpected token {0}<'{1}'>", tokenName, (offendingSymbol as CommonToken).Text), 
+                        _context.AddError(CompilerErrorFactory.ParserError(e, string.Format("Unexpected token {0}<'{1}'>", tokenName, (offendingSymbol as CommonToken).Text), 
                             _fileName, (offendingSymbol as CommonToken).Line, (offendingSymbol as CommonToken).Column + 1));
                     }
                     else
                     {
-                        _context.Errors.Add(CompilerErrorFactory.ParserError(e, msg, _fileName, line, charPositionInLine + 1));
+                        _context.AddError(CompilerErrorFactory.ParserError(e, msg, _fileName, line, charPositionInLine + 1));
                     }
                 }
                 else if(recognizer is MalinaLexer)
                 {
-                    _context.Errors.Add(CompilerErrorFactory.LexerError(e, msg, _fileName, line, charPositionInLine));
+                    _context.AddError(CompilerErrorFactory.LexerError(e, msg, _fileName, line, charPositionInLine));
                 }
                 else
                 {
-                    _context.Errors.Add(CompilerErrorFactory.FatalError(e, msg));
+                    _context.AddError(CompilerErrorFactory.FatalError(e, msg));
                 }
             }
         }

@@ -34,7 +34,7 @@ namespace Malina.Compiler.Steps
                     }
                     catch (Exception ex)
                     {
-                        _context.Errors.Add(CompilerErrorFactory.InputError(input.Name, ex));
+                        _context.AddError(CompilerErrorFactory.InputError(input.Name, ex));
                     }
                 }
                 _context.NamespaceResolver.ResolveAliasesAndDoChecks();
@@ -66,7 +66,7 @@ namespace Malina.Compiler.Steps
             }
             catch(Exception ex)
             {
-                _context.Errors.Add(CompilerErrorFactory.FatalError(ex));
+                _context.AddError(CompilerErrorFactory.FatalError(ex));
             }
         }
     }

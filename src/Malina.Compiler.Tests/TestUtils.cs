@@ -214,6 +214,7 @@ namespace Malina.Compiler.Tests
                 {
                     compilerParameters.Input.Add(new FileInput(fileName));
                 }
+                if (fileName.EndsWith(".xsd")) compilerParameters.XmlSchemaSet.Add(null, fileName);
             } 
 
             return compilerParameters;

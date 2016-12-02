@@ -126,6 +126,27 @@ namespace Malina.Compiler.Tests
         }
 
         [Test]
+        public void SchemaValidation()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ipo.xsd", 15, 5,-1), "XML validation error - 'Type 'http://www.example.com/myipo:Address' is not declared.'"),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+
+        [Test]
+        public void SchemaValidationXsdMissing()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ipo.xsd", 15, 5,-1), "XML validation error - 'Type 'http://www.example.com/myipo:Address' is not declared.'"),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+        [Test]
         public void AliasWithIncorrectBlock()
         {
             var errorsExpected = new List<CompilerError>()

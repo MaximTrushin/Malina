@@ -141,7 +141,7 @@ namespace Malina.Parser.PerfomanceTests
             Console.WriteLine("Visitor Time: {0}", t2 - t1);
         }
 
-        [Test]//, Ignore("")]
+        [Test, Ignore("")]
         public void BigFileCompilation()
         {
             var compilerParameters = CreateCompilerParameters("BigFileCompilation.mlx");

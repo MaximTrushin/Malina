@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using System;
 using System.Linq;
+using System.Xml.Schema;
 
 namespace Malina.Compiler.Steps
 {
@@ -42,7 +43,10 @@ namespace Malina.Compiler.Steps
         {
             _currentDocument = node;
             var fileName = _context.Parameters.OutputDirectory + node.Name + ".xml";
-            using (_xmlTextWriter = XmlWriter.Create(new XmlTextWriter(fileName, Encoding.UTF8) { Formatting = System.Xml.Formatting.Indented, Namespaces = true }))
+            using (_xmlTextWriter = XmlWriter.Create(
+                new XmlTextWriter(fileName, Encoding.UTF8) { Formatting = System.Xml.Formatting.Indented, Namespaces = true },
+                new XmlWriterSettings() { ConformanceLevel = ConformanceLevel.Document })
+            )
             {
                 _xmlTextWriter.WriteStartDocument();
                 _rootElementAdded = false;
@@ -50,7 +54,38 @@ namespace Malina.Compiler.Steps
                 _xmlTextWriter.WriteEndDocument();
 
             }
+            ValidateGeneratedFile(fileName);
             _currentDocument = null;
+        }
+
+        private void ValidateGeneratedFile(string fileName)
+        {
+            try
+            {
+                if (_context.Parameters.XmlSchemaSet.Count == 0) return;
+
+                var settings = new XmlReaderSettings
+                {
+                    ConformanceLevel = ConformanceLevel.Document,
+                    ValidationType = ValidationType.Schema,
+                    ValidationFlags = XmlSchemaValidationFlags.AllowXmlAttributes |
+                         XmlSchemaValidationFlags.ReportValidationWarnings
+                };
+                settings.Schemas = _context.Parameters.XmlSchemaSet;
+                using (var textReader = new XmlTextReader(fileName))
+                {
+                    using (var reader = XmlReader.Create(textReader, settings))
+                    {
+                        while (reader.Read()) { }
+                    }
+                }
+            }
+            catch (XmlSchemaValidationException ex)
+            {
+                _context.Errors.Add(CompilerErrorFactory.XmlSchemaValidationError(ex));
+            }
+
+
         }
 
         public override void OnAttribute(DOM.Attribute node)

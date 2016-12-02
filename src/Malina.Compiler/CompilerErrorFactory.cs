@@ -1,7 +1,6 @@
 ﻿using Malina.DOM;
 using System;
-
-
+using System.Xml.Schema;
 
 namespace Malina.Compiler
 {
@@ -123,6 +122,11 @@ namespace Malina.Compiler
         internal static CompilerError CantUseBlockAliasAsValue(Alias alias, string fileName)
         {
             return Instantiate("MCE0017", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index));
+        }
+
+        internal static CompilerError XmlSchemaValidationError(XmlSchemaValidationException ex)
+        {
+            return Instantiate("MCE0018", new LexicalInfo(ex.SourceUri, ex.LineNumber, ex.LinePosition, 0), ex.Message);
         }
     }
 }

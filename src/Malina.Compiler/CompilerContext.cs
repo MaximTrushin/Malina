@@ -11,7 +11,7 @@ namespace Malina.Compiler
 
         public NamespaceResolver NamespaceResolver { get; private set; }
 
-        public SortedSet<CompilerError> Errors { get; private set; }
+        public SortedSet<CompilerError> Errors { get; }
 
         public CompilerContext(CompilerParameters parameters, CompileUnit compileUnit)
         {

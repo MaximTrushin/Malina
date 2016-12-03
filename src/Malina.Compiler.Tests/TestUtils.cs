@@ -137,7 +137,7 @@ namespace Malina.Compiler.Tests
                     var result = File.ReadAllText(resultFileName).Replace("\r\n", "\n");
                     var recorded = File.ReadAllText(file).Replace("\r\n", "\n");
 
-                    Console.WriteLine(string.Format("File {0}:", file));
+                    Console.WriteLine($"File {file}:");
                     Console.WriteLine(result);
                     Assert.AreEqual(recorded, result);
                 }
@@ -201,8 +201,7 @@ namespace Malina.Compiler.Tests
 
         private static CompilerParameters CreateCompilerParameters()
         {
-            var compilerParameters = new CompilerParameters();
-            compilerParameters.Pipeline = new CompileToFiles();
+            var compilerParameters = new CompilerParameters {Pipeline = new CompileToFiles()};
 
             var dir = AssemblyDirectory + '\\' + "Scenarios" + '\\' + GetTestCaseName() + '\\';
 
@@ -231,7 +230,7 @@ namespace Malina.Compiler.Tests
         private static string GetTestCaseName()
         {
             var trace = new StackTrace();
-            return trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
+            return trace.GetFrames().Select(f => f.GetMethod()).First(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).Name;
         }
 
         private static bool TestHasAttribute<T>()

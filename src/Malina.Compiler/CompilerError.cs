@@ -129,7 +129,10 @@ namespace Malina.Compiler
             var result = LexicalInfo.CompareTo(other.LexicalInfo);
             if (result != 0) return result;
 
-            return string.Compare(Code, other.Code);
+            result = String.CompareOrdinal(Code, other.Code);
+            if (result != 0) return result;
+
+            return String.CompareOrdinal(Message, other.Message);
         }
 
         [ThreadStatic]

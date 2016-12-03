@@ -25,7 +25,7 @@ namespace Malina.Parser.PerfomanceTests
             //lexer.ErrorListeners.Clear();
             var t1 = Environment.TickCount;
             var i = 0;
-            IToken token = null;
+            IToken token;
             for (token = lexer.NextToken(); token.Type != -1; token = lexer.NextToken())
             {
                 i++;

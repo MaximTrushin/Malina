@@ -52,15 +52,9 @@ namespace Malina.DOM
         {
         }
 
-        override public bool IsValid
-        {
-            get { return null != _filename && base.IsValid; }
-        }
+        public override bool IsValid => null != _filename && base.IsValid;
 
-        public string FileName
-        {
-            get { return _filename; }
-        }
+        public string FileName => _filename;
 
         public string FullPath
         {
@@ -72,7 +66,7 @@ namespace Malina.DOM
             }
         }
 
-        override public string ToString()
+        public override string ToString()
         {
             return _filename + base.ToString();
         }
@@ -85,13 +79,14 @@ namespace Malina.DOM
             }
             catch (Exception)
             {
+                // ignored
             }
             return fname;
         }
 
         public int CompareTo(LexicalInfo other)
         {
-            int result = string.Compare(_filename, other._filename);
+            int result = String.CompareOrdinal(_filename, other._filename);
             if (result != 0) return result;
 
             return base.CompareTo(other); 

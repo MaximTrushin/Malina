@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Xml.Schema;
 
 namespace Malina.Compiler.Steps
 {
     class CompilingToFileVisitor : MalinaDepthFirstVisitor
     {
-        private CompilerContext _context;
+        private readonly CompilerContext _context;
         private Document _currentDocument;
         private XmlWriter _xmlTextWriter;
         private Stack<AliasContext> _aliasContext;
-        private bool _rootElementAdded = false;
+        private bool _rootElementAdded;
+        private Stack<int> _indicesStack;
+        private int _validationIndex;
+
+        private List<LexicalInfo> LocationMap { get; set; } = new List<LexicalInfo>();
 
         public Stack<AliasContext> AliasContext
         {
@@ -42,19 +46,26 @@ namespace Malina.Compiler.Steps
         public override void OnDocument(Document node)
         {
             _currentDocument = node;
+
             var fileName = _context.Parameters.OutputDirectory + node.Name + ".xml";
+
+            //Generate XML file
             using (_xmlTextWriter = XmlWriter.Create(
-                new XmlTextWriter(fileName, Encoding.UTF8) { Formatting = System.Xml.Formatting.Indented, Namespaces = true },
+                new XmlTextWriter(fileName, Encoding.UTF8) { Formatting = Formatting.Indented, Namespaces = true },
                 new XmlWriterSettings() { ConformanceLevel = ConformanceLevel.Document })
             )
             {
                 _xmlTextWriter.WriteStartDocument();
                 _rootElementAdded = false;
+                LocationMap = new List<LexicalInfo>();
                 base.OnDocument(node);
                 _xmlTextWriter.WriteEndDocument();
 
             }
+
+            //Validate XML file
             ValidateGeneratedFile(fileName);
+
             _currentDocument = null;
         }
 
@@ -62,30 +73,70 @@ namespace Malina.Compiler.Steps
         {
             try
             {
-                if (_context.Parameters.XmlSchemaSet.Count == 0) return;
-
                 var settings = new XmlReaderSettings
                 {
                     ConformanceLevel = ConformanceLevel.Document,
-                    ValidationType = ValidationType.Schema,
                     ValidationFlags = XmlSchemaValidationFlags.AllowXmlAttributes |
-                         XmlSchemaValidationFlags.ReportValidationWarnings
+                                      XmlSchemaValidationFlags.ReportValidationWarnings,
+                    Schemas = _context.Parameters.XmlSchemaSet
                 };
-                settings.Schemas = _context.Parameters.XmlSchemaSet;
+
+                if (_context.Parameters.XmlSchemaSet.Count > 0) settings.ValidationType = ValidationType.Schema;
+
+                    _validationIndex = 0;
+                _indicesStack = new Stack<int>();
+                _indicesStack.Push(0);
+                settings.ValidationEventHandler += ValidationEventHandler;
+
+
                 using (var textReader = new XmlTextReader(fileName))
                 {
                     using (var reader = XmlReader.Create(textReader, settings))
                     {
-                        while (reader.Read()) { }
+                        while (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Element)
+                            {
+                                if (!reader.IsEmptyElement)
+                                    _indicesStack.Push(_validationIndex); //This stack is used to store index of the current parent element.
+
+                                _validationIndex++;
+                                _validationIndex += GetAttributesCount(reader);
+                            }
+
+                            if (reader.NodeType == XmlNodeType.EndElement)
+                            {
+                                _indicesStack.Pop();
+                            }
+                        }
                     }
                 }
             }
             catch (XmlSchemaValidationException ex)
             {
-                _context.Errors.Add(CompilerErrorFactory.XmlSchemaValidationError(ex));
+                _context.AddError(CompilerErrorFactory.XmlSchemaValidationError(ex));
             }
+        }
 
+        private int GetAttributesCount(XmlReader reader)
+        {
+            if (!reader.MoveToFirstAttribute())
+                return 0;
+            var count = 0;
+            do
+            {
+                if (reader.NamespaceURI != "http://www.w3.org/2000/xmlns/")
+                    count++;
+            } while (reader.MoveToNextAttribute());
+            return count;
+        }
 
+        private void ValidationEventHandler(object sender, ValidationEventArgs e)
+        {
+            var index = ((XmlReader) sender).NodeType == XmlNodeType.EndElement ? _indicesStack.Peek() : _validationIndex;
+
+            var location = LocationMap[index];
+            _context.Errors.Add(CompilerErrorFactory.XmlSchemaValidationError(e.Exception, location));
         }
 
         public override void OnAttribute(DOM.Attribute node)
@@ -93,25 +144,27 @@ namespace Malina.Compiler.Steps
             string prefix, ns;
             
             _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument, 
-                () => { var aliasContext = AliasContext.Peek(); return aliasContext == null ? null : aliasContext.AliasDefinition; }, 
-                out prefix, out ns);
+                () => { var aliasContext = AliasContext.Peek(); return aliasContext?.AliasDefinition; }, 
+                out prefix, out ns); 
             string value = ResolveAttributeValue(node);
             _xmlTextWriter.WriteAttributeString(prefix, node.Name, ns, value);
-            base.OnAttribute(node);
+            LocationMap.Add(new LexicalInfo(_currentDocument.Module.FileName, node.start.Line, node.start.Column, node.start.Index));
+
         }
 
         private string ResolveAttributeValue(DOM.Attribute node)
         {
             if (node.ObjectValue != null)
             {
-                if (node.ObjectValue is Parameter)
+                var value = node.ObjectValue as Parameter;
+                if (value != null)
                 {
-                    return ResolveValueParameter(node.ObjectValue as Parameter);
+                    return ResolveValueParameter(value);
                 }
                 else if (node.ObjectValue is Alias)
                 {
-                    return ResolveValueAlias(node.ObjectValue as Alias);
-                }                
+                    return ResolveValueAlias((Alias) node.ObjectValue);
+                }
             }
             else return node.Value;
 
@@ -130,14 +183,16 @@ namespace Malina.Compiler.Steps
 
         private string ResolveObjectValue(object objectValue)
         {
-            if (objectValue is Parameter)
+            var value = objectValue as Parameter;
+            if (value != null)
             {
-                return ResolveValueParameter(objectValue as Parameter);
+                return ResolveValueParameter(value);
             }
 
-            if (objectValue is Alias)
+            var alias = objectValue as Alias;
+            if (alias != null)
             {
-                return ResolveValueAlias(objectValue as Alias);
+                return ResolveValueAlias(alias);
             }
             return null;
         }
@@ -156,16 +211,16 @@ namespace Malina.Compiler.Steps
             } 
 
             //if argument is not found lookup default value in the Alias Definition
-            var paramDef = (aliasContext.AliasDefinition as DOM.Antlr.AliasDefinition).Parameters.First(p => p.Name == parameter.Name);
+            var paramDef = (aliasContext.AliasDefinition as DOM.Antlr.AliasDefinition)?.Parameters.First(p => p.Name == parameter.Name);
 
             //If parameteres default value is Parameter or Alias then resolve it
-            if (paramDef.ObjectValue != null)
+            if (paramDef?.ObjectValue != null)
             {
                 return ResolveObjectValue(paramDef.ObjectValue);
 
             }
 
-            return paramDef.Value;
+            return paramDef?.Value;
 
         }
 
@@ -174,11 +229,13 @@ namespace Malina.Compiler.Steps
             //Getting namespace and prefix
             string prefix, ns;
             _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument,
-                () => { var aliasContext = AliasContext.Peek(); return aliasContext == null ? null : aliasContext.AliasDefinition; },
+                () => { var aliasContext = AliasContext.Peek(); return aliasContext?.AliasDefinition; },
                 out prefix, out ns);
 
             //Starting Element
             _xmlTextWriter.WriteStartElement(prefix, node.Name, ns);
+            LocationMap.Add(new LexicalInfo(_currentDocument.Module.FileName, node.start.Line, node.start.Column, node.start.Index));
+
 
             //Write all namespace declarations in the root element
             if (!_rootElementAdded)
@@ -197,11 +254,11 @@ namespace Malina.Compiler.Steps
             }
             else if (node.ObjectValue is Parameter)
             {
-                _xmlTextWriter.WriteString(ResolveValueParameter(node.ObjectValue as Parameter));
+                _xmlTextWriter.WriteString(ResolveValueParameter((Parameter) node.ObjectValue));
             }
             else if (node.ObjectValue is Alias)
             {
-                _xmlTextWriter.WriteString(ResolveValueAlias(node.ObjectValue as Alias));
+                _xmlTextWriter.WriteString(ResolveValueAlias((Alias) node.ObjectValue));
             }
 
             Visit(node.Entities);
@@ -219,10 +276,9 @@ namespace Malina.Compiler.Steps
         /// <summary>
         /// Go through all entities and resolve attributes for the current node.
         /// </summary>
-        /// <param name="entities">List of entities. Looking for alias or parameter because they potentialy can hold the attributes.</param>
+        /// <param name="entities">List of entities. Looking for alias or parameter because they potentially can hold the attributes.</param>
         private void ResolveAttributes(IEnumerable<Entity> entities)
         {
-            // todo: Create Attribute resolving visitor to write all attributes first
             foreach (var entity in entities)
             {
                 if(entity is Alias)
@@ -265,16 +321,7 @@ namespace Malina.Compiler.Steps
             var aliasContext = AliasContext.Peek();
             var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
 
-            if (argument != null)
-            {
-                //Resolve using argument's block
-                Visit(argument.Entities);
-            }
-            else
-            {
-                //Resolve using parameter's default block
-                Visit(parameter.Entities);
-            }
+            Visit(argument != null ? argument.Entities : parameter.Entities);
         }
 
 

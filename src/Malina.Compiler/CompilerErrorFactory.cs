@@ -99,6 +99,8 @@ namespace Malina.Compiler
             return Instantiate("MCE0012", new LexicalInfo(fileName, aliasDef.start.Line, aliasDef.start.Column + 1, aliasDef.start.Index), aliasDef.Name);
         }
 
+
+
         internal static CompilerError ArgumentIsMissing(Alias alias, string argumentName, string fileName)
         {
             return Instantiate("MCE0013", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index), argumentName);
@@ -127,6 +129,11 @@ namespace Malina.Compiler
         internal static CompilerError XmlSchemaValidationError(XmlSchemaValidationException ex)
         {
             return Instantiate("MCE0018", new LexicalInfo(ex.SourceUri, ex.LineNumber, ex.LinePosition, 0), ex.Message);
+        }
+
+        internal static CompilerError XmlSchemaValidationError(XmlSchemaException ex, LexicalInfo location)
+        {
+            return Instantiate("MCE0018", new LexicalInfo(location.FileName, location.Line, location.Column, 0), ex.Message);
         }
     }
 }

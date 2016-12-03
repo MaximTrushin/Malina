@@ -1,7 +1,12 @@
 ﻿#ipo = http://www.example.com/myipo
 
 !PurchaseOrder:
-	ipo.purchaseOrder
+	ipo.purchaseOrder:
+		shipTo:
+		billTo:
+			
+!PurchaseOrder2:
+	$Templates.PurchaseOrder
 
 !$Templates.PurchaseOrder:
 	ipo.purchaseOrder

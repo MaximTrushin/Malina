@@ -3,6 +3,8 @@ using Antlr4.Runtime.Misc;
 using Malina.DOM;
 using Malina.DOM.Antlr;
 using System.Collections.Generic;
+using IValueNode = Malina.DOM.IValueNode;
+using Scope = Malina.DOM.Antlr.Scope;
 
 namespace Malina.Parser
 {
@@ -54,11 +56,9 @@ namespace Malina.Parser
         protected virtual void EnterScopeContext(ParserRuleContext context)
         {
             //Creating Scope node, adding to parent, adding to ctx.Node and initializing CharStream
-            (context as INodeContext<DOM.Antlr.Scope>).InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
+            (context as INodeContext<Scope>).InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
 
             //Checking if this is root node and retuning as Listener result
-
-            var first = context.Start.Text;
 
             var dot = FindChar(context.Start.StartIndex, context.Start.StopIndex, context.Start.InputStream, '.');
             if (dot > -1)
@@ -68,7 +68,7 @@ namespace Malina.Parser
                 //Initializing ELEMENT
                 var element = new DOM.Antlr.Element();
 
-                (context as INodeContext<DOM.Antlr.Scope>).Node.AppendChild(element);
+                ((INodeContext<Scope>) context).Node.AppendChild(element);
 
                 element.CharStream = context.Start.InputStream;
 
@@ -79,7 +79,7 @@ namespace Malina.Parser
             {
                 //NAMESPACE_ID found. Need to create SCOPE only
 
-                _nodeStack.Push((context as INodeContext<DOM.Antlr.Scope>).Node);
+                _nodeStack.Push(((INodeContext<Scope>) context).Node);
             }
         }
 
@@ -223,6 +223,17 @@ namespace Malina.Parser
         {
             ExitContext(context);
         }
+
+        public override void EnterHybrid_block_element_stmt(MalinaParser.Hybrid_block_element_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitHybrid_block_element_stmt(MalinaParser.Hybrid_block_element_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
         #endregion
 
         #region ARRAY_ITEM context classes
@@ -478,22 +489,22 @@ namespace Malina.Parser
         #region Value
         public override void ExitString_value_inline([NotNull] MalinaParser.String_value_inlineContext context)
         {
-            var parent = _nodeStack.Peek() as DOM.Antlr.IValueNode;
+            var parent = (DOM.Antlr.IValueNode)_nodeStack.Peek();
 
             var dqs = context.DQS();
             if (dqs != null)
             {
                 
-                parent.ValueInterval = new Interval((dqs.Payload as CommonToken).StartIndex + 1, (dqs.Payload as CommonToken).StopIndex - 1);
-                (parent as DOM.IValueNode).ValueType = DOM.ValueType.DoubleQuotedString;
+                parent.ValueInterval = new Interval(((CommonToken) dqs.Payload).StartIndex + 1, ((CommonToken) dqs.Payload).StopIndex - 1);
+                ((IValueNode) parent).ValueType = DOM.ValueType.DoubleQuotedString;
                 return;
             }
 
             var openValue = context.OPEN_VALUE();
             if (openValue != null)
             {
-                parent.ValueInterval = new Interval((openValue.Payload as CommonToken).StartIndex, (openValue.Payload as CommonToken).StopIndex);
-                (parent as DOM.IValueNode).ValueType = DOM.ValueType.OpenString;
+                parent.ValueInterval = new Interval(((CommonToken) openValue.Payload).StartIndex, (openValue.Payload as CommonToken).StopIndex);
+                ((IValueNode) parent).ValueType = DOM.ValueType.OpenString;
                 return;
             }
         }

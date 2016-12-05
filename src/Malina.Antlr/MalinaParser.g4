@@ -22,7 +22,7 @@ alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (block_inline newline) | ns_bl
 //BLOCKS
 ns_block	:	COLON INDENT (namespace_declaration_stmt)+ (block_line_stmt | inline_stmt | hybrid_stmt)* dedent;
 
-block	:	COLON (INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ dedent)?;
+block	:	COLON (INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ dedent);
 
 array	:	(COLON | ARRAY_ITEM) INDENT (array_item_stmt | alias_stmt)+ dedent;
 
@@ -42,10 +42,11 @@ block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt | scope
 //ELEMENT RULES 
 
 //statements
-element_stmt	:	block_element_stmt | value_element_stmt | empty_element_stmt;
+element_stmt	:	block_element_stmt | value_element_stmt | empty_element_stmt | hybrid_block_element_stmt;
 value_element_stmt	:	ELEMENT_ID value newline;
 block_element_stmt	:	ELEMENT_ID ((block_inline newline) | block | array );
-empty_element_stmt	:	ELEMENT_ID newline;
+hybrid_block_element_stmt	:	ELEMENT_ID COLON (hybrid_block_element_stmt | block_element_stmt);
+empty_element_stmt	:	ELEMENT_ID COLON? newline;
 
 //inline
 element_inline	:	empty_element_inline | value_element_inline | block_element_inline;
@@ -142,8 +143,4 @@ parameter_object_value_ml	:	EQUAL PARAMETER_ID value_ml;
 
 alias_object_value_inline	:	EQUAL ALIAS_ID value_inline?;
 alias_object_value_ml	:	EQUAL ALIAS_ID value_ml;
-
-
-
-
 

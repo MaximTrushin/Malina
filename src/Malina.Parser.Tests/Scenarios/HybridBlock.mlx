@@ -1,0 +1,9 @@
+﻿!Doc:
+	root: 
+		parent1: parent2:
+			a:
+				b
+			c
+		element1 element2:
+			d e f
+		element3

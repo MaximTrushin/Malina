@@ -1,0 +1,8 @@
+01:00	Document `test`:
+01:07		Element `x`:
+01:10			Attribute `a`= `a`
+01:17			Attribute `b`= `b`
+01:24			Element `y`:
+01:27				Element `a`
+01:29				Element `b`
+

@@ -213,6 +213,12 @@ namespace Malina.Parser.Tests
         }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void InlineDocumentDefinition()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void InlineElementBody1()
         {
             PerformTest();

@@ -1,0 +1,8 @@
+01:00	AliasDefinition `test`:
+01:08		Element `x`:
+01:11			Attribute `a`= `a`
+01:18			Attribute `b`= `b`
+01:26		Element `y`:
+01:29			Element `a`
+01:31			Element `b`
+

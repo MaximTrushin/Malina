@@ -1,6 +1,6 @@
 lexer grammar MalinaLexer;
 
-tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON}
+tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON, SQS, SQS_ML}
 
 
 INDENT_DEDENT		:	(Eol {RecordCharIndex();} Spaces)+ {IndentDedent();};
@@ -46,6 +46,8 @@ mode IN_VALUE;
 	DQS					:	'"' (~["\r\n] | '""')+ '"' -> popMode;
 	DQS_ML				:	'"' (~["\r\n] | '""')* {StartDqsMl();} -> skip, pushMode(IN_DQS);
 
+	//Single Qoute String (SQS) and Multiline SQS
+	SQS					: '\'' (~['\r\n] | '\'\'')* {StartSqs();} -> skip, pushMode(IN_SQS);
 
 mode IN_DQS;
 	//Double Quoted String
@@ -54,6 +56,13 @@ mode IN_DQS;
 	DQS_VALUE_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
 
 	DQS_END			:	'"' {EndDqs();};
+
+mode IN_SQS;
+	//Single Quoted String (one line and multiline)
+	SQS_VALUE		:	(~['\r\n] | '\'\'')+ {EndSqsIfEofOrWsa();};
+	SQS_VALUE_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {SqIndentDedent();}; //End of SQS Line or End of SQS
+	SQS_END			:	'\'' {EndSqs();};
+
 
 fragment	Eol				:	( '\r'? '\n' )
 							;

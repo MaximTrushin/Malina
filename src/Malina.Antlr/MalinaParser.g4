@@ -129,8 +129,8 @@ value_ml	:	string_value_ml | object_value_ml;
 
 //string values
 string_value	:	string_value_inline | string_value_ml;
-string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | DQS);
-string_value_ml	:	(EQUAL | DBL_EQUAL) (DQS_ML | OPEN_VALUE_ML);
+string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | DQS | SQS);
+string_value_ml	:	(EQUAL | DBL_EQUAL) (SQS_ML | DQS_ML | OPEN_VALUE_ML);
 
 //object values
 object_value	:	object_value_ml | object_value_inline;

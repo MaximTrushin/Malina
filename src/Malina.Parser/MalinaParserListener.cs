@@ -503,32 +503,51 @@ namespace Malina.Parser
             var openValue = context.OPEN_VALUE();
             if (openValue != null)
             {
-                parent.ValueInterval = new Interval(((CommonToken) openValue.Payload).StartIndex, (openValue.Payload as CommonToken).StopIndex);
+                parent.ValueInterval = new Interval(((CommonToken) openValue.Payload).StartIndex, ((CommonToken) openValue.Payload).StopIndex);
                 ((IValueNode) parent).ValueType = DOM.ValueType.OpenString;
+                return;
+            }
+
+            var sqs = context.SQS();
+            if (sqs != null)
+            {
+                parent.ValueInterval = new Interval(((CommonToken)sqs.Payload).StartIndex + 1, ((CommonToken)sqs.Payload).StopIndex - 1);
+                ((IValueNode)parent).ValueType = DOM.ValueType.SingleQuotedString;
                 return;
             }
         }
 
         public override void ExitString_value_ml([NotNull] MalinaParser.String_value_mlContext context)
         {
-            var parent = _nodeStack.Peek() as DOM.Antlr.IValueNode;
+            var parent = (DOM.Antlr.IValueNode) _nodeStack.Peek();
             var open_value = context.OPEN_VALUE_ML();
             if (open_value != null)
             {
-                var token = open_value.Payload as MalinaToken;
+                var token = (MalinaToken) open_value.Payload;
                 parent.ValueInterval = new Interval(token.StartIndex, token.StopIndex);
                 parent.ValueIndent = token.TokenIndent;
-                (parent as DOM.IValueNode).ValueType = DOM.ValueType.OpenString;
+                ((IValueNode) parent).ValueType = DOM.ValueType.OpenString;
                 return;
 
             }
+
             var dqs_ml = context.DQS_ML();
             if (dqs_ml != null)
             {
-                var token = dqs_ml.Payload as MalinaToken;
+                var token = (MalinaToken) dqs_ml.Payload;
                 parent.ValueInterval = new Interval(token.StartIndex + 1, token.StopIndex - 1);
                 parent.ValueIndent = token.TokenIndent;
-                (parent as DOM.IValueNode).ValueType = DOM.ValueType.DoubleQuotedString;
+                ((IValueNode) parent).ValueType = DOM.ValueType.DoubleQuotedString;
+                return;
+            }
+
+            var sqs_ml = context.SQS_ML();
+            if (sqs_ml != null)
+            {
+                var token = (MalinaToken) sqs_ml.Payload;
+                parent.ValueInterval = new Interval(token.StartIndex + 1, token.StopIndex - 1);
+                parent.ValueIndent = token.TokenIndent;
+                ((IValueNode) parent).ValueType = DOM.ValueType.DoubleQuotedString;
                 return;
             }
         }

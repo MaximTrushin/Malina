@@ -389,7 +389,7 @@ namespace Malina.Parser.Tests
 
                 sb.AppendLine(string.Format("\t{2}:{3}\t{0}\t`{1}`\t ({4},{5})", GetType(token), text, token.Line, token.Column, token.StartIndex, token.StopIndex));
 
-                var iToken = token as InterpolationToken;
+                var iToken = token as InterpolationStringToken;
                 if (iToken == null) continue;
 
                 foreach (var interpolation in iToken.InterpolationTokens)

@@ -20,8 +20,8 @@ namespace Malina.Parser
         {
             if (source.Item1 != null)
             {
-                Line = source.Item1.Line;
-                Column = source.Item1.Column;
+                line = source.Item1.Line;
+                charPositionInLine = source.Item1.Column;
             }
             this.source = source;
             this.channel = channel;
@@ -29,20 +29,32 @@ namespace Malina.Parser
             this.stop = stop;
         }
     }
+
+    public class InterpolationStringToken : MalinaToken
+    {
+        private List<CommonToken> _interpolationTokens;
+        public InterpolationStringToken(int type) : base(type)
+        {
+        }
+
+        public InterpolationStringToken(Tuple<ITokenSource, ICharStream> source, int type, int channel, int start, int stop) : base(source, type, channel, start, stop)
+        {
+        }
+
+        public List<CommonToken> InterpolationTokens => _interpolationTokens??(_interpolationTokens = new List<CommonToken>());
+    }
     partial class MalinaLexer
     {
         public List<IToken> InvalidTokens = new List<IToken>();
         private Stack<int> _indents = new Stack<int>(new[] { 0 });
         private Queue<IToken> _tokens = new Queue<IToken>();
         private Stack<int> _wsaStack = new Stack<int>();
-        private MalinaToken _currentToken = null; //This field is used for tokens created with several lexer rules.
+        private MalinaToken _currentToken; //This field is used for tokens created with several lexer rules.
+        private MalinaToken _interpolationToken; //This field is used to build interpolation tokens
         private int _recordedIndex;
 
 
-        private bool InWsaMode
-        {
-            get { return _wsaStack.Count > 0; }
-        }
+        private bool InWsaMode => _wsaStack.Count > 0;
 
         public override void Reset()
         {
@@ -67,7 +79,7 @@ namespace Malina.Parser
 
         public override IToken NextToken()
         {            
-            //Return previosly generated tokens first
+            //Return previously generated tokens first
             if (_tokens.Count > 0)
             {
                 return _tokens.Dequeue();
@@ -81,8 +93,9 @@ namespace Malina.Parser
                 if (_currentToken == null)//Empty Open String
                 {
                     //Creating Token for Empty OpenString
-                    _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, -1, -1);
-                    _currentToken.Text = "";
+                    _currentToken =
+                        new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                            OPEN_VALUE, Channel, -1, -1) {Text = ""};
                     Emit(_currentToken);
                 }                
                 PopMode();
@@ -182,7 +195,7 @@ namespace Malina.Parser
         }
 
 
-        private void StartNewMultliLineToken()
+        private void StartNewMultiLineToken()
         {
             _currentToken = null;
         }
@@ -200,8 +213,10 @@ namespace Malina.Parser
                     if (_currentToken == null)//Empty Open String
                     {
                         //Creating Token for Empty OpenString
-                        _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, -1, -1);
-                        _currentToken.Text = "";
+                        _currentToken =
+                            new MalinaToken(
+                                new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                                OPEN_VALUE, Channel, -1, -1) {Text = ""};
                     }
 
                     Emit(_currentToken);
@@ -223,7 +238,7 @@ namespace Malina.Parser
                     Emit(_currentToken);
                     //EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 }
-                PopMode();
+                PopMode(); 
             }
             else if (indent > _currentIndent)
             {
@@ -240,8 +255,12 @@ namespace Malina.Parser
 
                     if (offset > 0) offset += _indents.Peek() + 1;
 
-                    _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, this._tokenStartCharIndex + offset, -1);
-                    _currentToken.TokenIndent = _indents.Peek() + 1;
+                    _currentToken =
+                        new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                            OPEN_VALUE, Channel, this._tokenStartCharIndex + offset, -1)
+                        {
+                            TokenIndent = _indents.Peek() + 1
+                        };
                 }
 
 
@@ -259,8 +278,9 @@ namespace Malina.Parser
                 if (_currentToken == null)//Empty Open String Scenario
                 {
                     //Creating Token for Empty OpenString
-                    _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, -1, -1);
-                    _currentToken.Text = "";
+                    _currentToken =
+                        new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                            OPEN_VALUE, Channel, -1, -1) {Text = ""};
                 }
 
                 //Adding 1 NEWLINE before DEDENTS
@@ -290,10 +310,6 @@ namespace Malina.Parser
             Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, _tokenStartCharIndex, InputStream.Index - 1));
         }
 
-        private void EmitExtraDQSIndentToken(int start, int stop)
-        {
-                EmitIndentationToken(DQS_VALUE, start, stop);
-        }
         private void EnterWsa()
         {
             _wsaStack.Push(_tokenStartCharIndex);
@@ -307,9 +323,14 @@ namespace Malina.Parser
 
         private void StartDqsMl()
         {
-            _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DQS, Channel, _tokenStartCharIndex, -1);
-            _currentToken.TokenIndent = _indents.Peek() + 1;
-            _currentToken.Column = _tokenStartCharPositionInLine + 1;
+            _currentToken =
+                new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), DQS,
+                    Channel,
+                    _tokenStartCharIndex, -1)
+                {
+                    TokenIndent = _indents.Peek() + 1,
+                    Column = _tokenStartCharPositionInLine + 1
+                };
             EndDqsIfEofOrWsa();
             _currentToken.Type = DQS_ML;
         }
@@ -326,9 +347,13 @@ namespace Malina.Parser
 
         private void StartSqs()
         {
-            _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), SQS, Channel, _tokenStartCharIndex, -1);
-            _currentToken.TokenIndent = _indents.Peek() + 1;
-            _currentToken.Column = _tokenStartCharPositionInLine + 1;
+            _currentToken =
+                new InterpolationStringToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                    SQS, Channel, _tokenStartCharIndex, -1)
+                {
+                    TokenIndent = _indents.Peek() + 1,
+                    Column = _tokenStartCharPositionInLine + 1
+                };
             EndDqsIfEofOrWsa();
             _currentToken.Type = SQS;
         }
@@ -341,6 +366,23 @@ namespace Malina.Parser
             Emit(_currentToken);
             PopMode(); PopMode();
         }
+
+        private void AddInterpolationToToken()
+        {
+            _interpolationToken.StopIndex = this.CharIndex - 1;
+            _interpolationToken.StopLine = Line;
+            _interpolationToken.StopColumn = _tokenStartCharPositionInLine;
+
+            ((InterpolationStringToken)_currentToken).InterpolationTokens.Add(_interpolationToken);
+        }
+
+        private void InterpolationBegin()
+        {
+            _interpolationToken = new MalinaToken(
+                new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), INTERPOLATION, Channel,
+                _tokenStartCharIndex, -1);
+        }
+
         private void SqIndentDedent()
         {
             var _currentIndent = InWsaMode ? 0 : _indents.Peek();
@@ -355,7 +397,7 @@ namespace Malina.Parser
                     new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
                     new DOM.SourceLocation(this._tokenStartLine, this._tokenStartCharPositionInLine, this._tokenStartCharIndex));
 
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Qoute",
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Quote",
                     new MalinaException(this, InputStream as ICharStream, err));
 
                 //END Multiline DQS
@@ -388,7 +430,7 @@ namespace Malina.Parser
                     new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
                     new DOM.SourceLocation(Line, Column, CharIndex));
 
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Qoute",
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Quote",
                     new MalinaException(this, InputStream as ICharStream, err));
 
                 _currentToken.StopIndex = this.CharIndex;
@@ -412,7 +454,7 @@ namespace Malina.Parser
                     new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
                     new DOM.SourceLocation(Line,Column, CharIndex));
 
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Qoute",
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Quote",
                     new MalinaException(this, InputStream as ICharStream, err));
 
                 _currentToken.StopIndex = this.CharIndex;
@@ -431,9 +473,13 @@ namespace Malina.Parser
         {
             if(_currentToken == null)
             {
-                _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, this._tokenStartCharIndex, -1);
-                _currentToken.Column = _tokenStartCharPositionInLine;
-                _currentToken.TokenIndent = _indents.Peek() + 1;
+                _currentToken =
+                    new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                        OPEN_VALUE, Channel, this._tokenStartCharIndex, -1)
+                    {
+                        Column = _tokenStartCharPositionInLine,
+                        TokenIndent = _indents.Peek() + 1
+                    };
             }
 
             _currentToken.StopIndex = this.CharIndex - 1;
@@ -466,7 +512,7 @@ namespace Malina.Parser
                     new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
                     new DOM.SourceLocation(this._tokenStartLine, this._tokenStartCharPositionInLine, this._tokenStartCharIndex));
 
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Qoute",
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Quote",
                     new MalinaException(this, InputStream as ICharStream, err));
 
                 //END Multiline DQS
@@ -492,55 +538,43 @@ namespace Malina.Parser
 
         private void EmitIdWithColon(int tokenType)
         {
-            var _currentIndent = _indents.Peek();
             if(InputStream.La(-1) == ':')
             {
-                var token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, _tokenStartCharIndex, CharIndex - 2);
-                token.Line = _tokenStartLine;
-                token.StopLine = _tokenStartLine;
-                token.Column = _tokenStartCharPositionInLine;
-                token.StopColumn = Column - 2;
+                var token =
+                    new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                        tokenType, Channel, _tokenStartCharIndex, CharIndex - 2)
+                    {
+                        Line = _tokenStartLine,
+                        StopLine = _tokenStartLine,
+                        Column = _tokenStartCharPositionInLine,
+                        StopColumn = Column - 2
+                    };
 
                 Emit(token);
 
-                token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), COLON, Channel, CharIndex - 1, CharIndex - 1);
-                token.Line = _tokenStartLine;
-                token.StopLine = _tokenStartLine;
-                token.Column = Column - 1;
-                token.StopColumn = Column - 1;
+                token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                    COLON, Channel, CharIndex - 1, CharIndex - 1)
+                {
+                    Line = _tokenStartLine,
+                    StopLine = _tokenStartLine,
+                    Column = Column - 1,
+                    StopColumn = Column - 1
+                };
                 Emit(token);
             }
             else
             {
-                var token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, _tokenStartCharIndex, CharIndex - 1);
-                token.Line = _tokenStartLine;
-                token.StopLine = _tokenStartLine;
-                token.Column = _tokenStartCharPositionInLine;
-                token.StopColumn = Column - 1;
+                var token =
+                    new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+                        tokenType, Channel, _tokenStartCharIndex, CharIndex - 1)
+                    {
+                        Line = _tokenStartLine,
+                        StopLine = _tokenStartLine,
+                        Column = _tokenStartCharPositionInLine,
+                        StopColumn = Column - 1
+                    };
                 Emit(token);
             }
-        }
-
-        private void ReportColonError(int tokenType)
-        {
-            if (InputStream.La(-1) == ':')
-            {
-                var token = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, _tokenStartCharIndex, CharIndex - 2);
-                token.Line = _tokenStartLine;
-                token.StopLine = _tokenStartLine;
-                token.Column = _tokenStartCharPositionInLine;
-                token.StopColumn = Column - 2;
-
-                Emit(token);
-            }
-
-            var err = new MalinaError(MalinaErrorCode.IncorrectColon,
-                new DOM.SourceLocation(Line, Column - 1, CharIndex - 1),
-                new DOM.SourceLocation(Line, Column - 1, CharIndex - 1));
-
-            ErrorListenerDispatch.SyntaxError(this, 0, this.CharIndex - 1, this.CharIndex - 1, "Incorrect usage of colon.",
-                    new MalinaException(this, InputStream as ICharStream, err));
-
         }
     }
 }

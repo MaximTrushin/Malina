@@ -1,0 +1,5 @@
+01:00	Document `MyRequest`:
+02:01		Element `request`:
+03:02			Element `e1`= `bla\n\t\t\tbla$bla bla`
+05:02			Element `name`= `[f: $user.first l: $( user.last)`s ]`
+

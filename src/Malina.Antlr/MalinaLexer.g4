@@ -22,14 +22,13 @@ PARAMETER_ID		:	'%' ShortName ':'? {EmitIdWithColon(PARAMETER_ID);};
 ARGUMENT_ID			:	'.' ShortName ':'? {EmitIdWithColon(ARGUMENT_ID);};
 ELEMENT_ID			:	((ShortName '.')? ShortName) ':'? {EmitIdWithColon(ELEMENT_ID);};
 
-VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
-OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultliLineToken();} -> pushMode(IN_VALUE);
+VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultiLineToken();} -> pushMode(IN_VALUE);
+OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultiLineToken();} -> pushMode(IN_VALUE); //todo: add separate mode for ==
 
 EMPTY_OBJECT		:	'()';
 EMPTY_ARRAY			:	'(:)';
 
 WS				:	WsSpaces	-> skip;
-
 
 mode IN_VALUE;
 	//Parameter or Alias assignment
@@ -47,7 +46,7 @@ mode IN_VALUE;
 	DQS_ML				:	'"' (~["\r\n] | '""')* {StartDqsMl();} -> skip, pushMode(IN_DQS);
 
 	//Single Qoute String (SQS) and Multiline SQS
-	SQS					: '\'' (~['\r\n] | '\'\'')* {StartSqs();} -> skip, pushMode(IN_SQS);
+	SQS					: '\''  {StartSqs();} -> skip, pushMode(IN_SQS);
 
 mode IN_DQS;
 	//Double Quoted String
@@ -59,10 +58,10 @@ mode IN_DQS;
 
 mode IN_SQS;
 	//Single Quoted String (one line and multiline)
-	SQS_VALUE		:	(~['\r\n] | '\'\'')+ {EndSqsIfEofOrWsa();};
-	SQS_VALUE_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {SqIndentDedent();}; //End of SQS Line or End of SQS
-	SQS_END			:	'\'' {EndSqs();};
-
+	INTERPOLATION	:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )? {InterpolationBegin();AddInterpolationToToken();} -> skip;
+	SQS_VALUE		:	(~['\r\n] | '\'\'')+? {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
+	SQS_VALUE_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
+	SQS_END			:	'\'' {EndSqs();}; //Explicitly ends SQS with single quote
 
 fragment	Eol				:	( '\r'? '\n' )
 							;

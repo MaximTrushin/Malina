@@ -1,0 +1,5 @@
+!MyRequest:
+	request:
+		e1 = 'bla
+			bla$bla bla'
+		name = '[f: $user.first l: $(user.last)`s ]'

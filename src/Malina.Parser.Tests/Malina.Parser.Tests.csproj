@@ -113,6 +113,9 @@
     <None Include="Scenarios\AliasDefinitionWithSimpleParameters.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\SingleQuoteInterpolation.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\SingleQuoteMultiline.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -235,10 +238,10 @@
     <None Include="Scenarios\OpenStringEndOnDedentAndEof.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\OpenStringMiltiline2.mlx">
+    <None Include="Scenarios\OpenStringMultiline2.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\OpenStringMiltiline.mlx">
+    <None Include="Scenarios\OpenStringMultiline.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\OpenStringEmpty.mlx">

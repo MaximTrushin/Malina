@@ -15,7 +15,7 @@ namespace Malina.Parser.PerfomanceTests
     [TestFixture]
     public class PerformanceTests
     {
-        [Test]
+        //[Test]
         public void BigFile()
         {
             Console.WriteLine("Starting BigFile");
@@ -83,7 +83,7 @@ namespace Malina.Parser.PerfomanceTests
             //Visitor Time: 6046
         }
 
-        [Test]
+        //[Test]
         public void BigFile2()
         {
             Console.WriteLine("Starting BigFile");
@@ -141,7 +141,7 @@ namespace Malina.Parser.PerfomanceTests
             Console.WriteLine("Visitor Time: {0}", t2 - t1);
         }
 
-        [Test, Ignore("")]
+        //[Test]
         public void BigFileCompilation()
         {
             var compilerParameters = CreateCompilerParameters("BigFileCompilation.mlx");

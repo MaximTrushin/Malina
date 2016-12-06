@@ -14,13 +14,7 @@ namespace Malina.Parser.Tests
 {
     public class TestUtils
     {
-        public static string AssemblyDirectory
-        {
-            get
-            {
-                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            }
-        }
+        public static string AssemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         public static string LoadTestCode()
         {
@@ -53,7 +47,7 @@ namespace Malina.Parser.Tests
         private static string GetTestCaseName()
         {
             var trace = new StackTrace();
-            return trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).First().Name;
+            return trace.GetFrames().Select(f => f.GetMethod()).First(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).Name;
         }
 
         public static string LoadRecordedTest(string printedTokens)
@@ -67,8 +61,7 @@ namespace Malina.Parser.Tests
 
                     var testCaseName = GetTestCaseName();
                     var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".test").ToString();
-                    if (!File.Exists(fileName)) recorded = null;
-                    else
+                    if (File.Exists(fileName))
                         recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
                 }
                 if (recorded == null || isLexerRecordTest)
@@ -92,8 +85,7 @@ namespace Malina.Parser.Tests
                 {
                     var testCaseName = GetTestCaseName();
                     var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".le").ToString();
-                    if (!File.Exists(fileName)) recorded = null;
-                    else
+                    if (File.Exists(fileName))
                         recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
                 }
                 if (recorded == null || isLexerErrorRecordTest)
@@ -356,9 +348,9 @@ namespace Malina.Parser.Tests
         private static bool TestHasAttribute<T>()
         {
             var trace = new StackTrace();
-            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T))) ||
-                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T)));
+            var method = trace.GetFrames().Select(f => f.GetMethod()).First(m => m.CustomAttributes.Any(a => a.AttributeType == typeof(TestAttribute)));
+            return method.CustomAttributes.Any(ca => ca.AttributeType == typeof(T)) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType == typeof(T));
         }
 
         public static void PrintCode(string code)
@@ -392,21 +384,27 @@ namespace Malina.Parser.Tests
             var sb = new StringBuilder();
             foreach (var token in tokens)
             {
-                //string text = token.text ?? ;
-                string text = token.StartIndex > -1? token.Text:"";
-                if (text != null)
-                    text = text.Replace("\n", @"\n").Replace("\t", @"\t");
-                
-                var s = token.StartIndex;
-                var e = token.StopIndex;
+                var text = token.StartIndex > -1? token.Text:"";
+                text = text?.Replace("\n", @"\n").Replace("\t", @"\t");
+
                 sb.AppendLine(string.Format("\t{2}:{3}\t{0}\t`{1}`\t ({4},{5})", GetType(token), text, token.Line, token.Column, token.StartIndex, token.StopIndex));
+
+                var iToken = token as InterpolationToken;
+                if (iToken == null) continue;
+
+                foreach (var interpolation in iToken.InterpolationTokens)
+                {
+                    text = interpolation.StartIndex > -1 ? interpolation.Text : "";
+                    text = text?.Replace("\n", @"\n").Replace("\t", @"\t");
+                    sb.AppendLine(string.Format("\t\t{2}:{3}\t{0}\t`{1}`\t ({4},{5})", GetType(interpolation), text, interpolation.Line, interpolation.Column, interpolation.StartIndex, interpolation.StopIndex));
+                }
             }
             return sb.ToString().Replace("\r\n", "\n");
         }
 
         private static string GetType(IToken token)
         {
-            return (token.TokenSource as MalinaLexer).Vocabulary.GetSymbolicName(token.Type);
+            return ((MalinaLexer) token.TokenSource).Vocabulary.GetSymbolicName(token.Type);
         }
 
         public static void PrintTree(ParserRuleContext ctx, int indent, StringBuilder sb, ref int nCount, ref int tCount)
@@ -424,14 +422,14 @@ namespace Malina.Parser.Tests
                     ).ToList();
                 nodes = ctx.children.OfType<ParserRuleContext>();
             }
-            tCount += symbols.Count();
+            tCount += symbols.Count;
 
             var ruleName = MalinaParser.ruleNames[ctx.RuleIndex];
 
-            var sSymbols = string.Join(", ", symbols.Select(s => string.Format("{0}={1}", GetType(s.Symbol), s.Symbol.Text)));
+            var sSymbols = string.Join(", ", symbols.Select(s => $"{GetType(s.Symbol)}={s.Symbol.Text}"));
 
             sb.Append('\n');
-            sb.Append(string.Format("{0}{1}: ({2})", "".PadLeft(indent * 4), ruleName, sSymbols));
+            sb.Append($"{"".PadLeft(indent*4)}{ruleName}: ({sSymbols})");
 
             foreach (var child in nodes)
             {

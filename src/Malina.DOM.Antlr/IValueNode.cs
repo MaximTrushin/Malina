@@ -8,5 +8,7 @@ namespace Malina.DOM.Antlr
         Interval ValueInterval { get; set; }
         object ObjectValue { get; set; }
         int ValueIndent { get; set; }
+
+        List<Alias> InterpolationAliases {get;}
     }
 }

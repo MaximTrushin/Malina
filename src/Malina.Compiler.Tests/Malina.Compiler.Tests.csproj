@@ -172,6 +172,9 @@
     <None Include="Scenarios\TwoModulesWithDocumentAndAlias\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\UnresolvedAliasInsideSqs\ModuleWithDocument.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Malina.Compiler\Malina.Compiler.csproj">

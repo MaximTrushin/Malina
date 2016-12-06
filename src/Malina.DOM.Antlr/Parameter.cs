@@ -39,6 +39,11 @@ namespace Malina.DOM.Antlr
                 _valueIndent = value;
             }
         }
+
+        private List<Alias> _interpolationAliases;
+        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
+
+
         public Interval ValueInterval
         {
             get

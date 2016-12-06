@@ -132,6 +132,9 @@ namespace Malina.DOM.Antlr
             }
         }
 
+        private List<Alias> _interpolationAliases;
+        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
+
         public static string GetValueFromValueInterval(ICharStream charStream, Interval valueInterval, int valueIndent, DOM.ValueType valueType)
         {
             if (valueInterval.Length == 0) return null;

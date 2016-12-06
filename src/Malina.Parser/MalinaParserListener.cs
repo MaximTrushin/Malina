@@ -1,9 +1,10 @@
-﻿using Antlr4.Runtime;
+﻿using System.Collections.Generic;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Malina.DOM;
-using Malina.DOM.Antlr;
-using System.Collections.Generic;
-using IValueNode = Malina.DOM.IValueNode;
+using Alias = Malina.DOM.Antlr.Alias;
+using Element = Malina.DOM.Antlr.Element;
+using IValueNode = Malina.DOM.Antlr.IValueNode;
 using Scope = Malina.DOM.Antlr.Scope;
 
 namespace Malina.Parser
@@ -14,7 +15,7 @@ namespace Malina.Parser
     public class MalinaParserListener: MalinaParserBaseListener
     {
         #region Class members
-        private CompileUnit _compileUnit;
+        private readonly CompileUnit _compileUnit;
         protected Stack<Node> _nodeStack = new Stack<Node>();
 
 
@@ -28,13 +29,8 @@ namespace Malina.Parser
         {
         }
 
-        public CompileUnit CompileUnit
-        {
-            get
-            {
-                return _compileUnit;
-            }
-        }
+        public CompileUnit CompileUnit => _compileUnit;
+
         protected virtual void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, new()
         {
             if (!valueNode)
@@ -66,7 +62,7 @@ namespace Malina.Parser
                 //SCOPE_ID found. Need to create SCOPE and ELEMENT
 
                 //Initializing ELEMENT
-                var element = new DOM.Antlr.Element();
+                var element = new Element();
 
                 ((INodeContext<Scope>) context).Node.AppendChild(element);
 
@@ -489,14 +485,14 @@ namespace Malina.Parser
         #region Value
         public override void ExitString_value_inline([NotNull] MalinaParser.String_value_inlineContext context)
         {
-            var parent = (DOM.Antlr.IValueNode)_nodeStack.Peek();
+            var parent = (IValueNode)_nodeStack.Peek();
 
             var dqs = context.DQS();
             if (dqs != null)
             {
                 
                 parent.ValueInterval = new Interval(((CommonToken) dqs.Payload).StartIndex + 1, ((CommonToken) dqs.Payload).StopIndex - 1);
-                ((IValueNode) parent).ValueType = DOM.ValueType.DoubleQuotedString;
+                ((DOM.IValueNode) parent).ValueType = ValueType.DoubleQuotedString;
                 return;
             }
 
@@ -504,7 +500,7 @@ namespace Malina.Parser
             if (openValue != null)
             {
                 parent.ValueInterval = new Interval(((CommonToken) openValue.Payload).StartIndex, ((CommonToken) openValue.Payload).StopIndex);
-                ((IValueNode) parent).ValueType = DOM.ValueType.OpenString;
+                ((DOM.IValueNode) parent).ValueType = ValueType.OpenString;
                 return;
             }
 
@@ -512,21 +508,37 @@ namespace Malina.Parser
             if (sqs != null)
             {
                 parent.ValueInterval = new Interval(((CommonToken)sqs.Payload).StartIndex + 1, ((CommonToken)sqs.Payload).StopIndex - 1);
-                ((IValueNode)parent).ValueType = DOM.ValueType.SingleQuotedString;
-                return;
+                ((DOM.IValueNode)parent).ValueType = ValueType.SingleQuotedString;
+                SetInterpolationAliases(parent, (InterpolationStringToken)sqs.Payload);
+                //return;
+            }
+        }
+
+        private static void SetInterpolationAliases(IValueNode node, InterpolationStringToken interpolationStringToken)
+        {
+            foreach (var token in interpolationStringToken.InterpolationTokens)
+            {
+                var aliasName = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
+
+                node.InterpolationAliases.Add(
+                    new Alias {Name = aliasName,
+                        start = new SourceLocation(token.Line, token.Column, token.StartIndex),
+                        end = new SourceLocation(token.Line, token.Column, token.StartIndex),
+                    }
+                   );
             }
         }
 
         public override void ExitString_value_ml([NotNull] MalinaParser.String_value_mlContext context)
         {
-            var parent = (DOM.Antlr.IValueNode) _nodeStack.Peek();
+            var parent = (IValueNode) _nodeStack.Peek();
             var open_value = context.OPEN_VALUE_ML();
             if (open_value != null)
             {
                 var token = (MalinaToken) open_value.Payload;
                 parent.ValueInterval = new Interval(token.StartIndex, token.StopIndex);
                 parent.ValueIndent = token.TokenIndent;
-                ((IValueNode) parent).ValueType = DOM.ValueType.OpenString;
+                ((DOM.IValueNode) parent).ValueType = ValueType.OpenString;
                 return;
 
             }
@@ -537,7 +549,7 @@ namespace Malina.Parser
                 var token = (MalinaToken) dqs_ml.Payload;
                 parent.ValueInterval = new Interval(token.StartIndex + 1, token.StopIndex - 1);
                 parent.ValueIndent = token.TokenIndent;
-                ((IValueNode) parent).ValueType = DOM.ValueType.DoubleQuotedString;
+                ((DOM.IValueNode) parent).ValueType = ValueType.DoubleQuotedString;
                 return;
             }
 
@@ -547,8 +559,8 @@ namespace Malina.Parser
                 var token = (MalinaToken) sqs_ml.Payload;
                 parent.ValueInterval = new Interval(token.StartIndex + 1, token.StopIndex - 1);
                 parent.ValueIndent = token.TokenIndent;
-                ((IValueNode) parent).ValueType = DOM.ValueType.DoubleQuotedString;
-                return;
+                ((DOM.IValueNode) parent).ValueType = ValueType.SingleQuotedString;
+                SetInterpolationAliases(parent, (InterpolationStringToken) token);
             }
         }
 

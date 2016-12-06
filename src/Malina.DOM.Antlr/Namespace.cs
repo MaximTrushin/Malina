@@ -81,5 +81,7 @@ namespace Malina.DOM.Antlr
                 _valueIndent = value;
             }
         }
+
+        public List<Alias> InterpolationAliases => null;
     }
 }

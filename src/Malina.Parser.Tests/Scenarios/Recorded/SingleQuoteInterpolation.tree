@@ -11,7 +11,7 @@ module: ()
                                     value_element_stmt: (ELEMENT_ID=e1)
                                         value: ()
                                             string_value: ()
-                                                string_value_inline: (EQUAL== , SQS='bla
+                                                string_value_ml: (EQUAL== , SQS_ML='bla
 			bla$bla bla')
                                         newline: ()
                             block_line_stmt: ()

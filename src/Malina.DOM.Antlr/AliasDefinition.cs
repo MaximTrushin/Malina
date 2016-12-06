@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 
@@ -97,5 +98,8 @@ namespace Malina.DOM.Antlr
                 return Element.GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
             }
         }
+
+        private List<Alias> _interpolationAliases;
+        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
     }
 }

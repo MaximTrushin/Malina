@@ -96,7 +96,7 @@ namespace Malina.DOM.Antlr
             {
                 if (_nsSeparator == -2)
                 {
-                    //Calsulate NsSeparator
+                    //Calculate NsSeparator
                     _nsSeparator = Element.CalcNsSeparator(_charStream, _idInterval);
                 }
                 return _nsSeparator;
@@ -107,6 +107,9 @@ namespace Malina.DOM.Antlr
                 _nsSeparator = value;
             }
         }
+
+        private List<Alias> _interpolationAliases;
+        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
 
         public override string NsPrefix
         {

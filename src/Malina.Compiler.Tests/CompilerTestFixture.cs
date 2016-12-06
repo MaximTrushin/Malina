@@ -233,5 +233,17 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+        [Test]
+        public void UnresolvedAliasInsideSqs()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 7,-1), "Alias 'bla' is not defined."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 15,-1), "Alias 'user.first' is not defined."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 30,-1), "Alias 'user.last' is not defined."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 01:00	Document `MyRequest`:
 02:01		Element `request`:
-03:02			Element `e1`= `bla\n\t\t\tbla bla`
-05:02			Element `e2`= `bla\n\t\t\t\t bla bla`
-07:02			Element `e3`= `bla\n\n\t\t\tbla bla`
-10:02			Element `e4`= `bla\n\t\t\t\t\n\t\t\tbla bla`
+03:02			Element `e1`= `bla\nbla bla`
+05:02			Element `e2`= `bla\n\t bla bla`
+07:02			Element `e3`= `bla\n\nbla bla`
+10:02			Element `e4`= `bla\n\t\nbla bla`
 

@@ -8,33 +8,17 @@ namespace Malina.DOM.Antlr
     public class AliasDefinition : DOM.AliasDefinition, IAntlrCharStreamConsumer, IValueNode
     {
         private NodeCollection<Parameter> _parameters;
-        private ICharStream _charStream;
-        private Interval _idInterval;
-        private Interval _valueInterval;
-        private int _valueIndent;
 
-        public ICharStream CharStream
-        {
-            set
-            {
-                _charStream = value;
-            }
-        }
+        public ICharStream CharStream { get; set; }
 
-        public Interval IDInterval
-        {
-            set
-            {
-                _idInterval = value;
-            }
-        }
+        public Interval IdInterval { get; set; }
 
         public override string Name
         {
             get
             {
                 if (base.Name != null) return base.Name;
-                return _charStream.GetText(new Interval(_idInterval.a + 2, _idInterval.b));
+                return CharStream.GetText(new Interval(IdInterval.a + 2, IdInterval.b));
             }
 
             set
@@ -45,49 +29,20 @@ namespace Malina.DOM.Antlr
 
         public NodeCollection<Parameter> Parameters
         {
-            get
-            {
-                if (_parameters == null)
-                {
-                    _parameters = new NodeCollection<Parameter>(this);
-                }
-                return _parameters;
-            }
+            get { return _parameters ?? (_parameters = new NodeCollection<Parameter>(this)); }
             set
             {
-                if (value != _parameters)
+                if (_parameters != null && value != _parameters)
                 {
                     _parameters = value;
                 }
             }
         }
 
-        public Interval ValueInterval
-        {
-            get
-            {
-                return _valueInterval;
-            }
-
-            set
-            {
-                _valueInterval = value;
-            }
-        }
+        public Interval ValueInterval { get; set; }
 
 
-        public int ValueIndent
-        {
-            get
-            {
-                return _valueIndent;
-            }
-
-            set
-            {
-                _valueIndent = value;
-            }
-        }
+        public int ValueIndent { get; set; }
 
         public override string Value
         {
@@ -95,11 +50,11 @@ namespace Malina.DOM.Antlr
             {
                 if (base.Value != null) return base.Value;
                 if (ValueType == ValueType.None) return null;
-                return Element.GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
+                return Element.GetValueFromValueInterval(CharStream, ValueInterval, ValueIndent, ValueType);
             }
         }
 
-        private List<Alias> _interpolationAliases;
-        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
+        private List<object> _interpolationItems;
+        public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
     }
 }

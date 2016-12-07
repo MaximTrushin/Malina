@@ -120,7 +120,7 @@ namespace Malina.DOM.Antlr
             {
                 if (_nsSeparator == -2)
                 {
-                    //Calsulate NsSeparator
+                    //Calculate NsSeparator
                     _nsSeparator = CalcNsSeparator(_charStream, _idInterval);
                 }
                 return _nsSeparator;
@@ -132,8 +132,8 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        private List<Alias> _interpolationAliases;
-        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
+        private List<object> _interpolationItems;
+        public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
 
         public static string GetValueFromValueInterval(ICharStream charStream, Interval valueInterval, int valueIndent, DOM.ValueType valueType)
         {

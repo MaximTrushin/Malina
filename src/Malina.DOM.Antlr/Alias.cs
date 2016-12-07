@@ -1,4 +1,5 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,6 @@ namespace Malina.DOM.Antlr
         private ICharStream _charStream;
         private Interval _idInterval;
         private Interval _valueInterval = Interval.Invalid;
-        private int _valueIndent;
 
         public ICharStream CharStream
         {
@@ -20,7 +20,7 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public Interval IDInterval
+        public Interval IdInterval
         {
             set
             {
@@ -60,24 +60,13 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Value != null) return base.Value;
-                return Element.GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
+                return Element.GetValueFromValueInterval(_charStream, _valueInterval, ValueIndent, ValueType);
             }
         }
 
-        public int ValueIndent
-        {
-            get
-            {
-                return _valueIndent;
-            }
+        public int ValueIndent { get; set; }
 
-            set
-            {
-                _valueIndent = value;
-            }
-        }
-
-        private List<Alias> _interpolationAliases;
-        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
+        private List<object> _interpolationItems;
+        public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
     }
 }

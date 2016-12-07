@@ -10,9 +10,6 @@ namespace Malina.DOM.Antlr
     public class Attribute : DOM.Attribute, IAntlrCharStreamConsumer, IValueNode
     {
         private ICharStream _charStream;
-        private Interval _idInterval;
-        private Interval _valueInterval = Interval.Invalid;
-        private int _valueIndent;
         private int _nsSeparator = -2;
 
         public ICharStream CharStream
@@ -23,26 +20,9 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public Interval IDInterval
-        {
-            set
-            {
-                _idInterval = value;
-            }
-        }
+        public Interval IdInterval { get; set; }
 
-        public Interval ValueInterval
-        {
-            get
-            {
-                return _valueInterval;
-            }
-
-            set
-            {
-                _valueInterval = value;
-            }
-        }
+        public Interval ValueInterval { get; set; } = Interval.Invalid;
 
         public override string Name
         {
@@ -51,9 +31,9 @@ namespace Malina.DOM.Antlr
                 if (base.Name != null) return base.Name;
                 if (NsSeparator > 0)
                 {
-                    return _charStream.GetText(new Interval(NsSeparator, _idInterval.b));
+                    return _charStream.GetText(new Interval(NsSeparator, IdInterval.b));
                 }
-                return _charStream.GetText(new Interval(_idInterval.a + 1, _idInterval.b));
+                return _charStream.GetText(new Interval(IdInterval.a + 1, IdInterval.b));
 
 
             }
@@ -69,7 +49,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Value != null) return base.Value;
-                return Element.GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
+                return Element.GetValueFromValueInterval(_charStream, ValueInterval, ValueIndent, ValueType);
             }
         }
 
@@ -77,18 +57,7 @@ namespace Malina.DOM.Antlr
         {
             ObjectValue = child;
         }
-        public int ValueIndent
-        {
-            get
-            {
-                return _valueIndent;
-            }
-
-            set
-            {
-                _valueIndent = value;
-            }
-        }
+        public int ValueIndent { get; set; }
 
         public int NsSeparator
         {
@@ -97,7 +66,7 @@ namespace Malina.DOM.Antlr
                 if (_nsSeparator == -2)
                 {
                     //Calculate NsSeparator
-                    _nsSeparator = Element.CalcNsSeparator(_charStream, _idInterval);
+                    _nsSeparator = Element.CalcNsSeparator(_charStream, IdInterval);
                 }
                 return _nsSeparator;
             }
@@ -108,19 +77,15 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        private List<Alias> _interpolationAliases;
-        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
+        private List<object> _interpolationItems;
+        public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
 
         public override string NsPrefix
         {
             get
             {
                 if (base.NsPrefix != null) return base.NsPrefix;
-                if (NsSeparator > 0)
-                {
-                    return _charStream.GetText(new Interval(_idInterval.a + 1, NsSeparator - 2));
-                }
-                return null;
+                return NsSeparator > 0 ? _charStream.GetText(new Interval(IdInterval.a + 1, NsSeparator - 2)) : null;
             }
         }
     }

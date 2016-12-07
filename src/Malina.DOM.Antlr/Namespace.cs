@@ -82,6 +82,6 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public List<Alias> InterpolationAliases => null;
+        public List<Object> InterpolationItems => null;
     }
 }

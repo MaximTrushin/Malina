@@ -80,7 +80,7 @@ namespace Malina.Compiler.Tests
         {
             Assert.AreEqual(Path.GetFileName(compilerError1.LexicalInfo.FileName), Path.GetFileName(compilerError2.LexicalInfo.FileName));
             Assert.AreEqual(compilerError1.LexicalInfo.Line, compilerError2.LexicalInfo.Line);
-            Assert.AreEqual(compilerError1.LexicalInfo.Column, compilerError2.LexicalInfo.Column);
+            Assert.AreEqual(compilerError1.LexicalInfo.Column, compilerError2.LexicalInfo.Column, compilerError2.Message);
 
 
             Assert.AreEqual(compilerError1.Message, compilerError2.Message);

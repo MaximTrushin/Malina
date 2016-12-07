@@ -154,32 +154,19 @@ namespace Malina.DOM
         {
             get
             {
-                if (_arguments == null)
-                {
-                    _arguments = new NodeCollection<Argument>(this);
-                }
-                return _arguments??new NodeCollection<Argument>(this);
+                return _arguments??(_arguments = new NodeCollection<Argument>(this));
             }
             set
             {
                 if (value != _arguments)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
+                    value?.InitializeParent(this);
                     _arguments = value;
                 }
             }
         }
 
-        public bool IsValueNode
-        {
-            get
-            {
-                return _valueType != ValueType.None;
-            }
-        }
+        public bool IsValueNode => _valueType != ValueType.None;
     }
 
 

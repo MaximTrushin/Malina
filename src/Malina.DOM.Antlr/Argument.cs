@@ -76,7 +76,7 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        private List<Alias> _interpolationAliases;
-        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
+        private List<object> _interpolationItems;
+        public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
     }
 }

@@ -1,4 +1,5 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using System.Collections.Generic;
 using System.Text;
@@ -40,8 +41,8 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        private List<Alias> _interpolationAliases;
-        public List<Alias> InterpolationAliases => _interpolationAliases ?? (_interpolationAliases = new List<Alias>());
+        private List<object> _interpolationItems;
+        public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
 
 
         public Interval ValueInterval

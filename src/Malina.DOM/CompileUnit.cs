@@ -12,24 +12,12 @@ namespace Malina.DOM
         // Properties
         public NodeCollection<Module> Modules
         {
-            get
-            {
-                if (_modules == null)
-                {
-                    _modules = new NodeCollection<Module>(this);
-                }
-                return _modules;
-            }
+            get { return _modules ?? (_modules = new NodeCollection<Module>(this)); }
             set
             {
-                if (value != _modules)
-                {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
-                    _modules = value;
-                }
+                if (value == _modules) return;
+                value?.InitializeParent(this);
+                _modules = value;
             }
         }
 
@@ -45,9 +33,10 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is Module)
+            var item = child as Module;
+            if (item != null)
             {
-                Modules.Add((Module)child);
+                Modules.Add(item);
             }
             else
             {

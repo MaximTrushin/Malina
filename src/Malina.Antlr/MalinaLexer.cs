@@ -383,8 +383,7 @@ namespace Malina.Parser
 
             ((InterpolationStringToken)_currentToken).InterpolationTokens.Add(_interpolationToken);
         }
-
-
+        
         private void SqIndentDedent()
         {
             var _currentIndent = InWsaMode ? 0 : _indents.Peek();
@@ -395,13 +394,7 @@ namespace Malina.Parser
                 //SQS is ended by indentation
 
                 //Report Lexer Error - missing closing Double Quote.
-                var err = new MalinaError(MalinaErrorCode.ClosingSqMissing,
-                    new DOM.SourceLocation(_tokenStartLine, _tokenStartCharPositionInLine, _tokenStartCharIndex),
-                    new DOM.SourceLocation(_tokenStartLine, _tokenStartCharPositionInLine, _tokenStartCharIndex));
-
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine,
-                    "Missing closing Single Quote",
-                    new MalinaException(this, InputStream as ICharStream, err));
+                ReportMissingSq();
 
                 //END Multiline SQS
                 PopMode();
@@ -429,28 +422,26 @@ namespace Malina.Parser
 
         }
 
+        private void ReportMissingSq()
+        {
+            var err = new MalinaError(MalinaErrorCode.ClosingSqMissing,
+                new DOM.SourceLocation(_tokenStartLine, _tokenStartCharPositionInLine, _tokenStartCharIndex),
+                new DOM.SourceLocation(_tokenStartLine, _tokenStartCharPositionInLine, _tokenStartCharIndex));
+
+            ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine,
+                "Missing closing Single Quote",
+                new MalinaException(this, InputStream as ICharStream, err));
+        }
+
         private void EndSqsIfEofOrWsa()
         {
             if (this._input.La(1) == -1 || InWsaMode)
             {
                 //Report Lexer Error - missing closing Single Quote.
-                var err = new MalinaError(MalinaErrorCode.ClosingSqMissing,
-                    new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
-                    new DOM.SourceLocation(Line, Column, CharIndex));
+                ReportMissingSq();
 
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Single Quote",
-                    new MalinaException(this, InputStream as ICharStream, err));
-
-                _currentToken.StopIndex = this.CharIndex;
-                _currentToken.StopLine = Line;
-                _currentToken.StopColumn = Column;
-                Emit(_currentToken);
                 PopMode(); PopMode();
-                //Emitting NEWLINE
-                if (!InWsaMode)
-                    EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
             }
-            else Skip();
         }
 
         private void EndDqsIfEofOrWsa()

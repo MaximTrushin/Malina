@@ -59,10 +59,9 @@ mode IN_DQS;
 mode IN_SQS;
 	//Single Quoted String (one line and multiline)
 	INTERPOLATION	:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )?;
-	SQS_VALUE		:	(~[$'\r\n] | '\'\'' | '$$')+;// {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
+	SQS_VALUE		:	(~[$'\r\n] | '\'\'' | '$$')+ {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
 	SQS_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
 	SQS_END			:	'\'' -> popMode, popMode;
-	SQS_ERR			:	EOF -> popMode, popMode;
 
 fragment	Eol				:	( '\r'? '\n' )
 							;

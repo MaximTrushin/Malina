@@ -192,8 +192,11 @@ namespace Malina.Parser.Tests
             string recorded = LoadRecordedTest(printedTokens);
             string serialLexerErrors;
             var recordedLexerErros = LoadLexerErrors(lexerErrors, out serialLexerErrors);
-            Console.WriteLine(recordedLexerErros);
-
+            if (recordedLexerErros != null)
+            {
+                Console.WriteLine("Lexer Errors:");
+                Console.WriteLine(recordedLexerErros);
+            }
             //Testing Parse Tree
             lexer.Reset();
             //lexer.ErrorListeners.Clear();

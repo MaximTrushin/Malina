@@ -330,7 +330,14 @@ namespace Malina.Parser.Tests
         {
             PerformTest();
         }
-        
+
+        [Test, LexerRecorded, LexerErrorRecorded, ParseTreeRecorded, DomRecorded]
+        public void SingleQuotedStringInline()
+        {
+            PerformTest();
+        }
+
+
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void OpenStringEmpty()
         {

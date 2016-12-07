@@ -347,15 +347,16 @@ namespace Malina.Parser
 
         private void StartSqs()
         {
-            _currentToken =
-                new InterpolationStringToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
+            var token =
+                new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
                     SQS, Channel, _tokenStartCharIndex, -1)
                 {
                     TokenIndent = _indents.Peek() + 1,
-                    Column = _tokenStartCharPositionInLine + 1
+                    Column = _tokenStartCharPositionInLine + 1,
+                    StopIndex = CharIndex - 1
+                    
                 };
-            EndDqsIfEofOrWsa();
-            _currentToken.Type = SQS;
+            Emit(token);
         }
 
         private void EndSqs()
@@ -369,20 +370,20 @@ namespace Malina.Parser
 
         private void AddInterpolationToToken()
         {
-            _interpolationToken.StopIndex = this.CharIndex - 1;
-            _interpolationToken.StopLine = Line;
-            _interpolationToken.StopColumn = Column;
+            _interpolationToken = new MalinaToken(
+                new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), INTERPOLATION,
+                Channel,
+                _tokenStartCharIndex, -1)
+            {
+                Column = _tokenStartCharPositionInLine + 1,
+                StopIndex = this.CharIndex - 1,
+                StopLine = Line,
+                StopColumn = Column
+            };
 
             ((InterpolationStringToken)_currentToken).InterpolationTokens.Add(_interpolationToken);
         }
 
-        private void InterpolationBegin()
-        {
-            _interpolationToken = new MalinaToken(
-                new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), INTERPOLATION, Channel,
-                _tokenStartCharIndex, -1);
-            _interpolationToken.Column = _tokenStartCharPositionInLine + 1;
-        }
 
         private void SqIndentDedent()
         {
@@ -395,19 +396,14 @@ namespace Malina.Parser
 
                 //Report Lexer Error - missing closing Double Quote.
                 var err = new MalinaError(MalinaErrorCode.ClosingSqMissing,
-                    new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
-                    new DOM.SourceLocation(this._tokenStartLine, this._tokenStartCharPositionInLine,
-                        this._tokenStartCharIndex));
+                    new DOM.SourceLocation(_tokenStartLine, _tokenStartCharPositionInLine, _tokenStartCharIndex),
+                    new DOM.SourceLocation(_tokenStartLine, _tokenStartCharPositionInLine, _tokenStartCharIndex));
 
                 ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine,
                     "Missing closing Single Quote",
                     new MalinaException(this, InputStream as ICharStream, err));
 
                 //END Multiline SQS
-                _currentToken.StopIndex = this._tokenStartCharIndex;
-                _currentToken.StopLine = this._tokenStartLine;
-                _currentToken.StopColumn = this._tokenStartCharPositionInLine;
-                Emit(_currentToken);
                 PopMode();
                 PopMode();
 
@@ -421,25 +417,28 @@ namespace Malina.Parser
                 }
 
             }
-            else //Continue Multine SQS
-            {
-                //There is more than one line in the string so this is Multiline string
-                _currentToken.Type = SQS_ML;
 
-                Skip();
-            }
+            //Adding new line
+            _interpolationToken = new MalinaToken(
+                new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), SQS,
+                Channel,
+                _tokenStartCharIndex, -1)
+            {
+                Text = Environment.NewLine
+            };
+
         }
 
         private void EndSqsIfEofOrWsa()
         {
             if (this._input.La(1) == -1 || InWsaMode)
             {
-                //Report Lexer Error - missing closing Double Quote.
-                var err = new MalinaError(MalinaErrorCode.ClosingDqMissing,
+                //Report Lexer Error - missing closing Single Quote.
+                var err = new MalinaError(MalinaErrorCode.ClosingSqMissing,
                     new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
                     new DOM.SourceLocation(Line, Column, CharIndex));
 
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Quote",
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Single Quote",
                     new MalinaException(this, InputStream as ICharStream, err));
 
                 _currentToken.StopIndex = this.CharIndex;

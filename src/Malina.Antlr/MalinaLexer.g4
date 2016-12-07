@@ -1,6 +1,6 @@
 lexer grammar MalinaLexer;
 
-tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON, SQS, SQS_ML}
+tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON, SQS}
 
 
 INDENT_DEDENT		:	(Eol {RecordCharIndex();} Spaces)+ {IndentDedent();};
@@ -46,7 +46,7 @@ mode IN_VALUE;
 	DQS_ML				:	'"' (~["\r\n] | '""')* {StartDqsMl();} -> skip, pushMode(IN_DQS);
 
 	//Single Qoute String (SQS) and Multiline SQS
-	SQS					: '\''  {StartSqs();} -> skip, pushMode(IN_SQS);
+	SQS					: '\'' {StartSqs();}  -> pushMode(IN_SQS);
 
 mode IN_DQS;
 	//Double Quoted String
@@ -58,10 +58,11 @@ mode IN_DQS;
 
 mode IN_SQS;
 	//Single Quoted String (one line and multiline)
-	INTERPOLATION	:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )? {InterpolationBegin();AddInterpolationToToken();} -> skip;
-	SQS_VALUE		:	(~['\r\n] | '\'\'')+? {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
-	SQS_VALUE_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
-	SQS_END			:	'\'' {EndSqs();}; //Explicitly ends SQS with single quote
+	INTERPOLATION	:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )?;
+	SQS_VALUE		:	(~[$'\r\n] | '\'\'' | '$$')+;// {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
+	SQS_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
+	SQS_END			:	'\'' -> popMode, popMode;
+	SQS_ERR			:	EOF -> popMode, popMode;
 
 fragment	Eol				:	( '\r'? '\n' )
 							;

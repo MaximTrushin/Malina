@@ -1,10 +1,14 @@
-﻿using Malina.DOM;
+﻿using System;
+using Malina.DOM;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml.Schema;
+using Antlr4.Runtime;
+using Malina.Parser;
+using ValueType = Malina.DOM.ValueType;
 
 namespace Malina.Compiler.Steps
 {
@@ -250,7 +254,7 @@ namespace Malina.Compiler.Steps
 
             //Write element's value
             if (node.Value != null) {
-                _xmlTextWriter.WriteString(node.Value);
+                _xmlTextWriter.WriteString(ResolveNodeValue((DOM.Antlr.IValueNode) node));
             }
             else if (node.ObjectValue is Parameter)
             {
@@ -265,6 +269,58 @@ namespace Malina.Compiler.Steps
 
             //End Element
             _xmlTextWriter.WriteEndElement();
+        }
+
+        private string ResolveNodeValue(DOM.Antlr.IValueNode node)
+        {
+            if (((IValueNode) node).ValueType != ValueType.SingleQuotedString)
+                return ((IValueNode) node).Value;
+
+            var sb = new StringBuilder();
+            foreach (var item in node.InterpolationItems)
+            {
+                var alias = item as Alias;
+                if (alias != null)
+                {
+                    sb.Append(ResolveValueAlias(alias));
+                    continue;
+                }
+                var token = item as CommonToken;
+                if (token == null) continue;
+
+                if (token.Type == MalinaLexer.SQS_EOL)
+                {
+                    sb.Append(ResolveSqsEol(token, node.ValueIndent));
+                }
+                else
+                    sb.Append(token.Text);
+            }
+            return sb.ToString();
+
+        }
+
+        private string ResolveSqsEol(CommonToken token, int valueIndent)
+        {
+            var sb = new StringBuilder();
+            var value = token.Text;
+            var lines = value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            var first = true;
+            foreach (var item in lines)
+            {
+                //Skip first one
+                if (first)
+                {
+                    first = false;
+                    continue;
+                }
+
+                //Removing indents
+                sb.AppendLine();
+                if (item.Length > valueIndent)
+                    sb.Append(item.Substring(valueIndent));
+            }
+
+            return sb.ToString();
         }
 
         private void ResolveAttributes(IEnumerable<DOM.Attribute> attributes, IEnumerable<Entity> entities)

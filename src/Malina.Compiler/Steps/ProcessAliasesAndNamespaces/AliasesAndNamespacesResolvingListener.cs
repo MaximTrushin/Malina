@@ -78,10 +78,12 @@ namespace Malina.Compiler.Steps
         private void SendInterpolationAliasesToNameresolver()
         {
             var parent = (IValueNode)_nodeStack.Peek();
-            if (parent?.InterpolationAliases == null) return;
-            foreach (var alias in parent.InterpolationAliases)
+            if (parent?.InterpolationItems == null) return;
+            foreach (var node in parent.InterpolationItems)
             {
-                _context.NamespaceResolver.AddAlias(alias);
+                var alias = node as Alias;
+                if (alias != null)
+                    _context.NamespaceResolver.AddAlias(alias);
             }
         }
 

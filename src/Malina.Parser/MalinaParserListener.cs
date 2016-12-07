@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using Antlr4.Runtime.Tree;
 using Malina.DOM;
 using Alias = Malina.DOM.Antlr.Alias;
 using Element = Malina.DOM.Antlr.Element;
@@ -15,8 +16,10 @@ namespace Malina.Parser
     public class MalinaParserListener: MalinaParserBaseListener
     {
         #region Class members
+        //CompileUnit where all Modules will be added
         private readonly CompileUnit _compileUnit;
-        protected Stack<Node> _nodeStack = new Stack<Node>();
+
+       protected readonly Stack<Node> _nodeStack = new Stack<Node>();
 
 
         public MalinaParserListener(CompileUnit compileUnit)
@@ -504,28 +507,50 @@ namespace Malina.Parser
                 return;
             }
 
-            var sqs = context.SQS();
+            var sqs = context.sqs_inline();
             if (sqs != null)
             {
-                parent.ValueInterval = new Interval(((CommonToken)sqs.Payload).StartIndex + 1, ((CommonToken)sqs.Payload).StopIndex - 1);
+                SetInterpolationItems(parent, sqs.children);
+
+                //Set ValueInterval
+                var stopIndex = ((CommonToken)sqs.Stop).Type == MalinaLexer.SQS_END ? ((CommonToken)sqs.Stop).StopIndex - 1 : ((CommonToken)sqs.Stop).StopIndex;
+                parent.ValueInterval = new Interval(((CommonToken)sqs.Start).StartIndex + 1, stopIndex);
+
+                //Set Indent
+                parent.ValueIndent = ((MalinaToken)sqs.children[0].Payload).TokenIndent;
+
+                //Set Value type to SingleQuotedString
                 ((DOM.IValueNode)parent).ValueType = ValueType.SingleQuotedString;
-                SetInterpolationAliases(parent, (InterpolationStringToken)sqs.Payload);
-                //return;
             }
         }
 
-        private static void SetInterpolationAliases(IValueNode node, InterpolationStringToken interpolationStringToken)
+        private static void SetInterpolationItems(IValueNode node, IList<IParseTree> children)
         {
-            foreach (var token in interpolationStringToken.InterpolationTokens)
-            {
-                var aliasName = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
 
-                node.InterpolationAliases.Add(
-                    new Alias {Name = aliasName,
-                        start = new SourceLocation(token.Line, token.Column, token.StartIndex),
-                        end = new SourceLocation(token.Line, token.Column, token.StartIndex),
-                    }
-                   );
+            foreach (var item in children)
+            {
+                var token = (CommonToken) item.Payload;
+
+                if (token.Type == MalinaLexer.SQS || token.Type == MalinaLexer.SQS_END) continue;
+
+                if (token.Type == MalinaLexer.INTERPOLATION)
+                {
+                    var aliasName = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
+
+                    node.InterpolationItems.Add(
+                        new Alias
+                        {
+                            Name = aliasName,
+                            start = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
+                            end = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
+                            ValueType = ValueType.Empty
+                        }
+                    );
+                }
+                else
+                {
+                    node.InterpolationItems.Add(token);
+                }
             }
         }
 
@@ -553,14 +578,22 @@ namespace Malina.Parser
                 return;
             }
 
-            var sqs_ml = context.SQS_ML();
+            var sqs_ml = context.sqs_ml();
             if (sqs_ml != null)
             {
-                var token = (MalinaToken) sqs_ml.Payload;
-                parent.ValueInterval = new Interval(token.StartIndex + 1, token.StopIndex - 1);
-                parent.ValueIndent = token.TokenIndent;
-                ((DOM.IValueNode) parent).ValueType = ValueType.SingleQuotedString;
-                SetInterpolationAliases(parent, (InterpolationStringToken) token);
+
+                SetInterpolationItems(parent, sqs_ml.children);
+
+                //Set ValueInterval
+                var stopIndex = ((CommonToken)sqs_ml.Stop).Type == MalinaLexer.SQS_END ? ((CommonToken)sqs_ml.Stop).StopIndex - 1: ((CommonToken)sqs_ml.Stop).StopIndex;
+                parent.ValueInterval = new Interval(((CommonToken)sqs_ml.Start).StartIndex + 1, stopIndex);
+
+                //Set Indent
+                parent.ValueIndent = ((MalinaToken)sqs_ml.children[0].Payload).TokenIndent;
+
+                //Set Value type to SingleQuotedString
+                ((DOM.IValueNode)parent).ValueType = ValueType.SingleQuotedString;
+
             }
         }
 

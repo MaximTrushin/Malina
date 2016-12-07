@@ -81,6 +81,15 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+
+        
+        [Test, RecordedTest]
+        public void AliasInsideSqs()
+        {
+            PerformCompilerTest();
+        }
+
+
         [Test, RecordedTest]
         public void AliasWithArguments()
         {

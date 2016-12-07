@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<request>
+  <e1>User Address $Address</e1>
+  <name>[f: $User.FirstName l: $( User.LastName )`s ]</name>
+</request>

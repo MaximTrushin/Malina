@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Malina.DOM;
-using Malina.DOM.Antlr;
 using System.IO;
-using Malina.Compiler.Steps;
+using AliasDefinition = Malina.DOM.Antlr.AliasDefinition;
 
 namespace Malina.Compiler
 {
@@ -14,7 +13,7 @@ namespace Malina.Compiler
         private ModuleMember _currentModuleMember;
         private Module _currentModule;
         private readonly CompilerContext _context;
-        private Stack<NsInfo> _aliasStack;
+        private readonly Stack<NsInfo> _aliasStack;
 
         public NamespaceResolver(CompilerContext context)
         {
@@ -25,18 +24,7 @@ namespace Malina.Compiler
         /// <summary>
         /// NsInfo for all Module Members (Documents and AliasDef)
         /// </summary>
-        private List<NsInfo> ModuleMembersNsInfo
-        {
-            get
-            {
-                if (_moduleMembersNsInfo == null) _moduleMembersNsInfo = new List<NsInfo>();
-                return _moduleMembersNsInfo;
-            }
-            set
-            {
-                _moduleMembersNsInfo = value;
-            }
-        }
+        private List<NsInfo> ModuleMembersNsInfo => _moduleMembersNsInfo ?? (_moduleMembersNsInfo = new List<NsInfo>());
 
         //This method is called from ProcessAliasesAndNamespaces step after the all Nodes are visited.
         public void ResolveAliasesAndDoChecks()
@@ -61,13 +49,13 @@ namespace Malina.Compiler
 
         internal void ProcessParameter(DOM.Antlr.Parameter node)
         {
-            if(_currentModuleMember is DOM.Document)
+            if(_currentModuleMember is Document)
             {
                 _context.AddError(CompilerErrorFactory.ParametersCantBeDeclaredInDocuments(node, _currentModule.FileName));
             }
             else
             {
-                (_currentModuleMember as DOM.Antlr.AliasDefinition).Parameters.Add(node);
+                ((AliasDefinition) _currentModuleMember).Parameters.Add(node);
             }
         }
 
@@ -114,8 +102,7 @@ namespace Malina.Compiler
         public DOM.AliasDefinition GetAliasDefinition(string name)
         {
             NsInfo resultInfo = ModuleMembersNsInfo.FirstOrDefault(a => (a.ModuleMember is DOM.AliasDefinition) && a.ModuleMember.Name == name);
-            if(resultInfo == null) return null;
-            return resultInfo.ModuleMember as DOM.AliasDefinition;
+            return (DOM.AliasDefinition) resultInfo?.ModuleMember;
         }
 
         private int CalcNumOfRootElements(DOM.Alias alias, List<DOM.AliasDefinition> aliasList)
@@ -169,8 +156,7 @@ namespace Malina.Compiler
         private NsInfo ResolveAliasInModuleMember(DOM.Alias alias, NsInfo memberNsInfo)
         {
             //Finding AliasDef
-            DOM.Antlr.AliasDefinition aliasDef = null;
-            aliasDef = LookupAliasDef(alias);
+            var aliasDef = LookupAliasDef(alias);
 
             if (aliasDef == null)
             {
@@ -181,10 +167,9 @@ namespace Malina.Compiler
 
             if (aliasDef.IsValueNode != alias.IsValueNode)
             {
-                if (aliasDef.IsValueNode)
-                    _context.AddError(CompilerErrorFactory.CantUseValueAliasInTheBlock(alias, memberNsInfo.ModuleMember.Module.FileName));
-                else
-                    _context.AddError(CompilerErrorFactory.CantUseBlockAliasAsValue(alias, memberNsInfo.ModuleMember.Module.FileName));
+                _context.AddError(aliasDef.IsValueNode
+                    ? CompilerErrorFactory.CantUseValueAliasInTheBlock(alias, memberNsInfo.ModuleMember.Module.FileName)
+                    : CompilerErrorFactory.CantUseBlockAliasAsValue(alias, memberNsInfo.ModuleMember.Module.FileName));
             }
 
 
@@ -195,7 +180,7 @@ namespace Malina.Compiler
 
         private void CheckAliasArguments(DOM.Alias alias, DOM.Antlr.AliasDefinition aliasDef, NsInfo documentNsInfo)
         {            
-            foreach (DOM.Parameter parameter in aliasDef.Parameters)
+            foreach (var parameter in aliasDef.Parameters)
             {
                 DOM.Argument argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
                 if (argument == null)
@@ -208,14 +193,11 @@ namespace Malina.Compiler
                 //Report error if type of argument (value/block) mismatch the type of parameter
                 if (argument.IsValueNode != parameter.IsValueNode)
                 {
-                    if (parameter.IsValueNode)
-                    {
-                        _context.AddError(CompilerErrorFactory.ValueArgumentIsExpected(argument, documentNsInfo.ModuleMember.Module.FileName));
-                    }
-                    else
-                    {
-                        _context.AddError(CompilerErrorFactory.BlockArgumentIsExpected(argument, documentNsInfo.ModuleMember.Module.FileName));
-                    }
+                    _context.AddError(parameter.IsValueNode
+                        ? CompilerErrorFactory.ValueArgumentIsExpected(argument,
+                            documentNsInfo.ModuleMember.Module.FileName)
+                        : CompilerErrorFactory.BlockArgumentIsExpected(argument,
+                            documentNsInfo.ModuleMember.Module.FileName));
                 }
 
             }
@@ -223,8 +205,7 @@ namespace Malina.Compiler
 
         private DOM.Antlr.AliasDefinition LookupAliasDef(DOM.Alias alias)
         {
-            DOM.Antlr.AliasDefinition result = null;
-            result = (DOM.Antlr.AliasDefinition)_context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            var result = (DOM.Antlr.AliasDefinition)_context.NamespaceResolver.GetAliasDefinition(alias.Name);
             return result;
         }
 
@@ -272,8 +253,7 @@ namespace Malina.Compiler
         private NsInfo ResolveAliasInAliasDefinition(DOM.Alias alias, NsInfo aliasDefNsInfo)
         {
             //Finding AliasDef
-            DOM.AliasDefinition aliasDef = null;
-            aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
             if (aliasDef == null)
             {
                 //Report Error
@@ -329,13 +309,13 @@ namespace Malina.Compiler
         public void ExitDocument(DOM.Antlr.Document node)
         {
             //Checking if the document's name is unique
-            var sameNameDocuments = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.Document && (n.ModuleMember as DOM.Document).Name == node.Name));
+            var sameNameDocuments = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.Document && ((DOM.Document) n.ModuleMember).Name == node.Name));
             if (sameNameDocuments.Count > 1)
             {
                 if (sameNameDocuments.Count == 2)
                 {
                     //Reporting error for 2 documents (existing and new)
-                    var prevDoc = sameNameDocuments[0].ModuleMember as DOM.Document;
+                    var prevDoc = (DOM.Document) sameNameDocuments[0].ModuleMember;
                     _context.AddError(CompilerErrorFactory.DuplicateDocumentName(prevDoc, prevDoc.Module.FileName));
                 }
                 _context.AddError(CompilerErrorFactory.DuplicateDocumentName(node, _currentModule.FileName));
@@ -347,13 +327,13 @@ namespace Malina.Compiler
         public void ExitAliasDef(DOM.Antlr.AliasDefinition node)
         {
             //Checking if the alias definition name is unique
-            var sameNameAliasDef = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.AliasDefinition && (n.ModuleMember as DOM.AliasDefinition).Name == node.Name));
+            var sameNameAliasDef = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.AliasDefinition && ((DOM.AliasDefinition) n.ModuleMember).Name == node.Name));
             if (sameNameAliasDef.Count > 1)
             {
                 if (sameNameAliasDef.Count == 2)
                 {
                     //Reporting error for 2 documents (existing and new)
-                    var prevAliasDef = sameNameAliasDef[0].ModuleMember as DOM.AliasDefinition;
+                    var prevAliasDef = (DOM.AliasDefinition) sameNameAliasDef[0].ModuleMember;
                     _context.AddError(CompilerErrorFactory.DuplicateAliasDefName(prevAliasDef, prevAliasDef.Module.FileName));
                 }
                 _context.AddError(CompilerErrorFactory.DuplicateAliasDefName(node, _currentModule.FileName));
@@ -385,7 +365,7 @@ namespace Malina.Compiler
         /// <param name="node"></param>
         internal void ProcessNsPrefix(Node node)
         {
-            var nsPrefix = (node as INsNode).NsPrefix;
+            var nsPrefix = ((INsNode) node).NsPrefix;
 
             if (nsPrefix != null && !nsPrefix.StartsWith("xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -400,7 +380,7 @@ namespace Malina.Compiler
 
                 if (foundNs == null)
                     CurrentModuleMemberNsInfo.Namespaces.Add(ns);
-                else if (foundNs.Name != nsPrefix) (node as INsNode).NsPrefix = foundNs.Name;
+                else if (foundNs.Name != nsPrefix) ((INsNode) node).NsPrefix = foundNs.Name;
 
             }
         }
@@ -412,7 +392,7 @@ namespace Malina.Compiler
         /// <returns></returns>
         private DOM.Namespace LookupNamespace(string nsPrefix)
         {
-            DOM.Namespace ns = null;
+            DOM.Namespace ns;
             //Looking up in the ModuleMember (Document/AliasDef)
             if ((ns = _currentModuleMember.Namespaces.FirstOrDefault(n => n.Name == nsPrefix)) != null)
                 return ns;
@@ -421,7 +401,7 @@ namespace Malina.Compiler
             if ((ns = _currentModule.Namespaces.FirstOrDefault(n => n.Name == nsPrefix)) != null)
             {
                 //Checking if this namespace can be replaced by ns from ModuleMember because it has same URI
-                DOM.Namespace ns2 = null;
+                DOM.Namespace ns2;
                 if ((ns2 = _currentModuleMember.Namespaces.FirstOrDefault(n => n.Value == ns.Value)) != null)
                     return ns2;
 
@@ -440,7 +420,7 @@ namespace Malina.Compiler
 
 
             //Getting namespace info for the generated document.
-            var targetNsInfo = ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == document);
+            var targetNsInfo = ModuleMembersNsInfo.First(n => n.ModuleMember == document);
 
             var aliasDef = getAliasDef();
 
@@ -463,7 +443,7 @@ namespace Malina.Compiler
                         ns = moduleNamespace.Value;
 
                         //Finding effective prefix in the Document Namespace
-                        domNamespace = targetNsInfo.Namespaces.FirstOrDefault(n => n.Value == moduleNamespace.Value);
+                        domNamespace = targetNsInfo.Namespaces.First(n => n.Value == moduleNamespace.Value);
                         prefix = domNamespace.Name;
                     }
                 }
@@ -471,7 +451,7 @@ namespace Malina.Compiler
             else
             {
                 //Resolving ns first using aliasDef context NsInfo
-                var contextNsInfo = ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == aliasDef);
+                var contextNsInfo = ModuleMembersNsInfo.First(n => n.ModuleMember == aliasDef);
                 var domNamespace = contextNsInfo.Namespaces.FirstOrDefault(n => n.Name == node.NsPrefix);
                 
                 if (domNamespace == null)

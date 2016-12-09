@@ -6,15 +6,19 @@ using Newtonsoft.Json;
 using Attribute = Malina.DOM.Attribute;
 using ValueType = Malina.DOM.ValueType;
 
-namespace Malina.Generator
+namespace Malina.Compiler
 {
     public class JsonGenerator : MalinaDepthFirstVisitor
     {
-        // Delegate returns JsonWriter for the module with the given string name.
+        
         private readonly Func<string, JsonWriter> _writerDelegate;
 
         private JsonWriter _jsonWriter;
 
+        /// <summary>
+        /// Delegate will be called for the each Document. The name of the document will be sent in the string argument.
+        /// </summary>
+        /// <param name="writerDelegate"></param>
         public JsonGenerator(Func<string, JsonWriter> writerDelegate)
         {
             _writerDelegate = writerDelegate;

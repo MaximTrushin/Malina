@@ -1,15 +1,10 @@
-﻿using Antlr4.Runtime;
-using Antlr4.Runtime.Atn;
-using Malina.DOM;
-using Malina.Parser;
+﻿using Malina.DOM;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Malina.Generator;
+using System.Xml;
 using Newtonsoft.Json;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace Malina.Compiler.Steps
 {
@@ -50,7 +45,7 @@ namespace Malina.Compiler.Steps
 
                 MalinaDepthFirstVisitor visitor;
                 if (module.FileName.EndsWith(".mlx"))
-                    visitor = new CompilingXmlToFileVisitor(context);
+                    visitor = new XmlGenerator(XmlFileWriterDelegate, context);
                 else visitor = new JsonGenerator(JsonFileWriterDelegate);
 
                 visitor.OnModule(module);
@@ -59,6 +54,15 @@ namespace Malina.Compiler.Steps
             {
                 _context.Errors.Add(CompilerErrorFactory.FatalError(ex));
             }
+        }
+
+        private XmlWriter XmlFileWriterDelegate(string documentName)
+        {
+            var fileName = Path.Combine(_context.Parameters.OutputDirectory + documentName + ".xml");
+            return XmlWriter.Create(
+                new XmlTextWriter(fileName, Encoding.UTF8) {Formatting = System.Xml.Formatting.Indented, Namespaces = true},
+                new XmlWriterSettings {ConformanceLevel = ConformanceLevel.Document});
+
         }
 
         private JsonWriter JsonFileWriterDelegate(string documentName)

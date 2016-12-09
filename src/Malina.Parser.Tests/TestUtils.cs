@@ -20,7 +20,10 @@ namespace Malina.Parser.Tests
         {
             var testCaseName = GetTestCaseName();
 
-            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\").Append(testCaseName).Append(".mlx").ToString();
+            var fileName = AssemblyDirectory + @"\Scenarios\"+ testCaseName;
+
+            if (File.Exists(fileName + ".mlj")) fileName += ".mlj";
+            else fileName += ".mlx";
 
             return File.ReadAllText(fileName).Replace("\r\n", "\n");
         }

@@ -189,13 +189,12 @@ namespace Malina.Compiler.Tests
 
             foreach (var fileName in Directory.EnumerateFiles(dir))
             {
-                if (fileName.EndsWith(".mlx"))
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(Path.GetFileName(fileName));
-                    var code = File.ReadAllText(fileName);
-                    PrintCode(code);
-                }
+                if (!fileName.EndsWith(".mlx") && !fileName.EndsWith(".mlj")) continue;
+
+                Console.WriteLine();
+                Console.WriteLine(Path.GetFileName(fileName));
+                var code = File.ReadAllText(fileName);
+                PrintCode(code);
             }
         }
 
@@ -209,7 +208,7 @@ namespace Malina.Compiler.Tests
 
             foreach (var fileName in Directory.EnumerateFiles(dir))
             {
-                if (fileName.EndsWith(".mlx"))
+                if (fileName.EndsWith(".mlx") || fileName.EndsWith(".mlj"))
                 {
                     compilerParameters.Input.Add(new FileInput(fileName));
                 }

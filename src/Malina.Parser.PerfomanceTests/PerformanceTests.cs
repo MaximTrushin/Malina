@@ -15,7 +15,7 @@ namespace Malina.Parser.PerfomanceTests
     [TestFixture]
     public class PerformanceTests
     {
-        //[Test]
+        [Test]
         public void BigFile()
         {
             Console.WriteLine("Starting BigFile");

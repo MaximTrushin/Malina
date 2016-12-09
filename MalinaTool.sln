@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console.Tests", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Compiler.Tests", "src\Malina.Compiler.Tests\Malina.Compiler.Tests.csproj", "{FD22DBF6-4EC4-4742-916F-88EBB8E59008}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Generator", "Malina.Generator\Malina.Generator.csproj", "{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +201,22 @@ Global
 		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|x64.Build.0 = Release|Any CPU
 		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|x86.ActiveCfg = Release|Any CPU
 		{FD22DBF6-4EC4-4742-916F-88EBB8E59008}.Release|x86.Build.0 = Release|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Debug|x64.Build.0 = Debug|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Debug|x86.Build.0 = Debug|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Release|ARM.Build.0 = Release|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Release|x64.ActiveCfg = Release|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Release|x64.Build.0 = Release|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Release|x86.ActiveCfg = Release|Any CPU
+		{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

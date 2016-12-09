@@ -2,7 +2,7 @@
 
 namespace Malina.Compiler.Steps
 {
-    class AliasContext
+    public class AliasContext
     {
         public Alias Alias { get; set; }
         public AliasDefinition AliasDefinition { get; set; }

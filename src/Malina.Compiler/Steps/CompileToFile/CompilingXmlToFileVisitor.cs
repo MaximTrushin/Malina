@@ -12,7 +12,7 @@ using ValueType = Malina.DOM.ValueType;
 
 namespace Malina.Compiler.Steps
 {
-    class CompilingToFileVisitor : MalinaDepthFirstVisitor
+    public class CompilingXmlToFileVisitor : MalinaDepthFirstVisitor
     {
         private readonly CompilerContext _context;
         private Document _currentDocument;
@@ -42,7 +42,7 @@ namespace Malina.Compiler.Steps
             }
         }
 
-        public CompilingToFileVisitor(CompilerContext context)
+        public CompilingXmlToFileVisitor(CompilerContext context)
         {
             _context = context;
         }
@@ -299,7 +299,7 @@ namespace Malina.Compiler.Steps
 
         }
 
-        private string ResolveSqsEol(CommonToken token, int valueIndent)
+        private static string ResolveSqsEol(IToken token, int valueIndent)
         {
             var sb = new StringBuilder();
             var value = token.Text;

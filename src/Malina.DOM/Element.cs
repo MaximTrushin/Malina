@@ -39,7 +39,7 @@ namespace Malina.DOM
         public override void Assign(Node node)
         {
             base.Assign(node);
-            Element element = node as Element;
+            Element element = (Element) node;
             NsPrefix = element.NsPrefix;
             ObjectValue = element.ObjectValue;            
             ValueType = element.ValueType;
@@ -70,22 +70,12 @@ namespace Malina.DOM
         }
         public NodeCollection<Attribute> Attributes
         {
-            get
-            {
-                if (_attributes == null)
-                {
-                    _attributes = new NodeCollection<Attribute>(this);
-                }
-                return _attributes;
-            }
+            get { return _attributes ?? (_attributes = new NodeCollection<Attribute>(this)); }
             set
             {
                 if (value != _attributes)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
+                    value?.InitializeParent(this);
                     _attributes = value;
                 }
             }
@@ -93,24 +83,13 @@ namespace Malina.DOM
 
         public NodeCollection<Entity> Entities
         {
-            get
-            {
-                if (_entities == null)
-                {
-                    _entities = new NodeCollection<Entity>(this);
-                }
-                return _entities;
-            }
+            get { return _entities ?? (_entities = new NodeCollection<Entity>(this)); }
             set
             {
-                if (value != _entities)
-                {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
-                    _entities = value;
-                }
+                if (value == _entities) return;
+
+                value?.InitializeParent(this);
+                _entities = value;
             }
         }
 
@@ -153,13 +132,7 @@ namespace Malina.DOM
             }
         }
 
-        public bool IsValueNode
-        {
-            get
-            {
-                return _valueType != ValueType.None;
-            }
-        }
+        public bool IsValueNode => _valueType != ValueType.None;
     }
 
 

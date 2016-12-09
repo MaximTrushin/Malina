@@ -35,6 +35,10 @@
       <HintPath>..\..\packages\Antlr4.Runtime.4.5.3\lib\net45\Antlr4.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,7 +57,7 @@
     <Compile Include="Steps\CompileToFile\AliasContext.cs" />
     <Compile Include="Steps\ProcessAliasesAndNamespaces\AliasesAndNamespacesResolvingListener.cs" />
     <Compile Include="Steps\CompileToFile\CompileDocumentsToFiles.cs" />
-    <Compile Include="Steps\CompileToFile\CompilingToFileVisitor.cs" />
+    <Compile Include="Steps\CompileToFile\CompilingXmlToFileVisitor.cs" />
     <Compile Include="Steps\ProcessAliasesAndNamespaces\LexerParserErrorListener.cs" />
     <Compile Include="ICompilerComponent.cs" />
     <Compile Include="ICompilerInput.cs" />
@@ -72,6 +76,10 @@
     <Compile Include="Steps\ProcessAliasesAndNamespaces\ProcessAliasesAndNamespaces.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Malina.Generator\Malina.Generator.csproj">
+      <Project>{5813DC1C-5A2C-48AA-A9FF-86C169FCE23D}</Project>
+      <Name>Malina.Generator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Malina.DOM.Antlr\Malina.DOM.Antlr.csproj">
       <Project>{902e7778-7de3-4d1a-beb7-9e13b8e525d2}</Project>
       <Name>Malina.DOM.Antlr</Name>

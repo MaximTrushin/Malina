@@ -18,12 +18,13 @@ namespace Malina.Parser
         }
 
         #region MODULE NodeContext
-        public partial class ModuleContext : INodeContext<DOM.Module>
+        public partial class ModuleContext : INodeContext<Module>
         {
-            public DOM.Module Node { get; set; }
+            public Module Node { get; set; }
             public void ApplyContext()
             {
                 this.SetNodeLocation();
+                if (Node.FileName != null && Node.FileName.EndsWith(".mlj")) Node.TargetFormat = Module.TargetFormats.Json;
             }
         }
         #endregion

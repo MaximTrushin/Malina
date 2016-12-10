@@ -7,6 +7,9 @@ namespace Malina.DOM.Antlr
     {
         private ICharStream _charStream;
         private Interval _idInterval;
+        
+
+
         public ICharStream CharStream
         {
             set

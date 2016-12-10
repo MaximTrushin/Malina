@@ -5,53 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Antlr4.Runtime;
-using Malina.Compiler.Generator;
-using Malina.Compiler.Steps;
 using Malina.DOM;
 using Malina.Parser;
 using ValueType = Malina.DOM.ValueType;
 
-namespace Malina.Compiler
+namespace Malina.Compiler.Generator
 {
-    public class XmlGenerator : MalinaDepthFirstVisitor
+    public class XmlGenerator : MalinaGenerator
     {
-        private Document _currentDocument;
         private XmlWriter _xmlTextWriter;
         private readonly Func<string, XmlWriter> _writerDelegate;
-        private readonly CompilerContext _context;
         private bool _rootElementAdded;
-        private Stack<AliasContext> _aliasContext;
-
 
         public List<LexicalInfo> LocationMap { get; set; }
-
-        public Stack<AliasContext> AliasContext
-        {
-            get
-            {
-                if (_aliasContext != null) return _aliasContext;
-
-                _aliasContext = new Stack<AliasContext>();
-                _aliasContext.Push(null);
-
-                return _aliasContext;
-            }
-
-            set
-            {
-                _aliasContext = value;
-            }
-        }
 
         /// <summary>
         /// This constructor should be used if output depends on the name of the document.
         /// </summary>
         /// <param name="writerDelegate">Delegate will be called for each Document. The name of the document will be sent in the string argument.</param>
         /// <param name="context"></param>
-        public XmlGenerator(Func<string, XmlWriter> writerDelegate, CompilerContext context)
+        public XmlGenerator(Func<string, XmlWriter> writerDelegate, CompilerContext context):base(context)
         {
             _writerDelegate = writerDelegate;
-            _context = context;
         }
 
         public override void OnDocument(Document node)
@@ -92,15 +67,13 @@ namespace Malina.Compiler
             _xmlTextWriter.WriteStartElement(prefix, node.Name, ns);
             LocationMap.Add(new LexicalInfo(_currentDocument.Module.FileName, node.start.Line, node.start.Column, node.start.Index));
 
-
             //Write all namespace declarations in the root element
             if (!_rootElementAdded)
             {
                 WritePendingNamespaceDeclarations(ns);
                 _rootElementAdded = true;
             }
-
-
+            
             //Write attributes            
             ResolveAttributes(node.Attributes, node.Entities);
 
@@ -141,7 +114,7 @@ namespace Malina.Compiler
         {
             var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
 
-            AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
+            AliasContext.Push(item: new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
             Visit(aliasDef.Entities);
             AliasContext.Pop();
         }
@@ -173,54 +146,6 @@ namespace Malina.Compiler
             }
         }
 
-        private void ResolveAttributes(IEnumerable<DOM.Attribute> attributes, IEnumerable<Entity> entities)
-        {
-            Visit(attributes);
-            ResolveAttributes(entities);
-        }
-
-        /// <summary>
-        /// Go through all entities and resolve attributes for the current node.
-        /// </summary>
-        /// <param name="entities">List of entities. Looking for alias or parameter because they potentially can hold the attributes.</param>
-        private void ResolveAttributes(IEnumerable<Entity> entities)
-        {
-            foreach (var entity in entities)
-            {
-                if (entity is Alias)
-                {
-                    ResolveAttributesInAlias(entity as Alias);
-                }
-                else if (entity is Parameter)
-                {
-                    ResolveAttributesInParameter(entity as Parameter);
-                }
-            }
-        }
-
-        private void ResolveAttributesInParameter(Parameter parameter)
-        {
-            var aliasContext = AliasContext.Peek();
-            var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
-            if (argument != null)
-            {
-                //Resolve using argument's block
-                ResolveAttributes(argument.Attributes, argument.Entities);
-            }
-            else
-            {
-                //Resolve using parameter's default block
-                ResolveAttributes(parameter.Attributes, parameter.Entities);
-            }
-        }
-
-        private void ResolveAttributesInAlias(Alias alias)
-        {
-            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
-            AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
-            ResolveAttributes(aliasDef.Attributes, aliasDef.Entities);
-            AliasContext.Pop();
-        }
 
         private string ResolveAttributeValue(DOM.Attribute node)
         {
@@ -241,114 +166,9 @@ namespace Malina.Compiler
             return null;
         }
 
-        private string ResolveNodeValue(DOM.Antlr.IValueNode node)
-        {
-            if (((IValueNode)node).ValueType != ValueType.SingleQuotedString)
-                return ((IValueNode)node).Value;
 
-            var sb = new StringBuilder();
-            foreach (var item in node.InterpolationItems)
-            {
-                var alias = item as Alias;
-                if (alias != null)
-                {
-                    sb.Append(ResolveValueAlias(alias));
-                    continue;
-                }
-                var token = item as CommonToken;
-                if (token == null) continue;
 
-                sb.Append(token.Type == MalinaLexer.SQS_EOL ? ResolveSqsEol(token, node.ValueIndent) : token.Text);
-            }
-            return sb.ToString();
 
-        }
 
-        private string ResolveValueParameter(Parameter parameter)
-        {
-            var aliasContext = AliasContext.Peek();
-            var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
-            if (argument != null)
-            {
-                if (argument.ObjectValue != null)
-                {
-                    return ResolveObjectValue(argument.ObjectValue);
-                }
-                return argument.Value;
-            }
-
-            //if argument is not found lookup default value in the Alias Definition
-            var paramDef = (aliasContext.AliasDefinition as DOM.Antlr.AliasDefinition)?.Parameters.First(p => p.Name == parameter.Name);
-
-            //If parameteres default value is Parameter or Alias then resolve it
-            if (paramDef?.ObjectValue != null)
-            {
-                return ResolveObjectValue(paramDef.ObjectValue);
-
-            }
-
-            return paramDef?.Value;
-
-        }
-
-        private string ResolveValueAlias(Alias alias)
-        {
-            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
-
-            if (aliasDef.ObjectValue == null) return aliasDef.Value;
-
-            return ResolveObjectValue(aliasDef.ObjectValue);
-
-        }
-
-        private string ResolveObjectValue(object objectValue)
-        {
-            var value = objectValue as Parameter;
-            if (value != null)
-            {
-                return ResolveValueParameter(value);
-            }
-
-            var alias = objectValue as Alias;
-            if (alias != null)
-            {
-                return ResolveValueAlias(alias);
-            }
-            return null;
-        }
-
-        private static string ResolveSqsEol(IToken token, int valueIndent)
-        {
-            var sb = new StringBuilder();
-            var value = token.Text;
-            var lines = value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-            var first = true;
-            foreach (var item in lines)
-            {
-                //Skip first one
-                if (first)
-                {
-                    first = false;
-                    continue;
-                }
-
-                //Removing indents
-                sb.AppendLine();
-                if (item.Length > valueIndent)
-                    sb.Append(item.Substring(valueIndent));
-            }
-
-            return sb.ToString();
-        }
-
-        private NsInfo GetContextNsInfo()
-        {
-            if (AliasContext.Peek() == null)
-            {
-                return _context.NamespaceResolver.GetNsInfo(_currentDocument);
-            }
-
-            return _context.NamespaceResolver.GetNsInfo(AliasContext.Peek().AliasDefinition);
-        }
     }
 }

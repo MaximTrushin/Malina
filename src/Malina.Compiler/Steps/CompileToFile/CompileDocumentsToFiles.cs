@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Xml;
+using Malina.Compiler.Generator;
 using Newtonsoft.Json;
 using Formatting = Newtonsoft.Json.Formatting;
 
@@ -46,7 +47,7 @@ namespace Malina.Compiler.Steps
                 MalinaDepthFirstVisitor visitor;
                 if (module.FileName.EndsWith(".mlx"))
                     visitor = new XmlGenerator(XmlFileWriterDelegate, context);
-                else visitor = new JsonGenerator(JsonFileWriterDelegate);
+                else visitor = new JsonGenerator(JsonFileWriterDelegate, context);
 
                 visitor.OnModule(module);
             }

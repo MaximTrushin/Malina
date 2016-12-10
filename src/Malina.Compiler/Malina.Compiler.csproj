@@ -54,12 +54,13 @@
     <Compile Include="CompilerParameters.cs" />
     <Compile Include="CompilerPipeline.cs" />
     <Compile Include="ErrorCodes.cs" />
+    <Compile Include="Generator\AliasContext.cs" />
     <Compile Include="Generator\JsonGenerator.cs" />
+    <Compile Include="Generator\MalinaGenerator.cs" />
     <Compile Include="Generator\SourceMappedXmlValidator.cs" />
     <Compile Include="Generator\XmlGenerator.cs" />
     <Compile Include="Generator\NamespaceResolver.cs" />
     <Compile Include="Generator\NsInfo.cs" />
-    <Compile Include="Steps\CompileToFile\AliasContext.cs" />
     <Compile Include="Steps\ProcessAliasesAndNamespaces\AliasesAndNamespacesResolvingListener.cs" />
     <Compile Include="Steps\CompileToFile\CompileDocumentsToFiles.cs" />
     <Compile Include="Steps\ProcessAliasesAndNamespaces\LexerParserErrorListener.cs" />

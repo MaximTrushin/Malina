@@ -147,7 +147,7 @@ namespace Malina.Compiler
             var i = 1;
             while (namespaces.Any(n => n.Name == name))
             {
-                name = name + i++.ToString();
+                name = name + i++;
             }
 
             return name;
@@ -308,8 +308,10 @@ namespace Malina.Compiler
 
         public void ExitDocument(DOM.Antlr.Document node)
         {
-            //Checking if the document's name is unique
-            var sameNameDocuments = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.Document && ((DOM.Document) n.ModuleMember).Name == node.Name));
+            //Checking if the document's name is unique per format (json/xml)
+            var sameNameDocuments = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.Document && ((DOM.Document) n.ModuleMember).Name == node.Name) 
+                && ((DOM.Antlr.Module)node.Module).TargetFormat == ((DOM.Antlr.Module)((DOM.Document)n.ModuleMember).Module).TargetFormat
+             );
             if (sameNameDocuments.Count > 1)
             {
                 if (sameNameDocuments.Count == 2)

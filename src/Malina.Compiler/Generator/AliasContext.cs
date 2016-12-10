@@ -1,6 +1,6 @@
 ﻿using Malina.DOM;
 
-namespace Malina.Compiler.Steps
+namespace Malina.Compiler.Generator
 {
     public class AliasContext
     {

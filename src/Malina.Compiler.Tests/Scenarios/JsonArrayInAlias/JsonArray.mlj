@@ -1,7 +1,10 @@
 !json:
-	item:
+	item1:
 		$Array
-
+	item2:
+		:
+			prop1 = "a"
+		$Array
 
 !$Array:
 	:

@@ -15,9 +15,9 @@ namespace Malina.Parser
         NoError = 0,
 
         //Lexer Errors
-        [Message("Missing closing Double Qoute.")]
+        [Message("Missing closing Double Quote.")]
         ClosingDqMissing,
-        [Message("Missing closing Single Qoute.")]
+        [Message("Missing closing Single Quote.")]
         ClosingSqMissing,
         [Message("Incorrect usage of colon.")]
         IncorrectColon,
@@ -85,7 +85,7 @@ namespace Malina.Parser
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append(string.Format("Code={0}, Start={1}, Stop={2}", _code, _start, _stop));
+            sb.Append($"Code={_code}, Start={_start}, Stop={_stop}");
             return sb.ToString();
         }
     }

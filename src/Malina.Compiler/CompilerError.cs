@@ -44,7 +44,7 @@ namespace Malina.Compiler
         public CompilerError(string code, LexicalInfo lexicalInfo, Exception cause, params object[] args) : base(ErrorCodes.Format(code, args), cause)
         {
             if (null == lexicalInfo)
-                throw new ArgumentNullException("lexicalInfo");
+                throw new ArgumentNullException(nameof(lexicalInfo));
             _code = code;
             _lexicalInfo = lexicalInfo;
         }
@@ -56,7 +56,7 @@ namespace Malina.Compiler
         public CompilerError(string code, LexicalInfo lexicalInfo, params object[] args) : base(ErrorCodes.Format(code, args))
         {
             if (null == lexicalInfo)
-                throw new ArgumentNullException("lexicalInfo");
+                throw new ArgumentNullException(nameof(lexicalInfo));
             _code = code;
             _lexicalInfo = lexicalInfo;
         }
@@ -64,7 +64,7 @@ namespace Malina.Compiler
         public CompilerError(string code, LexicalInfo lexicalInfo, string message, Exception cause) : base(message, cause)
         {
             if (null == lexicalInfo)
-                throw new ArgumentNullException("lexicalInfo");
+                throw new ArgumentNullException(nameof(lexicalInfo));
             _code = code;
             _lexicalInfo = lexicalInfo;
         }
@@ -86,17 +86,11 @@ namespace Malina.Compiler
         {
         }
 
-        public string Code
-        {
-            get { return _code; }
-        }
+        public string Code => _code;
 
-        public LexicalInfo LexicalInfo
-        {
-            get { return _lexicalInfo; }
-        }
+        public LexicalInfo LexicalInfo => _lexicalInfo;
 
-        override public string ToString()
+        public override string ToString()
         {
             var sb = new StringBuilder();
             if (_lexicalInfo.Line > 0)

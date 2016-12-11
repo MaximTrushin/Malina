@@ -289,7 +289,7 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedParseTree, parseTree, "PARSE TREE assertion failed");
             }
 
-            Assert.AreEqual(false, parserErrorListener.HasErrors);
+            Assert.AreEqual(false, parserErrorListener.HasErrors, "ParserErrorListener has errors");
 
             //DOM Assertions
             if (recordedDom != null)

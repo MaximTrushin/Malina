@@ -8,22 +8,8 @@ namespace Malina.DOM
         private NodeCollection<Namespace> _namespaces;
 
         // Methods
-        protected ModuleMember()
-        {
-        }
 
-        public virtual Module Module
-        {
-            get
-            {
-                return (Parent as Module);
-            }
-        }
-
-        public override void Assign(Node node)
-        {
-            base.Assign(node);
-        }
+        public virtual Module Module => (Parent as Module);
 
         public virtual NodeCollection<Namespace> Namespaces
         {

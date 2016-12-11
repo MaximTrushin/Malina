@@ -38,15 +38,6 @@ namespace Malina.DOM
             return this;
         }
 
-        public void AssignNodes(IEnumerable<Node> nodes)
-        {
-            Clear();
-            foreach (var node in nodes)
-            {
-                Add((node as Node).Clone() as T);
-            }
-        }
-
         public virtual void Clear()
         {
             _list.Clear();
@@ -74,15 +65,15 @@ namespace Malina.DOM
 
         public void Initialize(T item)
         {
-            (item as Node).InitializeParent(_parent);
+            item.InitializeParent(_parent);
         }
 
         internal void InitializeParent(Node parent)
         {
             _parent = parent;
-            foreach (T local in _list)
+            foreach (var local in _list)
             {
-                (local as Node).InitializeParent(parent);
+                local.InitializeParent(parent);
             }
         }
 
@@ -92,20 +83,6 @@ namespace Malina.DOM
             _list.Insert(index, item);
         }
 
-        public void InsertRange(int index, IEnumerable<T> collection)
-        {
-            foreach (T local in collection)
-            {
-                (local as Node).InitializeParent(_parent);
-            }
-            _list.InsertRange(index, collection);
-        }
-
-        public void InsertRangeBefore(T item, IEnumerable<T> collection)
-        {
-            int index = _list.IndexOf(item);
-            InsertRange(index, collection);
-        }
 
         public virtual bool Remove(T item)
         {
@@ -138,29 +115,11 @@ namespace Malina.DOM
         }
 
         // Properties
-        public virtual int Count
-        {
-            get
-            {
-                return _list.Count;
-            }
-        }
+        public virtual int Count => _list.Count;
 
-        public virtual bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool IsReadOnly => false;
 
-        public bool IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsSynchronized => false;
 
         public T this[int index]
         {
@@ -170,28 +129,16 @@ namespace Malina.DOM
             }
             set
             {
-                if (_list[index] != value)
+                if (_list != null && _list[index] != value)
                 {
                     _list[index] = value;
                 }
             }
         }
 
-        public Node Parent
-        {
-            get
-            {
-                return _parent;
-            }
-        }
+        public Node Parent => _parent;
 
-        public NodeCollection<T> SyncRoot
-        {
-            get
-            {
-                return this;
-            }
-        }
+        public NodeCollection<T> SyncRoot => this;
     }
 
 

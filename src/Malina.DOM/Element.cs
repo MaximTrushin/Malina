@@ -35,26 +35,7 @@ namespace Malina.DOM
                 base.AppendChild(child);
             }
         }
-
-        public override void Assign(Node node)
-        {
-            base.Assign(node);
-            Element element = (Element) node;
-            NsPrefix = element.NsPrefix;
-            ObjectValue = element.ObjectValue;            
-            ValueType = element.ValueType;
-            Entities.AssignNodes(element.Entities);
-            Attributes.AssignNodes(element.Attributes);
-
-        }
-
-        public override Node Clone()
-        {
-            Element element = new Element();
-            element.Assign(this);
-            return element;
-        }
-
+        
         // Properties
 
         public virtual string Value
@@ -68,18 +49,7 @@ namespace Malina.DOM
                 _value = value;
             }
         }
-        public NodeCollection<Attribute> Attributes
-        {
-            get { return _attributes ?? (_attributes = new NodeCollection<Attribute>(this)); }
-            set
-            {
-                if (value != _attributes)
-                {
-                    value?.InitializeParent(this);
-                    _attributes = value;
-                }
-            }
-        }
+        public NodeCollection<Attribute> Attributes => _attributes ?? (_attributes = new NodeCollection<Attribute>(this));
 
         public NodeCollection<Entity> Entities
         {

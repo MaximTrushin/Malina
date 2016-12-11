@@ -36,22 +36,6 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node)
-        {
-            base.Assign(node);
-            Module module = node as Module;
-            Name = module.Name;
-            Members.AssignNodes(module.Members);
-            Namespaces.AssignNodes(module.Namespaces);
-        }
-
-        public override Node Clone()
-        {
-            Module module = new Module();
-            module.Assign(this);
-            return module;
-        }
-
         // Properties
         public NodeCollection<ModuleMember> Members
         {

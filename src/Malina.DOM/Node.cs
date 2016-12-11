@@ -35,15 +35,6 @@ namespace Malina.DOM
             throw new NotSupportedException(new StringBuilder("Cannot add ").Append(child.GetType().Name).Append(" in ").Append(GetType().Name).ToString());
         }
 
-        public virtual void Assign(Node node)
-        {
-            _parent = node._parent;
-            start = node.start;
-            end = node.end;
-            _name = node.Name;
-        }
-
-        public abstract Node Clone();
         internal void InitializeParent(Node parent)
         {
             _parent = parent;

@@ -26,11 +26,6 @@ namespace Malina.DOM
             visitor.OnCompileUnit(this);
         }
 
-        public override Node Clone()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void AppendChild(Node child)
         {
             var item = child as Module;

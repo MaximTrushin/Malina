@@ -134,21 +134,6 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node)
-        {
-            base.Assign(node);
-            Alias alias = node as Alias;            
-            Arguments.AssignNodes(alias.Arguments);
-
-        }
-
-        public override Node Clone()
-        {
-            Alias alias = new Alias();
-            alias.Assign(this);
-            return alias;
-        }
-
         // Properties
         public NodeCollection<Argument> Arguments
         {

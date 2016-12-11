@@ -48,23 +48,6 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node)
-        {
-            base.Assign(node);
-            AliasDefinition definition = node as AliasDefinition;
-            Value = definition.Value;
-            Namespaces.AssignNodes(definition.Namespaces);
-            Entities.AssignNodes(definition.Entities);
-            Attributes.AssignNodes(definition.Attributes);
-        }
-
-        public override Node Clone()
-        {
-            AliasDefinition definition = new AliasDefinition();
-            definition.Assign(this);
-            return definition;
-        }
-
         // Properties
         public NodeCollection<Attribute> Attributes
         {

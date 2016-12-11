@@ -9,16 +9,15 @@ namespace Malina.DOM
     public class Document : ModuleMember
     {
         // Fields
+        private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
         
         public Entity DocumentElement;
 
+        // Properties
+        public NodeCollection<Attribute> Attributes => _attributes ?? (_attributes = new NodeCollection<Attribute>(this));
+
         // Methods
-        public Document()
-        {
-        }
-
-
         public override void Accept(IDomVisitor visitor)
         {
             visitor.OnDocument(this);
@@ -26,7 +25,11 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is Entity)
+            if (child is Attribute)
+            {
+                Attributes.Add((Attribute)child);
+            }
+            else if (child is Entity)
             {
                 DocumentElement = (Entity)child;
                 child.InitializeParent(this);
@@ -42,46 +45,8 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node)
-        {
-            base.Assign(node);
-            Document document = node as Document;
-            Namespaces.AssignNodes(document.Namespaces);
-            DocumentElement = (Entity)document.DocumentElement.Clone();
-
-        }
-
-        public override Node Clone()
-        {
-            Document document = new Document();
-            document.Assign(this);
-            return document;
-        }
-
         // Properties
-        public NodeCollection<Entity> Entities
-        {
-            get
-            {
-                if (_entities == null)
-                {
-                    _entities = new NodeCollection<Entity>(this);
-                }
-                return _entities;
-            }
-            set
-            {
-                if (value != _entities)
-                {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
-                    _entities = value;
-                }
-            }
-        }
-
+        public NodeCollection<Entity> Entities => _entities ?? (_entities = new NodeCollection<Entity>(this));
     }
 
 

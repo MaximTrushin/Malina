@@ -21,23 +21,6 @@ namespace Malina.DOM
             visitor.OnAttribute(this);
         }
 
-        public override void Assign(Node node)
-        {
-            base.Assign(node);
-            Attribute attribute = node as Attribute;
-            Namespace = attribute.Namespace;
-            Name = attribute.Name;
-            ObjectValue = attribute.ObjectValue;
-            ValueType = attribute.ValueType;
-        }
-
-        public override Node Clone()
-        {
-            Attribute attribute = new Attribute();
-            attribute.Assign(this);
-            return attribute;
-        }
-
         // Properties
         public virtual string Value
         {

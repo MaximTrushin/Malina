@@ -31,23 +31,6 @@ namespace Malina.DOM
             }
         }
 
-        public override void Assign(Node node)
-        {
-            base.Assign(node);
-            Scope scope = node as Scope;
-            Name = scope.Name;
-            Entities.AssignNodes(scope.Entities);
-            Attributes.AssignNodes(scope.Attributes);
-
-        }
-
-        public override Node Clone()
-        {
-            Scope scope = new Scope();
-            scope.Assign(this);
-            return scope;
-        }
-
         // Properties
         public NodeCollection<Attribute> Attributes
         {

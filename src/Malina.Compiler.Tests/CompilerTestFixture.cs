@@ -125,6 +125,12 @@ namespace Malina.Compiler.Tests
         }
 
         [Test, RecordedTest]
+        public void JsonArrayInAlias()
+        {
+            PerformCompilerTest();
+        }
+
+        [Test, RecordedTest]
         public void AliasWithDefaultValueParameters()
         {
             PerformCompilerTest();

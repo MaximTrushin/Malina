@@ -56,6 +56,9 @@
     <None Include="Scenarios\AliasWithArguments\ModuleWithDocument.mlj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\JsonArrayInAlias\JsonArray.mlj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\JsonArray\JsonArray.mlj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

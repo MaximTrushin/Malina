@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Antlr4.Runtime.Atn;
 using Malina.DOM;
 using Newtonsoft.Json;
 using Attribute = Malina.DOM.Attribute;
@@ -10,10 +11,17 @@ namespace Malina.Compiler.Generator
 {
     public class JsonGenerator : MalinaGenerator
     {
+        private enum BlockState
+        {
+            Object,
+            Array
+        }
+
         private readonly Func<string, JsonWriter> _writerDelegate;
 
         private JsonWriter _jsonWriter;
-        private Document _currentDocument;
+        private bool _blockStart;
+        private Stack<BlockState> _blockState;
 
 
         /// <summary>
@@ -33,18 +41,9 @@ namespace Malina.Compiler.Generator
 
             using (_jsonWriter = _writerDelegate(node.Name))
             {
-                if (IsArrayNode(node))
-                {
-                    _jsonWriter.WriteStartArray();
-                    base.OnDocument(node);
-                    _jsonWriter.WriteEndArray();
-                }
-                else
-                {
-                    _jsonWriter.WriteStartObject();
-                    base.OnDocument(node);
-                    _jsonWriter.WriteEndObject();
-                }
+                _blockStart = true;
+                _blockState = new Stack<BlockState>();
+                base.OnDocument(node);
             }
 
             _currentDocument = null;
@@ -93,42 +92,63 @@ namespace Malina.Compiler.Generator
 
         public override void OnAttribute(Attribute node)
         {
+            CheckBlockStart(node);
+
             _jsonWriter.WritePropertyName((node.NsPrefix != null ? node.NsPrefix + "." : "") + node.Name);
             ResolveValue(node);
         }
 
         public override void OnElement(Element node)
         {
-            if (node.Name != string.Empty)
+            CheckBlockStart(node);
+
+            if (!string.IsNullOrEmpty(node.Name))
                 _jsonWriter.WritePropertyName((node.NsPrefix != null ? node.NsPrefix + "." : "") + node.Name);
 
             if (ResolveValue(node)) return;
 
+            //Working with node's block
+            _blockStart = true;
+            var prevBlockStateCount = _blockState.Count;
 
+            ResolveAttributes(node.Attributes, node.Entities);
+            Visit(node.Entities);
+            _blockStart = false;
 
-            if (IsArrayNode(node))
+            if (_blockState.Count > prevBlockStateCount)
             {
-                _jsonWriter.WriteStartArray();
-                base.OnElement(node);
-                _jsonWriter.WriteEndArray();
-                return;
-            }
-
-            if (node.Attributes.Any() || node.Entities.Any() || node.ValueType == ValueType.Empty)
-            {
-                _jsonWriter.WriteStartObject();
-                //Write attributes            
-                ResolveAttributes(node.Attributes, node.Entities);
-                Visit(node.Entities);
-                _jsonWriter.WriteEndObject();
-                return;
-            }
-
-            if (node.Name != null)
-            {
-                _jsonWriter.WriteStartObject();
-                _jsonWriter.WriteEndObject();
+                if (_blockState.Pop() == BlockState.Array)
+                    _jsonWriter.WriteEndArray();
+                else
+                    _jsonWriter.WriteEndObject();
                 //return;
+            }
+
+
+            //if (node.Name != null)
+            //{
+            //    _jsonWriter.WriteStartObject();
+            //    _jsonWriter.WriteEndObject();
+            //    //return;
+            //}
+        }
+
+        private void CheckBlockStart(Node node)
+        {
+            if (_blockStart)
+            {
+                //This element is the first element of the block. It decides if the block is array or object
+                if (string.IsNullOrEmpty(node.Name))
+                {
+                    _jsonWriter.WriteStartArray(); //start array
+                    _blockState.Push(BlockState.Array);
+                }
+                else
+                {
+                    _jsonWriter.WriteStartObject(); //start array
+                    _blockState.Push(BlockState.Object);
+                }
+                _blockStart = false;
             }
         }
 
@@ -157,31 +177,12 @@ namespace Malina.Compiler.Generator
             return false;
         }
 
-        private static bool IsArrayNode(IEnumerable<Entity> entities)
+
+        public override void OnAliasDefinition(AliasDefinition node)
         {
-            string firstEntityName = entities.FirstOrDefault()?.Name;
-            return (firstEntityName == null) || (firstEntityName == string.Empty);
+            //Doing nothing for Alias Definition        
         }
 
-        private static bool IsArrayNode(Element node)
-        {
-            if (node.Attributes.Count > 0) return false;
-            return IsArrayNode(node.Entities);
-        }
-        private static bool IsArrayNode(Document node)
-        {
-            return IsArrayNode(node.Entities);
-        }
-
-        private NsInfo GetContextNsInfo()
-        {
-            if (AliasContext.Peek() == null)
-            {
-                return _context.NamespaceResolver.GetNsInfo(_currentDocument);
-            }
-
-            return _context.NamespaceResolver.GetNsInfo(AliasContext.Peek().AliasDefinition);
-        }
 
     }
 }

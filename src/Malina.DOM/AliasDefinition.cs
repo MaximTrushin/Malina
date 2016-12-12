@@ -8,17 +8,12 @@ namespace Malina.DOM
     public class AliasDefinition : ModuleMember, IValueNode
     {
         // Fields
-        private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
         private object _objectValue;
         private ValueType _valueType;
         private string _value;
 
         // Methods
-        public AliasDefinition()
-        {
-        }
-
         public override void Accept(IDomVisitor visitor)
         {
             visitor.OnAliasDefinition(this);
@@ -26,11 +21,7 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is Attribute)
-            {
-                Attributes.Add((Attribute)child);
-            }
-            else if (child is Parameter)
+            if (child is Parameter)
             {
                 Entities.Add((Entity)child);
             }
@@ -49,29 +40,6 @@ namespace Malina.DOM
         }
 
         // Properties
-        public NodeCollection<Attribute> Attributes
-        {
-            get
-            {
-                if (_attributes == null)
-                {
-                    _attributes = new NodeCollection<Attribute>(this);
-                }
-                return _attributes;
-            }
-            set
-            {
-                if (value != _attributes)
-                {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
-                    _attributes = value;
-                }
-            }
-        }
-
         public NodeCollection<Entity> Entities
         {
             get

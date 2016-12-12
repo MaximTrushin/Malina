@@ -59,7 +59,7 @@ namespace Malina.Parser
                     var dot = MalinaParserListener.FindChar(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream, '.');
                     if (dot > -1)
                     {
-                        ((Element) el).IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
+                        ((Element) el).IdInterval = new Interval(dot + 1, id.Symbol.StopIndex);
                         Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
                     }
                     else
@@ -86,7 +86,7 @@ namespace Malina.Parser
                     var dot = MalinaParserListener.FindChar(id.Symbol.StartIndex, id.Symbol.StopIndex, id.Symbol.InputStream, '.');
                     if(dot > -1)
                     {
-                        ((Element) el).IDInterval = new Interval(dot + 1, id.Symbol.StopIndex);
+                        ((Element) el).IdInterval = new Interval(dot + 1, id.Symbol.StopIndex);
                         Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
                     }
                     else
@@ -178,7 +178,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken) id.Symbol;
-                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
             }
         }
 
@@ -191,7 +191,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken) id.Symbol;
-                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
             }
         }
 
@@ -204,7 +204,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken) id.Symbol;
-                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
             }
         }
 
@@ -217,7 +217,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken)id.Symbol;
-                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
             }
         }
 
@@ -231,7 +231,7 @@ namespace Malina.Parser
             public void ApplyContext()
             {
                 this.SetNodeLocation();
-                Node.IDInterval = new Interval(1, 0);          
+                Node.IdInterval = new Interval(1, 0);          
             }
 
         }
@@ -247,7 +247,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken) id.Symbol;
-                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
             }
 
         }
@@ -261,7 +261,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken) id.Symbol;
-                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
             }
 
         }
@@ -275,7 +275,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken) id.Symbol;
-                Node.IDInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
             }
 
         }

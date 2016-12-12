@@ -68,13 +68,13 @@ namespace Malina.Parser.Tests
                 _sb.Append("`");
             }
 
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Entities.Count > 0)
             {
                 _sb.AppendLine(":");
                 _indent++;
             }
             base.OnAliasDefinition(node);
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Entities.Count > 0)
             {
                 _indent--;
             }
@@ -118,14 +118,14 @@ namespace Malina.Parser.Tests
                 _sb.Append("`");
                 _sb.AppendLine();
             }
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Entities.Count > 0)
             {
                 _sb.AppendLine(":");
                 _indent++;
             }
             base.OnArgument(node);
 
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Entities.Count > 0)
             {
                 _indent--;
             }
@@ -146,7 +146,7 @@ namespace Malina.Parser.Tests
                 PrintValue(node);
                 _sb.Append("`");
             }
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Entities.Count > 0)
             {
                 _sb.AppendLine(":");
                 _indent++;
@@ -154,7 +154,7 @@ namespace Malina.Parser.Tests
 
             base.OnElement(node);
 
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Entities.Count > 0)
             {
                 _indent--;
             }
@@ -188,7 +188,7 @@ namespace Malina.Parser.Tests
             }
             else PrintNodeStart(node);
 
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Entities.Count > 0)
             {                
                 _sb.AppendLine(":");
                 _indent++;
@@ -196,7 +196,7 @@ namespace Malina.Parser.Tests
 
             base.OnParameter(node);
 
-            if (node.Attributes.Count + node.Entities.Count > 0)
+            if (node.Entities.Count > 0)
             {
                 _indent--;
             }

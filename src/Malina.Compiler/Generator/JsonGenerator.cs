@@ -73,22 +73,7 @@ namespace Malina.Compiler.Generator
             }
         }
 
-        public override void OnAlias(Alias alias)
-        {
-            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
 
-            AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
-            Visit(aliasDef.Entities);
-            AliasContext.Pop();
-        }
-
-        public override void OnParameter(Parameter parameter)
-        {
-            var aliasContext = AliasContext.Peek();
-            var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
-
-            Visit(argument != null ? argument.Entities : parameter.Entities);
-        }
 
         public override void OnAttribute(Attribute node)
         {
@@ -111,8 +96,8 @@ namespace Malina.Compiler.Generator
             _blockStart = true;
             var prevBlockStateCount = _blockState.Count;
 
-            ResolveAttributes(node.Attributes, node.Entities);
-            Visit(node.Entities);
+            ResolveAttributes(node.Entities);
+            Visit(node.Entities.Where(e => !(e is Attribute)));
             _blockStart = false;
 
             if (_blockState.Count > prevBlockStateCount)
@@ -176,13 +161,6 @@ namespace Malina.Compiler.Generator
 
             return false;
         }
-
-
-        public override void OnAliasDefinition(AliasDefinition node)
-        {
-            //Doing nothing for Alias Definition        
-        }
-
 
     }
 }

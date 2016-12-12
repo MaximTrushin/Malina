@@ -186,7 +186,7 @@ namespace Malina.Compiler
                 if (argument == null)
                 {
                     //Report Error if argument is missing and there is no default value for the parameter
-                    if (parameter.Value == null && parameter.Attributes.Count == 0 && parameter.Entities.Count == 0) _context.AddError(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, documentNsInfo.ModuleMember.Module.FileName));
+                    if (parameter.Value == null && parameter.Entities.Count == 0) _context.AddError(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, documentNsInfo.ModuleMember.Module.FileName));
                     continue;
                 }
 

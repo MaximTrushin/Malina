@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Antlr4.Runtime;
 using Malina.DOM;
 using Malina.Parser;
+using Attribute = Malina.DOM.Attribute;
 using ValueType = Malina.DOM.ValueType;
 
 namespace Malina.Compiler.Generator
@@ -109,22 +110,20 @@ namespace Malina.Compiler.Generator
             return paramDef?.Value;
         }
 
-        protected void ResolveAttributes(IEnumerable<DOM.Attribute> attributes, IEnumerable<Entity> entities)
-        {
-            Visit(attributes);
-            ResolveAttributes(entities);
-        }
-
 
         /// <summary>
         /// Go through all entities and resolve attributes for the current node.
         /// </summary>
         /// <param name="entities">List of entities. Looking for alias or parameter because they potentially can hold the attributes.</param>
-        private void ResolveAttributes(IEnumerable<Entity> entities)
+        protected void ResolveAttributes(IEnumerable<Entity> entities)
         {
             foreach (var entity in entities)
             {
-                if (entity is Alias)
+                if (entity is Attribute)
+                {
+                    Visit(entity);
+                }
+                else if (entity is Alias)
                 {
                     ResolveAttributesInAlias(entity as Alias);
                 }
@@ -144,12 +143,12 @@ namespace Malina.Compiler.Generator
             if (argument != null)
             {
                 //Resolve using argument's block
-                ResolveAttributes(argument.Attributes, argument.Entities);
+                ResolveAttributes(argument.Entities);
             }
             else
             {
                 //Resolve using parameter's default block
-                ResolveAttributes(parameter.Attributes, parameter.Entities);
+                ResolveAttributes(parameter.Entities);
             }
         }
 
@@ -157,7 +156,7 @@ namespace Malina.Compiler.Generator
         {
             var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
             AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
-            ResolveAttributes(aliasDef.Attributes, aliasDef.Entities);
+            ResolveAttributes(aliasDef.Entities);
             AliasContext.Pop();
         }
 
@@ -196,7 +195,27 @@ namespace Malina.Compiler.Generator
             return sb.ToString();
         }
 
+        public override void OnAlias(Alias alias)
+        {
+            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
 
+            AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
+            Visit(aliasDef.Entities.Where(e => !(e is Attribute)));
+            AliasContext.Pop();
+        }
+
+        public override void OnParameter(Parameter parameter)
+        {
+            var aliasContext = AliasContext.Peek();
+            var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
+
+            Visit(argument != null ? argument.Entities : parameter.Entities);
+        }
+
+        public override void OnAliasDefinition(AliasDefinition node)
+        {
+            //Doing nothing for Alias Definition        
+        }
 
     }
 }

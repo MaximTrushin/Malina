@@ -2,9 +2,7 @@
 using Antlr4.Runtime.Misc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Malina.DOM.Antlr
 {
@@ -12,7 +10,6 @@ namespace Malina.DOM.Antlr
     {
         private ICharStream _charStream;
         private Interval _idInterval;
-        private Interval _valueInterval = Interval.Invalid;
         private int _valueIndent;
         private int _nsSeparator = -2;        
 
@@ -24,7 +21,7 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public Interval IDInterval
+        public Interval IdInterval
         {
             set
             {
@@ -32,18 +29,7 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public Interval ValueInterval
-        {
-            get
-            {
-                return _valueInterval;
-            }
-
-            set
-            {
-                _valueInterval = value;
-            }
-        }
+        public Interval ValueInterval { get; set; } = Interval.Invalid;
 
         public override string Name
         {
@@ -86,7 +72,8 @@ namespace Malina.DOM.Antlr
                 if(s[i] == '.')
                 {
                     if (s[i + 1] != '.') return _idInterval.a + i + 1;
-                    else i++;
+
+                    i++;
                 }
             }
             return -1;
@@ -97,7 +84,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Value != null) return base.Value;
-                return GetValueFromValueInterval(_charStream, _valueInterval, _valueIndent, ValueType);
+                return GetValueFromValueInterval(_charStream, ValueInterval, _valueIndent, ValueType);
             }
         }
 

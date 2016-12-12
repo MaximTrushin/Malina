@@ -7,6 +7,7 @@ using System.Xml;
 using Antlr4.Runtime;
 using Malina.DOM;
 using Malina.Parser;
+using Attribute = Malina.DOM.Attribute;
 using ValueType = Malina.DOM.ValueType;
 
 namespace Malina.Compiler.Generator
@@ -75,7 +76,7 @@ namespace Malina.Compiler.Generator
             }
             
             //Write attributes            
-            ResolveAttributes(node.Attributes, node.Entities);
+            ResolveAttributes(node.Entities);
 
             //Write element's value
             if (node.Value != null)
@@ -91,7 +92,7 @@ namespace Malina.Compiler.Generator
                 _xmlTextWriter.WriteString(ResolveValueAlias((Alias)node.ObjectValue));
             }
 
-            Visit(node.Entities);
+            Visit(node.Entities.Where(e => !(e is Attribute)));
 
             //End Element
             _xmlTextWriter.WriteEndElement();
@@ -110,29 +111,6 @@ namespace Malina.Compiler.Generator
 
         }
         
-        public override void OnAlias(Alias alias)
-        {
-            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
-
-            AliasContext.Push(item: new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
-            Visit(aliasDef.Entities);
-            AliasContext.Pop();
-        }
-
-        public override void OnParameter(Parameter parameter)
-        {
-            var aliasContext = AliasContext.Peek();
-            var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
-
-            Visit(argument != null ? argument.Entities : parameter.Entities);
-        }
-
-
-        public override void OnAliasDefinition(AliasDefinition node)
-        {
-            //Doing nothing for Alias Definition        
-        }
-
         private void WritePendingNamespaceDeclarations(string uri)
         {
             NsInfo nsInfo = _context.NamespaceResolver.GetNsInfo(_currentDocument);

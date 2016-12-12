@@ -16,7 +16,6 @@ namespace Malina.DOM
         public virtual void OnAliasDefinition(AliasDefinition node)
         {
             Visit(node.Namespaces);
-            Visit(node.Attributes);
             Visit(node.Entities);
         }
 
@@ -42,7 +41,6 @@ namespace Malina.DOM
 
         public virtual void OnElement(Element node)
         {
-            Visit(node.Attributes);
             Visit(node.Entities);
         }
 
@@ -58,7 +56,6 @@ namespace Malina.DOM
 
         public virtual void OnScope(Scope node)
         {
-            Visit(node.Attributes);
             Visit(node.Entities);
         }
 
@@ -69,7 +66,6 @@ namespace Malina.DOM
 
         public virtual void OnParameter(Parameter node)
         {
-            Visit(node.Attributes);
             Visit(node.Entities);
         }
 

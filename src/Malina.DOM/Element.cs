@@ -6,7 +6,6 @@ namespace Malina.DOM
     public class Element : Entity, IValueNode, INsNode
     {
         // Fields
-        private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
         private string _nsPrefix;
         private string _value;
@@ -22,11 +21,7 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is Attribute)
-            {
-                Attributes.Add((Attribute)child);
-            }
-            else if (child is Entity)
+            if (child is Entity)
             {
                 Entities.Add((Entity)child);
             }
@@ -49,7 +44,6 @@ namespace Malina.DOM
                 _value = value;
             }
         }
-        public NodeCollection<Attribute> Attributes => _attributes ?? (_attributes = new NodeCollection<Attribute>(this));
 
         public NodeCollection<Entity> Entities
         {

@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MalinaError.cs" />
+    <Compile Include="MalinaErrorCode.cs" />
     <Compile Include="MalinaException.cs" />
     <Compile Include="MalinaLexer.cs" />
     <Compile Include="MalinaParser.g4.cs">

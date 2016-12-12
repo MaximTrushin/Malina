@@ -47,8 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Malina.Antlr\MalinaError.cs">
-      <Link>MalinaError.cs</Link>
+    <Compile Include="..\Malina.Antlr\MalinaErrorCode.cs">
+      <Link>MalinaErrorCode.cs</Link>
     </Compile>
     <Compile Include="..\Malina.Antlr\MalinaException.cs">
       <Link>MalinaException.cs</Link>

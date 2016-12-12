@@ -163,7 +163,7 @@ namespace Malina.Parser.Tests
         }
 
 
-        private static string SerializeErrors(List<MalinaError> errors)
+        private static string SerializeErrors(List<MalinaException> errors)
         {
             var sb = new StringBuilder();
             foreach (var item in errors)

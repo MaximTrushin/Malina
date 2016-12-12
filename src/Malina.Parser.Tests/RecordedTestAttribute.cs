@@ -18,6 +18,12 @@ namespace Malina.Parser.Tests
     class LexerErrorRecordAttribute : Attribute
     {
     }
+    class ParserErrorRecordedAttribute : Attribute
+    {
+    }
+    class ParserErrorRecordAttribute : Attribute
+    {
+    }
     public class DomRecordedAttribute : Attribute
     {
     }

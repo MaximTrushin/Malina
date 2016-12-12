@@ -18,7 +18,12 @@ namespace Malina.Parser.Tests
             {
                 if (recognizer is MalinaParser)
                 {
-                    var me = new MalinaException((MalinaParser)recognizer, ((MalinaParser)recognizer).InputStream, ((MalinaParser)recognizer).Context);
+                    var me = new MalinaException(msg, (MalinaParser)recognizer, ((MalinaParser)recognizer).InputStream, ((MalinaParser)recognizer).Context)
+                    {
+                        Code = MalinaErrorCode.NoViableAltParserException,
+                        Start = new DOM.SourceLocation(line, charPositionInLine + 1, -1),
+                        Stop = new DOM.SourceLocation(line, charPositionInLine + 1, -1)
+                    };
                     Errors.Add(me);
                 }
                 else if (recognizer is MalinaLexer)

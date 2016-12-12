@@ -3,6 +3,14 @@ using static Malina.Parser.Tests.TestUtils;
 
 namespace Malina.Parser.Tests
 {
+    /// <summary>
+    /// Each test can perform 5 type of test:
+    /// 1) Lexer - compares generated stream of Tokens with the recorded one
+    /// 2) LexerError - compares lexer errors with recorded lexer errors
+    /// 3) Parser - compares ParseTree with recorded parse tree
+    /// 4) ParserError - compare parser errors with recorded parser errors
+    /// 5) Dom - compare generated Dom structure with the recorded Dom structure
+    /// </summary>
     [TestFixture]
     public class LexerParserTests
     {
@@ -64,6 +72,12 @@ namespace Malina.Parser.Tests
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithArguments()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, ParserErrorRecorded, DomRecorded]
+        public void AliasWithIncorrectBlock()
         {
             PerformTest();
         }
@@ -244,6 +258,12 @@ namespace Malina.Parser.Tests
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void JsonArray()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded]
+        public void JsonArrayItemInObject()
         {
             PerformTest();
         }

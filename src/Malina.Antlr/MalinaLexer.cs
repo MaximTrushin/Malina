@@ -50,7 +50,6 @@ namespace Malina.Parser
         private Queue<IToken> _tokens = new Queue<IToken>();
         private Stack<int> _wsaStack = new Stack<int>();
         private MalinaToken _currentToken; //This field is used for tokens created with several lexer rules.
-        private MalinaToken _interpolationToken; //This field is used to build interpolation tokens
         private int _recordedIndex;
 
 
@@ -383,18 +382,7 @@ namespace Malina.Parser
                     EmitIndentationToken(DEDENT, CharIndex - indent, CharIndex - 1);
                     _indents.Pop();
                 }
-
             }
-
-            //Adding new line
-            _interpolationToken = new MalinaToken(
-                new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), SQS,
-                Channel,
-                _tokenStartCharIndex, -1)
-            {
-                Text = Environment.NewLine
-            };
-
         }
 
         private void ReportMissingSq()

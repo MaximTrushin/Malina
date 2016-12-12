@@ -26,16 +26,19 @@ namespace Malina.Compiler
             {
                 if(recognizer is MalinaParser)
                 {
-                    if (e is NoViableAltException)
+                    if (offendingSymbol != null)
                     {
-                        var tokenName = (recognizer as MalinaParser).Vocabulary.GetDisplayName((offendingSymbol as CommonToken).Type);
+                        var tokenName =
+                            (recognizer as MalinaParser).Vocabulary.GetDisplayName((offendingSymbol as CommonToken).Type);
                         _context.AddError(CompilerErrorFactory.ParserError(e,
-                            $"Unexpected token {tokenName}<'{(offendingSymbol as CommonToken).Text}'>", 
-                            _fileName, (offendingSymbol as CommonToken).Line, (offendingSymbol as CommonToken).Column + 1));
+                            $"Unexpected token {tokenName}<'{(offendingSymbol as CommonToken).Text}'>",
+                            _fileName, (offendingSymbol as CommonToken).Line,
+                            (offendingSymbol as CommonToken).Column + 1));
                     }
                     else
                     {
-                        _context.AddError(CompilerErrorFactory.ParserError(e, msg, _fileName, line, charPositionInLine + 1));
+                        _context.AddError(CompilerErrorFactory.ParserError(e, msg, _fileName, line,
+                            charPositionInLine + 1));
                     }
                 }
                 else if(recognizer is MalinaLexer)

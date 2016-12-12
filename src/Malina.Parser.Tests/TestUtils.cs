@@ -100,6 +100,31 @@ namespace Malina.Parser.Tests
             return recorded;
         }
 
+        public static string LoadParserErrors(ErrorListener<IToken> parserErrors, out string serialParserErrors)
+        {
+            var isParserErrorRecordedTest = IsParserErrorRecordedTest();
+            var isParserErrorRecordTest = IsParserErrorRecordTest(); //Overwrites existing recording
+            string recorded = null;
+            serialParserErrors = null;
+            if (isParserErrorRecordedTest || isParserErrorRecordTest)
+            {
+                serialParserErrors = parserErrors.Errors.Count > 0 ? SerializeErrors(parserErrors.Errors) : null;
+                if (isParserErrorRecordedTest)
+                {
+                    var testCaseName = GetTestCaseName();
+                    var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".le").ToString();
+                    if (File.Exists(fileName))
+                        recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
+                }
+                if (recorded == null || isParserErrorRecordTest)
+                {
+                    SaveLexerErrors(serialParserErrors);
+                    return serialParserErrors;
+                }
+            }
+            return recorded;
+        }
+
 
         private static void SaveRecordedTest(string printedTokens)
         {
@@ -209,7 +234,6 @@ namespace Malina.Parser.Tests
             var parserErrorListener = new ErrorListener<IToken>();
             parser.AddErrorListener(parserErrorListener);
             parser.AddParseListener(malinaListener);
-            //parser.BuildParseTree = true;
 
             var module = parser.module();
 
@@ -234,6 +258,15 @@ namespace Malina.Parser.Tests
                 {
                     SaveRecordedParseTreeTest(parseTree);
                 }
+            }
+
+            //Parser Errors
+            string serialParserErrors;
+            var recordedParserErros = LoadParserErrors(parserErrorListener, out serialParserErrors);
+            if (recordedParserErros != null)
+            {
+                Console.WriteLine("Parser Errors:");
+                Console.WriteLine(recordedParserErros);
             }
 
             Console.WriteLine(parseTree);
@@ -265,7 +298,6 @@ namespace Malina.Parser.Tests
                 }
             }
 
-
             PrintCode(code);
 
             //LEXER Assertions
@@ -274,7 +306,7 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedLexerErros, serialLexerErrors);
             }
             else
-                Assert.AreEqual(false, lexerErrors.HasErrors);
+                Assert.AreEqual(false, lexerErrors.HasErrors, "LexerErrorListener has errors");
 
             Assert.AreEqual(0, lexer.InvalidTokens.Count);
 
@@ -289,7 +321,12 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedParseTree, parseTree, "PARSE TREE assertion failed");
             }
 
-            Assert.AreEqual(false, parserErrorListener.HasErrors, "ParserErrorListener has errors");
+            if (recordedParserErros != null)
+            {
+                Assert.AreEqual(recordedParserErros, serialParserErrors);
+            }
+            else
+                Assert.AreEqual(false, parserErrorListener.HasErrors, "ParserErrorListener has errors");
 
             //DOM Assertions
             if (recordedDom != null)
@@ -327,6 +364,16 @@ namespace Malina.Parser.Tests
         private static bool IsLexerErrorRecordTest()
         {
             return TestHasAttribute<LexerErrorRecordAttribute>();
+        }
+
+        private static bool IsParserErrorRecordedTest()
+        {
+            return TestHasAttribute<ParserErrorRecordedAttribute>();
+        }
+
+        private static bool IsParserErrorRecordTest()
+        {
+            return TestHasAttribute<ParserErrorRecordAttribute>();
         }
 
         public static bool IsDomRecordedTest()

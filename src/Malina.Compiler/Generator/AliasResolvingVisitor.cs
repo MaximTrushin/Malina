@@ -11,7 +11,7 @@ using ValueType = Malina.DOM.ValueType;
 
 namespace Malina.Compiler.Generator
 {
-    public class MalinaGenerator : MalinaDepthFirstVisitor
+    public class AliasResolvingVisitor : MalinaDepthFirstVisitor
     {
 
         private Stack<AliasContext> _aliasContext;
@@ -31,7 +31,7 @@ namespace Malina.Compiler.Generator
             }
         }
 
-        public MalinaGenerator(CompilerContext context)
+        public AliasResolvingVisitor(CompilerContext context)
         {
             _context = context;
         }
@@ -76,13 +76,37 @@ namespace Malina.Compiler.Generator
             }
 
             var alias = objectValue as Alias;
-            if (alias != null)
-            {
-                return ResolveValueAlias(alias);
-            }
-            return null;
+            return alias != null ? ResolveValueAlias(alias) : null;
         }
 
+        protected bool ResolveValue(IValueNode node)
+        {
+            //Write element's value
+            object value = node.ObjectValue as Parameter;
+            if (value != null)
+            {
+                OnValue(ResolveValueParameter((Parameter)value), node.ValueType);
+                return true;
+            }
+
+            value = node.ObjectValue as Alias;
+            if (value != null)
+            {
+                OnValue(ResolveValueAlias((Alias)value), node.ValueType);
+                return true;
+            }
+            if (node.Value != null)
+            {
+                OnValue(ResolveNodeValue((DOM.Antlr.IValueNode)node), node.ValueType);
+                return true;
+            }
+
+            return false;
+        }
+
+        public virtual void OnValue(string value, ValueType type)
+        {
+        }
 
         protected string ResolveValueParameter(Parameter parameter)
         {
@@ -134,22 +158,11 @@ namespace Malina.Compiler.Generator
             }
         }
 
-
-
         private void ResolveAttributesInParameter(Parameter parameter)
         {
             var aliasContext = AliasContext.Peek();
             var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
-            if (argument != null)
-            {
-                //Resolve using argument's block
-                ResolveAttributes(argument.Entities);
-            }
-            else
-            {
-                //Resolve using parameter's default block
-                ResolveAttributes(parameter.Entities);
-            }
+            ResolveAttributes(argument != null ? argument.Entities : parameter.Entities);
         }
 
         private void ResolveAttributesInAlias(Alias alias)
@@ -195,6 +208,12 @@ namespace Malina.Compiler.Generator
             return sb.ToString();
         }
 
+        public override void OnElement(Element node)
+        {
+            ResolveAttributes(node.Entities);
+            Visit(node.Entities.Where(e => !(e is Attribute)));
+        }
+
         public override void OnAlias(Alias alias)
         {
             var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
@@ -216,6 +235,5 @@ namespace Malina.Compiler.Generator
         {
             //Doing nothing for Alias Definition        
         }
-
     }
 }

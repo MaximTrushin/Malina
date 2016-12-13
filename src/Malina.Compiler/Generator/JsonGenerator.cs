@@ -9,9 +9,9 @@ using ValueType = Malina.DOM.ValueType;
 
 namespace Malina.Compiler.Generator
 {
-    public class JsonGenerator : MalinaGenerator
+    public class JsonGenerator : AliasResolvingVisitor
     {
-        private enum BlockState
+        public enum BlockState
         {
             Object,
             Array
@@ -50,7 +50,7 @@ namespace Malina.Compiler.Generator
         }
 
 
-        public virtual void OnValue(object value, ValueType type)
+        public override void OnValue(string value, ValueType type)
         {
             if (type == ValueType.Null)
             {
@@ -59,21 +59,19 @@ namespace Malina.Compiler.Generator
             }
 
             bool boolValue;
-            if (type == ValueType.Boolean && bool.TryParse(value.ToString(), out boolValue))
+            if (type == ValueType.Boolean && bool.TryParse(value, out boolValue))
             {
                 _jsonWriter.WriteValue(boolValue);
             }
             else
             {
                 decimal numberValue;
-                if (type == ValueType.Number && decimal.TryParse(value.ToString(), out numberValue))
+                if (type == ValueType.Number && decimal.TryParse(value, out numberValue))
                     _jsonWriter.WriteValue(numberValue);
                 else
                     _jsonWriter.WriteValue(value);
             }
         }
-
-
 
         public override void OnAttribute(Attribute node)
         {
@@ -96,8 +94,8 @@ namespace Malina.Compiler.Generator
             _blockStart = true;
             var prevBlockStateCount = _blockState.Count;
 
-            ResolveAttributes(node.Entities);
-            Visit(node.Entities.Where(e => !(e is Attribute)));
+            base.OnElement(node);
+
             _blockStart = false;
 
             if (_blockState.Count > prevBlockStateCount)
@@ -120,47 +118,22 @@ namespace Malina.Compiler.Generator
 
         private void CheckBlockStart(Node node)
         {
-            if (_blockStart)
+            if (!_blockStart) return;
+
+            //This element is the first element of the block. It decides if the block is array or object
+            if (string.IsNullOrEmpty(node.Name))
             {
-                //This element is the first element of the block. It decides if the block is array or object
-                if (string.IsNullOrEmpty(node.Name))
-                {
-                    _jsonWriter.WriteStartArray(); //start array
-                    _blockState.Push(BlockState.Array);
-                }
-                else
-                {
-                    _jsonWriter.WriteStartObject(); //start array
-                    _blockState.Push(BlockState.Object);
-                }
-                _blockStart = false;
+                _jsonWriter.WriteStartArray(); //start array
+                _blockState.Push(BlockState.Array);
             }
+            else
+            {
+                _jsonWriter.WriteStartObject(); //start array
+                _blockState.Push(BlockState.Object);
+            }
+            _blockStart = false;
         }
 
-        private bool ResolveValue(IValueNode node)
-        {
-            //Write element's value
-            object value = node.ObjectValue as Parameter;
-            if (value != null)
-            {
-                OnValue(ResolveValueParameter((Parameter)value), node.ValueType);
-                return true;
-            }
-
-            value = node.ObjectValue as Alias;
-            if (value != null)
-            {
-                OnValue(ResolveValueAlias((Alias)value), node.ValueType);
-                return true;
-            }
-            if (node.Value != null)
-            {
-                OnValue(ResolveNodeValue((DOM.Antlr.IValueNode) node), node.ValueType);
-                return true;
-            }
-
-            return false;
-        }
 
     }
 }

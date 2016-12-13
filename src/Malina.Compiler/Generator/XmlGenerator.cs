@@ -12,7 +12,7 @@ using ValueType = Malina.DOM.ValueType;
 
 namespace Malina.Compiler.Generator
 {
-    public class XmlGenerator : MalinaGenerator
+    public class XmlGenerator : AliasResolvingVisitor
     {
         private XmlWriter _xmlTextWriter;
         private readonly Func<string, XmlWriter> _writerDelegate;
@@ -74,28 +74,17 @@ namespace Malina.Compiler.Generator
                 WritePendingNamespaceDeclarations(ns);
                 _rootElementAdded = true;
             }
-            
-            //Write attributes            
-            ResolveAttributes(node.Entities);
 
-            //Write element's value
-            if (node.Value != null)
-            {
-                _xmlTextWriter.WriteString(ResolveNodeValue((DOM.Antlr.IValueNode)node));
-            }
-            else if (node.ObjectValue is Parameter)
-            {
-                _xmlTextWriter.WriteString(ResolveValueParameter((Parameter)node.ObjectValue));
-            }
-            else if (node.ObjectValue is Alias)
-            {
-                _xmlTextWriter.WriteString(ResolveValueAlias((Alias)node.ObjectValue));
-            }
-
-            Visit(node.Entities.Where(e => !(e is Attribute)));
+            if (!ResolveValue(node))
+                base.OnElement(node);
 
             //End Element
             _xmlTextWriter.WriteEndElement();
+        }
+
+        public override void OnValue(string value, ValueType type)
+        {
+            _xmlTextWriter.WriteString(value);
         }
 
         public override void OnAttribute(DOM.Attribute node)

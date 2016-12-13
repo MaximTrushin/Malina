@@ -14,17 +14,16 @@ module	: NEWLINE* namespace_declaration_stmt* (document_stmt | alias_def_stmt)* 
 
 namespace_declaration_stmt	:	NAMESPACE_ID string_value newline;
 
-document_stmt	:	DOCUMENT_ID ((block_inline newline) | ns_block | block | array);
+document_stmt	:	DOCUMENT_ID ((block_inline newline) | ns_block | block);
 
-alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (block_inline newline) | ns_block | block | array);
+alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (block_inline newline) | ns_block | block);
 
 
 //BLOCKS
 ns_block	:	COLON INDENT (namespace_declaration_stmt)+ (block_line_stmt | inline_stmt | hybrid_stmt)* dedent;
 
-block	:	COLON (INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ dedent);
+block	:	(COLON | ARRAY_ITEM) (INDENT (block_line_stmt | inline_stmt | hybrid_stmt | array_item_stmt)+ dedent);
 
-array	:	(COLON | ARRAY_ITEM) INDENT (array_item_stmt | alias_stmt)+ dedent;
 
 block_inline	:	COLON ((inline_expression)+)? COMMA?;
 
@@ -44,7 +43,7 @@ block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt | scope
 //statements
 element_stmt	:	block_element_stmt | value_element_stmt | empty_element_stmt | hybrid_block_element_stmt;
 value_element_stmt	:	ELEMENT_ID value newline;
-block_element_stmt	:	ELEMENT_ID ((block_inline newline) | block | array );
+block_element_stmt	:	ELEMENT_ID ((block_inline newline) | block);
 hybrid_block_element_stmt	:	ELEMENT_ID COLON (hybrid_block_element_stmt | block_element_stmt);
 empty_element_stmt	:	ELEMENT_ID COLON? newline;
 
@@ -58,11 +57,11 @@ block_element_inline	:	ELEMENT_ID block_inline;
 //statements
 array_item_stmt	:	block_array_item_stmt | value_array_item_stmt;
 block_array_item_stmt	:	ARRAY_ITEM INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ dedent;
-value_array_item_stmt	:	EQUAL value;
+value_array_item_stmt	:	EQUAL value newline;
 
 //SCOPE RULES
 
-scope_stmt	:	SCOPE_ID ((block_inline newline) | block | array);
+scope_stmt	:	SCOPE_ID ((block_inline newline) | block);
 scope_inline	:	SCOPE_ID block_inline;
 
 //ATTRIBUTE RULES
@@ -80,7 +79,7 @@ empty_attr_inline	: ATTRIBUTE_ID;
 parameter_stmt	:	empty_parameter_stmt | value_parameter_stmt | block_parameter_stmt;
 empty_parameter_stmt	: PARAMETER_ID newline;
 value_parameter_stmt	: PARAMETER_ID value newline;
-block_parameter_stmt	: PARAMETER_ID ((block_inline newline) | block | array);
+block_parameter_stmt	: PARAMETER_ID ((block_inline newline) | block);
 
 //inline
 parameter_inline	:	empty_parameter_inline | value_parameter_inline | block_parameter_inline;
@@ -93,7 +92,7 @@ block_parameter_inline	: PARAMETER_ID block_inline;
 alias_stmt	:	empty_alias_stmt | value_alias_stmt | block_alias_stmt;
 empty_alias_stmt	:	ALIAS_ID newline;
 value_alias_stmt	:	ALIAS_ID value newline;
-block_alias_stmt	:	ALIAS_ID (((block_inline | argument_block_inline) newline) | (block | array | argument_block));
+block_alias_stmt	:	ALIAS_ID (((block_inline | argument_block_inline) newline) | (block | argument_block));
 
 //inline
 alias_inline	:	empty_alias_inline | value_alias_inline | block_alias_inline;
@@ -106,7 +105,7 @@ block_alias_inline	: ALIAS_ID (block_inline | argument_block_inline);
 argument_stmt	:	empty_argument_stmt | value_argument_stmt | block_argument_stmt;
 empty_argument_stmt	:	ARGUMENT_ID newline;
 value_argument_stmt	:	ARGUMENT_ID value newline;
-block_argument_stmt	:	ARGUMENT_ID ((block_inline newline) | block | array);
+block_argument_stmt	:	ARGUMENT_ID ((block_inline newline) | block);
 
 argument_inline_stmt	:	argument_inline+ newline;
 

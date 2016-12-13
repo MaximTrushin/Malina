@@ -130,6 +130,17 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest();
         }
 
+        [Test]
+        public void JsonArrayItemInObject()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 5, 3,-1), "Object property is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 8, 3,-1), "Object property is expected."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
         [Test, RecordedTest]
         public void AliasWithDefaultValueParameters()
         {
@@ -151,10 +162,10 @@ namespace Malina.Compiler.Tests
         {
             var errorsExpected = new List<CompilerError>()
             {
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 1,-1), "XML validation error - 'The element 'purchaseOrder' in namespace 'http://www.example.com/myipo' has incomplete content. List of possible elements expected: 'comment' in namespace 'http://www.example.com/myipo' as well as 'Items'.'"),
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 2,-1), "XML validation error - 'The element 'shipTo' has incomplete content. List of possible elements expected: 'name, street' in namespace 'http://www.example.com/myipo'.'"),
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 6, 2,-1), "XML validation error - 'The element 'billTo' has incomplete content. List of possible elements expected: 'name, street' in namespace 'http://www.example.com/myipo'.'"),
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 12, 1,-1), "XML validation error - 'The element 'purchaseOrder' in namespace 'http://www.example.com/myipo' has incomplete content. List of possible elements expected: 'shipTo'.'"),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 1,-1), "XML validation error - 'The element 'purchaseOrder' in namespace 'http://www.example.com/myipo' has incomplete content. List of possible elements expected: 'comment' in namespace 'http://www.example.com/myipo' as well as 'Items'.'."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 2,-1), "XML validation error - 'The element 'shipTo' has incomplete content. List of possible elements expected: 'name, street' in namespace 'http://www.example.com/myipo'.'."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 6, 2,-1), "XML validation error - 'The element 'billTo' has incomplete content. List of possible elements expected: 'name, street' in namespace 'http://www.example.com/myipo'.'."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 12, 1,-1), "XML validation error - 'The element 'purchaseOrder' in namespace 'http://www.example.com/myipo' has incomplete content. List of possible elements expected: 'shipTo'.'."),
             };
             PerformCompilerTest(errorsExpected);
         }
@@ -165,7 +176,7 @@ namespace Malina.Compiler.Tests
         {
             var errorsExpected = new List<CompilerError>()
             {
-                new CompilerError(new LexicalInfo("ipo.xsd", 15, 5,-1), "XML validation error - 'Type 'http://www.example.com/myipo:Address' is not declared.'"),
+                new CompilerError(new LexicalInfo("ipo.xsd", 15, 5,-1), "XML validation error - 'Type 'http://www.example.com/myipo:Address' is not declared.'."),
             };
             PerformCompilerTest(errorsExpected);
         }

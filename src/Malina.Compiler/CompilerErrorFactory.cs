@@ -135,5 +135,15 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0018", new LexicalInfo(location.FileName, location.Line, location.Column, 0), ex.Message);
         }
+
+        internal static CompilerError ArrayItemIsExpected(Node node, string fileName)
+        {
+            return Instantiate("MCE0019", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
+        }
+
+        public static CompilerError PropertyIsExpected(Node node, string fileName)
+        {
+            return Instantiate("MCE0020", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
+        }
     }
 }

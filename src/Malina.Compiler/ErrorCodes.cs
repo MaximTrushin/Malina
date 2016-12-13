@@ -20,7 +20,9 @@
         public const string MCE0015 = "Block argument is expected.";
         public const string MCE0016 = "Can not use value alias in the block.";
         public const string MCE0017 = "Can not use block alias as value.";
-        public const string MCE0018 = "XML validation error - '{0}'";
+        public const string MCE0018 = "XML validation error - '{0}'.";
+        public const string MCE0019 = "Array item is expected.";
+        public const string MCE0020 = "Object property is expected.";
 
 
         public static string Format(string name, params object[] args)

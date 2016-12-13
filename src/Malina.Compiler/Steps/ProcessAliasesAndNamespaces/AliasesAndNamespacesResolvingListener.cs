@@ -1,11 +1,6 @@
 ﻿using Antlr4.Runtime;
-using Malina.DOM;
-using Malina.DOM.Antlr;
 using Malina.Parser;
-using System.Collections.Generic;
 using Antlr4.Runtime.Misc;
-using System;
-using System.Linq;
 using Alias = Malina.DOM.Antlr.Alias;
 using IValueNode = Malina.DOM.Antlr.IValueNode;
 
@@ -66,7 +61,6 @@ namespace Malina.Compiler.Steps
             else if (context is INodeContext<DOM.Antlr.Attribute>) _context.NamespaceResolver.ProcessNsPrefix(((INodeContext<DOM.Antlr.Attribute>) context).Node);
             else if (context is INodeContext<DOM.Antlr.Alias>) _context.NamespaceResolver.ProcessAlias(((INodeContext<DOM.Antlr.Alias>) context).Node);
             else if (context is INodeContext<DOM.Antlr.Parameter>) _context.NamespaceResolver.ProcessParameter(((INodeContext<DOM.Antlr.Parameter>) context).Node);
-
         }
 
         public override void ExitString_value_inline(MalinaParser.String_value_inlineContext context)

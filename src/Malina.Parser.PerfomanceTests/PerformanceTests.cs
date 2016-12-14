@@ -144,6 +144,7 @@ namespace Malina.Parser.PerfomanceTests
         //[Test]
         public void BigFileCompilation()
         {
+            //28 sec
             var compilerParameters = CreateCompilerParameters("BigFileCompilation.mlx");
             var compiler = new MalinaCompiler(compilerParameters);
 
@@ -153,6 +154,7 @@ namespace Malina.Parser.PerfomanceTests
             {
                 Malina.Compiler.Tests.TestUtils.PrintCompilerErrors(context.Errors);
             }
+            Assert.AreEqual(0, context.Errors.Count);
         }
 
         private CompilerParameters CreateCompilerParameters(string fileName)

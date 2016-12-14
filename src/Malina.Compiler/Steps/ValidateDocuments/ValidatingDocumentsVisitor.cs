@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Malina.Compiler.Generator;
 using Malina.DOM;
+using Attribute = Malina.DOM.Attribute;
 
 namespace Malina.Compiler.Steps
 {
@@ -75,12 +77,20 @@ namespace Malina.Compiler.Steps
                 if (blockState == JsonGenerator.BlockState.Array)
                 {
                     if (!string.IsNullOrEmpty(node.Name))
+                    {
+                        ReportErrorForEachNodeInAliasContext(
+                            n => CompilerErrorFactory.ArrayItemIsExpected(n, _currentModule.FileName));
                         _context.AddError(CompilerErrorFactory.ArrayItemIsExpected(node, _currentModule.FileName));
+                    }
                 }
                 else
                 {
                     if (string.IsNullOrEmpty(node.Name))
+                    {
+                        ReportErrorForEachNodeInAliasContext(
+                            n => CompilerErrorFactory.PropertyIsExpected(n, _currentModule.FileName));
                         _context.AddError(CompilerErrorFactory.PropertyIsExpected(node, _currentModule.FileName));
+                    }
                 }
 
                 return;
@@ -92,6 +102,17 @@ namespace Malina.Compiler.Steps
                 : JsonGenerator.BlockState.Object);
 
             _blockStart = false;
+        }
+
+        private void ReportErrorForEachNodeInAliasContext(Func<Node, CompilerError> func)
+        {
+            foreach (var item in AliasContext)
+            {
+                if (item != null)
+                {
+                    _context.AddError(func(item.Alias));
+                }
+            }
         }
 
         private static bool HasValue(IValueNode node)

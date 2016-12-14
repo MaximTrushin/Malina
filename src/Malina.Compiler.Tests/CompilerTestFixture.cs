@@ -141,6 +141,20 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+        [Test]
+        public void JsonPropertyInArray()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 6, 3,-1), "Array item is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 7, 3,-1), "Array item is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 11, 3,-1), "Array item is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 15, 2,-1), "Array item is expected."),
+
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
         [Test, RecordedTest]
         public void AliasWithDefaultValueParameters()
         {

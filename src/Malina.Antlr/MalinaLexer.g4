@@ -3,7 +3,7 @@ lexer grammar MalinaLexer;
 tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON, SQS}
 
 
-INDENT_DEDENT		:	(Eol {RecordCharIndex();} Spaces)+ {IndentDedent();};
+INDENT_DEDENT		:	(Eol Spaces) {IndentDedent();};
 
 ARRAY_ITEM			:	':';
 
@@ -52,7 +52,7 @@ mode IN_DQS;
 	//Double Quoted String
 	DQS_VALUE		:	(~["\r\n] | '""')+ {EndDqsIfEofOrWsa();};
 
-	DQS_VALUE_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
+	DQS_VALUE_EOL	:	(Eol Spaces)+ {DqIndentDedent();}; //End of DQS Line or End of DQS
 
 	DQS_END			:	'"' {EndDqs();};
 
@@ -60,7 +60,7 @@ mode IN_SQS;
 	//Single Quoted String (one line and multiline)
 	INTERPOLATION	:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )?;
 	SQS_VALUE		:	(~[$'\r\n] | '\'\'' | '$$')+ {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
-	SQS_EOL	:	(Eol {RecordCharIndex();} Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
+	SQS_EOL	:	(Eol Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
 	SQS_END			:	'\'' -> popMode, popMode;
 
 fragment	Eol				:	( '\r'? '\n' )

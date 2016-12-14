@@ -50,8 +50,6 @@ namespace Malina.Parser
         private Queue<IToken> _tokens = new Queue<IToken>();
         private Stack<int> _wsaStack = new Stack<int>();
         private MalinaToken _currentToken; //This field is used for tokens created with several lexer rules.
-        private int _recordedIndex;
-
 
         private bool InWsaMode => _wsaStack.Count > 0;
 
@@ -112,16 +110,28 @@ namespace Malina.Parser
         public override void Recover(LexerNoViableAltException e)
         {
             //Lexer recover strategy - ignore all till next space, tab or EOL
-            while (_input.La(1) != -1 && _input.La(1) != ' ' && _input.La(1) != '\n' && _input.La(1) != '\r' && _input.La(1) != '\t')
+            var next = _input.La(1);
+            while (next != -1 && next != ' ' && next != '\n' && next != '\r' && next != '\t')
             {
                 Interpreter.Consume(_input);
+                next = _input.La(1);
             }
         }
 
         private void IndentDedent()
         {
+            var next = _input.La(1);
+            
+            //Ignore empty line
+            if (next == '\r' || next == '\n')
+            {
+                Skip();
+                return;
+            }
+
+
             //Lexer reached EOF. 
-            if (_input.La(1) == Eof)
+            if (next == Eof)
             {
                 Skip();
                 return;
@@ -163,16 +173,18 @@ namespace Malina.Parser
             }
         }
 
-        private void RecordCharIndex()
-        {
-            _recordedIndex = CharIndex;
-        }
-
         private int CalcIndent()
         {
             if (InWsaMode) return 0;
 
-            return CharIndex - _recordedIndex;
+            var i = -1;
+            var c = InputStream.La(i);
+            while (c != '\n' && c != -1 && c != '\r')
+            {
+                i--;
+                c = InputStream.La(i);
+            }
+            return -i - 1;
 
         }
 

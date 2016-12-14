@@ -20,10 +20,11 @@ alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (block_inline newline) | ns_bl
 
 
 //BLOCKS
-ns_block	:	COLON INDENT (namespace_declaration_stmt)+ (block_line_stmt | inline_stmt | hybrid_stmt)* dedent;
+ns_block	:	COLON INDENT (namespace_declaration_stmt)+ block_stmt* dedent;
 
-block	:	(COLON | ARRAY_ITEM) (INDENT (block_line_stmt | inline_stmt | hybrid_stmt | array_item_stmt)+ dedent);
+block	:	(COLON | ARRAY_ITEM) INDENT block_stmt+ dedent;
 
+block_stmt: block_line_stmt | inline_stmt | hybrid_stmt | array_item_stmt;
 
 block_inline	:	COLON ((inline_expression)+)? COMMA?;
 

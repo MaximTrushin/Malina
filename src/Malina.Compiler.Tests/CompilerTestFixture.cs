@@ -135,8 +135,10 @@ namespace Malina.Compiler.Tests
         {
             var errorsExpected = new List<CompilerError>()
             {
-                new CompilerError(new LexicalInfo("JsonArray.mlj", 5, 3,-1), "Object property is expected."),
-                new CompilerError(new LexicalInfo("JsonArray.mlj", 8, 3,-1), "Object property is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 4, 3,-1), "Object property is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 6, 3,-1), "Object property is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 9, 3,-1), "Object property is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 14, 2,-1), "Object property is expected."),
             };
             PerformCompilerTest(errorsExpected);
         }

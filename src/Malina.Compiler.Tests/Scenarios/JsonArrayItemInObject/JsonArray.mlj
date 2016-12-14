@@ -1,6 +1,7 @@
 !json:
 	item:
 		prop1 = "a"
+		$ArrayAlias
 		prop2 = "b"
 		:
 			prop1 = "a"
@@ -8,3 +9,7 @@
 		:
 			@prop1 = a
 			@prop2 = b
+
+!$ArrayAlias:
+	:
+		prop3 = c

@@ -235,23 +235,6 @@ namespace Malina.Parser
 
         #endregion
 
-        #region ARRAY_ITEM context classes
-        #region STATEMENT context 
-
-        public override void EnterBlock_array_item_stmt([NotNull] MalinaParser.Block_array_item_stmtContext context)
-        {
-            EnterContext(context);
-        }
-
-        public override void ExitBlock_array_item_stmt([NotNull] MalinaParser.Block_array_item_stmtContext context)
-        {
-            ExitContext(context);
-        }
-
-
-        #endregion
-        #endregion
-
         #region INLINE context
         public override void EnterValue_element_inline([NotNull] MalinaParser.Value_element_inlineContext context)
         {
@@ -282,6 +265,63 @@ namespace Malina.Parser
         {
             ExitContext(context);
         }
+        #endregion
+        #endregion
+
+        #region ARRAY_ITEM context classes
+        #region STATEMENT context 
+
+        public override void EnterValue_array_item_stmt(MalinaParser.Value_array_item_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitValue_array_item_stmt(MalinaParser.Value_array_item_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterBlock_array_item_stmt(MalinaParser.Block_array_item_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_array_item_stmt(MalinaParser.Block_array_item_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterHybrid_block_array_item_stmt(MalinaParser.Hybrid_block_array_item_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitHybrid_block_array_item_stmt(MalinaParser.Hybrid_block_array_item_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+        #endregion
+        #region INLINE context
+        public override void EnterValue_array_item_inline([NotNull] MalinaParser.Value_array_item_inlineContext context)
+        {
+            EnterContext(context);
+        }
+        public override void ExitValue_array_item_inline([NotNull] MalinaParser.Value_array_item_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
+        public override void EnterBlock_array_item_inline([NotNull] MalinaParser.Block_array_item_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitBlock_array_item_inline([NotNull] MalinaParser.Block_array_item_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
         #endregion
         #endregion
 

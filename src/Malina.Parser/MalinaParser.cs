@@ -223,20 +223,6 @@ namespace Malina.Parser
 
         #endregion
 
-        #region ARRAY_ITEM Context
-        public partial class Block_array_item_stmtContext : INodeContext<Element>
-        {
-            public Element Node { get; set; }
-
-            public void ApplyContext()
-            {
-                this.SetNodeLocation();
-                Node.IdInterval = new Interval(1, 0);          
-            }
-
-        }
-        #endregion
-
         #region INLINE Context
         public partial class Value_element_inlineContext : INodeContext<Element>
         {
@@ -282,6 +268,68 @@ namespace Malina.Parser
         #endregion
 
         #endregion
+
+        #region ARRAY_ITEM Context
+        #region STATEMENT Context
+        public partial class Value_array_item_stmtContext : INodeContext<Element>
+        {
+            public Element Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                Node.IdInterval = new Interval(1, 0);
+            }
+        }
+
+        public partial class Block_array_item_stmtContext : INodeContext<Element>
+        {
+            public Element Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                Node.IdInterval = new Interval(1, 0);
+            }
+        }
+
+        public partial class Hybrid_block_array_item_stmtContext : INodeContext<Element>
+        {
+            public Element Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                Node.IdInterval = new Interval(1, 0);
+            }
+        }
+        #endregion
+        #region INLINE Context
+        public partial class Value_array_item_inlineContext : INodeContext<Element>
+        {
+            public Element Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                Node.IdInterval = new Interval(1, 0);
+            }
+
+        }
+        public partial class Block_array_item_inlineContext : INodeContext<Element>
+        {
+            public Element Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                Node.IdInterval = new Interval(1, 0);
+            }
+
+        }
+        #endregion
+        #endregion
+
 
         #region PARAMETER NodeContext
         #region STATEMENT Context

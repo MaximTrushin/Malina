@@ -1,0 +1,6 @@
+01:00	Document `json`:
+02:01		Element `items`:
+03:02			Element ``:
+03:04				Element `prop1`= `a`
+03:16				Element `prop2`= `b`
+

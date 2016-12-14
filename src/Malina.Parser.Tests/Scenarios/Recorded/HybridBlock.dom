@@ -5,10 +5,15 @@
 04:03					Element `a`:
 05:04						Element `b`
 06:03					Element `c`
-07:02			Element `element1`
-07:11			Element `element2`:
+07:02			Element `el1`
+07:06			Element `el2`:
 08:03				Element `d`
 08:05				Element `e`
 08:07				Element `f`
-09:02			Element `element3`
+09:02			Element `el3`:
+09:07				Element `el4`= `a`
+09:17				Element `el5`:
+10:03					Element `a`
+10:05					Element `b`
+10:07					Element `c`
 

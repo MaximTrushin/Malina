@@ -256,13 +256,19 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
+        public void InlineJsonArray()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
         public void JsonArray()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void JsonArrayItemInObject()
         {
             PerformTest();

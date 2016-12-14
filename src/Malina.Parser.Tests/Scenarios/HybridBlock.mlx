@@ -4,6 +4,7 @@
 			a:
 				b
 			c
-		element1 element2:
+		el1 el2:
 			d e f
-		element3
+		el3: el4 = "a" el5:
+			a b c

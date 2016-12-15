@@ -1,7 +1,7 @@
 
 module: ()
-    document_stmt: (DOCUMENT_ID=!MyRequest)
-        block: (COLON=:)
+    document_stmt: (DOCUMENT_ID=!MyRequest, COLON=:)
+        block: ()
             block_stmt: ()
                 block_line_stmt: ()
                     element_stmt: ()

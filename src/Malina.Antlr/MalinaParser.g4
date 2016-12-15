@@ -14,19 +14,19 @@ module	: NEWLINE* namespace_declaration_stmt* (document_stmt | alias_def_stmt)* 
 
 namespace_declaration_stmt	:	NAMESPACE_ID string_value newline;
 
-document_stmt	:	DOCUMENT_ID ((block_inline newline) | ns_block | block);
+document_stmt	:	DOCUMENT_ID COLON ((block_inline newline) | ns_block | block);
 
-alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (block_inline newline) | ns_block | block);
+alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (COLON ((block_inline newline) | ns_block | block)));
 
 
 //BLOCKS
-ns_block	:	COLON INDENT (namespace_declaration_stmt)+ block_stmt* dedent;
+ns_block	:	INDENT (namespace_declaration_stmt)+ block_stmt* dedent;
 
-block	:	(COLON | ARRAY_ITEM) INDENT block_stmt+ dedent;
+block	:	INDENT block_stmt+ dedent;
 
 block_stmt: block_line_stmt | inline_stmt | hybrid_stmt | array_item_stmt;
 
-block_inline	:	COLON ((inline_expression)+)? COMMA?;
+block_inline	:	inline_expression+ COMMA?;
 
 //STATEMENTS and EXPRESSIONS
 inline_stmt	:	inline_expression+ newline;
@@ -44,7 +44,7 @@ block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt | scope
 //statements
 element_stmt	:	block_element_stmt | value_element_stmt | empty_element_stmt | hybrid_block_element_stmt;
 value_element_stmt	:	ELEMENT_ID value newline;
-block_element_stmt	:	ELEMENT_ID ((block_inline newline) | block);
+block_element_stmt	:	ELEMENT_ID COLON ((block_inline newline) | block);
 hybrid_block_element_stmt	:	ELEMENT_ID COLON (hybrid_block_element_stmt | block_stmt);
 empty_element_stmt	:	ELEMENT_ID COLON? newline;
 
@@ -52,7 +52,7 @@ empty_element_stmt	:	ELEMENT_ID COLON? newline;
 element_inline	:	empty_element_inline | value_element_inline | block_element_inline;
 empty_element_inline	:	ELEMENT_ID;
 value_element_inline	:	ELEMENT_ID value_inline;
-block_element_inline	:	ELEMENT_ID block_inline;
+block_element_inline	:	ELEMENT_ID COLON block_inline;
 
 //ARRAY RULES
 //statements
@@ -64,11 +64,11 @@ hybrid_block_array_item_stmt	:	ARRAY_ITEM (hybrid_block_array_item_stmt | block_
 //inline
 array_item_inline	:	value_array_item_inline | block_array_item_inline;
 value_array_item_inline : value_inline;
-block_array_item_inline	: block_inline;
+block_array_item_inline	: ARRAY_ITEM block_inline;
 //SCOPE RULES
 
-scope_stmt	:	SCOPE_ID ((block_inline newline) | block);
-scope_inline	:	SCOPE_ID block_inline;
+scope_stmt	:	SCOPE_ID COLON ((block_inline newline) | block);
+scope_inline	:	SCOPE_ID COLON block_inline;
 
 //ATTRIBUTE RULES
 
@@ -85,33 +85,37 @@ empty_attr_inline	: ATTRIBUTE_ID;
 parameter_stmt	:	empty_parameter_stmt | value_parameter_stmt | block_parameter_stmt;
 empty_parameter_stmt	: PARAMETER_ID newline;
 value_parameter_stmt	: PARAMETER_ID value newline;
-block_parameter_stmt	: PARAMETER_ID ((block_inline newline) | block);
+block_parameter_stmt	: PARAMETER_ID COLON ((block_inline newline) | block);
 
 //inline
 parameter_inline	:	empty_parameter_inline | value_parameter_inline | block_parameter_inline;
 empty_parameter_inline	: PARAMETER_ID;
 value_parameter_inline	: PARAMETER_ID value_inline;
-block_parameter_inline	: PARAMETER_ID block_inline;
+block_parameter_inline	: PARAMETER_ID COLON block_inline;
 
 //ALIAS RULES
 //statements
 alias_stmt	:	empty_alias_stmt | value_alias_stmt | block_alias_stmt;
 empty_alias_stmt	:	ALIAS_ID newline;
 value_alias_stmt	:	ALIAS_ID value newline;
-block_alias_stmt	:	ALIAS_ID (((block_inline | argument_block_inline) newline) | (block | argument_block));
+block_alias_stmt	:	ALIAS_ID COLON (((block_inline | argument_block_inline) newline) | (block | argument_block));
 
 //inline
 alias_inline	:	empty_alias_inline | value_alias_inline | block_alias_inline;
 empty_alias_inline	: ALIAS_ID;
 value_alias_inline	: ALIAS_ID value_inline;
-block_alias_inline	: ALIAS_ID (block_inline | argument_block_inline);
+block_alias_inline	: ALIAS_ID COLON (block_inline | argument_block_inline);
 
 //ARGUMENTS RULES
+//block
+argument_block	:	INDENT (argument_stmt | argument_inline_stmt)+ dedent;
+argument_block_inline	:	(argument_inline)+ COMMA?;
+
 //statements
 argument_stmt	:	empty_argument_stmt | value_argument_stmt | block_argument_stmt;
 empty_argument_stmt	:	ARGUMENT_ID newline;
 value_argument_stmt	:	ARGUMENT_ID value newline;
-block_argument_stmt	:	ARGUMENT_ID ((block_inline newline) | block);
+block_argument_stmt	:	ARGUMENT_ID COLON block;
 
 argument_inline_stmt	:	argument_inline+ newline;
 
@@ -119,11 +123,7 @@ argument_inline_stmt	:	argument_inline+ newline;
 argument_inline	:	empty_argument_inline | value_argument_inline | block_argument_inline;
 empty_argument_inline	: ARGUMENT_ID;
 value_argument_inline	: ARGUMENT_ID value_inline;
-block_argument_inline	: ARGUMENT_ID block_inline;
-
-//block
-argument_block	:	COLON INDENT (argument_stmt | argument_inline_stmt)+ dedent;
-argument_block_inline	:	COLON (argument_inline)+ COMMA?;
+block_argument_inline	: ARGUMENT_ID  COLON block_inline;
 
 
 //VALUES

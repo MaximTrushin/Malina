@@ -112,7 +112,7 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
         public void AliasWithInlineArguments()
         {
             PerformTest();

@@ -1,7 +1,7 @@
 
 module: ()
-    document_stmt: (DOCUMENT_ID=!MyRequest)
-        ns_block: (COLON=:)
+    document_stmt: (DOCUMENT_ID=!MyRequest, COLON=:)
+        ns_block: ()
             namespace_declaration_stmt: (NAMESPACE_ID=#ns1)
                 string_value: ()
                     string_value_inline: (EQUAL== , DQS="http://myNs1.com")

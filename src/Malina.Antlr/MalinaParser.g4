@@ -45,7 +45,7 @@ block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt | scope
 element_stmt	:	block_element_stmt | value_element_stmt | empty_element_stmt | hybrid_block_element_stmt;
 value_element_stmt	:	ELEMENT_ID value newline;
 block_element_stmt	:	ELEMENT_ID ((block_inline newline) | block);
-hybrid_block_element_stmt	:	ELEMENT_ID COLON (hybrid_block_element_stmt | block_element_stmt);
+hybrid_block_element_stmt	:	ELEMENT_ID COLON (hybrid_block_element_stmt | block_stmt);
 empty_element_stmt	:	ELEMENT_ID COLON? newline;
 
 //inline
@@ -59,7 +59,12 @@ block_element_inline	:	ELEMENT_ID block_inline;
 array_item_stmt	:	block_array_item_stmt | value_array_item_stmt;
 block_array_item_stmt	:	ARRAY_ITEM INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ dedent;
 value_array_item_stmt	:	EQUAL value newline;
+hybrid_block_array_item_stmt	:	ARRAY_ITEM (hybrid_block_array_item_stmt | block_stmt);
 
+//inline
+array_item_inline	:	value_array_item_inline | block_array_item_inline;
+value_array_item_inline : value_inline;
+block_array_item_inline	: block_inline;
 //SCOPE RULES
 
 scope_stmt	:	SCOPE_ID ((block_inline newline) | block);

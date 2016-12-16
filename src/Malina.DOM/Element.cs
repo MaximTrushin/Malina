@@ -21,9 +21,10 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is Entity)
+            var item = child as Entity;
+            if (item != null)
             {
-                Entities.Add((Entity)child);
+                Entities.Add(item);
             }
             else
             {

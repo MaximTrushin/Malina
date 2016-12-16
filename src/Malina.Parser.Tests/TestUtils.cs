@@ -444,16 +444,6 @@ namespace Malina.Parser.Tests
                 text = text?.Replace("\n", @"\n").Replace("\t", @"\t");
 
                 sb.AppendLine(string.Format("\t{2}:{3}\t{0}\t`{1}`\t ({4},{5})", GetType(token), text, token.Line, token.Column, token.StartIndex, token.StopIndex));
-
-                var iToken = token as InterpolationStringToken;
-                if (iToken == null) continue;
-
-                foreach (var interpolation in iToken.InterpolationTokens)
-                {
-                    text = interpolation.StartIndex > -1 ? interpolation.Text : "";
-                    text = text?.Replace("\n", @"\n").Replace("\t", @"\t");
-                    sb.AppendLine(string.Format("\t\t{2}:{3}\t{0}\t`{1}`\t ({4},{5})", GetType(interpolation), text, interpolation.Line, interpolation.Column, interpolation.StartIndex, interpolation.StopIndex));
-                }
             }
             return sb.ToString().Replace("\r\n", "\n");
         }

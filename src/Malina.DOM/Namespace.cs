@@ -9,13 +9,7 @@ namespace Malina.DOM
         private string _value;
         private ValueType _valueType;
 
-        public bool IsValueNode
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsValueNode => true;
 
         public object ObjectValue
         {

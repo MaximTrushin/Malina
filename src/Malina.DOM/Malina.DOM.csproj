@@ -52,8 +52,6 @@
     <Compile Include="Element.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="IDomVisitor.cs" />
-    <Compile Include="IntString.cs" />
-    <Compile Include="IntToken.cs" />
     <Compile Include="IValueNode.cs" />
     <Compile Include="LexicalInfo.cs" />
     <Compile Include="Module.cs" />

@@ -12,9 +12,6 @@ namespace Malina.DOM
         private string _nsPrefix;
 
         // Methods
-        public Attribute()
-        {
-        }
 
         public override void Accept(IDomVisitor visitor)
         {
@@ -26,7 +23,7 @@ namespace Malina.DOM
         {
             get
             {
-                return ((ObjectValue != null) ? (!(ObjectValue is Alias) ? ObjectValue.ToString() : ("$" + (ObjectValue as Alias).Name)) : null);
+                return ObjectValue != null ? (!(ObjectValue is Alias) ? ObjectValue.ToString() : "$" + ((Alias) ObjectValue).Name) : null;
             }
             set
             {
@@ -73,13 +70,7 @@ namespace Malina.DOM
             }
         }
 
-        public bool IsValueNode
-        {
-            get
-            {
-                return _valueType != ValueType.None;
-            }
-        }
+        public bool IsValueNode => _valueType != ValueType.None;
     }
 
 

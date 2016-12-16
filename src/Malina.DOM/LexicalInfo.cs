@@ -71,17 +71,17 @@ namespace Malina.DOM
             return _filename + base.ToString();
         }
 
-        private static string SafeGetFullPath(string fname)
+        private static string SafeGetFullPath(string fileName)
         {
             try
             {
-                return System.IO.Path.GetFullPath(fname);
+                return System.IO.Path.GetFullPath(fileName);
             }
             catch (Exception)
             {
                 // ignored
             }
-            return fname;
+            return fileName;
         }
 
         public int CompareTo(LexicalInfo other)

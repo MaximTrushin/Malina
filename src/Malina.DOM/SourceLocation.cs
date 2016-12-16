@@ -34,9 +34,9 @@ namespace Malina.DOM
     public class SourceLocation : IComparable<SourceLocation>, IEquatable<SourceLocation>
     {
         // Fields
-        public int Column { get; private set; }
-        public int Line { get; private set; }
-        public int Index { get; private set; }
+        public int Column { get; }
+        public int Line { get; }
+        public int Index { get; }
 
         // Methods
         public SourceLocation(int line, int column, int index)
@@ -65,20 +65,12 @@ namespace Malina.DOM
 
         public override string ToString()
         {
-            return string.Format("({0},{1},{2})", Line, Column, Index);
+            return $"({Line},{Column},{Index})";
         }
 
         // Properties
 
-        public virtual bool IsValid
-        {
-            get
-            {
-                return ((Line > 0) && (Column > 0));
-            }
-        }
-
-
+        public virtual bool IsValid => ((Line > 0) && (Column > 0));
     }
 
 

@@ -22,13 +22,17 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is ModuleMember)
+            var item = child as ModuleMember;
+            if (item != null)
             {
-                Members.Add((ModuleMember)child);
+                Members.Add(item);
+                return;
             }
-            else if (child is Namespace)
+
+            var ns = child as Namespace;
+            if (ns != null)
             {
-                Namespaces.Add((Namespace)child);
+                Namespaces.Add(ns);
             }
             else
             {
@@ -39,22 +43,12 @@ namespace Malina.DOM
         // Properties
         public NodeCollection<ModuleMember> Members
         {
-            get
-            {
-                if (_member == null)
-                {
-                    _member = new NodeCollection<ModuleMember>(this);
-                }
-                return _member;
-            }
+            get { return _member ?? (_member = new NodeCollection<ModuleMember>(this)); }
             set
             {
                 if (value != _member)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
+                    value?.InitializeParent(this);
                     _member = value;
                 }
             }
@@ -62,22 +56,12 @@ namespace Malina.DOM
 
         public NodeCollection<Namespace> Namespaces
         {
-            get
-            {
-                if (_namespaces == null)
-                {
-                    _namespaces = new NodeCollection<Namespace>(this);
-                }
-                return _namespaces;
-            }
+            get { return _namespaces ?? (_namespaces = new NodeCollection<Namespace>(this)); }
             set
             {
                 if (value != _namespaces)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
+                    value?.InitializeParent(this);
                     _namespaces = value;
                 }
             }

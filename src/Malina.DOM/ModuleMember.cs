@@ -13,22 +13,12 @@ namespace Malina.DOM
 
         public virtual NodeCollection<Namespace> Namespaces
         {
-            get
-            {
-                if (_namespaces == null)
-                {
-                    _namespaces = new NodeCollection<Namespace>(this);
-                }
-                return _namespaces;
-            }
+            get { return _namespaces ?? (_namespaces = new NodeCollection<Namespace>(this)); }
             set
             {
                 if (value != _namespaces)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
+                    value?.InitializeParent(this);
                     _namespaces = value;
                 }
             }

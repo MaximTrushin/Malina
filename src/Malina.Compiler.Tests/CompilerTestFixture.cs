@@ -143,6 +143,12 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+        [Test, RecordedTest]
+        public void JsonArrayWithValues()
+        {
+            PerformCompilerTest();
+        }
+
         [Test]
         public void JsonPropertyInArray()
         {

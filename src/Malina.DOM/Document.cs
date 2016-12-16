@@ -25,24 +25,30 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is Attribute)
+            var item = child as Attribute;
+            if (item != null)
             {
-                Attributes.Add((Attribute)child);
+                Attributes.Add(item);
+                return;
             }
-            else if (child is Entity)
+
+            var entity = child as Entity;
+            if (entity != null)
             {
-                DocumentElement = (Entity)child;
-                child.InitializeParent(this);
-                Entities.Add((Entity)child);
+                DocumentElement = entity;
+                entity.InitializeParent(this);
+                Entities.Add(entity);
+                return;
             }
-            else if (child is Namespace)
+
+            var ns = child as Namespace;
+            if (ns != null)
             {
-                Namespaces.Add((Namespace)child);
+                Namespaces.Add(ns);
+                return;
             }
-            else
-            {
-                base.AppendChild(child);
-            }
+            base.AppendChild(child);
+
         }
 
         // Properties

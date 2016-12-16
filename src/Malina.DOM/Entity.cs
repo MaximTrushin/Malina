@@ -8,6 +8,4 @@ namespace Malina.DOM
         // Methods
 
     }
-
-
 }

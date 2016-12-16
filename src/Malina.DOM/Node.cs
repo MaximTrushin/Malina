@@ -25,10 +25,6 @@ namespace Malina.DOM
             }
         }
         // Methods
-        protected Node()
-        {
-        }
-
         public abstract void Accept(IDomVisitor visitor);
         public virtual void AppendChild(Node child)
         {
@@ -41,12 +37,6 @@ namespace Malina.DOM
         }
 
         // Properties
-        public Node Parent
-        {
-            get
-            {
-                return _parent;
-            }
-        }
+        public Node Parent => _parent;
     }
 }

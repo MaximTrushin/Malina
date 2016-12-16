@@ -20,22 +20,12 @@ namespace Malina.DOM
 
         public NodeCollection<Attribute> Attributes
         {
-            get
-            {
-                if (_attributes == null)
-                {
-                    _attributes = new NodeCollection<Attribute>(this);
-                }
-                return _attributes;
-            }
+            get { return _attributes ?? (_attributes = new NodeCollection<Attribute>(this)); }
             set
             {
                 if (value != _attributes)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
+                    value?.InitializeParent(this);
                     _attributes = value;
                 }
             }
@@ -43,22 +33,12 @@ namespace Malina.DOM
 
         public NodeCollection<Entity> Entities
         {
-            get
-            {
-                if (_entities == null)
-                {
-                    _entities = new NodeCollection<Entity>(this);
-                }
-                return _entities;
-            }
+            get { return _entities ?? (_entities = new NodeCollection<Entity>(this)); }
             set
             {
                 if (value != _entities)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
+                    value?.InitializeParent(this);
                     _entities = value;
                 }
             }
@@ -67,7 +47,7 @@ namespace Malina.DOM
         {
             get
             {
-                return ((ObjectValue != null) ? (!(ObjectValue is Alias) ? ObjectValue.ToString() : ("$" + (ObjectValue as Alias).Name)) : null);
+                return ObjectValue != null ? (!(ObjectValue is Alias) ? ObjectValue.ToString() : "$" + ((Alias) ObjectValue).Name) : null;
             }
             set
             {
@@ -124,9 +104,10 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is Argument)
+            var item = child as Argument;
+            if (item != null)
             {
-                Arguments.Add((Argument)child);
+                Arguments.Add(item);
             }
             else
             {

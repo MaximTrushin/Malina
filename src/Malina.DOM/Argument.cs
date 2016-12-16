@@ -7,11 +7,6 @@ namespace Malina.DOM
     {
 
         // Methods
-        public Argument()
-        {
-        }
-
-
         public override void Accept(IDomVisitor visitor)
         {
             visitor.OnArgument(this);

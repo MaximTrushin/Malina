@@ -16,9 +16,10 @@ namespace Malina.DOM
 
         public override void AppendChild(Node child)
         {
-            if (child is Entity)
+            var item = child as Entity;
+            if (item != null)
             {
-                Entities.Add((Entity)child);
+                Entities.Add(item);
             }
             else
             {
@@ -30,22 +31,12 @@ namespace Malina.DOM
  
         public NodeCollection<Entity> Entities
         {
-            get
-            {
-                if (_entities == null)
-                {
-                    _entities = new NodeCollection<Entity>(this);
-                }
-                return _entities;
-            }
+            get { return _entities ?? (_entities = new NodeCollection<Entity>(this)); }
             set
             {
                 if (value != _entities)
                 {
-                    if (value != null)
-                    {
-                        value.InitializeParent(this);
-                    }
+                    value?.InitializeParent(this);
                     _entities = value;
                 }
             }

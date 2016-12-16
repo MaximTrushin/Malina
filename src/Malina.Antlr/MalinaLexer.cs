@@ -30,19 +30,6 @@ namespace Malina.Parser
         }
     }
 
-    public class InterpolationStringToken : MalinaToken
-    {
-        private List<CommonToken> _interpolationTokens;
-        public InterpolationStringToken(int type) : base(type)
-        {
-        }
-
-        public InterpolationStringToken(Tuple<ITokenSource, ICharStream> source, int type, int channel, int start, int stop) : base(source, type, channel, start, stop)
-        {
-        }
-
-        public List<CommonToken> InterpolationTokens => _interpolationTokens??(_interpolationTokens = new List<CommonToken>());
-    }
     partial class MalinaLexer
     {
         public List<IToken> InvalidTokens = new List<IToken>();

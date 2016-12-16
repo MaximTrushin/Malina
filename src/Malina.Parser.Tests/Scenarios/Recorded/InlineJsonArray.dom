@@ -3,4 +3,20 @@
 03:02			Element ``:
 03:04				Element `prop1`= `a`
 03:16				Element `prop2`= `b`
+04:02			Element ``:
+04:04				Element `prop3`= `a`
+04:16				Element `prop4`= `b`
+04:28				Element `sub_items`:
+05:04					Element ``:
+06:05						Element `prop5`= `a`
+07:05						Element `prop6`= `b`
+08:04					Element ``:
+09:05						Element `prop7`= `a`
+10:05						Element `prop8`= `b`
+11:02			Element ``:
+11:04				Element `propA`= `a`
+11:16				Element `propB`= `b`
+11:30			Element ``:
+11:32				Element `propC`= `a`
+11:44				Element `propD`= `b`
 

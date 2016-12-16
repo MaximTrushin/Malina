@@ -24,7 +24,7 @@ ns_block	:	INDENT (namespace_declaration_stmt)+ block_stmt* dedent;
 
 block	:	INDENT block_stmt+ dedent;
 
-block_stmt: block_line_stmt | inline_stmt | hybrid_stmt | array_item_stmt;
+block_stmt: inline_stmt | block_line_stmt | hybrid_stmt | array_item_stmt;
 
 block_inline	:	inline_expression+ COMMA?;
 
@@ -44,8 +44,8 @@ block_line_stmt	:	attr_stmt | element_stmt | parameter_stmt | alias_stmt | scope
 //statements
 element_stmt	:	block_element_stmt | value_element_stmt | empty_element_stmt | hybrid_block_element_stmt;
 value_element_stmt	:	ELEMENT_ID value newline;
-block_element_stmt	:	ELEMENT_ID COLON ((block_inline newline) | block);
-hybrid_block_element_stmt	:	ELEMENT_ID COLON (hybrid_block_element_stmt | block_stmt);
+block_element_stmt	:	ELEMENT_ID COLON block;
+hybrid_block_element_stmt	:	ELEMENT_ID COLON (hybrid_block_element_stmt | block_line_stmt);
 empty_element_stmt	:	ELEMENT_ID COLON? newline;
 
 //inline
@@ -57,7 +57,7 @@ block_element_inline	:	ELEMENT_ID COLON block_inline;
 //ARRAY RULES
 //statements
 array_item_stmt	:	block_array_item_stmt | value_array_item_stmt;
-block_array_item_stmt	:	ARRAY_ITEM INDENT (block_line_stmt | inline_stmt | hybrid_stmt)+ dedent;
+block_array_item_stmt	:	ARRAY_ITEM block;
 value_array_item_stmt	:	EQUAL value newline;
 hybrid_block_array_item_stmt	:	ARRAY_ITEM (hybrid_block_array_item_stmt | block_stmt);
 
@@ -67,7 +67,7 @@ value_array_item_inline : value_inline;
 block_array_item_inline	: ARRAY_ITEM block_inline;
 //SCOPE RULES
 
-scope_stmt	:	SCOPE_ID COLON ((block_inline newline) | block);
+scope_stmt	:	SCOPE_ID COLON block;
 scope_inline	:	SCOPE_ID COLON block_inline;
 
 //ATTRIBUTE RULES
@@ -85,7 +85,7 @@ empty_attr_inline	: ATTRIBUTE_ID;
 parameter_stmt	:	empty_parameter_stmt | value_parameter_stmt | block_parameter_stmt;
 empty_parameter_stmt	: PARAMETER_ID newline;
 value_parameter_stmt	: PARAMETER_ID value newline;
-block_parameter_stmt	: PARAMETER_ID COLON ((block_inline newline) | block);
+block_parameter_stmt	: PARAMETER_ID COLON block;
 
 //inline
 parameter_inline	:	empty_parameter_inline | value_parameter_inline | block_parameter_inline;
@@ -98,7 +98,7 @@ block_parameter_inline	: PARAMETER_ID COLON block_inline;
 alias_stmt	:	empty_alias_stmt | value_alias_stmt | block_alias_stmt;
 empty_alias_stmt	:	ALIAS_ID newline;
 value_alias_stmt	:	ALIAS_ID value newline;
-block_alias_stmt	:	ALIAS_ID COLON (((block_inline | argument_block_inline) newline) | (block | argument_block));
+block_alias_stmt	:	ALIAS_ID COLON (block | argument_block);
 
 //inline
 alias_inline	:	empty_alias_inline | value_alias_inline | block_alias_inline;

@@ -235,6 +235,9 @@ namespace Malina.Parser.Tests
             parser.AddErrorListener(parserErrorListener);
             parser.AddParseListener(malinaListener);
 
+            //parser.AddErrorListener(new DiagnosticErrorListener());
+            //parser.Interpreter.PredictionMode = PredictionMode.LlExactAmbigDetection;
+
             var module = parser.module();
 
             int nCount = 0;

@@ -235,7 +235,7 @@ namespace Malina.Parser
                     _currentToken.StopColumn++;
                     Emit(_currentToken);
                 }
-                PopMode(); 
+                ExitInValueMode(); 
             }
             else if (indent > currentIndent)
             {
@@ -269,6 +269,7 @@ namespace Malina.Parser
                 }
                 _currentToken.Type = OPEN_STRING_ML;
                 Skip();
+                EnterInOsMode();
             }
             else
             {
@@ -290,9 +291,30 @@ namespace Malina.Parser
                     EmitIndentationToken(DEDENT, CharIndex - indent, CharIndex - 1);
                     _indents.Pop();
                 }
-                PopMode();
+                ExitInValueMode();
             }
         }
+
+        private void EnterInOsMode()
+        {
+            if (_mode != IN_OS)
+                PushMode(IN_OS);
+        }
+
+        private void ExitInValueMode()
+        {
+            switch (_mode)
+            {
+                case IN_VALUE:
+                    PopMode();
+                    break;
+                case IN_OS:
+                    PopMode();
+                    PopMode();
+                    break;
+            }
+        }
+
 
         private void EmitIndentationToken(int tokenType, int start, int stop)
         {
@@ -447,15 +469,15 @@ namespace Malina.Parser
             _currentToken.StopLine = Line;
             _currentToken.StopColumn = Column - 1;
 
-            if (this._input.La(1) == -1 || InWsaMode)
+            if (_input.La(1) == -1 || InWsaMode)
             {
                 Emit(_currentToken);
-                PopMode();
+                ExitInValueMode();
                 //Emitting NEWLINE if not in WSA
                 if(!InWsaMode)
                     EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
             }
-            else Skip();
+            else {Skip(); EnterInOsMode();}
 
         }
 

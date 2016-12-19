@@ -268,6 +268,13 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
+        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
+        public void JsonArrayWithValues()
+        {
+            PerformTest();
+        }
+
+
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void JsonArrayItemInObject()
         {
@@ -339,6 +346,13 @@ namespace Malina.Parser.Tests
         {
             PerformTest();
         }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void OpenStringMultiline3()
+        {
+            PerformTest();
+        }
+
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void OpenStringSimple()
         {

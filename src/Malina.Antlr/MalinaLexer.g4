@@ -38,8 +38,8 @@ mode IN_VALUE;
 					)		-> popMode;
 
 	//Open string and Multi Line Open String
-	OPEN_STRING_EOL		:	(Eol Spaces)+ '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
-	OPEN_STRING			:	~[$%"\'\r\n](~[\r\n])* {EndOpenValueIfEofOrWsa();}; //Open string content can't start with [$%"\'\r\n]
+	OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
+	OPEN_STRING			:	OpenStringStart {EndOpenValueIfEofOrWsa();};
 	
 	//Double Qoute String (DQS) and Multiline DQS
 	DQS					:	'"' (~["\r\n] | '""')+ '"' -> popMode;
@@ -48,7 +48,13 @@ mode IN_VALUE;
 	//Single Qoute String (SQS) and Multiline SQS
 	SQS					: '\'' {StartSqs();}  -> pushMode(IN_SQS);
 
-//mode IN_OPEN
+mode IN_OS;
+	IN_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
+	IN_OPEN_STRING			:	OpenString {EndOpenValueIfEofOrWsa();};
+
+fragment OpenStringEol	:	(Eol Spaces)+ '=='?; //End of Open String Line or End of Open String
+fragment OpenStringStart	:	~[$%"\'\r\n](~[\r\n])*; //Open string content can't start with [$%"\'\r\n]
+fragment OpenString	:	~[\r\n]+; //Open string content
 
 mode IN_DQS;
 	//Double Quoted String

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Antlr4.Runtime.Atn;
 using Malina.DOM;
 using Newtonsoft.Json;
 using Attribute = Malina.DOM.Attribute;
@@ -13,8 +11,8 @@ namespace Malina.Compiler.Generator
     {
         public enum BlockState
         {
-            Object,
-            Array
+            Object, //Json block is object
+            Array   //Json block is array
         }
 
         private readonly Func<string, JsonWriter> _writerDelegate;
@@ -67,7 +65,13 @@ namespace Malina.Compiler.Generator
             {
                 decimal numberValue;
                 if (type == ValueType.Number && decimal.TryParse(value, out numberValue))
-                    _jsonWriter.WriteValue(numberValue);
+                {
+                    if (numberValue % 1 == 0)
+                        _jsonWriter.WriteValue((long) numberValue);
+                    else
+                        _jsonWriter.WriteValue(numberValue);
+                }
+                    
                 else
                     _jsonWriter.WriteValue(value);
             }

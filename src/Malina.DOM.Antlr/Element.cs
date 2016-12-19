@@ -133,7 +133,7 @@ namespace Malina.DOM.Antlr
             foreach (var item in lines)
             {
                 string s;
-                if (valueType == ValueType.OpenString)
+                if (valueType == ValueType.OpenString || valueType == ValueType.Boolean || valueType == ValueType.Null || valueType == ValueType.Number)
                     s = item.TrimEnd(' ', '\t'); //ignoring trailing whitespace for open strings
                 else
                     s = item;

@@ -452,13 +452,13 @@ namespace Malina.Parser
             else Skip();
         }
 
-        private void EndOpenValueIfEofOrWsa()
+        private void ProcessOpenStringLine(int tokenType)
         {
             if(_currentToken == null)
             {
                 _currentToken =
                     new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                        OPEN_STRING, Channel, this._tokenStartCharIndex, -1)
+                        tokenType, Channel, this._tokenStartCharIndex, -1)
                     {
                         Column = _tokenStartCharPositionInLine,
                         TokenIndent = _indents.Peek() + 1

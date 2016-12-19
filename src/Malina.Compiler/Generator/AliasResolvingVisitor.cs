@@ -48,7 +48,8 @@ namespace Malina.Compiler.Generator
                 var alias = item as Alias;
                 if (alias != null)
                 {
-                    sb.Append(ResolveValueAlias(alias));
+                    ValueType valueType;
+                    sb.Append(ResolveValueAlias(alias, out valueType));
                     continue;
                 }
                 var token = item as CommonToken;
@@ -59,40 +60,42 @@ namespace Malina.Compiler.Generator
             return sb.ToString();
         }
 
-        protected string ResolveValueAlias(Alias alias)
+        protected string ResolveValueAlias(Alias alias, out ValueType valueType)
         {
             var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
-
-            return aliasDef.ObjectValue == null ? aliasDef.Value : ResolveObjectValue(aliasDef.ObjectValue);
+            valueType = ValueType.None;
+            return aliasDef.ObjectValue == null ? aliasDef.Value : ResolveObjectValue(aliasDef.ObjectValue, out valueType);
         }
 
 
-        private string ResolveObjectValue(object objectValue)
+        private string ResolveObjectValue(object objectValue, out ValueType valueType)
         {
             var value = objectValue as Parameter;
             if (value != null)
             {
-                return ResolveValueParameter(value);
+                return ResolveValueParameter(value, out valueType);
             }
 
             var alias = objectValue as Alias;
-            return alias != null ? ResolveValueAlias(alias) : null;
+            valueType = ValueType.None;
+            return alias != null ? ResolveValueAlias(alias, out valueType) : null;
         }
 
         protected bool ResolveValue(IValueNode node)
         {
             //Write element's value
             object value = node.ObjectValue as Parameter;
+            ValueType valueType;
             if (value != null)
             {
-                OnValue(ResolveValueParameter((Parameter)value), node.ValueType);
+                OnValue(ResolveValueParameter((Parameter)value, out valueType), valueType);
                 return true;
             }
 
             value = node.ObjectValue as Alias;
             if (value != null)
             {
-                OnValue(ResolveValueAlias((Alias)value), node.ValueType);
+                OnValue(ResolveValueAlias((Alias)value, out valueType), valueType);
                 return true;
             }
             if (node.Value != null)
@@ -108,7 +111,7 @@ namespace Malina.Compiler.Generator
         {
         }
 
-        protected string ResolveValueParameter(Parameter parameter)
+        protected string ResolveValueParameter(Parameter parameter, out ValueType valueType)
         {
             var aliasContext = AliasContext.Peek();
             var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
@@ -116,22 +119,23 @@ namespace Malina.Compiler.Generator
             {
                 if (argument.ObjectValue != null)
                 {
-                    return ResolveObjectValue(argument.ObjectValue);
+                    return ResolveObjectValue(argument.ObjectValue, out valueType);
                 }
+                valueType = argument.ValueType;
                 return argument.Value;
             }
 
             //if argument is not found lookup default value in the Alias Definition
-            var paramDef = (aliasContext.AliasDefinition as DOM.Antlr.AliasDefinition)?.Parameters.First(p => p.Name == parameter.Name);
+            var paramDef = ((DOM.Antlr.AliasDefinition) aliasContext.AliasDefinition).Parameters.First(p => p.Name == parameter.Name);
 
             //If parameteres default value is Parameter or Alias then resolve it
-            if (paramDef?.ObjectValue != null)
+            if (paramDef.ObjectValue != null)
             {
-                return ResolveObjectValue(paramDef.ObjectValue);
-
+                return ResolveObjectValue(paramDef.ObjectValue, out valueType);
             }
 
-            return paramDef?.Value;
+            valueType = paramDef.ValueType;
+            return paramDef.Value;
         }
 
 

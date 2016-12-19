@@ -119,13 +119,14 @@ namespace Malina.Compiler.Generator
             if (node.ObjectValue != null)
             {
                 var value = node.ObjectValue as Parameter;
+                ValueType valueType;
                 if (value != null)
                 {
-                    return ResolveValueParameter(value);
+                    return ResolveValueParameter(value, out valueType);
                 }
                 else if (node.ObjectValue is Alias)
                 {
-                    return ResolveValueAlias((Alias)node.ObjectValue);
+                    return ResolveValueAlias((Alias)node.ObjectValue, out valueType);
                 }
             }
             else return node.Value;

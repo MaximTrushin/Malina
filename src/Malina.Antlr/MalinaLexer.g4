@@ -39,7 +39,10 @@ mode IN_VALUE;
 
 	//Open string and Multi Line Open String
 	OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
-	OPEN_STRING			:	OpenStringStart {EndOpenValueIfEofOrWsa();};
+	JSON_BOOLEAN		:	('true' | 'false') {ProcessOpenStringLine(JSON_BOOLEAN);};
+	JSON_NULL		:	'null' {ProcessOpenStringLine(JSON_NULL);};
+	JSON_NUMBER		:	('-'? Int '.' [0-9] + Exp? | '-'? Int Exp | '-'? Int) {ProcessOpenStringLine(JSON_NUMBER);};
+	OPEN_STRING			:	OpenStringStart {ProcessOpenStringLine(OPEN_STRING);};
 	
 	//Double Qoute String (DQS) and Multiline DQS
 	DQS					:	'"' (~["\r\n] | '""')+ '"' -> popMode;
@@ -48,13 +51,21 @@ mode IN_VALUE;
 	//Single Qoute String (SQS) and Multiline SQS
 	SQS					: '\'' {StartSqs();}  -> pushMode(IN_SQS);
 
+
 mode IN_OS;
 	IN_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
-	IN_OPEN_STRING			:	OpenString {EndOpenValueIfEofOrWsa();};
+	IN_OPEN_STRING			:	OpenString {ProcessOpenStringLine(OPEN_STRING);};
 
 fragment OpenStringEol	:	(Eol Spaces)+ '=='?; //End of Open String Line or End of Open String
 fragment OpenStringStart	:	~[$%"\'\r\n](~[\r\n])*; //Open string content can't start with [$%"\'\r\n]
 fragment OpenString	:	~[\r\n]+; //Open string content
+fragment Int
+   : '0' | [1-9] [0-9]*
+   ;
+// no leading zeros
+fragment Exp
+   : [Ee] [+\-]? Int
+   ;
 
 mode IN_DQS;
 	//Double Quoted String

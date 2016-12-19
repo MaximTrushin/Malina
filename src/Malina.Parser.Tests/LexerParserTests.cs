@@ -112,7 +112,7 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithInlineArguments()
         {
             PerformTest();
@@ -256,19 +256,19 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void InlineJsonArray()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void JsonArray()
         {
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void JsonArrayWithValues()
         {
             PerformTest();

@@ -61,7 +61,7 @@ block_element_inline	:	ELEMENT_ID COLON block_inline;
 //statements
 array_item_stmt	:	block_array_item_stmt | value_array_item_stmt | hybrid_block_array_item_stmt;
 block_array_item_stmt	:	ARRAY_ITEM block;
-value_array_item_stmt	:	EQUAL value newline;
+value_array_item_stmt	:	value newline;
 hybrid_block_array_item_stmt	:	ARRAY_ITEM (hybrid_block_array_item_stmt | hybrid_stmt | block_line_stmt);
 
 //inline
@@ -140,7 +140,7 @@ value_ml	:	string_value_ml | object_value_ml;
 
 //string values
 string_value	:	string_value_inline | string_value_ml;
-string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_STRING | DQS | sqs_inline);
+string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_STRING | JSON_BOOLEAN | JSON_NULL | JSON_NUMBER | DQS | sqs_inline);
 string_value_ml	:	(EQUAL | DBL_EQUAL) (sqs_ml | DQS_ML | OPEN_STRING_ML);
 
 sqs_inline	:	SQS (SQS_VALUE | INTERPOLATION)* SQS_END?;

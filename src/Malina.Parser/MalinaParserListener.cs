@@ -547,6 +547,30 @@ namespace Malina.Parser
                 return;
             }
 
+            var jsonBoolean = context.JSON_BOOLEAN();
+            if (jsonBoolean != null)
+            {
+                parent.ValueInterval = new Interval(((CommonToken)jsonBoolean.Payload).StartIndex, ((CommonToken)jsonBoolean.Payload).StopIndex);
+                ((DOM.IValueNode)parent).ValueType = ValueType.Boolean;
+                return;
+            }
+
+            var jsonNull = context.JSON_NULL();
+            if (jsonNull != null)
+            {
+                parent.ValueInterval = new Interval(((CommonToken)jsonNull.Payload).StartIndex, ((CommonToken)jsonNull.Payload).StopIndex);
+                ((DOM.IValueNode)parent).ValueType = ValueType.Null;
+                return;
+            }
+
+            var jsonNumber = context.JSON_NUMBER();
+            if (jsonNumber != null)
+            {
+                parent.ValueInterval = new Interval(((CommonToken)jsonNumber.Payload).StartIndex, ((CommonToken)jsonNumber.Payload).StopIndex);
+                ((DOM.IValueNode)parent).ValueType = ValueType.Number;
+                return;
+            }
+
             var sqs = context.sqs_inline();
             if (sqs != null)
             {

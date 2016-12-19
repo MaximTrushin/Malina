@@ -7,7 +7,7 @@
 	4:2	INDENT	`INDENT`	 (27,28)
 	4:2	ELEMENT_ID	`tag1`	 (29,32)
 	4:9	EQUAL	`= `	 (34,35)
-	4:9	OPEN_VALUE	`tag1`	 (36,39)
+	4:9	OPEN_STRING	`tag1`	 (36,39)
 	5:2	NEWLINE	`NEWLINE`	 (40,40)
 	5:2	ELEMENT_ID	`ns1.tag2`	 (43,50)
 	5:13	EQUAL	`= `	 (52,53)

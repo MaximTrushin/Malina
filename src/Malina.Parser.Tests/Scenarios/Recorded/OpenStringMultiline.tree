@@ -13,7 +13,7 @@ module: ()
                                             element_inline: ()
                                                 value_element_inline: (ELEMENT_ID=e1)
                                                     value_inline: ()
-                                                        string_value_inline: (EQUAL== , OPEN_VALUE=bla)
+                                                        string_value_inline: (EQUAL== , OPEN_STRING=bla)
                                         newline: ()
                                 block_stmt: ()
                                     block_line_stmt: ()
@@ -21,7 +21,7 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=e2)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+                                                        string_value_ml: (EQUAL== , OPEN_STRING_ML=blabla
 			bla bla)
                                                 newline: ()
                                 block_stmt: ()
@@ -30,7 +30,7 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=e2_1)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+                                                        string_value_ml: (EQUAL== , OPEN_STRING_ML=blabla
 			bla bla
 					==)
                                                 newline: ()
@@ -48,7 +48,7 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=e4)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+                                                        string_value_ml: (EQUAL== , OPEN_STRING_ML=blabla
 					bla bla
 				bla)
                                                 newline: ()
@@ -58,7 +58,7 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=e5)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+                                                        string_value_ml: (EQUAL== , OPEN_STRING_ML=blabla
 					bla bla
 				bla
 )
@@ -69,7 +69,7 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=e6)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (EQUAL== , OPEN_VALUE_ML=blabla
+                                                        string_value_ml: (EQUAL== , OPEN_STRING_ML=blabla
 					bla bla
 				bla
 )

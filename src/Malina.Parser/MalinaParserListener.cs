@@ -539,7 +539,7 @@ namespace Malina.Parser
                 return;
             }
 
-            var openValue = context.OPEN_VALUE();
+            var openValue = context.OPEN_STRING();
             if (openValue != null)
             {
                 parent.ValueInterval = new Interval(((CommonToken) openValue.Payload).StartIndex, ((CommonToken) openValue.Payload).StopIndex);
@@ -597,7 +597,7 @@ namespace Malina.Parser
         public override void ExitString_value_ml([NotNull] MalinaParser.String_value_mlContext context)
         {
             var parent = (IValueNode) _nodeStack.Peek();
-            var open_value = context.OPEN_VALUE_ML();
+            var open_value = context.OPEN_STRING_ML();
             if (open_value != null)
             {
                 var token = (MalinaToken) open_value.Payload;

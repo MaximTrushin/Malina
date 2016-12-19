@@ -1,6 +1,6 @@
 lexer grammar MalinaLexer;
 
-tokens { INDENT, DEDENT, NEWLINE, OPEN_VALUE_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON, SQS}
+tokens { INDENT, DEDENT, NEWLINE, OPEN_STRING_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON, SQS}
 
 
 INDENT_DEDENT		:	(Eol Spaces) {IndentDedent();};
@@ -38,8 +38,8 @@ mode IN_VALUE;
 					)		-> popMode;
 
 	//Open string and Multi Line Open String
-	OPEN_VALUE_EOL		:	(Eol Spaces)+ '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
-	OPEN_VALUE			:	~[$%"\'\r\n](~[\r\n])* {EndOpenValueIfEofOrWsa();}; //Open string content can't start with [$%"\'\r\n]
+	OPEN_STRING_EOL		:	(Eol Spaces)+ '=='?  {OsIndentDedent();}; //End of Open String Line or End of Open String
+	OPEN_STRING			:	~[$%"\'\r\n](~[\r\n])* {EndOpenValueIfEofOrWsa();}; //Open string content can't start with [$%"\'\r\n]
 	
 	//Double Qoute String (DQS) and Multiline DQS
 	DQS					:	'"' (~["\r\n] | '""')+ '"' -> popMode;
@@ -47,6 +47,8 @@ mode IN_VALUE;
 
 	//Single Qoute String (SQS) and Multiline SQS
 	SQS					: '\'' {StartSqs();}  -> pushMode(IN_SQS);
+
+//mode IN_OPEN
 
 mode IN_DQS;
 	//Double Quoted String

@@ -79,7 +79,7 @@ namespace Malina.Parser
                     //Creating Token for Empty OpenString
                     _currentToken =
                         new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                            OPEN_VALUE, Channel, -1, -1) {Text = ""};
+                            OPEN_STRING, Channel, -1, -1) {Text = ""};
                     Emit(_currentToken);
                 }                
                 PopMode();
@@ -201,9 +201,9 @@ namespace Malina.Parser
         //Open String Indents/Dedents processing
         private void OsIndentDedent()
         {
-            var _currentIndent = InWsaMode ? 0 : _indents.Peek();
+            var currentIndent = InWsaMode ? 0 : _indents.Peek();
             var indent = CalcOsIndent();
-            if (indent == _currentIndent)
+            if (indent == currentIndent)
             {
                 //Emitting NEWLINE if OS is not ended by ==
                 if (_input.La(-1) != '=')
@@ -214,7 +214,7 @@ namespace Malina.Parser
                         _currentToken =
                             new MalinaToken(
                                 new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                                OPEN_VALUE, Channel, -1, -1) {Text = ""};
+                                OPEN_STRING, Channel, -1, -1) {Text = ""};
                     }
 
                     Emit(_currentToken);
@@ -226,19 +226,18 @@ namespace Malina.Parser
                     if (_currentToken == null)
                     {
                         //Creating Token 
-                        _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_VALUE, Channel, _tokenStartCharIndex, -1);
+                        _currentToken = new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), OPEN_STRING, Channel, _tokenStartCharIndex, -1);
                     }
                     //if value was ended with ==  then we need to add \n                                     
                     _currentToken.StopIndex = CharIndex - Column - 1;
                     _currentToken.StopLine = this._tokenStartLine;
-                    _currentToken.Type = OPEN_VALUE_ML;
+                    _currentToken.Type = OPEN_STRING_ML;
                     _currentToken.StopColumn++;
                     Emit(_currentToken);
-                    //EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
                 }
                 PopMode(); 
             }
-            else if (indent > _currentIndent)
+            else if (indent > currentIndent)
             {
                 if (_currentToken == null)
                 {
@@ -255,7 +254,7 @@ namespace Malina.Parser
 
                     _currentToken =
                         new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                            OPEN_VALUE, Channel, this._tokenStartCharIndex + offset, -1)
+                            OPEN_STRING, Channel, this._tokenStartCharIndex + offset, -1)
                         {
                             TokenIndent = _indents.Peek() + 1
                         };
@@ -268,7 +267,7 @@ namespace Malina.Parser
                     _currentToken.StopLine = Line;
                     _currentToken.StopColumn = Column - 1;
                 }
-                _currentToken.Type = OPEN_VALUE_ML;
+                _currentToken.Type = OPEN_STRING_ML;
                 Skip();
             }
             else
@@ -278,13 +277,10 @@ namespace Malina.Parser
                     //Creating Token for Empty OpenString
                     _currentToken =
                         new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                            OPEN_VALUE, Channel, -1, -1) {Text = ""};
+                            OPEN_STRING, Channel, -1, -1) {Text = ""};
                 }
 
                 //Adding 1 NEWLINE before DEDENTS
-                //_currentToken.StopIndex = CharIndex - Column;
-                //_currentToken.StopLine = this._tokenStartLine;
-                //_currentToken.StopColumn++;
                 Emit(_currentToken);
                 EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
 
@@ -427,8 +423,8 @@ namespace Malina.Parser
                 _currentToken.StopColumn = Column;
                 Emit(_currentToken);
                 PopMode(); PopMode();
-                //Emitting NEWLINE
-                if(!InWsaMode)
+                //Emitting NEWLINE if not in WSA
+                if (!InWsaMode)
                     EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
             }
             else Skip();
@@ -440,7 +436,7 @@ namespace Malina.Parser
             {
                 _currentToken =
                     new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                        OPEN_VALUE, Channel, this._tokenStartCharIndex, -1)
+                        OPEN_STRING, Channel, this._tokenStartCharIndex, -1)
                     {
                         Column = _tokenStartCharPositionInLine,
                         TokenIndent = _indents.Peek() + 1
@@ -455,7 +451,7 @@ namespace Malina.Parser
             {
                 Emit(_currentToken);
                 PopMode();
-                //Emitting NEWLINE
+                //Emitting NEWLINE if not in WSA
                 if(!InWsaMode)
                     EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
             }
@@ -503,6 +499,11 @@ namespace Malina.Parser
                 Skip();
         }
 
+        /// <summary>
+        /// COLON token is emitted only if colon follows an ID with no space between them. 
+        /// Otherwise token ARRAY_ITEM is emitted by ARRAY_ITEM lexer rule.
+        /// </summary>
+        /// <param name="tokenType"></param>
         private void EmitIdWithColon(int tokenType)
         {
             if(InputStream.La(-1) == ':')

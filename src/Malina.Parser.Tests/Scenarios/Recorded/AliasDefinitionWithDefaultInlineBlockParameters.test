@@ -11,7 +11,7 @@
 	4:23	COLON	`:`	 (47,47)
 	4:25	ELEMENT_ID	`Type`	 (49,52)
 	4:32	EQUAL	`= `	 (54,55)
-	4:32	OPEN_VALUE	`NewCustomer`	 (56,66)
+	4:32	OPEN_STRING	`NewCustomer`	 (56,66)
 	5:2	NEWLINE	`NEWLINE`	 (67,67)
 	5:2	PARAMETER_ID	`%ServiceAddress`	 (70,84)
 	5:17	COLON	`:`	 (85,85)

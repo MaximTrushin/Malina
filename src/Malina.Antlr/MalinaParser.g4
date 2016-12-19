@@ -140,8 +140,8 @@ value_ml	:	string_value_ml | object_value_ml;
 
 //string values
 string_value	:	string_value_inline | string_value_ml;
-string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_VALUE | DQS | sqs_inline);
-string_value_ml	:	(EQUAL | DBL_EQUAL) (sqs_ml | DQS_ML | OPEN_VALUE_ML);
+string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_STRING | DQS | sqs_inline);
+string_value_ml	:	(EQUAL | DBL_EQUAL) (sqs_ml | DQS_ML | OPEN_STRING_ML);
 
 sqs_inline	:	SQS (SQS_VALUE | INTERPOLATION)* SQS_END?;
 sqs_ml	:	SQS (SQS_VALUE | INTERPOLATION)* SQS_EOL (SQS_VALUE | INTERPOLATION | SQS_EOL)* SQS_END?;

@@ -9,7 +9,7 @@
 	4:13	EQUAL	`= `	 (35,36)
 	4:21	PARAMETER_ID	`%Account`	 (37,44)
 	4:24	EQUAL	`= `	 (46,47)
-	4:24	OPEN_VALUE	`Inactive`	 (48,55)
+	4:24	OPEN_STRING	`Inactive`	 (48,55)
 	5:2	NEWLINE	`NEWLINE`	 (56,56)
 	5:2	ELEMENT_ID	`AccountType`	 (59,69)
 	5:13	COLON	`:`	 (70,70)

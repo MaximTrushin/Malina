@@ -1,0 +1,13 @@
+01:00	Document `json`:
+02:01		Element `items`:
+03:02			Element ``:
+03:04				Element `prop1`= `a`
+04:04			Element ``= `string`
+05:04			Element ``= `string2`
+06:04			Element ``= `123.34`
+07:04			Element ``= `true`
+08:04			Element ``= `false`
+09:04			Element ``= `null`
+10:04			Element ``= `true\nstory`
+12:04			Element ``= `this is\nfalse`
+

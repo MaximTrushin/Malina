@@ -14,6 +14,7 @@ namespace Malina.DOM
         Null, //Json null
         Number, // Json number literal
         Boolean, // Json boolean literal
+        EmptyObject //Json empty object {}
     }
 
 

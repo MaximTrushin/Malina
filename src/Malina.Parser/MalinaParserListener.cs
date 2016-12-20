@@ -301,6 +301,18 @@ namespace Malina.Parser
             ExitContext(context);
         }
 
+        public override void EnterEmpty_array_item_stmt(MalinaParser.Empty_array_item_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_array_item_stmt(MalinaParser.Empty_array_item_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
+
+
         #endregion
         #region INLINE context
         public override void EnterValue_array_item_inline([NotNull] MalinaParser.Value_array_item_inlineContext context)
@@ -322,7 +334,39 @@ namespace Malina.Parser
             ExitContext(context);
         }
 
+        public override void EnterEmpty_array_inline(MalinaParser.Empty_array_inlineContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitEmpty_array_inline(MalinaParser.Empty_array_inlineContext context)
+        {
+            ExitContext(context);
+        }
+
         #endregion
+        #endregion
+
+        #region EMPTY OBJECT
+
+        public override void ExitEmpty_object_stmt(MalinaParser.Empty_object_stmtContext context)
+        {
+            var parent = _nodeStack.Peek() as DOM.IValueNode;
+            if (parent != null)
+            {
+                parent.ValueType = ValueType.EmptyObject;
+            }
+        }
+
+        public override void ExitEmpty_object_inline(MalinaParser.Empty_object_inlineContext context)
+        {
+            var parent = _nodeStack.Peek() as DOM.IValueNode;
+            if (parent != null)
+            {
+                parent.ValueType = ValueType.EmptyObject;
+            }
+        }
+
         #endregion
 
         #region PARAMETER context classes
@@ -521,9 +565,6 @@ namespace Malina.Parser
         }
         #endregion
         #endregion
-
-
-
 
         #region Value
         public override void ExitString_value_inline([NotNull] MalinaParser.String_value_inlineContext context)

@@ -1,0 +1,34 @@
+{
+  "request": {
+    "emptyObject": {},
+    "arrayWithEmptyArrays": [
+      [],
+      [],
+      []
+    ],
+    "arrayWithEmptyArrays": [
+      [],
+      [],
+      []
+    ],
+    "arrayWithEmptyObject": [
+      {}
+    ],
+    "emptyArray": [],
+    "emptyArray": [],
+    "emptyArray": [],
+    "arrayWithEmptyObject": [
+      {}
+    ],
+    "arrayWithEmptyObjects": [
+      {},
+      {},
+      {}
+    ],
+    "arrayWithEmptyObjects": [
+      {},
+      {},
+      {}
+    ]
+  }
+}

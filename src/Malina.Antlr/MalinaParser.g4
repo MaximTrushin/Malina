@@ -22,7 +22,7 @@ alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (COLON ((block_inline newline)
 //BLOCKS
 ns_block	:	INDENT (namespace_declaration_stmt)+ block_stmt* dedent;
 
-block	:	INDENT block_stmt+ dedent;
+block	:	INDENT (block_stmt+ | empty_array_item_stmt | empty_object_stmt) dedent;
 
 //block_stmt is a statement that can be declared in the block and takes at least one line
 block_stmt: 
@@ -30,7 +30,7 @@ block_stmt:
 			| block_line_stmt //takes at least two lines
 			| hybrid_stmt; // start with inline expression but end with block_line_stmt
 
-block_inline	:	inline_expression+ COMMA?;
+block_inline	:	(inline_expression+ COMMA?) | empty_object_inline | empty_array_inline;
 
 //STATEMENTS and EXPRESSIONS
 inline_stmt	:	inline_expression+ newline;
@@ -57,17 +57,20 @@ empty_element_inline	:	ELEMENT_ID;
 value_element_inline	:	ELEMENT_ID value_inline;
 block_element_inline	:	ELEMENT_ID COLON block_inline;
 
+
 //ARRAY RULES
 //statements
 array_item_stmt	:	block_array_item_stmt | value_array_item_stmt | hybrid_block_array_item_stmt;
 block_array_item_stmt	:	ARRAY_ITEM block;
 value_array_item_stmt	:	value newline;
 hybrid_block_array_item_stmt	:	ARRAY_ITEM (hybrid_block_array_item_stmt | hybrid_stmt | block_line_stmt);
+empty_array_item_stmt	: (EMPTY_ARRAY | ARRAY_ITEM) newline;
 
 //inline
 array_item_inline	:	value_array_item_inline | block_array_item_inline;
 value_array_item_inline : value_inline;
 block_array_item_inline	: ARRAY_ITEM block_inline;
+empty_array_inline	:	(EMPTY_ARRAY | ARRAY_ITEM);	
 
 //SCOPE RULES
 scope_stmt	:	SCOPE_ID COLON block;
@@ -162,3 +165,6 @@ parameter_object_value_ml	:	EQUAL PARAMETER_ID value_ml;
 alias_object_value_inline	:	EQUAL ALIAS_ID value_inline?;
 alias_object_value_ml	:	EQUAL ALIAS_ID value_ml;
 
+//Empty object 
+empty_object_inline		:	EMPTY_OBJECT;
+empty_object_stmt		:	EMPTY_OBJECT newline;

@@ -42,12 +42,24 @@ namespace Malina.Compiler.Generator
                 _blockStart = true;
                 _blockState = new Stack<BlockState>();
                 base.OnDocument(node);
-            }
 
+                if (_blockState.Count > 0)
+                {
+                    if (_blockState.Pop() == BlockState.Array)
+                        _jsonWriter.WriteEndArray();
+                    else
+                        _jsonWriter.WriteEndObject();
+                }
+                //Empty document. Writing an empty object as a value.
+                else
+                {
+                    _jsonWriter.WriteStartObject();
+                    _jsonWriter.WriteEndObject();
+                }
+            }
             _currentDocument = null;
         }
-
-
+        
         public override void OnValue(string value, ValueType type)
         {
             if (type == ValueType.Null)
@@ -108,16 +120,16 @@ namespace Malina.Compiler.Generator
                     _jsonWriter.WriteEndArray();
                 else
                     _jsonWriter.WriteEndObject();
-                //return;
+                return;
             }
 
-
-            //if (node.Name != null)
-            //{
-            //    _jsonWriter.WriteStartObject();
-            //    _jsonWriter.WriteEndObject();
-            //    //return;
-            //}
+            //Element hase nor block no value. Writing an empty object as a value.
+            if (!string.IsNullOrEmpty(node.Name) || node.ValueType == ValueType.EmptyObject)
+            {
+                _jsonWriter.WriteStartObject();
+                _jsonWriter.WriteEndObject();
+                //return;
+            }
         }
 
         private void CheckBlockStart(Node node)

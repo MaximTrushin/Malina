@@ -1,0 +1,31 @@
+!MyRequest:
+	ns1.request:
+		emptyObject
+		arrayWithEmptyArrays: :(:) :(:) :(:)
+		arrayWithEmptyArrays: 
+			:(:) 
+			:(:) 
+			:(:)
+
+		arrayWithEmptyObject:
+			:()
+
+		emptyArray:
+			:
+
+		emptyArray: :
+		emptyArray: (:)
+
+		arrayWithEmptyObject: :()
+
+		arrayWithEmptyObjects: :() :() :()
+		arrayWithEmptyObjects: 
+			:() 
+			:()
+			:()
+
+
+!EmptyDoc1.json: :
+
+!EmptyDoc2.json: 
+	:

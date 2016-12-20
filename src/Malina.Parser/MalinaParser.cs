@@ -303,6 +303,18 @@ namespace Malina.Parser
                 Node.IdInterval = new Interval(1, 0);
             }
         }
+
+        public partial class Empty_array_item_stmtContext : INodeContext<Element>
+        {
+            public Element Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                Node.IdInterval = new Interval(1, 0);
+            }
+        }
+
         #endregion
         #region INLINE Context
         public partial class Value_array_item_inlineContext : INodeContext<Element>
@@ -325,7 +337,17 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 Node.IdInterval = new Interval(1, 0);
             }
+        }
 
+        public partial class Empty_array_inlineContext : INodeContext<Element>
+        {
+            public Element Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                Node.IdInterval = new Interval(1, 0);
+            }
         }
         #endregion
         #endregion

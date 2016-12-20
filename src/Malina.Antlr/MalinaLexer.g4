@@ -56,16 +56,7 @@ mode IN_OS;
 	IN_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
 	IN_OPEN_STRING			:	OpenString {ProcessOpenStringLine(OPEN_STRING);};
 
-fragment OpenStringEol	:	(Eol Spaces)+ '=='?; //End of Open String Line or End of Open String
-fragment OpenStringStart	:	~[$%"\'\r\n](~[\r\n])*; //Open string content can't start with [$%"\'\r\n]
-fragment OpenString	:	~[\r\n]+; //Open string content
-fragment Int
-   : '0' | [1-9] [0-9]*
-   ;
-// no leading zeros
-fragment Exp
-   : [Ee] [+\-]? Int
-   ;
+
 
 mode IN_DQS;
 	//Double Quoted String
@@ -75,12 +66,16 @@ mode IN_DQS;
 
 	DQS_END			:	'"' {EndDqs();};
 
+//Single Quoted String (one line and multiline)
 mode IN_SQS;
-	//Single Quoted String (one line and multiline)
-	INTERPOLATION	:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )?;
-	SQS_VALUE		:	(~[$'\r\n] | '\'\'' | '$$')+ {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
-	SQS_EOL	:	(Eol Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
-	SQS_END			:	'\'' -> popMode, popMode;
+	
+	SQS_JSON_BOOLEAN	:	'true' | 'false';
+	SQS_JSON_NULL		:	'null';
+	SQS_JSON_NUMBER		:	('-'? Int '.' [0-9] + Exp? | '-'? Int Exp | '-'? Int);
+	INTERPOLATION		:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )?;
+	SQS_VALUE			:	(~[$'\r\n] | '\'\'' | '$$')+ {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
+	SQS_EOL				:	(Eol Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
+	SQS_END				:	'\'' -> popMode, popMode;
 
 fragment	Eol				:	( '\r'? '\n' )
 							;
@@ -147,3 +142,14 @@ fragment	NameStartChar	:   [a-zA-Z]
 
 fragment	Digit			:   [0-9]
 							;
+
+fragment OpenStringEol	:	(Eol Spaces)+ '=='?; //End of Open String Line or End of Open String
+fragment OpenStringStart	:	~[$%"\'\r\n](~[\r\n])*; //Open string content can't start with [$%"\'\r\n]
+fragment OpenString	:	~[\r\n]+; //Open string content
+fragment Int
+   : '0' | [1-9] [0-9]*
+   ;
+// no leading zeros
+fragment Exp
+   : [Ee] [+\-]? Int
+   ;

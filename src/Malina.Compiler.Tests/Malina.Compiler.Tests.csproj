@@ -59,6 +59,9 @@
     <None Include="Scenarios\JsonArrayWithValues\JsonArrayWithValues.mlj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\JsonLiteralsInSqs\JsonLiteralsInSqs.mlj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\JsonPropertyInArray\JsonArray.mlj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

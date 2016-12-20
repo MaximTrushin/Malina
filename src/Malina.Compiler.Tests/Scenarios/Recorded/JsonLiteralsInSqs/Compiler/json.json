@@ -1,0 +1,11 @@
+{
+  "items": {
+    "prop1": 123.34,
+    "prop2": "123.34\r\nis decimal",
+    "prop3": true,
+    "prop4": false,
+    "prop5": null,
+    "prop6": "true\r\nstory",
+    "prop7": "this is\r\nfalse"
+  }
+}

@@ -149,6 +149,12 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest();
         }
 
+        [Test, RecordedTest]
+        public void JsonLiteralsInSqs()
+        {
+            PerformCompilerTest();
+        }
+
         [Test]
         public void JsonPropertyInArray()
         {

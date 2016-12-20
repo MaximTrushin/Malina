@@ -140,12 +140,16 @@ value_ml	:	string_value_ml | object_value_ml;
 
 //string values
 string_value	:	string_value_inline | string_value_ml;
-string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_STRING | JSON_BOOLEAN | JSON_NULL | JSON_NUMBER | DQS | sqs_inline);
+string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_STRING | JSON_BOOLEAN | JSON_NULL | JSON_NUMBER | DQS | sqs_json_literal | sqs_inline);
 string_value_ml	:	(EQUAL | DBL_EQUAL) (sqs_ml | DQS_ML | OPEN_STRING_ML);
 
-sqs_inline	:	SQS (SQS_VALUE | INTERPOLATION)* SQS_END?;
-sqs_ml	:	SQS (SQS_VALUE | INTERPOLATION)* SQS_EOL (SQS_VALUE | INTERPOLATION | SQS_EOL)* SQS_END?;
 
+sqs_inline	:	SQS sqs_body_item* SQS_END?;
+sqs_ml	:	SQS sqs_body_item* SQS_EOL sqs_body_item* SQS_END?;
+
+sqs_body_item	:	SQS_VALUE | INTERPOLATION | SQS_JSON_BOOLEAN | SQS_JSON_NULL | SQS_JSON_NUMBER;
+
+sqs_json_literal	:	SQS	(SQS_JSON_BOOLEAN | SQS_JSON_NULL | SQS_JSON_NUMBER) SQS_END?;
 //object values
 object_value	:	object_value_ml | object_value_inline;
 

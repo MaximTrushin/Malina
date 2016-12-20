@@ -1,0 +1,10 @@
+01:00	Document `json`:
+02:01		Element `items`:
+03:02			Element `prop1`= `123.34`
+04:02			Element `prop2`= `123.34\nis decimal`
+06:02			Element `prop3`= `true`
+07:02			Element `prop4`= `false`
+08:02			Element `prop5`= `null`
+09:02			Element `prop6`= `true\nstory`
+11:02			Element `prop7`= `this is\nfalse`
+

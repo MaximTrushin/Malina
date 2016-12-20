@@ -14,8 +14,10 @@ module: ()
                                                 value: ()
                                                     string_value: ()
                                                         string_value_ml: (EQUAL== )
-                                                            sqs_ml: (SQS=', SQS_VALUE=bla, SQS_EOL=
-			, SQS_VALUE=bla bla)
+                                                            sqs_ml: (SQS=', SQS_EOL=
+			)
+                                                                sqs_body_item: (SQS_VALUE=bla)
+                                                                sqs_body_item: (SQS_VALUE=bla bla)
                                                 newline: ()
                                 block_stmt: ()
                                     block_line_stmt: ()
@@ -24,8 +26,10 @@ module: ()
                                                 value: ()
                                                     string_value: ()
                                                         string_value_ml: (EQUAL== )
-                                                            sqs_ml: (SQS=', SQS_VALUE=bla, SQS_EOL=
-				 , SQS_VALUE=bla bla, SQS_END=')
+                                                            sqs_ml: (SQS=', SQS_EOL=
+				 , SQS_END=')
+                                                                sqs_body_item: (SQS_VALUE=bla)
+                                                                sqs_body_item: (SQS_VALUE=bla bla)
                                                 newline: ()
                                 block_stmt: ()
                                     block_line_stmt: ()
@@ -34,9 +38,11 @@ module: ()
                                                 value: ()
                                                     string_value: ()
                                                         string_value_ml: (EQUAL== )
-                                                            sqs_ml: (SQS=', SQS_VALUE=bla, SQS_EOL=
+                                                            sqs_ml: (SQS=', SQS_EOL=
 
-			, SQS_VALUE=bla bla, SQS_END=')
+			, SQS_END=')
+                                                                sqs_body_item: (SQS_VALUE=bla)
+                                                                sqs_body_item: (SQS_VALUE=bla bla)
                                                 newline: ()
                                 block_stmt: ()
                                     block_line_stmt: ()
@@ -45,9 +51,11 @@ module: ()
                                                 value: ()
                                                     string_value: ()
                                                         string_value_ml: (EQUAL== )
-                                                            sqs_ml: (SQS=', SQS_VALUE=bla, SQS_EOL=
+                                                            sqs_ml: (SQS=', SQS_EOL=
 				
-			, SQS_VALUE=bla bla, SQS_END=')
+			, SQS_END=')
+                                                                sqs_body_item: (SQS_VALUE=bla)
+                                                                sqs_body_item: (SQS_VALUE=bla bla)
                                                 newline: (EOF=<EOF>)
                                 dedent: (EOF=<EOF>)
             dedent: (EOF=<EOF>)

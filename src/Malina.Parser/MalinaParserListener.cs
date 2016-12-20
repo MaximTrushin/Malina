@@ -586,6 +586,28 @@ namespace Malina.Parser
                 //Set Value type to SingleQuotedString
                 ((DOM.IValueNode)parent).ValueType = ValueType.SingleQuotedString;
             }
+
+            var jsonLiteral = context.sqs_json_literal();
+            if (jsonLiteral != null)
+            {
+                //Set ValueInterval
+                var stopIndex = ((CommonToken)jsonLiteral.Stop).Type == MalinaLexer.SQS_END ? ((CommonToken)jsonLiteral.Stop).StopIndex - 1 : ((CommonToken)jsonLiteral.Stop).StopIndex;
+                parent.ValueInterval = new Interval(((CommonToken)jsonLiteral.Start).StartIndex + 1, stopIndex);
+                var literalToken = (CommonToken)jsonLiteral.children[1].Payload;
+                switch(literalToken.Type)
+                {
+                    case MalinaLexer.SQS_JSON_BOOLEAN:
+                        ((DOM.IValueNode)parent).ValueType = ValueType.Boolean;
+                        break;
+                    case MalinaLexer.SQS_JSON_NULL:
+                        ((DOM.IValueNode)parent).ValueType = ValueType.Null;
+                        break;
+                    case MalinaLexer.SQS_JSON_NUMBER:
+                        ((DOM.IValueNode)parent).ValueType = ValueType.Number;
+                        break;
+                }
+
+            }
         }
 
         private static void SetInterpolationItems(IValueNode node, IList<IParseTree> children)
@@ -593,27 +615,44 @@ namespace Malina.Parser
 
             foreach (var item in children)
             {
-                var token = (CommonToken) item.Payload;
-
-                if (token.Type == MalinaLexer.SQS || token.Type == MalinaLexer.SQS_END) continue;
-
-                if (token.Type == MalinaLexer.INTERPOLATION)
+                var token = item.Payload as CommonToken;
+                if (token != null)
                 {
-                    var aliasName = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
+                    //Skipping quotes
+                    if (token.Type == MalinaLexer.SQS || token.Type == MalinaLexer.SQS_END) continue;
 
-                    node.InterpolationItems.Add(
-                        new Alias
-                        {
-                            Name = aliasName,
-                            start = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
-                            end = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
-                            ValueType = ValueType.Empty
-                        }
-                    );
-                }
-                else
-                {
+                    //Adding SQL_EOL
                     node.InterpolationItems.Add(token);
+                    continue;
+                }
+
+                //Processing tokens from sqs_body_item
+                var ruleContext = item as MalinaParser.Sqs_body_itemContext;
+
+                if (ruleContext == null) continue;
+
+                foreach (var parseTree in ruleContext.children)
+                {
+                    token = (CommonToken)parseTree.Payload;
+
+                    if (token.Type == MalinaLexer.INTERPOLATION)
+                    {
+                        var aliasName = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
+
+                        node.InterpolationItems.Add(
+                            new Alias
+                            {
+                                Name = aliasName,
+                                start = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
+                                end = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
+                                ValueType = ValueType.Empty
+                            }
+                        );
+                    }
+                    else
+                    {
+                        node.InterpolationItems.Add(token);
+                    }
                 }
             }
         }

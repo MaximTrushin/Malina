@@ -149,8 +149,14 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest();
         }
 
-        [Test, RecordTest]
-        public void JsonEmptyArrayAndObject()
+        [Test, RecordedTest]
+        public void JsonArrayWithValuesInAlias()
+        {
+            PerformCompilerTest();
+        }
+
+        [Test, RecordedTest]
+        public void JsonArrayWithValuesInParameters()
         {
             PerformCompilerTest();
         }

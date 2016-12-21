@@ -9,6 +9,6 @@
 	4:4	COLON	`:`	 (27,27)
 	4:7	ELEMENT_ID	`e2`	 (30,31)
 	4:12	EQUAL	`= `	 (33,34)
-	4:15	ALIAS_ID	`$a1`	 (35,37)
+	4:12	ALIAS_ID	`$a1`	 (35,37)
 	4:16	ALIAS_ID	`$a2`	 (39,41)
 	4:20	ELEMENT_ID	`e3`	 (43,44)

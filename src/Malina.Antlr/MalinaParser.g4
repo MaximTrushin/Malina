@@ -159,11 +159,11 @@ object_value	:	object_value_ml | object_value_inline;
 object_value_ml	:	parameter_object_value_ml | alias_object_value_ml;
 object_value_inline	:	parameter_object_value_inline | alias_object_value_inline;
 
-parameter_object_value_inline	:	EQUAL PARAMETER_ID value_inline?;
-parameter_object_value_ml	:	EQUAL PARAMETER_ID value_ml;
+parameter_object_value_inline	:	EQUAL parameter_inline;
+parameter_object_value_ml	:	EQUAL parameter_stmt;
 
-alias_object_value_inline	:	EQUAL ALIAS_ID value_inline?;
-alias_object_value_ml	:	EQUAL ALIAS_ID value_ml;
+alias_object_value_inline	:	EQUAL alias_inline;
+alias_object_value_ml	:	EQUAL alias_stmt;
 
 //Empty object 
 empty_object_inline		:	EMPTY_OBJECT;

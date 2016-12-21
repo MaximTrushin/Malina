@@ -274,6 +274,11 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void JsonArrayWithValuesInParameters()
+        {
+            PerformTest();
+        }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void JsonArrayItemInObject()
@@ -402,7 +407,7 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
         public void ValueAliasDefinition()
         {
             PerformTest();

@@ -63,8 +63,14 @@ namespace Malina.Compiler.Generator
         protected string ResolveValueAlias(Alias alias, out ValueType valueType)
         {
             var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
-            valueType = ValueType.None;
-            return aliasDef.ObjectValue == null ? aliasDef.Value : ResolveObjectValue(aliasDef.ObjectValue, out valueType);
+            valueType = aliasDef.ValueType;
+            if (aliasDef.ObjectValue == null) return aliasDef.Value;
+
+            AliasContext.Push(new AliasContext { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
+            var result = ResolveObjectValue(aliasDef.ObjectValue, out valueType);
+            AliasContext.Pop();
+
+            return result;
         }
 
 
@@ -114,7 +120,7 @@ namespace Malina.Compiler.Generator
         protected string ResolveValueParameter(Parameter parameter, out ValueType valueType)
         {
             var aliasContext = AliasContext.Peek();
-            var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
+            var argument = aliasContext?.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
             if (argument != null)
             {
                 if (argument.ObjectValue != null)

@@ -1,0 +1,29 @@
+01:00	Document `json`:
+02:01		Element `items`:
+03:02			Element ``:
+03:04				Element `prop1`= `a`
+04:04			Element ``= `string`
+05:04			Element ``= `string2`
+06:04			Element ``= 	Alias `Number`
+07:04			Element ``= 	Alias `Number`:
+07:13				Argument `value`= `123.45`
+
+08:04			Element ``= 	Alias `True`
+09:04			Element ``= 	Alias `True`:
+09:11				Argument `value`= `true`
+
+11:04			Element ``= 	Alias `False`
+12:04			Element ``= 	Alias `False`:
+12:12				Argument `value`= `false`
+
+14:04			Element ``= 	Alias `Null`
+15:04			Element ``= 	Alias `Null`:
+15:11				Argument `value`= `null`
+
+17:04			Element ``= `$True\nstory`
+19:04			Element ``= `this is\n$False`
+
+22:00	AliasDefinition `True`= 	Parameter `value`= `true`
+23:00	AliasDefinition `False`= 	Parameter `value`= `false`
+24:00	AliasDefinition `Number`= 	Parameter `value`= `123.34`
+25:00	AliasDefinition `Null`= 	Parameter `value`= `null`

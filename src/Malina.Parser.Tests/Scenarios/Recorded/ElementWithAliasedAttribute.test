@@ -7,7 +7,7 @@
 	4:2	INDENT	`INDENT`	 (27,28)
 	4:2	ATTRIBUTE_ID	`@name`	 (29,33)
 	4:10	EQUAL	`= `	 (35,36)
-	4:17	ALIAS_ID	`$alias1`	 (37,43)
+	4:10	ALIAS_ID	`$alias1`	 (37,43)
 	5:2	NEWLINE	`NEWLINE`	 (44,44)
 	5:2	ATTRIBUTE_ID	`@ns1.name2`	 (47,56)
 	5:15	EQUAL	`= `	 (58,59)

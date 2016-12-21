@@ -9,5 +9,5 @@
 	4:4	COLON	`:`	 (27,27)
 	4:7	ATTRIBUTE_ID	`@attr1`	 (30,35)
 	4:16	EQUAL	`= `	 (37,38)
-	4:19	ALIAS_ID	`$a1`	 (39,41)
+	4:16	ALIAS_ID	`$a1`	 (39,41)
 	4:20	ALIAS_ID	`$a2`	 (43,45)

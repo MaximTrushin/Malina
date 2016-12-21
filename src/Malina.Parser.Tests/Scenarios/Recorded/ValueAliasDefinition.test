@@ -9,4 +9,4 @@
 	8:0	NEWLINE	`NEWLINE`	 (75,75)
 	8:0	ALIAS_DEF_ID	`!$AddressRef`	 (76,87)
 	8:15	EQUAL	`= `	 (89,90)
-	8:23	ALIAS_ID	`$Address`	 (91,98)
+	8:15	ALIAS_ID	`$Address`	 (91,98)

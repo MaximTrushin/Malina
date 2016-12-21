@@ -36,10 +36,17 @@ namespace Malina.Parser
 
         protected virtual void EnterContext<T>(INodeContext<T> context, bool valueNode = false) where T : Node, new()
         {
-            if (!valueNode)
-                context.InitNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
+            var valueNodeExpected = false;
+            var parent = _nodeStack.Peek();
+            if (parent is DOM.IValueNode)
+            {
+                valueNodeExpected = (parent as DOM.IValueNode).ValueType == ValueType.ObjectValue;
+            }
+
+            if (!(valueNode || valueNodeExpected))
+                context.InitNode(_nodeStack.Count == 0 ? null : parent);
             else
-                context.InitValueNode(_nodeStack.Count == 0 ? null : _nodeStack.Peek());
+                context.InitValueNode(_nodeStack.Count == 0 ? null : parent);
             _nodeStack.Push(context.Node);
         }
 
@@ -741,26 +748,22 @@ namespace Malina.Parser
             }
         }
 
-        public override void EnterParameter_object_value_inline([NotNull] MalinaParser.Parameter_object_value_inlineContext context)
+        public override void EnterObject_value(MalinaParser.Object_valueContext context)
         {
-            EnterContext(context, true);
+            SetParentsValueType(ValueType.ObjectValue);
         }
 
-        public override void ExitParameter_object_value_inline([NotNull] MalinaParser.Parameter_object_value_inlineContext context)
+        public override void EnterObject_value_inline(MalinaParser.Object_value_inlineContext context)
         {
-            ExitContext(context);
-        }
-
-        public override void EnterAlias_object_value_inline([NotNull] MalinaParser.Alias_object_value_inlineContext context)
-        {
-            EnterContext(context, true);
-        }
-
-        public override void ExitAlias_object_value_inline([NotNull] MalinaParser.Alias_object_value_inlineContext context)
-        {
-            ExitContext(context);
+            SetParentsValueType(ValueType.ObjectValue);
         }
 
         #endregion
+
+        private void SetParentsValueType(ValueType valueType)
+        {
+            var parent = _nodeStack.Peek() as DOM.IValueNode;
+            if (parent != null) parent.ValueType = valueType;
+        }
     }
 }

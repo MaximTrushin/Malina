@@ -33,8 +33,8 @@ WS				:	WsSpaces	-> skip;
 mode IN_VALUE;
 	//Parameter or Alias assignment
 	OBJECT_VALUE	: 
-					(	PARAMETER_ID {Emit(PARAMETER_ID);}						
-					|	ALIAS_ID {Emit(ALIAS_ID);}
+					(	(PARAMETER_ID {EmitIdWithColon(PARAMETER_ID);})						
+					|	(ALIAS_ID {EmitIdWithColon(ALIAS_ID);})
 					)		-> popMode;
 
 	//Open string and Multi Line Open String

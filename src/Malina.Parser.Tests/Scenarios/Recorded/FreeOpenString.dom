@@ -1,0 +1,10 @@
+01:00	Document `doc`:
+02:01		Element `root`:
+03:02			Element `value`= `free open string`
+04:02			Element `value`= `free open string\nwith second line`
+06:02			Element `value`= `"double quoted free openstring"`
+07:02			Element `value`= `'single quoted free openstring'`
+08:02			Element `value`= `'single quoted free openstring'\nwith second line`
+10:02			Element `value`= `first line\nsecond line`
+13:02			Element `value`= `first line\nsecond line\n`
+

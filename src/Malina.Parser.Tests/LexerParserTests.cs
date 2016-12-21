@@ -215,6 +215,12 @@ namespace Malina.Parser.Tests
         }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void FreeOpenString()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void HybridBlock()
         {
             PerformTest();
@@ -407,7 +413,7 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecord, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ValueAliasDefinition()
         {
             PerformTest();

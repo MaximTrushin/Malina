@@ -23,12 +23,17 @@ ARGUMENT_ID			:	'.' ShortName ':'? {EmitIdWithColon(ARGUMENT_ID);};
 ELEMENT_ID			:	((ShortName '.')? ShortName) ':'? {EmitIdWithColon(ELEMENT_ID);};
 
 VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultiLineToken();} -> pushMode(IN_VALUE);
-OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultiLineToken();} -> pushMode(IN_VALUE); //todo: add separate mode for ==
+OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultiLineToken();} -> pushMode(IN_FREE_VALUE);
 
 EMPTY_OBJECT		:	'()';
 EMPTY_ARRAY			:	'(:)';
 
 WS				:	WsSpaces	-> skip;
+
+mode IN_FREE_VALUE;
+	//Open string and Multi Line Open String
+	FREE_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
+	FREE_OPEN_STRING			:	OpenString {ProcessOpenStringLine(OPEN_STRING);};
 
 mode IN_VALUE;
 	//Parameter or Alias assignment

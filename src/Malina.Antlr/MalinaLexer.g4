@@ -22,18 +22,13 @@ PARAMETER_ID		:	'%' ShortName ':'? {EmitIdWithColon(PARAMETER_ID);};
 ARGUMENT_ID			:	'.' ShortName ':'? {EmitIdWithColon(ARGUMENT_ID);};
 ELEMENT_ID			:	((ShortName '.')? ShortName) ':'? {EmitIdWithColon(ELEMENT_ID);};
 
-VALUE_BEGIN			:	'=' Spaces {Emit(EQUAL);StartNewMultiLineToken();} -> pushMode(IN_VALUE);
-OPEN_VALUE_BEGIN	:	'=='	Spaces {Emit(DBL_EQUAL);StartNewMultiLineToken();} -> pushMode(IN_FREE_VALUE);
+VALUE_BEGIN			:	'=' [ \t]* {Emit(EQUAL);StartNewMultiLineToken();} -> pushMode(IN_VALUE);
+OPEN_VALUE_BEGIN	:	'=='	[ \t]* {Emit(DBL_EQUAL);StartNewMultiLineToken();} -> pushMode(IN_FREE_VALUE);
 
 EMPTY_OBJECT		:	'()';
 EMPTY_ARRAY			:	'(:)';
 
 WS				:	WsSpaces	-> skip;
-
-mode IN_FREE_VALUE;
-	//Open string and Multi Line Open String
-	FREE_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
-	FREE_OPEN_STRING			:	OpenString {ProcessOpenStringLine(OPEN_STRING);};
 
 mode IN_VALUE;
 	//Parameter or Alias assignment
@@ -57,6 +52,11 @@ mode IN_VALUE;
 	SQS					: '\'' {StartSqs();}  -> pushMode(IN_SQS);
 
 
+mode IN_FREE_VALUE;
+	//Open string and Multi Line Open String
+	FREE_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
+	FREE_OPEN_STRING			:	OpenString {ProcessOpenStringLine(OPEN_STRING);};
+
 mode IN_OS;
 	IN_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
 	IN_OPEN_STRING			:	OpenString {ProcessOpenStringLine(OPEN_STRING);};
@@ -77,10 +77,17 @@ mode IN_SQS;
 	SQS_JSON_BOOLEAN	:	'true' | 'false';
 	SQS_JSON_NULL		:	'null';
 	SQS_JSON_NUMBER		:	('-'? Int '.' [0-9] + Exp? | '-'? Int Exp | '-'? Int);
+	SQS_ESCAPE			:	('\\' [btnvfr"'\\]) | '$$' | '\'\'' | SqsEscapeCode;
 	INTERPOLATION		:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )?;
-	SQS_VALUE			:	(~[$'\r\n] | '\'\'' | '$$')+ {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
+	SQS_VALUE			:	(~[$'\r\n])+ {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
 	SQS_EOL				:	(Eol Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
 	SQS_END				:	'\'' -> popMode, popMode;
+
+fragment	SqsEscapeCode	:	'$' (EscapeDecimalNumber | ('(' [ \t]* EscapeDecimalNumber [ \t]* ')' ) | EscapeHexNumber | ('(' [ \t]* EscapeHexNumber [ \t]* ')' ) );
+
+fragment	EscapeDecimalNumber	:	Digit Digit? Digit? Digit? Digit?;
+
+fragment	EscapeHexNumber		:	HexDigit HexDigit? HexDigit? HexDigit?;
 
 fragment	Eol				:	( '\r'? '\n' )
 							;
@@ -146,6 +153,9 @@ fragment	NameStartChar	:   [a-zA-Z]
 							;
 
 fragment	Digit			:   [0-9]
+							;
+
+fragment	HexDigit		:   Digit | [a-f] | [A-F]
 							;
 
 fragment OpenStringEol	:	(Eol Spaces)+ '=='?; //End of Open String Line or End of Open String

@@ -150,7 +150,7 @@ string_value_ml	:	(EQUAL | DBL_EQUAL) (sqs_ml | DQS_ML | OPEN_STRING_ML);
 sqs_inline	:	SQS sqs_body_item* SQS_END?;
 sqs_ml	:	SQS sqs_body_item* SQS_EOL sqs_body_item* SQS_END?;
 
-sqs_body_item	:	SQS_VALUE | INTERPOLATION | SQS_JSON_BOOLEAN | SQS_JSON_NULL | SQS_JSON_NUMBER;
+sqs_body_item	:	SQS_VALUE | INTERPOLATION | SQS_JSON_BOOLEAN | SQS_JSON_NULL | SQS_JSON_NUMBER | SQS_ESCAPE;
 
 sqs_json_literal	:	SQS	(SQS_JSON_BOOLEAN | SQS_JSON_NULL | SQS_JSON_NUMBER) SQS_END?;
 //object values

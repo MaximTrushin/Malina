@@ -396,6 +396,12 @@ namespace Malina.Parser
         public override void ExitEmpty_parameter_stmt([NotNull] MalinaParser.Empty_parameter_stmtContext context)
         {
             ExitContext(context);
+            //If there empty block then set node's ValueType to EmptyObject
+            if (context.COLON() != null)
+            {
+                context.Node.ValueType = ValueType.EmptyObject;
+            }
+
         }
 
         public override void EnterValue_parameter_stmt([NotNull] MalinaParser.Value_parameter_stmtContext context)
@@ -428,6 +434,12 @@ namespace Malina.Parser
         public override void ExitEmpty_parameter_inline([NotNull] MalinaParser.Empty_parameter_inlineContext context)
         {
             ExitContext(context);
+
+            //If there empty block then set node's ValueType to EmptyObject
+            if (context.COLON() != null)
+            {
+                context.Node.ValueType = ValueType.EmptyObject;
+            }
         }
 
         public override void EnterValue_parameter_inline([NotNull] MalinaParser.Value_parameter_inlineContext context)

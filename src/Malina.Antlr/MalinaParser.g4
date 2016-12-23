@@ -105,8 +105,8 @@ block_parameter_inline	: PARAMETER_ID COLON block_inline;
 alias_stmt	:	value_alias_stmt | block_alias_stmt | hybrid_block_alias_stmt | empty_alias_stmt;
 empty_alias_stmt	:	ALIAS_ID (COLON COMMA?)? newline;
 value_alias_stmt	:	ALIAS_ID value newline;
-block_alias_stmt	:	ALIAS_ID COLON (block | argument_block);
-hybrid_block_alias_stmt	:	ALIAS_ID COLON (hybrid_block_alias_stmt | hybrid_stmt | block_line_stmt);
+block_alias_stmt	:	ALIAS_ID COLON (block | argument_block | hybrid_argument_block);
+hybrid_block_alias_stmt	:	ALIAS_ID COLON (hybrid_stmt | block_line_stmt);
 
 
 //inline
@@ -119,6 +119,7 @@ block_alias_inline	: ALIAS_ID COLON (block_inline | argument_block_inline);
 //block
 argument_block	:	INDENT (argument_inline_stmt | argument_stmt)+ dedent;
 argument_block_inline	:	(argument_inline)+ COMMA?;
+hybrid_argument_block	:	(argument_inline)+ argument_stmt;
 
 //statements
 argument_stmt	:	value_argument_stmt | block_argument_stmt | hybrid_block_argument_stmt | empty_argument_stmt;

@@ -61,6 +61,12 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
+        
+        [Test, RecordedTest]
+        public void EmptyParameters()
+        {
+            PerformCompilerTest();
+        }
 
         [Test]
         public void DuplicateAliasDefinition()

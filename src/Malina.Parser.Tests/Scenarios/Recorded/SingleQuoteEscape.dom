@@ -1,0 +1,8 @@
+01:00	Document `doc`:
+02:01		Element `root`:
+03:02			Element `text1`= `$$5 ''FiOS'' TV Offer`
+05:02			Element `text2`= `blabla \$\b\t\n\n\v\f\r\"\'\\`
+08:02			Element `text3`= `\u00af \u65e5\u672c$%10Line 1$(10)line $(10) $0001000 $%000a00h$(%0a) `
+09:02			Element `foldedText`= `Line 1.\nLine 1 continue\n\nLine2 starts.\nLine 2 continue\n\n`
+16:02			Element `h`= `$$5 FiOS TV Offer`
+

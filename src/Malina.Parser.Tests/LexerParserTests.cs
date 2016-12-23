@@ -406,6 +406,11 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void SingleQuoteEscape()
+        {
+            PerformTest();
+        }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void OpenStringEmpty()

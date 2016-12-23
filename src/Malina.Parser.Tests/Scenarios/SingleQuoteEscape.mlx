@@ -1,0 +1,16 @@
+!doc:
+	root:
+		text1 = '$$5 ''FiOS'' TV Offer'
+
+		text2 = 'blabla \$\b\t
+			\n\v\f\r\"\'\\'
+		
+		text3 = '\u00af \u65e5\u672c$%10Line 1$(10)line $(10) $0001000 $%000a00h$(%0a) '	
+		foldedText = 'Line 1.
+			Line 1 continue
+
+			Line2 starts.
+			Line 2 continue
+
+			'
+		h = '$$5 FiOS TV Offer'

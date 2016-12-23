@@ -1,0 +1,11 @@
+{
+  "request": {
+    "name": "name1",
+    "name2": "name2",
+    "tag1": "text\r\n//text line2",
+    "tag2": "tag2",
+    "element1": {},
+    "text": "this open string\r\nhas comment inside.",
+    "text": "this is open string"
+  }
+}

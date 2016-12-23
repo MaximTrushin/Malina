@@ -59,6 +59,7 @@ namespace Malina.Compiler.Steps
 
                 var resolvingListener = new AliasesAndNamespacesResolvingListener(_context, fileName);
 
+                parser.RemoveErrorListeners();
                 parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context, fileName));
                 parser.AddParseListener(resolvingListener);
                 parser.module();

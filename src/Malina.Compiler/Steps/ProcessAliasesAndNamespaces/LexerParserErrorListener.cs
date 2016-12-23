@@ -21,15 +21,13 @@ namespace Malina.Compiler
         public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg,
             RecognitionException e)
         {
-            if (e is MalinaException) Errors.Add((MalinaException) e);
-            else
-            {
+
                 if(recognizer is MalinaParser)
                 {
                     if (offendingSymbol != null)
                     {
                         var tokenName =
-                            (recognizer as MalinaParser).Vocabulary.GetDisplayName((offendingSymbol as CommonToken).Type);
+                            ((MalinaParser) recognizer).Vocabulary.GetDisplayName((offendingSymbol as CommonToken).Type);
                         _context.AddError(CompilerErrorFactory.ParserError(e,
                             $"Unexpected token {tokenName}<'{(offendingSymbol as CommonToken).Text}'>",
                             _fileName, (offendingSymbol as CommonToken).Line,
@@ -49,7 +47,7 @@ namespace Malina.Compiler
                 {
                     _context.AddError(CompilerErrorFactory.FatalError(e, msg));
                 }
-            }
+
         }
     }
 }

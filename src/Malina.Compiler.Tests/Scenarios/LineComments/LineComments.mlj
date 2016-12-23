@@ -1,0 +1,16 @@
+////Testing how line comments are processed in the context of strings
+!MyRequest:
+	request: //
+		@name = "name1" //comment2
+		@name2 = name2
+//comment3
+		tag1 = text
+			//text line2
+		tag2 = tag2
+	//line comment
+		element1 //end comment
+		text = this open string
+	//comment for openstring
+			has comment inside.	
+		text = this is open string
+	//comment for openstring

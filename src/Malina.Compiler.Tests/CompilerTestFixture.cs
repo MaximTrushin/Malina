@@ -10,6 +10,13 @@ namespace Malina.Compiler.Tests
     [TestFixture]
     public class CompilerTestFixture
     {
+
+        [Test, RecordedTest]
+        public void AliasWithDefaultValueParameters()
+        {
+            PerformCompilerTest();
+        }
+
         [Test, RecordedTest]
         public void ModulesWithNsDocumentAndNsAlias()
         {
@@ -188,10 +195,11 @@ namespace Malina.Compiler.Tests
         }
 
         [Test, RecordedTest]
-        public void AliasWithDefaultValueParameters()
+        public void LineComments()
         {
             PerformCompilerTest();
         }
+
 
         [Test]
         public void ParameterInDocument()

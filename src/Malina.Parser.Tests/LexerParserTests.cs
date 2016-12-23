@@ -215,6 +215,12 @@ namespace Malina.Parser.Tests
         }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void EmptyParameters()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void FreeOpenString()
         {
             PerformTest();

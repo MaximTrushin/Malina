@@ -311,6 +311,12 @@ namespace Malina.Parser.Tests
         }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void LineCommentsInQuotedStrings()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ModuleNamespaceOverload()
         {
             PerformTest();
@@ -318,12 +324,6 @@ namespace Malina.Parser.Tests
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void ModuleWithTwoNamespaces()
-        {
-            PerformTest();
-        }
-
-        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
-        public void MultiLineComments()
         {
             PerformTest();
         }

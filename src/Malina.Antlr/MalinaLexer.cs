@@ -30,7 +30,7 @@ namespace Malina.Parser
         }
     }
 
-    partial class MalinaLexer
+    public partial class MalinaLexer
     {
         public List<IToken> InvalidTokens = new List<IToken>();
         private Stack<int> _indents = new Stack<int>(new[] { 0 });
@@ -201,8 +201,14 @@ namespace Malina.Parser
         //Open String Indents/Dedents processing
         private void OsIndentDedent()
         {
+
             var currentIndent = InWsaMode ? 0 : _indents.Peek();
             var indent = CalcOsIndent();
+
+            //If dedent found check if this is comment and ignore it
+            if (!(indent > currentIndent) && CurrentLineEndsWithComment())
+                return;
+
             if (indent == currentIndent)
             {
                 //Emitting NEWLINE if OS is not ended by ==
@@ -295,6 +301,32 @@ namespace Malina.Parser
             }
         }
 
+        /// <summary>
+        /// Function checks if current line ends with comment and consume it
+        /// </summary>
+        /// <returns></returns>
+        private bool CurrentLineEndsWithComment()
+        {
+            if (_input.La(1) == '/' && _input.La(2) == '/')
+            {
+                while (_input.La(1) != '\n' && _input.La(1) != '\r' && _input.La(1) != Eof)
+                {
+                    InputStream.Consume();
+                }
+                if (_input.La(1) == -1 || InWsaMode)
+                {
+                    Emit(_currentToken);
+                    ExitInValueMode();
+                    //Emitting NEWLINE if not in WSA
+                    if (!InWsaMode)
+                        EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
+                }
+                else Skip();
+                return true;
+            }
+            return false;
+        }
+
         private void EnterInOsMode()
         {
             if (_mode != IN_OS)
@@ -377,10 +409,14 @@ namespace Malina.Parser
        
         private void SqIndentDedent()
         {
-            var _currentIndent = InWsaMode ? 0 : _indents.Peek();
+            var currentIndent = InWsaMode ? 0 : _indents.Peek();
             var indent = CalcIndent();
 
-            if (indent <= _currentIndent || _input.La(1) == Eof)
+            //If dedent found check if this is comment and ignore it
+            if (!(indent > currentIndent) && CurrentLineEndsWithComment())
+                return;
+
+            if (indent <= currentIndent || _input.La(1) == Eof)
             {
                 //SQS is ended by indentation
 
@@ -483,10 +519,15 @@ namespace Malina.Parser
 
         private void DqIndentDedent()
         {
-            var _currentIndent = InWsaMode ? 0 : _indents.Peek();
+            var currentIndent = InWsaMode ? 0 : _indents.Peek();
             var indent = CalcIndent();
 
-            if (indent <= _currentIndent || _input.La(1) == Eof)
+            //If dedent found check if this is comment and ignore it
+            if (!(indent > currentIndent) && CurrentLineEndsWithComment())
+                return;
+
+
+            if (indent <= currentIndent || _input.La(1) == Eof)
             {
                 //DQS is ended by indentation
 

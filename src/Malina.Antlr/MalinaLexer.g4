@@ -99,15 +99,7 @@ fragment	WsSpaces			:	([ \t] | Comment)+
 							;
 
 
-fragment	Comment			:	BlockComment
-							|	LineComment
-							;
-
-fragment	BlockComment	:   '/*' .*? '*/'
-							;
-
-fragment	LineComment		:   '//' ~[\r\n]*
-							;
+fragment	Comment			:	'//' ~[\r\n]*;
 
 fragment	Name			:	LongName | ShortName
 							;
@@ -158,7 +150,7 @@ fragment	Digit			:   [0-9]
 fragment	HexDigit		:   Digit | [a-f] | [A-F]
 							;
 
-fragment OpenStringEol	:	(Eol Spaces)+ '=='?; //End of Open String Line or End of Open String
+fragment OpenStringEol	:	(Eol [ \t]*)+ '=='?; //End of Open String Line or End of Open String
 fragment OpenStringStart	:	~[$%"\'\r\n](~[\r\n])*; //Open string content can't start with [$%"\'\r\n]
 fragment OpenString	:	~[\r\n]+; //Open string content
 fragment Int

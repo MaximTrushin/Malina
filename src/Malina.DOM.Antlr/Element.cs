@@ -2,6 +2,7 @@
 using Antlr4.Runtime.Misc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Malina.DOM.Antlr
@@ -140,10 +141,18 @@ namespace Malina.DOM.Antlr
 
                 if (first) {_sb.Append(s); first = false; continue; }
 
-                //Removing indents
-                if (s.Length <= valueIndent) { _sb.AppendLine();continue; }
+                //Counting indent of line
+                var itemsIndent = item.TakeWhile(c => c == ' ' || c == '\t').Count();
+                if (itemsIndent < valueIndent)
+                {
+                    //Ignore dedented comments inside open string
+                    if (s.Substring(itemsIndent).StartsWith("//")) continue;
+                }
+                if (s.Length <= valueIndent) { _sb.AppendLine();continue; } //this is just empty line
+
+
                 _sb.AppendLine();
-                _sb.Append(s.Substring(valueIndent));                    
+                _sb.Append(s.Substring(valueIndent));//Removing indents                    
             }
 
             return _sb.ToString();

@@ -54,10 +54,87 @@ namespace Malina.Compiler.Generator
                 }
                 var token = item as CommonToken;
                 if (token == null) continue;
+                if (token.Type == MalinaLexer.SQS_ESCAPE)
+                {
+                    var c = ResolveSqsEscape(token);
+                    if (IsLegalXmlChar(c))
+                    {
+                        sb.Append(c);
+                    }
 
-                sb.Append(token.Type == MalinaLexer.SQS_EOL ? ResolveSqsEol(token, node.ValueIndent) : token.Text);
+                }
+                else
+                    sb.Append(token.Type == MalinaLexer.SQS_EOL ? ResolveSqsEol(token, node.ValueIndent) : token.Text);
             }
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Whether a given character is allowed by XML 1.0.
+        /// </summary>
+        public static bool IsLegalXmlChar(int character)
+        {
+            return
+            (
+                 character == 0x9 /* == '\t' == 9   */          ||
+                 character == 0xA /* == '\n' == 10  */          ||
+                 character == 0xD /* == '\r' == 13  */          ||
+                (character >= 0x20 && character <= 0xD7FF) ||
+                (character >= 0xE000 && character <= 0xFFFD) ||
+                (character >= 0x10000 && character <= 0x10FFFF)
+            );
+        }
+
+        private char ResolveSqsEscape(CommonToken token)
+        {
+            var text = token.Text;
+
+            switch (text)
+            {
+                case "$$":
+                    return '$';
+                case "''":
+                    return '\'';
+            }
+
+            if (text[0] == '$') return ResolveSqsEscapeCode(token);
+
+            //This is EscSeq
+            switch (text[1])
+            {   //'$'|'b'|'f'|'n'|'r'|'t'|'v'
+                case '"':
+                case '\'':
+                case '\\':
+                case '/':
+                case '$':
+                    return text[1];
+                case 'b':
+                    return  (char)8;
+                case 'f':
+                    return (char)0xC;
+                case 'n':
+                    return (char)0xA;
+                case 'r':
+                    return (char)0xD;
+                case 't':
+                    return (char)0x9;
+                case 'v':
+                    return (char)0xB;
+                case 'u':
+                    return Convert.ToChar(Convert.ToUInt32(text.Substring(2), 16));
+
+            }
+
+            return (char) 0;//should never reach this code if lexer works correctly
+
+        }
+
+        private char ResolveSqsEscapeCode(CommonToken token)
+        {
+            var code = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
+
+            if (code[0] != '%') return (char) int.Parse(code);
+            return Convert.ToChar(Convert.ToUInt32(code.Substring(1), 16));
         }
 
         protected string ResolveValueAlias(Alias alias, out ValueType valueType)

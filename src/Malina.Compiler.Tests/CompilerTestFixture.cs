@@ -241,6 +241,12 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+        [Test, RecordedTest]
+        public void SingleQuoteEscape()
+        {
+            PerformCompilerTest();
+        }
+
         [Test]
         public void AliasWithIncorrectBlock()
         {

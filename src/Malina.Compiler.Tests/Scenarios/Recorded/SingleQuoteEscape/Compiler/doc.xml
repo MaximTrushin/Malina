@@ -1,15 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <text1>$$5 ''FiOS'' TV Offer</text1>
-  <text2>blabla \$\b\t
-\n\v\f\r\"\'\\</text2>
-  <text3>\u00af \u65e5\u672c$%10Line 1$(10)line $(10) $0001000 $%000a00h$(%0a) </text3>
-  <foldedText>Line 1.
-Line 1 continue
+<root text1="$5 &quot;FiOS&quot; TV Offer">
+  <text1>$5 'FiOS' TV Offer</text1>
+  <text2>blabla $	
 
-Line2 starts.
-Line 2 continue
-
+"'\</text2>
+  <text3>¯ 日本Line 1
+line 
+ 
+00 
+00h
+ </text3>
+  <foldedText>Line 1.Line 1 continues
+Line2 starts.Line 2 continues
 </foldedText>
-  <h>$$5 FiOS TV Offer</h>
+  <h>$5 FiOS TV Offer</h>
 </root>

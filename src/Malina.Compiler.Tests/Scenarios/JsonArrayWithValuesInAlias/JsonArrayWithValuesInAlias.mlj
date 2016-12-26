@@ -12,8 +12,10 @@
 		= $Null
 		= $NullOpen
 		= '$True
+
 			story'
 		= 'this is
+
 			$False'
 
 !$TrueOpen = true

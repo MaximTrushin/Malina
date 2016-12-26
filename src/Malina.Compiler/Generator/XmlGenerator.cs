@@ -87,6 +87,33 @@ namespace Malina.Compiler.Generator
             _xmlTextWriter.WriteString(value);
         }
 
+        protected override void ResolveSqsEscape(CommonToken token, StringBuilder sb)
+        {
+            char c = ResolveSqsEscapeChar(token);
+            if (IsLegalXmlChar(c))
+            {
+                sb.Append(c);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Whether a given character is allowed by XML 1.0.
+        /// </summary>
+        public static bool IsLegalXmlChar(int character)
+        {
+            return
+            (
+                 character == 0x9 /* == '\t' == 9   */          ||
+                 character == 0xA /* == '\n' == 10  */          ||
+                 character == 0xD /* == '\r' == 13  */          ||
+                (character >= 0x20 && character <= 0xD7FF) ||
+                (character >= 0xE000 && character <= 0xFFFD) ||
+                (character >= 0x10000 && character <= 0x10FFFF)
+            );
+        }
+
         public override void OnAttribute(DOM.Attribute node)
         {
             string prefix, ns;
@@ -95,9 +122,11 @@ namespace Malina.Compiler.Generator
                 () => { var aliasContext = AliasContext.Peek(); return aliasContext?.AliasDefinition; },
                 out prefix, out ns);
             string value = ResolveAttributeValue(node);
-            _xmlTextWriter.WriteAttributeString(prefix, node.Name, ns, value);
-            LocationMap.Add(new LexicalInfo(_currentDocument.Module.FileName, node.start.Line, node.start.Column, node.start.Index));
+            _xmlTextWriter.WriteStartAttribute(prefix, node.Name, ns);
+            ResolveValue(node);
+            _xmlTextWriter.WriteEndAttribute();
 
+            LocationMap.Add(new LexicalInfo(_currentDocument.Module.FileName, node.start.Line, node.start.Column, node.start.Index));
         }
         
         private void WritePendingNamespaceDeclarations(string uri)

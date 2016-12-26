@@ -56,12 +56,7 @@ namespace Malina.Compiler.Generator
                 if (token == null) continue;
                 if (token.Type == MalinaLexer.SQS_ESCAPE)
                 {
-                    var c = ResolveSqsEscape(token);
-                    if (IsLegalXmlChar(c))
-                    {
-                        sb.Append(c);
-                    }
-
+                    ResolveSqsEscape(token, sb);
                 }
                 else
                     sb.Append(token.Type == MalinaLexer.SQS_EOL ? ResolveSqsEol(token, node.ValueIndent) : token.Text);
@@ -69,23 +64,13 @@ namespace Malina.Compiler.Generator
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Whether a given character is allowed by XML 1.0.
-        /// </summary>
-        public static bool IsLegalXmlChar(int character)
+        protected virtual void ResolveSqsEscape(CommonToken token, StringBuilder sb)
         {
-            return
-            (
-                 character == 0x9 /* == '\t' == 9   */          ||
-                 character == 0xA /* == '\n' == 10  */          ||
-                 character == 0xD /* == '\r' == 13  */          ||
-                (character >= 0x20 && character <= 0xD7FF) ||
-                (character >= 0xE000 && character <= 0xFFFD) ||
-                (character >= 0x10000 && character <= 0x10FFFF)
-            );
+            char c = ResolveSqsEscapeChar(token);
+            sb.Append(c);
         }
 
-        private char ResolveSqsEscape(CommonToken token)
+        protected char ResolveSqsEscapeChar(CommonToken token)
         {
             var text = token.Text;
 
@@ -93,6 +78,7 @@ namespace Malina.Compiler.Generator
             {
                 case "$$":
                     return '$';
+
                 case "''":
                     return '\'';
             }
@@ -109,7 +95,7 @@ namespace Malina.Compiler.Generator
                 case '$':
                     return text[1];
                 case 'b':
-                    return  (char)8;
+                    return (char)8;
                 case 'f':
                     return (char)0xC;
                 case 'n':
@@ -125,11 +111,10 @@ namespace Malina.Compiler.Generator
 
             }
 
-            return (char) 0;//should never reach this code if lexer works correctly
-
+            return (char)0;//should never reach this code if lexer works correctly
         }
 
-        private char ResolveSqsEscapeCode(CommonToken token)
+        protected char ResolveSqsEscapeCode(CommonToken token)
         {
             var code = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
 
@@ -271,18 +256,29 @@ namespace Malina.Compiler.Generator
             return _context.NamespaceResolver.GetNsInfo(AliasContext.Peek().AliasDefinition);
         }
 
+        /// <summary>
+        /// Resolves SQS_EOL token. Returns string with new line and indentation symbols.
+        /// SQS_EOL token can spread accross several lines.
+        /// The first newline symbol is ignored because SQS is "folded" string. 
+        /// If there are only one new line symbol in SQS_EOL then it is ignored.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="valueIndent"></param>
+        /// <returns></returns>
         private static string ResolveSqsEol(IToken token, int valueIndent)
         {
             var sb = new StringBuilder();
             var value = token.Text;
-            var lines = value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-            var first = true;
+            var lines = value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None); //Minimum 2 strings will be in this array
+
+            if(lines.Length < 3) return string.Empty;
+
+            var count = 1;
             foreach (var item in lines)
             {
                 //Skip first one
-                if (first)
+                if (count ++ < 3) //Ignore first empty item and second item with new line symbol.
                 {
-                    first = false;
                     continue;
                 }
 

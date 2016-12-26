@@ -15,8 +15,10 @@
 		= $Null: .value = null
 
 		= '$True
+
 			story'
 		= 'this is
+
 			$False'
 
 !$True = %value = true

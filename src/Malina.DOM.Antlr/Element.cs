@@ -134,7 +134,7 @@ namespace Malina.DOM.Antlr
             var lines = charStream.GetText(valueInterval).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
             var first = true;
-            var firstEmptyLine = true;
+            var firstEmptyLine = true; //If true then previous line was not empty therefor newline shouldn't be added
 
             foreach (var item in lines)
             {
@@ -150,9 +150,8 @@ namespace Malina.DOM.Antlr
 
                 if (line.Length <= valueIndent) //this is just empty line
                 {
-                    if (valueType == ValueType.FreeOpenString)
+                    if (valueType == ValueType.FreeOpenString)//Folded string
                     {
-                        //Folded string
                         if (firstEmptyLine)
                         {
                             firstEmptyLine = false;

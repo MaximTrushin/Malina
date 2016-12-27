@@ -138,6 +138,12 @@ namespace Malina.Compiler.Tests
         }
 
         [Test, RecordedTest]
+        public void FoldedSQS()
+        {
+            PerformCompilerTest();
+        }
+
+        [Test, RecordedTest]
         public void JsonArray()
         {
             PerformCompilerTest();

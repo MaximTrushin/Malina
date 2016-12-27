@@ -21,7 +21,8 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=value)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (DBL_EQUAL=== , OPEN_STRING_ML=free open string
+                                                        string_value_ml: (DBL_EQUAL=== , FREE_OPEN_STRING_ML=free open string
+
 			with second line)
                                                 newline: ()
                                 block_stmt: ()
@@ -46,7 +47,8 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=value)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (DBL_EQUAL=== , OPEN_STRING_ML='single quoted free openstring'
+                                                        string_value_ml: (DBL_EQUAL=== , FREE_OPEN_STRING_ML='single quoted free openstring'
+
 			with second line)
                                                 newline: ()
                                 block_stmt: ()
@@ -55,8 +57,9 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=value)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (DBL_EQUAL===, OPEN_STRING_ML=first line
-			second line)
+                                                        string_value_ml: (DBL_EQUAL===, FREE_OPEN_STRING_ML=first line
+
+				second line)
                                                 newline: ()
                                 block_stmt: ()
                                     block_line_stmt: ()
@@ -64,8 +67,10 @@ module: ()
                                             value_element_stmt: (ELEMENT_ID=value)
                                                 value: ()
                                                     string_value: ()
-                                                        string_value_ml: (DBL_EQUAL===, OPEN_STRING_ML=first line
+                                                        string_value_ml: (DBL_EQUAL===, FREE_OPEN_STRING_ML=first line
+
 			second line
+
 )
                                                 newline: (EOF=<EOF>)
                                 dedent: (EOF=<EOF>)

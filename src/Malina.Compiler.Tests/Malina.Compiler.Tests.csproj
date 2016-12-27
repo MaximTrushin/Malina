@@ -62,6 +62,12 @@
     <None Include="Scenarios\EmptyParameters\EmptyParameters.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\FoldedOpenString\FoldedOpenString.mlj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\FoldedOpenString\FoldedOpenString.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\JsonArrayWithValuesInParameters\JsonArrayWithValuesInParameters.mlj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

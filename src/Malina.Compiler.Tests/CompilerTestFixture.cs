@@ -130,6 +130,12 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
+        
+        [Test, RecordedTest]
+        public void FoldedOpenString()
+        {
+            PerformCompilerTest();
+        }
 
         [Test, RecordedTest]
         public void JsonArray()

@@ -10,6 +10,7 @@ namespace Malina.DOM
         DoubleQuotedString,
         SingleQuotedString,
         OpenString,
+        FreeOpenString, // Folded open string (starts with ==)
         ObjectValue, //Parameter or Alias
         Null, //Json null
         Number, // Json number literal

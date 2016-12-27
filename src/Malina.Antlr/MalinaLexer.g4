@@ -1,6 +1,6 @@
 lexer grammar MalinaLexer;
 
-tokens { INDENT, DEDENT, NEWLINE, OPEN_STRING_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON, SQS}
+tokens { INDENT, DEDENT, NEWLINE, FREE_OPEN_STRING, OPEN_STRING_ML, FREE_OPEN_STRING_ML, EQUAL, DBL_EQUAL, DQS, DQS_ML, COLON, SQS}
 
 
 INDENT_DEDENT		:	(Eol Spaces) {IndentDedent();};
@@ -38,7 +38,7 @@ mode IN_VALUE;
 					)		-> popMode;
 
 	//Open string and Multi Line Open String
-	OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
+	OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent(OPEN_STRING, OPEN_STRING_ML);};
 	JSON_BOOLEAN		:	('true' | 'false') {ProcessOpenStringLine(JSON_BOOLEAN);};
 	JSON_NULL		:	'null' {ProcessOpenStringLine(JSON_NULL);};
 	JSON_NUMBER		:	('-'? Int '.' [0-9] + Exp? | '-'? Int Exp | '-'? Int) {ProcessOpenStringLine(JSON_NUMBER);};
@@ -54,11 +54,11 @@ mode IN_VALUE;
 
 mode IN_FREE_VALUE;
 	//Open string and Multi Line Open String
-	FREE_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
+	FREE_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent(FREE_OPEN_STRING, FREE_OPEN_STRING_ML);};
 	FREE_OPEN_STRING			:	OpenString {ProcessOpenStringLine(OPEN_STRING);};
 
 mode IN_OS;
-	IN_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent();};
+	IN_OPEN_STRING_EOL		:	OpenStringEol {OsIndentDedent(OPEN_STRING, OPEN_STRING_ML);};
 	IN_OPEN_STRING			:	OpenString {ProcessOpenStringLine(OPEN_STRING);};
 
 

@@ -607,6 +607,14 @@ namespace Malina.Parser
                 return;
             }
 
+            var freeOpenValue = context.FREE_OPEN_STRING();
+            if (freeOpenValue != null)
+            {
+                parent.ValueInterval = new Interval(((CommonToken)freeOpenValue.Payload).StartIndex, ((CommonToken)freeOpenValue.Payload).StopIndex);
+                ((DOM.IValueNode)parent).ValueType = ValueType.FreeOpenString;
+                return;
+            }
+
             var jsonBoolean = context.JSON_BOOLEAN();
             if (jsonBoolean != null)
             {
@@ -728,7 +736,16 @@ namespace Malina.Parser
                 parent.ValueIndent = token.TokenIndent;
                 ((DOM.IValueNode) parent).ValueType = ValueType.OpenString;
                 return;
+            }
 
+            var free_open_value = context.FREE_OPEN_STRING_ML();
+            if (free_open_value != null)
+            {
+                var token = (MalinaToken)free_open_value.Payload;
+                parent.ValueInterval = new Interval(token.StartIndex, token.StopIndex);
+                parent.ValueIndent = token.TokenIndent;
+                ((DOM.IValueNode)parent).ValueType = ValueType.FreeOpenString;
+                return;
             }
 
             var dqs_ml = context.DQS_ML();

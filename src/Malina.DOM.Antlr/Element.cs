@@ -123,39 +123,62 @@ namespace Malina.DOM.Antlr
         private List<object> _interpolationItems;
         public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
 
-        public static string GetValueFromValueInterval(ICharStream charStream, Interval valueInterval, int valueIndent, DOM.ValueType valueType)
+        public static string GetValueFromValueInterval(ICharStream charStream, Interval valueInterval, int valueIndent, ValueType valueType)
         {
-            if (valueInterval.Length == 0) return null;
-            if (valueInterval.a == -1) return "";
+            if (valueInterval.Length == 0) return null; //Node has no value
+            if (valueInterval.a == -1) return ""; //Node has empty value
+
             var _sb = new StringBuilder();
-            var value = charStream.GetText(valueInterval);
-            var lines = value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            //Splitting text. Getting array of text lines
+            var lines = charStream.GetText(valueInterval).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
             var first = true;
+            var firstEmptyLine = true;
+
             foreach (var item in lines)
             {
-                string s;
-                if (valueType == ValueType.OpenString || valueType == ValueType.Boolean || valueType == ValueType.Null || valueType == ValueType.Number)
-                    s = item.TrimEnd(' ', '\t'); //ignoring trailing whitespace for open strings
-                else
-                    s = item;
+                string line = TrimEndOfOpenStringLine(item, valueType);
 
-                if (first) {_sb.Append(s); first = false; continue; }
+                if (first) {_sb.Append(line); first = false; continue; } //adding first line without appending new line symbol
 
                 //Counting indent of line
-                var itemsIndent = item.TakeWhile(c => c == ' ' || c == '\t').Count();
-                if (itemsIndent < valueIndent)
+                var lineIndent = line.TakeWhile(c => c == ' ' || c == '\t').Count();
+
+                //Ignore dedented comments inside open string
+                if (lineIndent < valueIndent && line.Substring(lineIndent).StartsWith("//")) continue;
+
+                if (line.Length <= valueIndent) //this is just empty line
                 {
-                    //Ignore dedented comments inside open string
-                    if (s.Substring(itemsIndent).StartsWith("//")) continue;
+                    if (valueType == ValueType.FreeOpenString)
+                    {
+                        //Folded string
+                        if (firstEmptyLine)
+                        {
+                            firstEmptyLine = false;
+                            continue; //Ignore first empty line for folded string
+                        }
+                    }
+                    _sb.AppendLine(); continue;
                 }
-                if (s.Length <= valueIndent) { _sb.AppendLine();continue; } //this is just empty line
 
+                line = line.Substring(valueIndent);
 
-                _sb.AppendLine();
-                _sb.Append(s.Substring(valueIndent));//Removing indents                    
+                if (valueType == ValueType.FreeOpenString && firstEmptyLine) _sb.Append(" ");
+                if (valueType != ValueType.FreeOpenString || !firstEmptyLine) _sb.AppendLine();
+                firstEmptyLine = true; //reseting the flag for folded string logic
+                _sb.Append(line);//Removing indents                    
             }
 
             return _sb.ToString();
+        }
+
+        private static string TrimEndOfOpenStringLine(string line, ValueType valueType)
+        {
+            if (valueType == ValueType.OpenString || valueType == ValueType.FreeOpenString || valueType == ValueType.Boolean || valueType == ValueType.Null || valueType == ValueType.Number)
+                return line.TrimEnd(' ', '\t'); //ignoring trailing whitespace for open strings
+
+            return line;
         }
     }
 }

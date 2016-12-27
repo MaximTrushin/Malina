@@ -104,7 +104,7 @@ namespace Malina.Compiler.Generator
             if (!string.IsNullOrEmpty(node.Name))
                 _jsonWriter.WritePropertyName((node.NsPrefix != null ? node.NsPrefix + "." : "") + node.Name);
 
-            if (ResolveValue(node)) return;
+            if (ResolveValue(node)) return; //Block has value therefore it has no block.
 
             //Working with node's block
             _blockStart = true;

@@ -116,7 +116,6 @@ namespace Malina.Parser
                 return;
             }
 
-
             //Lexer reached EOF. 
             if (next == Eof)
             {
@@ -199,9 +198,8 @@ namespace Malina.Parser
         }
 
         //Open String Indents/Dedents processing
-        private void OsIndentDedent()
+        private void OsIndentDedent(int tokenType, int mlTokenType)
         {
-
             var currentIndent = InWsaMode ? 0 : _indents.Peek();
             var indent = CalcOsIndent();
 
@@ -220,7 +218,7 @@ namespace Malina.Parser
                         _currentToken =
                             new MalinaToken(
                                 new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                                OPEN_STRING, Channel, -1, -1) {Text = ""};
+                                tokenType, Channel, -1, -1) {Text = ""};
                     }
 
                     Emit(_currentToken);
@@ -237,7 +235,7 @@ namespace Malina.Parser
                     //if value was ended with ==  then we need to add \n                                     
                     _currentToken.StopIndex = CharIndex - Column - 1;
                     _currentToken.StopLine = this._tokenStartLine;
-                    _currentToken.Type = OPEN_STRING_ML;
+                    _currentToken.Type = mlTokenType;
                     _currentToken.StopColumn++;
                     Emit(_currentToken);
                 }
@@ -260,12 +258,11 @@ namespace Malina.Parser
 
                     _currentToken =
                         new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                            OPEN_STRING, Channel, this._tokenStartCharIndex + offset, -1)
+                            tokenType, Channel, this._tokenStartCharIndex + offset, -1)
                         {
                             TokenIndent = _indents.Peek() + 1
                         };
                 }
-
 
                 if (_input.La(-1) == '=')//If indent ends with == then include it
                 {
@@ -273,7 +270,7 @@ namespace Malina.Parser
                     _currentToken.StopLine = Line;
                     _currentToken.StopColumn = Column - 1;
                 }
-                _currentToken.Type = OPEN_STRING_ML;
+                _currentToken.Type = mlTokenType;
                 Skip();
                 EnterInOsMode();
             }
@@ -284,7 +281,7 @@ namespace Malina.Parser
                     //Creating Token for Empty OpenString
                     _currentToken =
                         new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
-                            OPEN_STRING, Channel, -1, -1) {Text = ""};
+                            tokenType, Channel, -1, -1) {Text = ""};
                 }
 
                 //Adding 1 NEWLINE before DEDENTS
@@ -327,30 +324,27 @@ namespace Malina.Parser
             return false;
         }
 
+        /// <summary>
+        /// Switch lexer from IN_VALUE to IN_OS mode.
+        /// </summary>
         private void EnterInOsMode()
         {
-            if (_mode != IN_OS)
+            if (_mode == IN_VALUE)
                 PushMode(IN_OS);
         }
 
         private void ExitInValueMode()
         {
-            switch (_mode)
+            while (_modeStack.Count > 0)
             {
-                case IN_VALUE:
-                    PopMode();
-                    break;
-                case IN_OS:
-                    PopMode();
-                    PopMode();
-                    break;
+                PopMode();
             }
         }
 
 
         private void EmitIndentationToken(int tokenType, int start, int stop)
         {
-                Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, start, stop) { Text =  _SymbolicNames[tokenType]});
+            Emit(new CommonToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream), tokenType, Channel, start, stop) { Text =  _SymbolicNames[tokenType]});
         }
 
         private void Emit(int tokenType)
@@ -556,7 +550,6 @@ namespace Malina.Parser
                     EmitIndentationToken(DEDENT, CharIndex - indent, CharIndex - 1);
                     _indents.Pop();
                 }
-
             }
             else //Continue Multine DQS
                 Skip();

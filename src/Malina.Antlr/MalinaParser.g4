@@ -144,8 +144,8 @@ value_ml	:	string_value_ml | object_value_ml;
 
 //string values
 string_value	:	string_value_inline | string_value_ml;
-string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_STRING | JSON_BOOLEAN | JSON_NULL | JSON_NUMBER | DQS | sqs_json_literal | sqs_inline);
-string_value_ml	:	(EQUAL | DBL_EQUAL) (sqs_ml | DQS_ML | OPEN_STRING_ML);
+string_value_inline	:	(EQUAL | DBL_EQUAL) (OPEN_STRING | FREE_OPEN_STRING | JSON_BOOLEAN | JSON_NULL | JSON_NUMBER | DQS | sqs_json_literal | sqs_inline);
+string_value_ml	:	(EQUAL | DBL_EQUAL) (sqs_ml | DQS_ML | OPEN_STRING_ML | FREE_OPEN_STRING_ML);
 
 
 sqs_inline	:	SQS sqs_body_item* SQS_END?;

@@ -327,6 +327,13 @@ namespace Malina.Compiler.Tests
         }
 
         [Test, RecordedTest]
+        public void DotEscapedInId()
+        {
+            PerformCompilerTest();
+        }
+
+
+        [Test, RecordedTest]
         public void TwoModulesWithDocumentAndAlias()
         {
             PerformCompilerTest();

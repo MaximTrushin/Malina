@@ -118,6 +118,12 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void DotEscapedInId()
+        {
+            PerformTest();
+        }
+
         [Test, LexerRecord, LexerErrorRecorded, ParseTreeRecorded, DomRecorded]
         public void DoubleQuoteMultilineString()
         {

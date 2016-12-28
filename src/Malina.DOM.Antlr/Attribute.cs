@@ -28,14 +28,8 @@ namespace Malina.DOM.Antlr
         {
             get
             {
-                if (base.Name != null) return base.Name;
-                if (NsSeparator > 0)
-                {
-                    return _charStream.GetText(new Interval(NsSeparator, IdInterval.b));
-                }
-                return _charStream.GetText(new Interval(IdInterval.a + 1, IdInterval.b));
-
-
+                return base.Name ??
+                       _charStream.GetText(NsSeparator > 0 ? new Interval(NsSeparator, IdInterval.b) : new Interval(IdInterval.a + 1, IdInterval.b)).Replace("..", ".");
             }
 
             set
@@ -44,14 +38,8 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public override string Value
-        {
-            get
-            {
-                if (base.Value != null) return base.Value;
-                return Element.GetValueFromValueInterval(_charStream, ValueInterval, ValueIndent, ValueType);
-            }
-        }
+        public override string Value => base.Value ??
+                                        Element.GetValueFromValueInterval(_charStream, ValueInterval, ValueIndent, ValueType);
 
         public override void AppendChild(Node child)
         {

@@ -36,12 +36,8 @@ namespace Malina.DOM.Antlr
         {
             get
             {
-                if (base.Name != null) return base.Name;
-                if (NsSeparator > 0)
-                {
-                    return _charStream.GetText(new Interval(NsSeparator, _idInterval.b));
-                }
-                return _charStream.GetText(_idInterval);
+                return base.Name ??
+                       _charStream.GetText(NsSeparator > 0 ? new Interval(NsSeparator, _idInterval.b) : _idInterval).Replace("..", ".");
             }
 
             set
@@ -56,26 +52,19 @@ namespace Malina.DOM.Antlr
             {
                 if (base.NsPrefix != null) return base.NsPrefix;
 
-                if (NsSeparator > 0)
-                {
-                    return _charStream.GetText(new Interval(_idInterval.a, NsSeparator - 2));
-                }
-
-                return null;
+                return NsSeparator > 0 ? _charStream.GetText(new Interval(_idInterval.a, NsSeparator - 2)) : null;
             }
         }
 
-        public static int CalcNsSeparator(ICharStream _charStream, Interval _idInterval)
+        public static int CalcNsSeparator(ICharStream charStream, Interval idInterval)
         {
-            var s = _charStream.GetText(_idInterval);
+            var s = charStream.GetText(idInterval);
             for (int i = 0; i < s.Length - 1; i++)
             {
-                if(s[i] == '.')
-                {
-                    if (s[i + 1] != '.') return _idInterval.a + i + 1;
+                if (s[i] != '.') continue;
+                if (s[i + 1] != '.') return idInterval.a + i + 1;
 
-                    i++;
-                }
+                i++;
             }
             return -1;
         }

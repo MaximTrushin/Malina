@@ -1,0 +1,7 @@
+01:00	Document `super..doc`:
+02:01		Element `root.element`:
+03:02			Attribute `awesome.attribute`= `cool`
+04:02			Attribute `ns.spaced.attribute`= `cool`
+05:02			Element `another.element`= `test`
+06:02			Element `ns.spaced.element`= `test`
+

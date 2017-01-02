@@ -299,6 +299,16 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
+        
+        [Test]
+        public void AliasWithUnexpectedArgument()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 2, 20,-1), "Unexpected argument."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
 
         [Test]
         public void ArgumentInTheElementBlock()

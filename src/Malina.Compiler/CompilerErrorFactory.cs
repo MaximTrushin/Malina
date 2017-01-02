@@ -33,7 +33,7 @@ namespace Malina.Compiler
 
         private static CompilerError Instantiate(string code, LexicalInfo location, params object[] args)
         {
-            return new CompilerError(code, location, Array.ConvertAll<object, string>(args, DisplayStringFor));
+            return new CompilerError(code, location, Array.ConvertAll(args, DisplayStringFor));
         }
 
         internal static string DisplayStringFor(object o)
@@ -50,7 +50,7 @@ namespace Malina.Compiler
 
         internal static CompilerError NsPrefixNotDefined<T>(T node, string fileName) where T : Node
         {
-            return Instantiate("MCE0003", new LexicalInfo(fileName, node.start.Line, node.start.Column, node.start.Index), (node as INsNode).NsPrefix);
+            return Instantiate("MCE0003", new LexicalInfo(fileName, node.start.Line, node.start.Column, node.start.Index), ((INsNode) node).NsPrefix);
         }
 
         internal static CompilerError AliasIsNotDefined(Alias alias, string fileName)
@@ -60,7 +60,7 @@ namespace Malina.Compiler
 
         internal static CompilerError AliasDefHasCircularReference(NsInfo aliasDefNsInfo)
         {
-            var aliasDef = aliasDefNsInfo.ModuleMember as AliasDefinition;
+            var aliasDef = (AliasDefinition) aliasDefNsInfo.ModuleMember;
             return Instantiate("MCE0005", new LexicalInfo(aliasDef.Module.FileName,
                 aliasDef.start.Line, aliasDef.start.Column + 1, aliasDef.start.Index), aliasDef.Name);
         }
@@ -98,8 +98,6 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0012", new LexicalInfo(fileName, aliasDef.start.Line, aliasDef.start.Column + 1, aliasDef.start.Index), aliasDef.Name);
         }
-
-
 
         internal static CompilerError ArgumentIsMissing(Alias alias, string argumentName, string fileName)
         {
@@ -159,6 +157,11 @@ namespace Malina.Compiler
         public static CompilerError DefaultArgumentIsMissing(Alias alias, string fileName)
         {
             return Instantiate("MCE0023", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index));
+        }
+
+        public static CompilerError UnexpectedArgument(Argument argument, string fileName)
+        {
+            return Instantiate("MCE0024", new LexicalInfo(fileName, argument.start.Line, argument.start.Column + 1, argument.start.Index));
         }
     }
 }

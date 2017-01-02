@@ -5,7 +5,7 @@
 		@orderDate = 2001-12-12
 		shipTo:
 			$Address:
-				.Name = Helen
+				.name = Helen
 				City = London
 
 

@@ -181,23 +181,38 @@ namespace Malina.Compiler
 
         private void CheckAliasArguments(DOM.Alias alias, DOM.Antlr.AliasDefinition aliasDef, NsInfo documentNsInfo)//todo: check for unexpected argument
         {
-            var hasDefaultParameter = aliasDef.Parameters.Any(p => p.Name == "_");            
+            CheckCompatibilityWithParameters(alias, aliasDef, documentNsInfo);
+            CheckForUnexpectedArguments(alias, aliasDef, documentNsInfo);
+        }
+
+        private void CheckForUnexpectedArguments(Alias alias, AliasDefinition aliasDef, NsInfo documentNsInfo)
+        {
+            foreach (var argument in alias.Arguments)
+            {
+                if (aliasDef.Parameters.All(p => p.Name != argument.Name)) _context.AddError(CompilerErrorFactory.UnexpectedArgument(argument, documentNsInfo.ModuleMember.Module.FileName)); ;
+            }
+        }
+
+        private void CheckCompatibilityWithParameters(Alias alias, AliasDefinition aliasDef, NsInfo documentNsInfo)
+        {
             foreach (var parameter in aliasDef.Parameters)
             {
-                if (parameter.Name == "_")//Default parameter
+                if (parameter.Name == "_") //Default parameter
                 {
                     if (alias.Entities.Count == 0 && alias.ValueType != ValueType.EmptyObject)
-                        _context.AddError(CompilerErrorFactory.DefaultArgumentIsMissing(alias, documentNsInfo.ModuleMember.Module.FileName));
+                        _context.AddError(CompilerErrorFactory.DefaultArgumentIsMissing(alias,
+                            documentNsInfo.ModuleMember.Module.FileName));
 
                     continue;
                 }
 
-                DOM.Argument argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
+                var argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
                 if (argument == null)
                 {
                     //Report Error if argument is missing and there is no default value for the parameter
                     if (parameter.Value == null && parameter.Entities.Count == 0 && parameter.ValueType != ValueType.EmptyObject)
-                        _context.AddError(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name, documentNsInfo.ModuleMember.Module.FileName));
+                        _context.AddError(CompilerErrorFactory.ArgumentIsMissing(alias, parameter.Name,
+                            documentNsInfo.ModuleMember.Module.FileName));
 
                     continue;
                 }
@@ -211,7 +226,6 @@ namespace Malina.Compiler
                         : CompilerErrorFactory.BlockArgumentIsExpected(argument,
                             documentNsInfo.ModuleMember.Module.FileName));
                 }
-
             }
         }
 

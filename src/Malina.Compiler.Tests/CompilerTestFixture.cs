@@ -307,6 +307,12 @@ namespace Malina.Compiler.Tests
         }
 
         [Test, RecordedTest]
+        public void AliasWithDefaultBlockParameter()
+        {
+            PerformCompilerTest();
+        }
+
+        [Test, RecordedTest]
         public void ArgumentWithObjectValue()
         {
             PerformCompilerTest();

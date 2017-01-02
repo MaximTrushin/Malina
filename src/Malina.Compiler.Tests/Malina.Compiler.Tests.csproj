@@ -53,7 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scenarios\AliasParameterWithDefaultBlock\ModuleWithAlias.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\AliasWithArguments\ModuleWithDocument.mlj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\AliasWithDefaultBlockParameter\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\ArgumentInTheElementBlock\ModuleWithDocument.mlx">
@@ -172,7 +178,7 @@
     <None Include="Scenarios\AliasWithArguments\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\AliasParameterWithDefaultBlock\ModuleWithAlias.mlx">
+    <None Include="Scenarios\AliasWithDefaultBlockParameter\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\AliasParameterWithDefaultBlock\ModuleWithAlias2.mlx">

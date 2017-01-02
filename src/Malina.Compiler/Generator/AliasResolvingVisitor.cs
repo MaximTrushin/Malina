@@ -309,6 +309,13 @@ namespace Malina.Compiler.Generator
         public override void OnParameter(Parameter parameter)
         {
             var aliasContext = AliasContext.Peek();
+
+            if (parameter.Name == "_") //Default parameter. Value is passed in the body of the alias
+            {
+                Visit(aliasContext.Alias.Entities);
+                return;
+            }
+
             var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
 
             Visit(argument != null ? argument.Entities : parameter.Entities);

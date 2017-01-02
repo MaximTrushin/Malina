@@ -24,7 +24,7 @@
         public const string MCE0019 = "Array item is expected.";
         public const string MCE0020 = "Object property is expected.";
         public const string MCE0021 = "Alias can't have default argument along with other arguments.";
-
+        public const string MCE0022 = "Argument can be defined only in an alias' block.";
 
         public static string Format(string name, params object[] args)
         {

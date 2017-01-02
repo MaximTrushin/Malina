@@ -73,6 +73,18 @@ namespace Malina.Compiler.Steps
             base.OnAlias(alias);
         }
 
+        public override void OnArgument(Argument argument)
+        {
+            CheckArgumentIntegrity(argument);
+            base.OnArgument(argument);
+        }
+
+        private void CheckArgumentIntegrity(Argument argument)
+        {
+            if (! (argument.Parent is Alias))
+                _context.AddError(CompilerErrorFactory.ArgumentMustBeDefinedInAlias(argument, _currentModule.FileName));
+        }
+
         private void CheckAliasIntegrity(Alias @alias)
         {
             if (alias.Arguments.Count > 0)

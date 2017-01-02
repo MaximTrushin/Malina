@@ -56,6 +56,9 @@
     <None Include="Scenarios\AliasWithArguments\ModuleWithDocument.mlj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\ArgumentInTheElementBlock\ModuleWithDocument.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\DotEscapedInId\DotEscapedInId.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

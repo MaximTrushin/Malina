@@ -280,14 +280,22 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
-
-
         [Test]
         public void AliasWithMissedArgument()
         {
             var errorsExpected = new List<CompilerError>()
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 4,-1), "Argument 'street' is missing."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+        [Test]
+        public void ArgumentInTheElementBlock()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 3, 3,-1), "Argument can be defined only in an alias' block."),
             };
             PerformCompilerTest(errorsExpected);
         }

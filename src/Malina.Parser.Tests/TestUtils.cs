@@ -309,7 +309,12 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedLexerErros, serialLexerErrors);
             }
             else
+            {
+                if (lexerErrors.HasErrors)
+                    PrintErrors(lexerErrors.Errors);
                 Assert.AreEqual(false, lexerErrors.HasErrors, "LexerErrorListener has errors");
+            }
+                
 
             Assert.AreEqual(0, lexer.InvalidTokens.Count);
 
@@ -329,7 +334,13 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedParserErros, serialParserErrors);
             }
             else
+            {
+                if (parserErrorListener.HasErrors)
+                    PrintErrors(parserErrorListener.Errors);       
+                
                 Assert.AreEqual(false, parserErrorListener.HasErrors, "ParserErrorListener has errors");
+            }
+                
 
             //DOM Assertions
             if (recordedDom != null)
@@ -337,6 +348,20 @@ namespace Malina.Parser.Tests
                 Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
             }
 
+        }
+
+        public static void PrintErrors(List<MalinaException> errors)
+        {
+            Console.WriteLine("Compiler Errors:");
+
+            foreach (var error in errors)
+            {
+                Console.WriteLine();
+                Console.Write(error.Code + " " + error.Start + "-" + error.Stop + ": ");
+                Console.WriteLine(error.Message);
+                if (error.InnerException != null)
+                    Console.WriteLine(error.InnerException.StackTrace);
+            }
         }
 
         private static IList<IToken> GetTokens(string code, out MalinaLexer lexer, out ErrorListener<int> lexerErros)

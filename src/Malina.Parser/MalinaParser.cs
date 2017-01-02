@@ -379,6 +379,18 @@ namespace Malina.Parser
             }
         }
 
+        public partial class Hybrid_block_parameter_stmtContext : INodeContext<Parameter>
+        {
+            public Parameter Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = PARAMETER_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+
         public partial class Block_parameter_stmtContext : INodeContext<Parameter>
         {
             public Parameter Node { get; set; }

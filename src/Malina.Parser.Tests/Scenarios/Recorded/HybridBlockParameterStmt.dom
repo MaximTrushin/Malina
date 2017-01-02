@@ -1,0 +1,8 @@
+01:00	AliasDefinition `Document1`:
+02:01		Element `root`:
+03:02			Parameter `param4`:
+03:11				Attribute `attr`= `4`
+03:23				Element `element`:
+04:04					Element `element1`= `text1`
+05:04					Element `element2`= `text2`
+

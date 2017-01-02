@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scenarios\HybridBlockParameterStmt.mlx" />
     <None Include="Scenarios\HybridBlockArgumentStmt.mlx" />
     <None Include="Scenarios\HybridBlockAliasStmt.mlx" />
     <None Include="Scenarios\InlineAliasEndOfBlock.mlx">

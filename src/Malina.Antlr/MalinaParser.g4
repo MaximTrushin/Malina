@@ -38,10 +38,10 @@ inline_stmt	:	inline_expression+ newline;
 hybrid_stmt	:	inline_expression+ block_line_stmt;
 
 //Represent inline expression
-inline_expression	:	attr_inline | element_inline | parameter_inline | alias_inline | scope_inline | array_item_inline;
+inline_expression	:	attr_inline | argument_inline | element_inline | parameter_inline | alias_inline | scope_inline | array_item_inline;
 
 //Represents one line of block. Always ends with NEWLINE
-block_line_stmt	:	attr_stmt | alias_stmt | element_stmt | parameter_stmt | scope_stmt | array_item_stmt;
+block_line_stmt	:	attr_stmt | argument_stmt | alias_stmt | element_stmt | parameter_stmt | scope_stmt | array_item_stmt;
 
 //ELEMENT RULES 
 //statements
@@ -52,7 +52,7 @@ hybrid_block_element_stmt	:	ELEMENT_ID COLON (hybrid_block_element_stmt | hybrid
 empty_element_stmt	:	ELEMENT_ID (COLON COMMA?)? newline;
 
 //inline
-element_inline	:	value_element_inline | block_element_inline | empty_element_inline;
+element_inline	:	block_element_inline | value_element_inline | empty_element_inline;
 empty_element_inline	:	ELEMENT_ID  (COLON COMMA?)?;
 value_element_inline	:	ELEMENT_ID value_inline;
 block_element_inline	:	ELEMENT_ID COLON block_inline;
@@ -102,33 +102,28 @@ block_parameter_inline	: PARAMETER_ID COLON block_inline;
 
 //ALIAS RULES
 //statements
-alias_stmt	:	value_alias_stmt | block_alias_stmt | hybrid_block_alias_stmt | empty_alias_stmt;
+alias_stmt	:	block_alias_stmt | value_alias_stmt | hybrid_block_alias_stmt | empty_alias_stmt;
 empty_alias_stmt	:	ALIAS_ID (COLON COMMA?)? newline;
 value_alias_stmt	:	ALIAS_ID value newline;
-block_alias_stmt	:	ALIAS_ID COLON (block | argument_block | hybrid_argument_block);
-hybrid_block_alias_stmt	:	ALIAS_ID COLON (hybrid_stmt | block_line_stmt);
+block_alias_stmt	:	ALIAS_ID COLON block;
+hybrid_block_alias_stmt	:	ALIAS_ID COLON (hybrid_block_element_stmt | hybrid_stmt | block_line_stmt);
 
 
 //inline
-alias_inline	:	value_alias_inline | block_alias_inline | empty_alias_inline;
+alias_inline	:	block_alias_inline | value_alias_inline | empty_alias_inline;
 empty_alias_inline	: ALIAS_ID (COLON COMMA?)?;
 value_alias_inline	: ALIAS_ID value_inline;
-block_alias_inline	: ALIAS_ID COLON (block_inline | argument_block_inline);
+block_alias_inline	: ALIAS_ID COLON block_inline;
 
 //ARGUMENTS RULES
-//block
-argument_block	:	INDENT (argument_inline_stmt | argument_stmt)+ dedent;
-argument_block_inline	:	(argument_inline)+ COMMA?;
-hybrid_argument_block	:	(argument_inline)+ argument_stmt;
 
 //statements
-argument_stmt	:	value_argument_stmt | block_argument_stmt | hybrid_block_argument_stmt | empty_argument_stmt;
+argument_stmt	:	block_argument_stmt | hybrid_block_argument_stmt | value_argument_stmt | empty_argument_stmt;
 empty_argument_stmt	:	ARGUMENT_ID (COLON COMMA?)? newline;
 value_argument_stmt	:	ARGUMENT_ID value newline;
 block_argument_stmt	:	ARGUMENT_ID COLON block;
 hybrid_block_argument_stmt	:	ARGUMENT_ID COLON (hybrid_block_argument_stmt | hybrid_stmt | block_line_stmt);
 
-argument_inline_stmt	:	argument_inline+ newline;
 
 //inline
 argument_inline	:	value_argument_inline | block_argument_inline | empty_argument_inline;

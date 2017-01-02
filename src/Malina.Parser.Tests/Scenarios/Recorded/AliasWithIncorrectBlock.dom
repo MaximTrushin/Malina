@@ -4,6 +4,7 @@
 06:02			Element `shipTo`:
 07:03				Alias `Address`:
 08:04					Argument `Name`= `Helen`
+09:04					Element `City`= `London`
 
 12:00	AliasDefinition `Address`:
 13:01		Element `name`= 	Parameter `name`= `Helen Zoe`

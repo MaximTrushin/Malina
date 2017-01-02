@@ -76,7 +76,7 @@ namespace Malina.Parser.Tests
             PerformTest();
         }
 
-        [Test, LexerRecorded, ParseTreeRecorded, ParserErrorRecorded, DomRecorded]
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithIncorrectBlock()
         {
             PerformTest();
@@ -239,7 +239,19 @@ namespace Malina.Parser.Tests
         }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void HybridBlockAliasStmt()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void InlineAliasDefinition()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void InlineAliasEndOfBlock()
         {
             PerformTest();
         }
@@ -366,6 +378,12 @@ namespace Malina.Parser.Tests
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void OpenStringEndOnDedentAndEof()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void OpenStringEndsWithIndentEof()
         {
             PerformTest();
         }

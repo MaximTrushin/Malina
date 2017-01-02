@@ -9,7 +9,6 @@ namespace Malina.DOM
         // Fields
         private NodeCollection<Argument> _arguments;
         
-        private NodeCollection<Attribute> _attributes;
         private NodeCollection<Entity> _entities;
         private object _objectValue;
         private ValueType _valueType;
@@ -17,20 +16,6 @@ namespace Malina.DOM
 
 
         //Properties
-
-        public NodeCollection<Attribute> Attributes
-        {
-            get { return _attributes ?? (_attributes = new NodeCollection<Attribute>(this)); }
-            set
-            {
-                if (value != _attributes)
-                {
-                    value?.InitializeParent(this);
-                    _attributes = value;
-                }
-            }
-        }
-
         public NodeCollection<Entity> Entities
         {
             get { return _entities ?? (_entities = new NodeCollection<Entity>(this)); }
@@ -111,7 +96,7 @@ namespace Malina.DOM
             }
             else
             {
-                base.AppendChild(child);
+                Entities.Add((Entity) child);
             }
         }
 

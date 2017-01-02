@@ -459,6 +459,18 @@ namespace Malina.Parser
                 Node.IdInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
             }
         }
+        public partial class Hybrid_block_alias_stmtContext : INodeContext<Alias>
+        {
+            public Alias Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ALIAS_ID();
+                Node.IdInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
+        
 
         public partial class Value_alias_stmtContext : INodeContext<Alias>
         {

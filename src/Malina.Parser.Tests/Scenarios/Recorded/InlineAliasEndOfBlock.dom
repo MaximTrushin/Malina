@@ -1,0 +1,11 @@
+01:00	Document `Doc`:
+02:01		Alias `Alieas`:
+03:02			Element `items`:
+04:03				Alias `Items.Jewelry.Necklaces.Lapis`:
+04:35					Argument `Quantity`= `2`
+04:49					Alias `fff`
+04:55				Alias `ddd`
+05:03				Alias `Items.Jewelry.Necklaces.Lapis`:
+05:35					Argument `Quantity`= `2`
+05:50				Alias `fff`
+

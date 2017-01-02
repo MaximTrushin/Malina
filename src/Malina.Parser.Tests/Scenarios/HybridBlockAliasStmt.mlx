@@ -1,0 +1,6 @@
+﻿!Document1:
+	root:
+		$Alias: .param4: argument4 = "4", .param2:
+			element1 = text1
+			element2 = text2
+				

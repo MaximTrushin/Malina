@@ -1,4 +1,4 @@
-01:00	AliasDefinition `test`:
+01:00	AliasDefinition `Alias`:
 02:01		Parameter `param`
 03:01		Element `item`:
 04:02			Parameter `param1`
@@ -6,6 +6,6 @@
 04:22			Parameter `param5`
 05:01		Element `item`
 06:01		Parameter `param2`
-07:01		Parameter `param3`
-08:01		Element `item`
+07:01		Element `item`
+08:01		Parameter `param3`
 

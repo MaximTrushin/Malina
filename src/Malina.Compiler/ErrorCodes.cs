@@ -23,6 +23,7 @@
         public const string MCE0018 = "XML validation error - '{0}'.";
         public const string MCE0019 = "Array item is expected.";
         public const string MCE0020 = "Object property is expected.";
+        public const string MCE0021 = "Alias can't have default argument along with other arguments.";
 
 
         public static string Format(string name, params object[] args)

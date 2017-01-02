@@ -264,7 +264,7 @@ namespace Malina.Compiler.Tests
         {
             var errorsExpected = new List<CompilerError>()
             {
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 9, 5,-1), "ParserError - 'Unexpected token ELEMENT_ID<'City'>'."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 9, 5,-1), "Alias can't have default argument along with other arguments."),
             };
             PerformCompilerTest(errorsExpected);
         }

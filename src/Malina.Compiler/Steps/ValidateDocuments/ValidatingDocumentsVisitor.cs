@@ -31,8 +31,6 @@ namespace Malina.Compiler.Steps
                 _targetFormat = DOM.Antlr.Module.TargetFormats.Json;
             _currentModule = node;
 
-            if (_targetFormat == DOM.Antlr.Module.TargetFormats.Xml) return; //Currently there are no checks which need to be done for xml.
-
             base.OnModule(node);
 
         }
@@ -67,6 +65,23 @@ namespace Malina.Compiler.Steps
         public override void OnAttribute(Attribute node)
         {
             CheckBlockIntegrity(node);
+        }
+
+        public override void OnAlias(Alias alias)
+        {
+            CheckAliasIntegrity(alias);
+            base.OnAlias(alias);
+        }
+
+        private void CheckAliasIntegrity(Alias @alias)
+        {
+            if (alias.Arguments.Count > 0)
+            {
+                foreach (var entity in alias.Entities)
+                {
+                    _context.AddError(CompilerErrorFactory.AliasCantHaveDefaultArgument(entity, _currentModule.FileName));
+                }
+            }
         }
 
         private void CheckBlockIntegrity(Node node)

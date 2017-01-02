@@ -1,0 +1,9 @@
+01:00	Document `Document1`:
+02:01		Element `root`:
+03:02			Alias `Alias`:
+03:10				Argument `param4`:
+03:19					Element `argument4`= `4`
+03:36				Argument `param2`:
+04:03					Element `element1`= `text1`
+05:03					Element `element2`= `text2`
+

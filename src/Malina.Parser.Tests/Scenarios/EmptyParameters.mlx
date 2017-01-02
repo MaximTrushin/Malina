@@ -1,9 +1,9 @@
-!$test:
+!$Alias:
 	%param:
 	item: 
 		%param1:, %param4:, %param5:
 	item
 	%param2: ()
-	%param3
 	item
+	%param3:
 		

@@ -225,7 +225,7 @@ namespace Malina.Parser.Tests
             }
             else PrintNodeStart(node);
 
-            if (node.Attributes.Count + node.Entities.Count + node.Arguments.Count > 0)
+            if (node.Entities.Count + node.Arguments.Count > 0)
             {
                 _sb.AppendLine(":");
                 _indent++;
@@ -233,7 +233,7 @@ namespace Malina.Parser.Tests
 
             base.OnAlias(node);
 
-            if (node.Attributes.Count + node.Entities.Count + node.Arguments.Count > 0)
+            if (node.Entities.Count + node.Arguments.Count > 0)
             {
                 _indent--;
             }

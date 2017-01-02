@@ -1,6 +1,5 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Atn;
-using Malina.DOM;
 using Malina.Parser;
 using System;
 using System.IO;

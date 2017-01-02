@@ -122,7 +122,7 @@ argument_stmt	:	block_argument_stmt | hybrid_block_argument_stmt | value_argumen
 empty_argument_stmt	:	ARGUMENT_ID (COLON COMMA?)? newline;
 value_argument_stmt	:	ARGUMENT_ID value newline;
 block_argument_stmt	:	ARGUMENT_ID COLON block;
-hybrid_block_argument_stmt	:	ARGUMENT_ID COLON (hybrid_block_argument_stmt | hybrid_stmt | block_line_stmt);
+hybrid_block_argument_stmt	:	ARGUMENT_ID COLON ( hybrid_stmt | block_line_stmt);
 
 
 //inline

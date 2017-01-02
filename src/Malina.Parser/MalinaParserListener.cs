@@ -561,6 +561,17 @@ namespace Malina.Parser
         {
             ExitContext(context);
         }
+
+        public override void EnterHybrid_block_argument_stmt(MalinaParser.Hybrid_block_argument_stmtContext context)
+        {
+            EnterContext(context);
+        }
+
+        public override void ExitHybrid_block_argument_stmt(MalinaParser.Hybrid_block_argument_stmtContext context)
+        {
+            ExitContext(context);
+        }
+
         #endregion
 
         #region INLINE context

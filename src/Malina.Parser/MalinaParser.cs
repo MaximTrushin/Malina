@@ -563,6 +563,18 @@ namespace Malina.Parser
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
             }
         }
+
+        public partial class Hybrid_block_argument_stmtContext : INodeContext<Argument>
+        {
+            public Argument Node { get; set; }
+
+            public void ApplyContext()
+            {
+                this.SetNodeLocation();
+                var id = ARGUMENT_ID();
+                Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+            }
+        }
         #endregion
 
         #region INLINE Context

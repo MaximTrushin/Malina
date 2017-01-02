@@ -243,7 +243,12 @@ namespace Malina.Parser.Tests
         {
             PerformTest();
         }
-
+       
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void HybridBlockArgumentStmt()
+        {
+            PerformTest();
+        }
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void InlineAliasDefinition()
         {

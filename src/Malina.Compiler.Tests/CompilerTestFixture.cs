@@ -291,6 +291,16 @@ namespace Malina.Compiler.Tests
         }
 
         [Test]
+        public void AliasWithMissedDefaultBlockParameter()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 2, 2,-1), "Default block argument is missing."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+        [Test]
         public void ArgumentInTheElementBlock()
         {
             var errorsExpected = new List<CompilerError>()

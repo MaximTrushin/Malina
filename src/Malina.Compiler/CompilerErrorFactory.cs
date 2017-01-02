@@ -155,5 +155,10 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0022", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
         }
+
+        public static CompilerError DefaultArgumentIsMissing(Alias alias, string fileName)
+        {
+            return Instantiate("MCE0023", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index));
+        }
     }
 }

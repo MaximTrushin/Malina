@@ -117,7 +117,7 @@ namespace Malina.DOM
             }
         }
 
-        public bool IsValueNode => _valueType != ValueType.None;
+        public bool IsValueNode => _valueType != ValueType.None && _valueType != ValueType.EmptyObject;
     }
 
 

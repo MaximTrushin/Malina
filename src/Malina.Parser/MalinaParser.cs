@@ -1,7 +1,16 @@
-﻿using Malina.DOM.Antlr;
-using Antlr4.Runtime.Misc;
+﻿using Antlr4.Runtime.Misc;
 using System.Collections.Generic;
 using Antlr4.Runtime;
+using Malina.DOM;
+using Alias = Malina.DOM.Antlr.Alias;
+using AliasDefinition = Malina.DOM.Antlr.AliasDefinition;
+using Argument = Malina.DOM.Antlr.Argument;
+using Document = Malina.DOM.Antlr.Document;
+using Element = Malina.DOM.Antlr.Element;
+using Module = Malina.DOM.Antlr.Module;
+using Namespace = Malina.DOM.Antlr.Namespace;
+using Parameter = Malina.DOM.Antlr.Parameter;
+using Scope = Malina.DOM.Antlr.Scope;
 
 namespace Malina.Parser
 {
@@ -192,6 +201,7 @@ namespace Malina.Parser
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken) id.Symbol;
                 Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                if (COLON() != null) Node.ValueType = ValueType.EmptyObject;
             }
         }
 
@@ -248,6 +258,7 @@ namespace Malina.Parser
                 var id = ELEMENT_ID();
                 var mt = (MalinaToken) id.Symbol;
                 Node.IdInterval = new Interval(mt.StartIndex, mt.StopIndex);
+                if (COLON() != null) Node.ValueType = ValueType.EmptyObject;
             }
 
         }
@@ -364,6 +375,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = PARAMETER_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                if (COLON() != null) Node.ValueType = ValueType.EmptyObject;
             }
         }
 
@@ -414,6 +426,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = PARAMETER_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                if (COLON() != null) Node.ValueType = ValueType.EmptyObject;
             }
         }
 
@@ -457,6 +470,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ALIAS_ID();
                 Node.IdInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                if (COLON() != null) Node.ValueType = ValueType.EmptyObject;
             }
         }
 
@@ -508,6 +522,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ALIAS_ID();
                 Node.IdInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                if (COLON() != null) Node.ValueType = ValueType.EmptyObject;
             }
         }
 
@@ -549,6 +564,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ARGUMENT_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                if (COLON() != null) Node.ValueType = ValueType.EmptyObject;
             }
         }
 
@@ -599,6 +615,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ARGUMENT_ID();
                 Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                if (COLON() != null) Node.ValueType = ValueType.EmptyObject;
             }
         }
 

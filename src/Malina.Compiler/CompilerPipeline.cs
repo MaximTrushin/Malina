@@ -7,7 +7,7 @@ namespace Malina.Compiler
     {
         public List<ICompilerStep> Steps { get; private set; } = new List<ICompilerStep>();
 
-        virtual public void Run(CompilerContext context)
+        public virtual void Run(CompilerContext context)
         {
             foreach (ICompilerStep step in Steps)
             {

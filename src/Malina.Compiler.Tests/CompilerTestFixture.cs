@@ -12,7 +12,7 @@ namespace Malina.Compiler.Tests
     {
 
         [Test, RecordedTest]
-        public void AliasWithDefaultValueParameters()
+        public void AliasParameterWithDefaultValue()
         {
             PerformCompilerTest();
         }
@@ -111,7 +111,7 @@ namespace Malina.Compiler.Tests
 
 
         [Test, RecordedTest]
-        public void AliasWithDefaultBlockParameters()
+        public void AliasParameterWithDefaultBlock()
         {
             PerformCompilerTest();
         }

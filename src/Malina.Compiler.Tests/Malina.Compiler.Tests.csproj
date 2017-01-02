@@ -172,19 +172,19 @@
     <None Include="Scenarios\AliasWithArguments\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\AliasWithDefaultBlockParameters\ModuleWithAlias.mlx">
+    <None Include="Scenarios\AliasParameterWithDefaultBlock\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\AliasWithDefaultBlockParameters\ModuleWithAlias2.mlx">
+    <None Include="Scenarios\AliasParameterWithDefaultBlock\ModuleWithAlias2.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\AliasWithDefaultBlockParameters\ModuleWithDocument.mlx">
+    <None Include="Scenarios\AliasParameterWithDefaultBlock\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\AliasWithDefaultValueParameters\ModuleWithAlias.mlx">
+    <None Include="Scenarios\AliasParameterWithDefaultValue\ModuleWithAlias.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\AliasWithDefaultValueParameters\ModuleWithDocument.mlx">
+    <None Include="Scenarios\AliasParameterWithDefaultValue\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\AliasWithArguments\ModuleWithDocument.mlx">

@@ -477,7 +477,7 @@ namespace Malina.Parser
             ExitContext(context);
         }
 
-        public override void EnterHybrid_block_alias_stmt(MalinaParser.Hybrid_block_alias_stmtContext context)//todo: hybrid_block_argument_stmt and paramter
+        public override void EnterHybrid_block_alias_stmt(MalinaParser.Hybrid_block_alias_stmtContext context)
         {
             EnterContext(context);
         }

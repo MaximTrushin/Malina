@@ -264,12 +264,23 @@ namespace Malina.Parser
                         };
                 }
 
-                if (_input.La(-1) == '=')//If indent ends with == then include it
+                if (_input.La(-1) == '=')//If indent ends with == then include it because it was consumed by fragment OpenStringEol
                 {
                     _currentToken.StopIndex = this.CharIndex - 1;
                     _currentToken.StopLine = Line;
                     _currentToken.StopColumn = Column - 1;
                 }
+
+                //Indent before EOF and in WsaMode should end OS
+                if (_input.La(1) == -1 || InWsaMode)
+                {
+                    Emit(_currentToken);
+                    ExitInValueMode();
+                    //Emitting NEWLINE if not in WSA
+                    if (!InWsaMode)
+                        EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
+                }
+
                 _currentToken.Type = mlTokenType;
                 Skip();
                 EnterInOsMode();

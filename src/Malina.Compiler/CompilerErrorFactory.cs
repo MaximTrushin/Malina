@@ -144,10 +144,10 @@ namespace Malina.Compiler
             return Instantiate("MCE0020", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
         }
 
-        public static CompilerError AliasCantHaveDefaultArgument(Node node, string fileName)
-        {
-            return Instantiate("MCE0021", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
-        }
+        //public static CompilerError AliasCantHaveDefaultArgument(Node node, string fileName)
+        //{
+        //    return Instantiate("MCE0021", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
+        //}
 
         public static CompilerError ArgumentMustBeDefinedInAlias(Argument node, string fileName)
         {
@@ -162,6 +162,11 @@ namespace Malina.Compiler
         public static CompilerError UnexpectedArgument(Argument argument, string fileName)
         {
             return Instantiate("MCE0024", new LexicalInfo(fileName, argument.start.Line, argument.start.Column + 1, argument.start.Index));
+        }
+
+        public static CompilerError UnexpectedDefaultBlockArgument(Entity entity, string fileName)
+        {
+            return Instantiate("MCE0025", new LexicalInfo(fileName, entity.start.Line, entity.start.Column + 1, entity.start.Index));
         }
     }
 }

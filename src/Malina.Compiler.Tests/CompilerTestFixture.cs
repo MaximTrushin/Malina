@@ -264,7 +264,7 @@ namespace Malina.Compiler.Tests
         {
             var errorsExpected = new List<CompilerError>()
             {
-                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 9, 5,-1), "Alias can't have default argument along with other arguments."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 9, 5,-1), "Unexpected default block argument."),
             };
             PerformCompilerTest(errorsExpected);
         }
@@ -299,7 +299,17 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
-        
+
+        [Test]
+        public void AliasWithUnexpectedDefaultBlockParameter()
+        {
+            var errorsExpected = new List<CompilerError>()
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 6, 4,-1), "Unexpected default block argument."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
         [Test]
         public void AliasWithUnexpectedArgument()
         {

@@ -16,7 +16,7 @@ namespace_declaration_stmt	:	NAMESPACE_ID string_value newline;
 
 document_stmt	:	DOCUMENT_ID COLON ((block_inline newline) | ns_block | block);
 
-alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (COLON ((block_inline newline) | ns_block | block)));
+alias_def_stmt	:	ALIAS_DEF_ID ( (value newline) | (COLON ((block_inline? newline) | ns_block | block)));
 
 
 //BLOCKS

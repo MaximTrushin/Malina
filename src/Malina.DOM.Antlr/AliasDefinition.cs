@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 
@@ -13,14 +12,13 @@ namespace Malina.DOM.Antlr
 
         public Interval IdInterval { get; set; }
 
+        public bool HasDefaultBlockParameter { get; set; }
+
         public override string Name
         {
-            get
-            {
-                if (base.Name != null) return base.Name;
-                return CharStream.GetText(new Interval(IdInterval.a + 2, IdInterval.b));
+            get {
+                return base.Name != null ? base.Name : CharStream.GetText(new Interval(IdInterval.a + 2, IdInterval.b));
             }
-
             set
             {
                 base.Name = value;
@@ -41,7 +39,6 @@ namespace Malina.DOM.Antlr
 
         public Interval ValueInterval { get; set; }
 
-
         public int ValueIndent { get; set; }
 
         public override string Value
@@ -49,8 +46,7 @@ namespace Malina.DOM.Antlr
             get
             {
                 if (base.Value != null) return base.Value;
-                if (ValueType == ValueType.None) return null;
-                return Element.GetValueFromValueInterval(CharStream, ValueInterval, ValueIndent, ValueType);
+                return ValueType == ValueType.None ? null : Element.GetValueFromValueInterval(CharStream, ValueInterval, ValueIndent, ValueType);
             }
         }
 

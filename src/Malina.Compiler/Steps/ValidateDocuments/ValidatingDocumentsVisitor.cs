@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Malina.Compiler.Generator;
 using Malina.DOM;
 using Attribute = Malina.DOM.Attribute;
@@ -67,12 +66,6 @@ namespace Malina.Compiler.Steps
             CheckBlockIntegrity(node);
         }
 
-        public override void OnAlias(Alias alias)
-        {
-            CheckAliasIntegrity(alias);
-            base.OnAlias(alias);
-        }
-
         public override void OnArgument(Argument argument)
         {
             CheckArgumentIntegrity(argument);
@@ -83,17 +76,6 @@ namespace Malina.Compiler.Steps
         {
             if (! (argument.Parent is Alias))
                 _context.AddError(CompilerErrorFactory.ArgumentMustBeDefinedInAlias(argument, _currentModule.FileName));
-        }
-
-        private void CheckAliasIntegrity(Alias @alias)
-        {
-            if (alias.Arguments.Count > 0)
-            {
-                foreach (var entity in alias.Entities)
-                {
-                    _context.AddError(CompilerErrorFactory.AliasCantHaveDefaultArgument(entity, _currentModule.FileName));
-                }
-            }
         }
 
         private void CheckBlockIntegrity(Node node)

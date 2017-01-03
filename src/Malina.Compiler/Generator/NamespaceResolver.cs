@@ -28,7 +28,7 @@ namespace Malina.Compiler
         private List<NsInfo> ModuleMembersNsInfo => _moduleMembersNsInfo ?? (_moduleMembersNsInfo = new List<NsInfo>());
 
         //This method is called from ProcessAliasesAndNamespaces step after the all Nodes are visited.
-        public void ResolveAliasesAndDoChecks()
+        public void ResolveAliasesAndDoChecks()//todo: check if aliasDef has default param along with other parameters
         {
             foreach(var nsInfo in ModuleMembersNsInfo)
             {
@@ -57,6 +57,8 @@ namespace Malina.Compiler
             else
             {
                 ((AliasDefinition) _currentModuleMember).Parameters.Add(node);
+                if (node.Name == "_" && !node.IsValueNode)
+                    ((AliasDefinition) _currentModuleMember).HasDefaultBlockParameter = true;
             }
         }
 
@@ -179,7 +181,7 @@ namespace Malina.Compiler
             return ResolveAliasesInAliasDefinition(aliasDef);
         }
 
-        private void CheckAliasArguments(DOM.Alias alias, DOM.Antlr.AliasDefinition aliasDef, NsInfo documentNsInfo)//todo: check for unexpected argument
+        private void CheckAliasArguments(DOM.Alias alias, DOM.Antlr.AliasDefinition aliasDef, NsInfo documentNsInfo)
         {
             CheckCompatibilityWithParameters(alias, aliasDef, documentNsInfo);
             CheckForUnexpectedArguments(alias, aliasDef, documentNsInfo);
@@ -191,6 +193,12 @@ namespace Malina.Compiler
             {
                 if (aliasDef.Parameters.All(p => p.Name != argument.Name)) _context.AddError(CompilerErrorFactory.UnexpectedArgument(argument, documentNsInfo.ModuleMember.Module.FileName)); ;
             }
+
+            if (!aliasDef.HasDefaultBlockParameter && alias.Entities.Count > 0)
+            {
+                _context.AddError(CompilerErrorFactory.UnexpectedDefaultBlockArgument(alias.Entities[0],
+                            documentNsInfo.ModuleMember.Module.FileName));
+            } 
         }
 
         private void CheckCompatibilityWithParameters(Alias alias, AliasDefinition aliasDef, NsInfo documentNsInfo)

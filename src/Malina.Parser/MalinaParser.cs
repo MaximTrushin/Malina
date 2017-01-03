@@ -129,6 +129,7 @@ namespace Malina.Parser
                 this.SetNodeLocation();
                 var id = ALIAS_DEF_ID();
                 Node.IdInterval = new Interval( id.Symbol.StartIndex, id.Symbol.StopIndex);
+                if(value() == null && block_inline() == null && ns_block() == null && block() == null) Node.ValueType = ValueType.EmptyObject;
             }
         }
         #endregion

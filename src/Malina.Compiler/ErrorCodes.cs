@@ -27,6 +27,7 @@
         public const string MCE0022 = "Argument can be defined only in an alias' block.";
         public const string MCE0023 = "Default block argument is missing.";
         public const string MCE0024 = "Unexpected argument.";
+        public const string MCE0025 = "Unexpected default block argument.";
 
         public static string Format(string name, params object[] args)
         {

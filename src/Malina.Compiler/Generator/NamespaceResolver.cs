@@ -32,7 +32,9 @@ namespace Malina.Compiler
         {
             foreach(var nsInfo in ModuleMembersNsInfo)
             {
-                CheckDocument(nsInfo);
+                CheckModuleMember(nsInfo);
+
+
 
                 ResolveAliasesInModuleMember(nsInfo);
             }
@@ -67,13 +69,33 @@ namespace Malina.Compiler
             return ModuleMembersNsInfo.FirstOrDefault(n => n.ModuleMember == document);
         }
 
-        private void CheckDocument(NsInfo nsInfo)
+        private void CheckModuleMember(NsInfo nsInfo)
         {
-            var document = nsInfo.ModuleMember as DOM.Document;
-            if (document != null)
+            var document = nsInfo.ModuleMember as Document;
+
+            if (document == null)
             {
-                if (Path.GetExtension(document.Module.FileName) == ".mlx")
-                    CheckDocumentElement(document);
+                CheckAliasDef((AliasDefinition)nsInfo.ModuleMember);
+                return;
+            }
+
+            if (Path.GetExtension(document.Module.FileName) == ".mlx")
+                CheckDocumentElement(document);
+        }
+
+        private void CheckAliasDef(AliasDefinition aliasDef)
+        {
+            if (!aliasDef.HasDefaultBlockParameter) return;
+
+            var hasNonDefaultParameter = aliasDef.Parameters.Any(p => p.Name != "_");
+            if (!hasNonDefaultParameter) return;
+
+            foreach (var param in aliasDef.Parameters)
+            {
+                if (param.Name == "_")
+                {
+                    _context.AddError(CompilerErrorFactory.DefaultParameterMustBeOnly(param, aliasDef.Module.FileName));
+                }
             }
         }
 
@@ -452,8 +474,7 @@ namespace Malina.Compiler
             prefix = null;
             ns = null;
 
-            if (node.NsPrefix == null) return;//No prefix no cry
-
+            if (node.NsPrefix == null) return;
 
             //Getting namespace info for the generated document.
             var targetNsInfo = ModuleMembersNsInfo.First(n => n.ModuleMember == document);

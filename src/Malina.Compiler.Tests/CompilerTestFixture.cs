@@ -1,7 +1,5 @@
 ﻿using Malina.DOM;
-using Malina.Parser.Tests;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using static Malina.Compiler.Tests.TestUtils;
 
@@ -10,6 +8,32 @@ namespace Malina.Compiler.Tests
     [TestFixture]
     public class CompilerTestFixture
     {
+
+        [Test]
+        public void AliasDefWithDefaultAndBlockParameter()
+        {
+            var errorsExpected = new List<CompilerError>
+            {
+                new CompilerError(new LexicalInfo("ModuleWithAliasDef.mlx", 3, 3,-1), "Default parameter must be the only parameter."),
+                new CompilerError(new LexicalInfo("ModuleWithAliasDef.mlx", 9, 3,-1), "Default parameter must be the only parameter."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+        [Test]
+        public void AliasHasCircularReference()
+        {
+            var errorsExpected = new List<CompilerError>
+            {
+                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 2,1,-1), "Alias Definition 'Address1' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 9,1,-1), "Alias Definition 'Address3' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 16,1,-1), "Alias Definition 'Address4' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 2,1,-1), "Alias Definition 'Address2' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 9,1,-1), "Alias Definition 'Address5' has circular reference."),
+                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 17,1,-1), "Alias Definition 'Address6' has circular reference.")
+            };
+            PerformCompilerTest(errorsExpected);
+        }
 
         [Test, RecordedTest]
         public void AliasParameterWithDefaultValue()
@@ -32,7 +56,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void MissingAlias()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 7,3,-1), "Alias 'Address.UK.Cambridge' is not defined.")
             };
@@ -42,7 +66,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void NamespaceIsNotDefined()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 3,1,-1), "Namespace prefix 'ipo' is not defined."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4,2,-1), "Namespace prefix 'ipo2' is not defined.")
@@ -54,7 +78,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void DuplicateDocumentName()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 2,1,-1), "Duplicate document name - 'PurchaseOrder'."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument2.mlx", 2,1,-1), "Duplicate document name - 'PurchaseOrder'.")
@@ -71,30 +95,13 @@ namespace Malina.Compiler.Tests
         [Test]
         public void DuplicateAliasDefinition()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithAliasDef1.mlx", 1,1,-1), "Duplicate alias definition name - 'Address'."),
                 new CompilerError(new LexicalInfo("ModuleWithAliasDef2.mlx", 2,1,-1), "Duplicate alias definition name - 'Address'.")
             };
             PerformCompilerTest(errorsExpected);
         }
-
-        [Test]
-        public void AliasHasCircularReference()
-        {
-            var errorsExpected = new List<CompilerError>()
-            {
-                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 2,1,-1), "Alias Definition 'Address1' has circular reference."),
-                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 9,1,-1), "Alias Definition 'Address3' has circular reference."),
-                new CompilerError(new LexicalInfo("ModuleWithAlias1.mlx", 16,1,-1), "Alias Definition 'Address4' has circular reference."),
-                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 2,1,-1), "Alias Definition 'Address2' has circular reference."),
-                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 9,1,-1), "Alias Definition 'Address5' has circular reference."),
-                new CompilerError(new LexicalInfo("ModuleWithAlias2.mlx", 17,1,-1), "Alias Definition 'Address6' has circular reference.")
-            };
-            PerformCompilerTest(errorsExpected);
-        }
-
-
         
         [Test, RecordedTest]
         public void AliasInsideSqs()
@@ -119,7 +126,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void ExtraRootElementInDocument()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 2, 1,-1), "Document 'PurchaseOrder' must have only one root element."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument1.mlx", 12, 1,-1), "Document 'PurchaseOrder2' must have only one root element."),
@@ -158,7 +165,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void JsonArrayItemInObject()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("JsonArray.mlj", 4, 3,-1), "Object property is expected."),
                 new CompilerError(new LexicalInfo("JsonArray.mlj", 6, 3,-1), "Object property is expected."),
@@ -201,7 +208,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void JsonPropertyInArray()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("JsonArray.mlj", 6, 3,-1), "Array item is expected."),
                 new CompilerError(new LexicalInfo("JsonArray.mlj", 7, 3,-1), "Array item is expected."),
@@ -222,7 +229,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void ParameterInDocument()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 7, 4,-1), "Parameters can't be declared in documents."),
             };
@@ -232,7 +239,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void SchemaValidation()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 1,-1), "XML validation error - 'The element 'purchaseOrder' in namespace 'http://www.example.com/myipo' has incomplete content. List of possible elements expected: 'comment' in namespace 'http://www.example.com/myipo' as well as 'Items'.'."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 2,-1), "XML validation error - 'The element 'shipTo' has incomplete content. List of possible elements expected: 'name, street' in namespace 'http://www.example.com/myipo'.'."),
@@ -246,7 +253,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void SchemaValidationXsdMissing()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ipo.xsd", 15, 5,-1), "XML validation error - 'Type 'http://www.example.com/myipo:Address' is not declared.'."),
             };
@@ -262,7 +269,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void AliasWithIncorrectBlock()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 9, 5,-1), "Unexpected default block argument."),
             };
@@ -272,7 +279,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void AliasWithIncorrectType()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 4,-1), "Can not use value alias in the block."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 12, 11,-1), "Can not use block alias as value."),
@@ -283,7 +290,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void AliasWithMissedArgument()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 4,-1), "Argument 'street' is missing."),
             };
@@ -293,7 +300,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void AliasWithMissedDefaultBlockParameter()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 2, 2,-1), "Default block argument is missing."),
             };
@@ -303,7 +310,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void AliasWithUnexpectedDefaultBlockParameter()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 6, 4,-1), "Unexpected default block argument."),
             };
@@ -313,7 +320,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void AliasWithUnexpectedArgument()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 2, 20,-1), "Unexpected argument."),
             };
@@ -323,7 +330,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void ArgumentInTheElementBlock()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 3, 3,-1), "Argument can be defined only in an alias' block."),
             };
@@ -351,7 +358,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void AliasWithDuplicateArguments()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 6, 5,-1), "Duplicate argument name - 'name'."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 7, 5,-1), "Duplicate argument name - 'name'."),
@@ -362,7 +369,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void AliasWithIncorrectArgumentType()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 5,-1), "Value argument is expected."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 7, 5,-1), "Block argument is expected."),
@@ -386,7 +393,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void UndeclaredNamespace()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 2, 1,-1), "Namespace prefix 'ipo' is not defined."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 1,-1), "Namespace prefix 'ipo2' is not defined."),
@@ -397,7 +404,7 @@ namespace Malina.Compiler.Tests
         [Test]
         public void UnresolvedAliasInsideSqs()
         {
-            var errorsExpected = new List<CompilerError>()
+            var errorsExpected = new List<CompilerError>
             {
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 7,-1), "Alias 'bla' is not defined."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 15,-1), "Alias 'user.first' is not defined."),
@@ -405,6 +412,5 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
-
     }
 }

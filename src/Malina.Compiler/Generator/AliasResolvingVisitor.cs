@@ -37,19 +37,26 @@ namespace Malina.Compiler.Generator
         }
 
 
-        protected string ResolveNodeValue(DOM.Antlr.IValueNode node)
+        protected string ResolveNodeValue(DOM.Antlr.IValueNode node, out ValueType valueType)
         {
-            if (((IValueNode)node).ValueType != ValueType.SingleQuotedString)
-                return ((IValueNode)node).Value;
-
+            if (((IValueNode) node).ValueType != ValueType.SingleQuotedString)
+            {
+                valueType = ((IValueNode) node).ValueType;
+                return ((IValueNode) node).Value;
+            }
             var sb = new StringBuilder();
             foreach (var item in node.InterpolationItems)
             {
                 var alias = item as Alias;
                 if (alias != null)
                 {
-                    ValueType valueType;
                     sb.Append(ResolveValueAlias(alias, out valueType));
+                    continue;
+                }
+                var param = item as Parameter;
+                if (param != null)
+                {
+                    sb.Append(ResolveValueParameter(param, out valueType));
                     continue;
                 }
                 var token = item as CommonToken;
@@ -61,6 +68,8 @@ namespace Malina.Compiler.Generator
                 else
                     sb.Append(token.Type == MalinaLexer.SQS_EOL ? ResolveSqsEol(token, node.ValueIndent) : token.Text);
             }
+
+            valueType = ValueType.SingleQuotedString;
             return sb.ToString();
         }
 
@@ -125,11 +134,11 @@ namespace Malina.Compiler.Generator
         protected string ResolveValueAlias(Alias alias, out ValueType valueType)
         {
             var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
-            valueType = aliasDef.ValueType;
-            if (aliasDef.ObjectValue == null) return aliasDef.Value;
 
             AliasContext.Push(new AliasContext { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
-            var result = ResolveObjectValue(aliasDef.ObjectValue, out valueType);
+
+            var result = aliasDef.ObjectValue == null ? ResolveNodeValue(aliasDef, out valueType) : ResolveObjectValue(aliasDef.ObjectValue, out valueType);
+
             AliasContext.Pop();
 
             return result;
@@ -166,9 +175,9 @@ namespace Malina.Compiler.Generator
                 OnValue(ResolveValueAlias((Alias)value, out valueType), valueType);
                 return true;
             }
-            if (node.Value != null)
+            if (node.IsValueNode)
             {
-                OnValue(ResolveNodeValue((DOM.Antlr.IValueNode)node), node.ValueType);
+                OnValue(ResolveNodeValue((DOM.Antlr.IValueNode)node, out valueType), node.ValueType);
                 return true;
             }
 
@@ -182,7 +191,19 @@ namespace Malina.Compiler.Generator
         protected string ResolveValueParameter(Parameter parameter, out ValueType valueType)
         {
             var aliasContext = AliasContext.Peek();
-            var argument = aliasContext?.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
+
+            if (parameter.Name == "_")
+            {
+                //Resolving default value parameter
+                if (aliasContext.Alias.ObjectValue != null)
+                {
+                    return ResolveObjectValue(aliasContext.Alias.ObjectValue, out valueType);
+                }
+                return ResolveNodeValue((DOM.Antlr.IValueNode) aliasContext.Alias, out valueType);
+            }
+
+
+            var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
             if (argument != null)
             {
                 if (argument.ObjectValue != null)

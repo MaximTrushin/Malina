@@ -86,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scenarios\AliasWithDefaultValueParameter.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\HybridBlockParameterStmt.mlx" />
     <None Include="Scenarios\HybridBlockArgumentStmt.mlx" />
     <None Include="Scenarios\HybridBlockAliasStmt.mlx" />

@@ -738,17 +738,31 @@ namespace Malina.Parser
 
                     if (token.Type == MalinaLexer.INTERPOLATION)
                     {
-                        var aliasName = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
-
-                        node.InterpolationItems.Add(
-                            new Alias
-                            {
-                                Name = aliasName,
-                                start = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
-                                end = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
-                                ValueType = ValueType.Empty
-                            }
-                        );
+                        var tokenText = token.Text;
+                        if (tokenText.StartsWith("$"))
+                        {
+                            node.InterpolationItems.Add(
+                                new Alias
+                                {
+                                    Name = tokenText.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' '),
+                                    start = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
+                                    end = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
+                                    ValueType = ValueType.Empty
+                                }
+                            );
+                        }
+                        else
+                        {
+                            node.InterpolationItems.Add(
+                                new Parameter
+                                {
+                                    Name = tokenText.TrimStart('%', '(', '\t', ' ').TrimEnd(')', '\t', ' '),
+                                    start = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
+                                    end = new SourceLocation(token.Line, token.Column + 1, token.StartIndex),
+                                    ValueType = ValueType.Empty
+                                }
+                            );
+                        }
                     }
                     else
                     {

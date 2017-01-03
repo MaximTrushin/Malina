@@ -78,8 +78,8 @@ mode IN_SQS;
 	SQS_JSON_NULL		:	'null';
 	SQS_JSON_NUMBER		:	('-'? Int '.' [0-9] + Exp? | '-'? Int Exp | '-'? Int);
 	SQS_ESCAPE			:	EscSeq | '$$' | '\'\'' | SqsEscapeCode;
-	INTERPOLATION		:	'$' (Name | ('(' [ \t]* Name [ \t]* ')' ) )?;
-	SQS_VALUE			:	(~[$\'\r\n\\])+ {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
+	INTERPOLATION		:	('$' | '%') (Name | ('(' [ \t]* Name [ \t]* ')' ) )?;
+	SQS_VALUE			:	(~[$%\'\r\n\\])+ {EndSqsIfEofOrWsa();}; //Non-gready rule gives priority to other interpolation tokens
 	SQS_EOL				:	(Eol Spaces)+ {SqIndentDedent();}; //Ends SQS Line or whole SQS if dedent or EOF.
 	SQS_END				:	'\'' -> popMode, popMode;
 

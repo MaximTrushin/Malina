@@ -124,10 +124,10 @@ namespace Malina.Compiler
             }
         }
 
-        public DOM.AliasDefinition GetAliasDefinition(string name)
+        public AliasDefinition GetAliasDefinition(string name)
         {
             NsInfo resultInfo = ModuleMembersNsInfo.FirstOrDefault(a => (a.ModuleMember is DOM.AliasDefinition) && a.ModuleMember.Name == name);
-            return (DOM.AliasDefinition) resultInfo?.ModuleMember;
+            return (AliasDefinition) resultInfo?.ModuleMember;
         }
 
         private int CalcNumOfRootElements(DOM.Alias alias, List<DOM.AliasDefinition> aliasList)

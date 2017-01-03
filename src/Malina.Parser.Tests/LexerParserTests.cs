@@ -77,6 +77,12 @@ namespace Malina.Parser.Tests
         }
 
         [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
+        public void AliasWithDefaultValueParameter()
+        {
+            PerformTest();
+        }
+
+        [Test, LexerRecorded, ParseTreeRecorded, DomRecorded]
         public void AliasWithIncorrectBlock()
         {
             PerformTest();

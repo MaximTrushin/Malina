@@ -59,6 +59,9 @@
     <None Include="Scenarios\AliasDefWithDefaultAndBlockParameter\ModuleWithAliasDef.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\AliasWithDefaultValueParameter\Module.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\AliasWithUnexpectedDefaultBlockParameter\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

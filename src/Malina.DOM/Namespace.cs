@@ -10,6 +10,10 @@ namespace Malina.DOM
         private ValueType _valueType;
 
         public bool IsValueNode => true;
+        public bool HasValue()
+        {
+            return ObjectValue != null || Value != null;
+        }
 
         public object ObjectValue
         {

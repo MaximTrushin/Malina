@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Malina.Parser;
 using Antlr4.Runtime.Misc;
+using Malina.DOM.Antlr;
 using Alias = Malina.DOM.Antlr.Alias;
 using IValueNode = Malina.DOM.Antlr.IValueNode;
 
@@ -57,19 +58,48 @@ namespace Malina.Compiler.Steps
         {
             base.ExitEveryRule(context);
 
-            if (context is INodeContext<DOM.Antlr.Element>) _context.NamespaceResolver.ProcessNsPrefix(((INodeContext<DOM.Antlr.Element>) context).Node);
-            else if (context is INodeContext<DOM.Antlr.Attribute>) _context.NamespaceResolver.ProcessNsPrefix(((INodeContext<DOM.Antlr.Attribute>) context).Node);
-            else if (context is INodeContext<DOM.Antlr.Alias>) _context.NamespaceResolver.ProcessAlias(((INodeContext<DOM.Antlr.Alias>) context).Node);
-            else if (context is INodeContext<DOM.Antlr.Parameter>) _context.NamespaceResolver.ProcessParameter(((INodeContext<DOM.Antlr.Parameter>) context).Node);
+            var elementContext = context as INodeContext<Element>;
+            if (elementContext != null)
+            {
+                _context.NamespaceResolver.ProcessNsPrefix(elementContext.Node);
+                return;
+            }
+
+            var attributeContext = context as INodeContext<Attribute>;
+            if (attributeContext != null)
+            {
+                _context.NamespaceResolver.ProcessNsPrefix(attributeContext.Node);
+                return;
+            }
+
+            var aliasContext = context as INodeContext<Alias>;
+            if (aliasContext != null)
+            {
+                _context.NamespaceResolver.ProcessAlias(aliasContext.Node);
+                return;
+            }
+
+            var parameterContext = context as INodeContext<Parameter>;
+            if (parameterContext != null)
+            {
+                _context.NamespaceResolver.ProcessParameter(parameterContext.Node);
+                return;
+            }
         }
 
         public override void ExitString_value_inline(MalinaParser.String_value_inlineContext context)
         {
             base.ExitString_value_inline(context);
-            SendInterpolationAliasesToNameresolver();
+            SendInterpolationAliasesAndParametersToNameresolver();
         }
 
-        private void SendInterpolationAliasesToNameresolver()
+        public override void ExitString_value_ml(MalinaParser.String_value_mlContext context)
+        {
+            base.ExitString_value_ml(context);
+            SendInterpolationAliasesAndParametersToNameresolver();
+        }
+
+        private void SendInterpolationAliasesAndParametersToNameresolver()
         {
             var parent = (IValueNode)_nodeStack.Peek();
             if (parent?.InterpolationItems == null) return;
@@ -77,15 +107,21 @@ namespace Malina.Compiler.Steps
             {
                 var alias = node as Alias;
                 if (alias != null)
+                {
                     _context.NamespaceResolver.AddAlias(alias);
+                    continue;
+                }
+
+                var param = node as DOM.Parameter;
+                if (param != null)
+                {
+                    _context.NamespaceResolver.ProcessParameter(param);
+                    continue;
+                }
+
             }
         }
 
-        public override void ExitString_value_ml(MalinaParser.String_value_mlContext context)
-        {
-            base.ExitString_value_ml(context);
-            SendInterpolationAliasesToNameresolver();
-        }
 
         protected override void EnterContext<T>(INodeContext<T> context, bool valueNode = false)
         {

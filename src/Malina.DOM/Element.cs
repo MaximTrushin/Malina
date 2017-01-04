@@ -98,6 +98,11 @@ namespace Malina.DOM
         }
 
         public virtual bool IsValueNode => _valueType != ValueType.None && _valueType != ValueType.EmptyObject;
+
+        public virtual bool HasValue()
+        {
+            return ObjectValue != null || Value != null;
+        }
     }
 
 

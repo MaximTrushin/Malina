@@ -6,7 +6,7 @@ namespace Malina.DOM.Antlr
 {
     public class AliasDefinition : DOM.AliasDefinition, IAntlrCharStreamConsumer, IValueNode
     {
-        private NodeCollection<Parameter> _parameters;
+        private NodeCollection<DOM.Parameter> _parameters;
 
         public ICharStream CharStream { get; set; }
 
@@ -25,9 +25,9 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public NodeCollection<Parameter> Parameters
+        public NodeCollection<DOM.Parameter> Parameters
         {
-            get { return _parameters ?? (_parameters = new NodeCollection<Parameter>(this)); }
+            get { return _parameters ?? (_parameters = new NodeCollection<DOM.Parameter>(this)); }
             set
             {
                 if (_parameters != null && value != _parameters)

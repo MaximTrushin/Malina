@@ -50,7 +50,7 @@ namespace Malina.Compiler
             }
         }
 
-        internal void ProcessParameter(DOM.Antlr.Parameter node)
+        internal void ProcessParameter(Parameter node)
         {
             if(_currentModuleMember is Document)
             {
@@ -229,13 +229,28 @@ namespace Malina.Compiler
             {
                 if (parameter.Name == "_") //Default parameter
                 {
-                    if (alias.Entities.Count == 0 && alias.ValueType != ValueType.EmptyObject)
-                        _context.AddError(CompilerErrorFactory.DefaultArgumentIsMissing(alias,
-                            documentNsInfo.ModuleMember.Module.FileName));
+                    if (!parameter.IsValueNode)
+                    {
+                        if (alias.Entities.Count == 0 && alias.ValueType != ValueType.EmptyObject)
+                            _context.AddError(CompilerErrorFactory.DefaultBlockArgumentIsMissing(alias,
+                                documentNsInfo.ModuleMember.Module.FileName));
+                    }
+                    else
+                    {
+                        if (parameter.HasValue()) continue; //if parameter has default value then skip check
+
+                        if (!alias.HasValue())
+                        {
+                            _context.AddError(CompilerErrorFactory.DefaultValueArgumentIsMissing(alias,
+                                documentNsInfo.ModuleMember.Module.FileName));
+                        }
+                    }
+
 
                     continue;
                 }
 
+                //Non default parameter
                 var argument = alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
                 if (argument == null)
                 {

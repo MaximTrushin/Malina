@@ -71,6 +71,10 @@ namespace Malina.DOM
         }
 
         public bool IsValueNode => true;
+        public bool HasValue()
+        {
+            return ObjectValue != null || Value != null;
+        }
     }
 
 

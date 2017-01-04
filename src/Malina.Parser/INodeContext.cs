@@ -51,7 +51,6 @@ namespace Malina.Parser
                 var csc = node as IAntlrCharStreamConsumer;
                 if (csc != null)
                     csc.CharStream = ((ParserRuleContext) ctx).start.InputStream;
-
             }
             return ctx.Node;
         }

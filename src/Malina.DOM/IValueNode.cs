@@ -6,6 +6,7 @@
         object ObjectValue { get; set; }
         ValueType ValueType { get; set; }
         bool IsValueNode { get; }
+        bool HasValue();
 
     }
 }

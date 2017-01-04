@@ -308,6 +308,16 @@ namespace Malina.Compiler.Tests
         }
 
         [Test]
+        public void AliasWithMissedDefaultValueParameter()
+        {
+            var errorsExpected = new List<CompilerError>
+            {
+                new CompilerError(new LexicalInfo("Module.mlx", 5, 13,-1), "Default value argument is missing."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+        [Test]
         public void AliasWithUnexpectedDefaultBlockParameter()
         {
             var errorsExpected = new List<CompilerError>
@@ -415,6 +425,17 @@ namespace Malina.Compiler.Tests
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 7,-1), "Alias 'bla' is not defined."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 15,-1), "Alias 'user.first' is not defined."),
                 new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 30,-1), "Alias 'user.last' is not defined."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+        
+        [Test]
+        public void ValueAliasWithMissedArgument()
+        {
+            var errorsExpected = new List<CompilerError>
+            {
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 4, 14,-1), "Argument 'street' is missing."),
+                new CompilerError(new LexicalInfo("ModuleWithDocument.mlx", 5, 11,-1), "Argument 'name' is missing."),
             };
             PerformCompilerTest(errorsExpected);
         }

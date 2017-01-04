@@ -21,6 +21,16 @@ namespace Malina.Compiler.Tests
         }
 
         [Test]
+        public void AliasDefWithDefaultAndValueParameter()
+        {
+            var errorsExpected = new List<CompilerError>
+            {
+                new CompilerError(new LexicalInfo("Module.mlx", 1, 31,-1), "Default parameter must be the only parameter."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+        [Test]
         public void AliasHasCircularReference()
         {
             var errorsExpected = new List<CompilerError>

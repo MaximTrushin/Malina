@@ -28,7 +28,7 @@ namespace Malina.Compiler
         private List<NsInfo> ModuleMembersNsInfo => _moduleMembersNsInfo ?? (_moduleMembersNsInfo = new List<NsInfo>());
 
         //This method is called from ProcessAliasesAndNamespaces step after the all Nodes are visited.
-        public void ResolveAliasesAndDoChecks()//todo: check if aliasDef has default param along with other parameters
+        public void ResolveAliasesAndDoChecks()
         {
             foreach(var nsInfo in ModuleMembersNsInfo)
             {
@@ -90,7 +90,7 @@ namespace Malina.Compiler
 
         private void CheckAliasDef(AliasDefinition aliasDef)
         {
-            if (!aliasDef.HasDefaultBlockParameter) return;
+            if (!aliasDef.HasDefaultBlockParameter && !aliasDef.HasDefaultValueParameter) return;
 
             var hasNonDefaultParameter = aliasDef.Parameters.Any(p => p.Name != "_");
             if (!hasNonDefaultParameter) return;
@@ -218,7 +218,7 @@ namespace Malina.Compiler
         {
             foreach (var argument in alias.Arguments)
             {
-                if (aliasDef.Parameters.All(p => p.Name != argument.Name)) _context.AddError(CompilerErrorFactory.UnexpectedArgument(argument, documentNsInfo.ModuleMember.Module.FileName)); ;
+                if (aliasDef.Parameters.All(p => p.Name != argument.Name)) _context.AddError(CompilerErrorFactory.UnexpectedArgument(argument, documentNsInfo.ModuleMember.Module.FileName));
             }
 
             if (!aliasDef.HasDefaultBlockParameter && alias.Entities.Count > 0)
@@ -287,7 +287,7 @@ namespace Malina.Compiler
 
         private DOM.Antlr.AliasDefinition LookupAliasDef(DOM.Alias alias)
         {
-            var result = (DOM.Antlr.AliasDefinition)_context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            var result = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
             return result;
         }
 

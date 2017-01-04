@@ -13,6 +13,7 @@ namespace Malina.DOM.Antlr
         public Interval IdInterval { get; set; }
 
         public bool HasDefaultBlockParameter { get; set; }
+        public bool HasDefaultValueParameter { get; set; }
 
         public override string Name
         {
@@ -52,5 +53,6 @@ namespace Malina.DOM.Antlr
 
         private List<object> _interpolationItems;
         public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
+        
     }
 }

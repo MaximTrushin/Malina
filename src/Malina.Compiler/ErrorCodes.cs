@@ -29,6 +29,7 @@
         public const string MCE0024 = "Unexpected argument.";
         public const string MCE0025 = "Unexpected default block argument.";
         public const string MCE0026 = "Default value argument is missing.";
+        public const string MCE0027 = "Unexpected default value argument.";
 
         public static string Format(string name, params object[] args)
         {

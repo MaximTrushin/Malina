@@ -328,6 +328,16 @@ namespace Malina.Compiler.Tests
         }
 
         [Test]
+        public void AliasWithUnexpectedDefaultValueParameter()
+        {
+            var errorsExpected = new List<CompilerError>
+            {
+                new CompilerError(new LexicalInfo("Module.mlx", 5, 13,-1), "Unexpected default value argument."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
+
+        [Test]
         public void AliasWithUnexpectedArgument()
         {
             var errorsExpected = new List<CompilerError>

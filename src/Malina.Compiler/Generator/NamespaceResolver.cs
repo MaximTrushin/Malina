@@ -59,8 +59,13 @@ namespace Malina.Compiler
             else
             {
                 ((AliasDefinition) _currentModuleMember).Parameters.Add(node);
-                if (node.Name == "_" && !node.IsValueNode)
-                    ((AliasDefinition) _currentModuleMember).HasDefaultBlockParameter = true;
+                if (node.Name == "_")
+                {
+                    if (!node.IsValueNode)
+                        ((AliasDefinition) _currentModuleMember).HasDefaultBlockParameter = true;
+                    else
+                        ((AliasDefinition)_currentModuleMember).HasDefaultValueParameter = true;
+                }
             }
         }
 
@@ -220,7 +225,13 @@ namespace Malina.Compiler
             {
                 _context.AddError(CompilerErrorFactory.UnexpectedDefaultBlockArgument(alias.Entities[0],
                             documentNsInfo.ModuleMember.Module.FileName));
-            } 
+            }
+
+            if (!aliasDef.HasDefaultValueParameter && alias.HasValue())
+            {
+                _context.AddError(CompilerErrorFactory.UnexpectedDefaultValueArgument(alias,
+                            documentNsInfo.ModuleMember.Module.FileName));
+            }
         }
 
         private void CheckCompatibilityWithParameters(Alias alias, AliasDefinition aliasDef, NsInfo documentNsInfo)

@@ -68,6 +68,15 @@
     <None Include="Scenarios\AliasWithUnexpectedDefaultValueParameter\Module.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\NestedAliasesWithParameters\Module.mlj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\NestedAliasesWithParameters\Module.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\NestedAliasesWithParameters\ModuleWithAlias1.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\ValueAliasWithMissedArgument\ModuleWithDocument.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

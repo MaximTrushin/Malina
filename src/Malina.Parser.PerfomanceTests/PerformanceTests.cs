@@ -10,7 +10,7 @@ using Malina.Compiler.Pipelines;
 using System.IO;
 using Malina.Compiler.IO;
 
-namespace Malina.Parser.PerfomanceTests
+namespace Malina.Parser.PerformanceTests
 {
     [TestFixture]
     public class PerformanceTests

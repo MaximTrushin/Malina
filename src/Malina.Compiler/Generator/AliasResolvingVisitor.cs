@@ -189,7 +189,7 @@ namespace Malina.Compiler.Generator
 
         protected string ResolveValueParameter(Parameter parameter, out ValueType valueType)
         {
-            var aliasContext = AliasContext.Peek();
+            var aliasContext = GetAliasContextForParameter(parameter);
 
             if (parameter.Name == "_")
             {
@@ -252,9 +252,19 @@ namespace Malina.Compiler.Generator
 
         private void ResolveAttributesInParameter(Parameter parameter)
         {
-            var aliasContext = AliasContext.Peek();
+            var aliasContext = GetAliasContextForParameter(parameter);
             var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
             ResolveAttributes(argument != null ? argument.Entities : parameter.Entities);
+        }
+
+        private AliasContext GetAliasContextForParameter(Parameter parameter)
+        {
+            foreach (var context in _aliasContext)
+            {
+                if (context == null) return null;
+                if (context.AliasDefinition == parameter.Parent) return context;
+            }
+            return null;
         }
 
         private void ResolveAttributesInAlias(Alias alias)
@@ -328,7 +338,7 @@ namespace Malina.Compiler.Generator
 
         public override void OnParameter(Parameter parameter)
         {
-            var aliasContext = AliasContext.Peek();
+            var aliasContext = GetAliasContextForParameter(parameter);
 
             if (parameter.Name == "_") //Default parameter. Value is passed in the body of the alias
             {

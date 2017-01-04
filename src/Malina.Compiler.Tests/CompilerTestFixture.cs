@@ -63,6 +63,12 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest();
         }
 
+        [Test, RecordedTest]
+        public void NestedAliasesWithParameters()
+        {
+            PerformCompilerTest();
+        }
+        
         [Test]
         public void MissingAlias()
         {

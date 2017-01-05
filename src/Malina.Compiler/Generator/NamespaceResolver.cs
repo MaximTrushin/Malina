@@ -14,12 +14,12 @@ namespace Malina.Compiler
         private ModuleMember _currentModuleMember;
         private Module _currentModule;
         private readonly CompilerContext _context;
-        private readonly Stack<NsInfo> _aliasStack;
+        private readonly Stack<NsInfo> _aliasDefStack;
 
         public NamespaceResolver(CompilerContext context)
         {
             _context = context;
-            _aliasStack = new Stack<NsInfo>();
+            _aliasDefStack = new Stack<NsInfo>();
         }
 
         /// <summary>
@@ -33,8 +33,6 @@ namespace Malina.Compiler
             foreach(var nsInfo in ModuleMembersNsInfo)
             {
                 CheckModuleMember(nsInfo);
-
-
 
                 ResolveAliasesInModuleMember(nsInfo);
             }
@@ -115,7 +113,7 @@ namespace Malina.Compiler
             {
                 if (entity is DOM.Element) rootElementCount++;
 
-                if (entity is DOM.Alias) rootElementCount += CalcNumOfRootElements(entity as DOM.Alias, null);
+                if (entity is DOM.Antlr.Alias) rootElementCount += CalcNumOfRootElements(entity as DOM.Antlr.Alias, null);
 
                 if (rootElementCount > 1)
                 {
@@ -135,7 +133,7 @@ namespace Malina.Compiler
             return (AliasDefinition) resultInfo?.ModuleMember;
         }
 
-        private int CalcNumOfRootElements(DOM.Alias alias, List<DOM.AliasDefinition> aliasList)
+        private int CalcNumOfRootElements(DOM.Antlr.Alias alias, List<DOM.AliasDefinition> aliasList)
         {
             int result = 0;
             var aliasDef = LookupAliasDef(alias);
@@ -151,7 +149,8 @@ namespace Malina.Compiler
             foreach (var entity in aliasDef.Entities)
             {
                 if (entity is DOM.Element) result++;
-                if (entity is DOM.Alias) result += CalcNumOfRootElements(entity as DOM.Alias, aliasList);
+                var aliasEntity = entity as DOM.Antlr.Alias;
+                if (aliasEntity != null) result += CalcNumOfRootElements(aliasEntity, aliasList);
             }
 
             return result;
@@ -183,7 +182,7 @@ namespace Malina.Compiler
             return name;
         }
 
-        private NsInfo ResolveAliasInModuleMember(DOM.Alias alias, NsInfo memberNsInfo)
+        private NsInfo ResolveAliasInModuleMember(DOM.Antlr.Alias alias, NsInfo memberNsInfo)
         {
             //Finding AliasDef
             var aliasDef = LookupAliasDef(alias);
@@ -285,9 +284,14 @@ namespace Malina.Compiler
             }
         }
 
-        private DOM.Antlr.AliasDefinition LookupAliasDef(DOM.Alias alias)
+        private DOM.Antlr.AliasDefinition LookupAliasDef(DOM.Antlr.Alias alias)
         {
+            if (alias.AliasDefinition != null)
+                return alias.AliasDefinition == AliasDefinition.Undefined ? null : alias.AliasDefinition;
+
             var result = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+
+            alias.AliasDefinition = result ?? AliasDefinition.Undefined;
             return result;
         }
 
@@ -305,18 +309,19 @@ namespace Malina.Compiler
         {
             //Check if Alias is already being resolved (circular reference)
 
-            if (_aliasStack.Any(n => n == aliasDefNsInfo))
+            if (_aliasDefStack.Any(n => n == aliasDefNsInfo))
             {
                 //Report Error
-                foreach (var info in _aliasStack)
+                foreach (var info in _aliasDefStack)
                 {
                     _context.AddError(CompilerErrorFactory.AliasDefHasCircularReference(info));
+                    ((DOM.Antlr.AliasDefinition) info.ModuleMember).HasCircularReference = true;
                     if (info == aliasDefNsInfo) break;
                 }                
                 return aliasDefNsInfo;
             }
 
-            _aliasStack.Push(aliasDefNsInfo);
+            _aliasDefStack.Push(aliasDefNsInfo);
 
             foreach (var alias in aliasDefNsInfo.Aliases)
             {
@@ -325,7 +330,7 @@ namespace Malina.Compiler
                 MergeNsInfo(aliasDefNsInfo, aliasNsInfo);
             }
 
-            _aliasStack.Pop();
+            _aliasDefStack.Pop();
 
             aliasDefNsInfo.AliasesResolved = true;
 

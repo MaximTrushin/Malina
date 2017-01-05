@@ -12,8 +12,11 @@ namespace Malina.DOM.Antlr
 
         public Interval IdInterval { get; set; }
 
+        public static AliasDefinition Undefined = new AliasDefinition(); //Used to if Alias has no corresponding Alias Definition.
+
         public bool HasDefaultBlockParameter { get; set; }
         public bool HasDefaultValueParameter { get; set; }
+        public bool HasCircularReference { get; set; }
 
         public override string Name
         {

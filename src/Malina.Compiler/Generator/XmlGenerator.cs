@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Xml;
 using Antlr4.Runtime;
 using Malina.DOM;
-using Malina.Parser;
-using Attribute = Malina.DOM.Attribute;
 using ValueType = Malina.DOM.ValueType;
 
 namespace Malina.Compiler.Generator

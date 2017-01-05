@@ -20,6 +20,8 @@ namespace Malina.DOM.Antlr
             }
         }
 
+        public AliasDefinition AliasDefinition { get; set; }
+
         public Interval IdInterval
         {
             set
@@ -68,5 +70,7 @@ namespace Malina.DOM.Antlr
 
         private List<object> _interpolationItems;
         public List<object> InterpolationItems => _interpolationItems ?? (_interpolationItems = new List<object>());
+
+        
     }
 }

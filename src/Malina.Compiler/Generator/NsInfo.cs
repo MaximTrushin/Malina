@@ -1,5 +1,6 @@
 ﻿using Malina.DOM;
 using System.Collections.Generic;
+using Alias = Malina.DOM.Antlr.Alias;
 
 namespace Malina.Compiler
 {

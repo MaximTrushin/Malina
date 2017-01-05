@@ -253,12 +253,17 @@ namespace Malina.Compiler.Generator
         private void ResolveAttributesInParameter(Parameter parameter)
         {
             var aliasContext = GetAliasContextForParameter(parameter);
+
+            if (aliasContext == null) return;
+
             var argument = aliasContext.Alias.Arguments.FirstOrDefault(a => a.Name == parameter.Name);
             ResolveAttributes(argument != null ? argument.Entities : parameter.Entities);
         }
 
         private AliasContext GetAliasContextForParameter(Parameter parameter)
         {
+            if (_aliasContext == null) return null;
+
             foreach (var context in _aliasContext)
             {
                 if (context == null) return null;
@@ -269,7 +274,11 @@ namespace Malina.Compiler.Generator
 
         private void ResolveAttributesInAlias(Alias alias)
         {
-            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            var aliasDef = ((DOM.Antlr.Alias)alias).AliasDefinition;
+
+            //Do not resolve alias without AliasDef or having circular reference
+            if (aliasDef == DOM.Antlr.AliasDefinition.Undefined || aliasDef.HasCircularReference) return;
+
             AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
             ResolveAttributes(aliasDef.Entities);
             AliasContext.Pop();
@@ -329,7 +338,10 @@ namespace Malina.Compiler.Generator
 
         public override void OnAlias(Alias alias)
         {
-            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            var aliasDef = ((DOM.Antlr.Alias)alias).AliasDefinition;
+
+            //Do not resolve alias without AliasDef or having circular reference
+            if (aliasDef == DOM.Antlr.AliasDefinition.Undefined || aliasDef.HasCircularReference) return;
 
             AliasContext.Push(new AliasContext() { AliasDefinition = aliasDef, Alias = alias, AliasNsInfo = GetContextNsInfo() });
             Visit(aliasDef.Entities.Where(e => !(e is Attribute)));
@@ -339,6 +351,8 @@ namespace Malina.Compiler.Generator
         public override void OnParameter(Parameter parameter)
         {
             var aliasContext = GetAliasContextForParameter(parameter);
+
+            if (aliasContext == null) return;
 
             if (parameter.Name == "_") //Default parameter. Value is passed in the body of the alias
             {

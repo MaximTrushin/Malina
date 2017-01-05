@@ -76,6 +76,8 @@ namespace Malina.Compiler.Generator
 
         private void InternalValidationEventHandler(object sender, ValidationEventArgs e)
         {
+            if (e.Severity != XmlSeverityType.Error) return;
+
             var index = ((XmlReader)sender).NodeType == XmlNodeType.EndElement ? _indicesStack.Peek() : _validationIndex;
 
             var location = LocationMap[index];

@@ -71,6 +71,17 @@
     <None Include="Scenarios\JsonArrayInXmlDocument\JsonArray.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\MultipleFilesWithSchemaCompilation\Address.mlx" />
+    <None Include="Scenarios\MultipleFilesWithSchemaCompilation\address.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Scenarios\MultipleFilesWithSchemaCompilation\ipo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Scenarios\MultipleFilesWithSchemaCompilation\Items.mlx" />
+    <None Include="Scenarios\MultipleFilesWithSchemaCompilation\PurchaseOrder.mlj" />
+    <None Include="Scenarios\MultipleFilesWithSchemaCompilation\PurchaseOrder.mlx" />
+    <None Include="Scenarios\MultipleFilesWithSchemaCompilation\Templates.mlx" />
     <None Include="Scenarios\NamespaceScope\NamespaceScope1.mlj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

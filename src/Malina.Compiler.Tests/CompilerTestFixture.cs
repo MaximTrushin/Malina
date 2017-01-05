@@ -56,6 +56,12 @@ namespace Malina.Compiler.Tests
         {
             PerformCompilerTest();
         }
+        
+        [Test, RecordedTest]
+        public void MultipleFilesWithSchemaCompilation()
+        {
+            PerformCompilerTest();
+        }
 
         [Test, RecordedTest]
         public void NestedAliases()

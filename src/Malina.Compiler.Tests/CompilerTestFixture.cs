@@ -90,6 +90,12 @@ namespace Malina.Compiler.Tests
             PerformCompilerTest(errorsExpected);
         }
 
+        [Test, RecordedTest]
+        public void NamespaceScope()
+        {
+            PerformCompilerTest();
+        }
+
 
         [Test]
         public void DuplicateDocumentName()

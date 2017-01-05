@@ -59,6 +59,7 @@ namespace Malina.Compiler.Generator
             string prefix, ns;
             _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument,
                 () => { var aliasContext = AliasContext.Peek(); return aliasContext?.AliasDefinition; },
+                () => ScopeContext.Peek(),
                 out prefix, out ns);
 
             //Starting Element
@@ -117,8 +118,9 @@ namespace Malina.Compiler.Generator
 
             _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument,
                 () => { var aliasContext = AliasContext.Peek(); return aliasContext?.AliasDefinition; },
+                () => ScopeContext.Peek(),
                 out prefix, out ns);
-            string value = ResolveAttributeValue(node);
+            
             _xmlTextWriter.WriteStartAttribute(prefix, node.Name, ns);
             ResolveValue(node);
             _xmlTextWriter.WriteEndAttribute();

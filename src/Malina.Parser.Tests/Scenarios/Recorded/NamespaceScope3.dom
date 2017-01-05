@@ -1,4 +1,22 @@
-02:00	Document `MyRequest`:
-03:02		Scope `ns1`:
-04:03			Element `e2`
+01:00	Namespace `ns1`= `syntactik.com`
+02:00	Namespace `ns2`= `syntactik.com/malina`
+04:00	Document `MyRequest`:
+05:01		Element `request`:
+06:02			Scope `ns1`:
+06:02				Element `e1`:
+07:03					Element `e2`
+08:03					Scope `ns2`:
+08:03						Element `e3`:
+09:04							Scope ``:
+09:04								Element `e4`:
+10:05									Element `e5`
+11:04							Element `e6`
+12:03					Scope ``:
+13:04						Element `e7`
+14:03					Scope `ns1`:
+14:03						Element `e5`:
+14:12							Element `e6`
+14:16					Scope `ns1`:
+14:16						Element `e7`:
+14:25							Element `e8`
 

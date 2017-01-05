@@ -16,7 +16,7 @@ namespace Malina.DOM.Antlr
             }
         }
 
-        public Interval IDInterval
+        public Interval IdInterval
         {
             set
             {
@@ -37,6 +37,12 @@ namespace Malina.DOM.Antlr
             {
                 base.Name = value;
             }
+        }
+
+        public override string NsPrefix
+        {
+            get { return Name; }
+            set { Name = value; }
         }
     }
 }

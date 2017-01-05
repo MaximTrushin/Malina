@@ -69,11 +69,11 @@ namespace Malina.Parser
                     if (dot > -1)
                     {
                         ((Element) el).IdInterval = new Interval(dot + 1, id.Symbol.StopIndex);
-                        Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
+                        Node.IdInterval = new Interval(id.Symbol.StartIndex, dot - 1);
                     }
                     else
                     {
-                        Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                        Node.IdInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
                     }                    
                 }                
             }
@@ -96,11 +96,11 @@ namespace Malina.Parser
                     if(dot > -1)
                     {
                         ((Element) el).IdInterval = new Interval(dot + 1, id.Symbol.StopIndex);
-                        Node.IDInterval = new Interval(id.Symbol.StartIndex, dot - 1);
+                        Node.IdInterval = new Interval(id.Symbol.StartIndex, dot - 1);
                     }
                     else
                     {
-                        Node.IDInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
+                        Node.IdInterval = new Interval(id.Symbol.StartIndex, id.Symbol.StopIndex);
                     }
                 }
             }

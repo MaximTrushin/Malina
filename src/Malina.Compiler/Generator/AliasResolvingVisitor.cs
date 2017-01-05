@@ -14,6 +14,7 @@ namespace Malina.Compiler.Generator
     {
 
         private Stack<AliasContext> _aliasContext;
+        private Stack<Scope> _scopeContext;
         protected CompilerContext _context;
         protected Document _currentDocument;
 
@@ -27,6 +28,18 @@ namespace Malina.Compiler.Generator
                 _aliasContext.Push(null);
 
                 return _aliasContext;
+            }
+        }
+
+        protected Stack<Scope> ScopeContext
+        {
+            get
+            {
+                if (_scopeContext != null) return _scopeContext;
+
+                _scopeContext = new Stack<Scope>();
+                _scopeContext.Push(null);
+                return _scopeContext;
             }
         }
 
@@ -262,9 +275,7 @@ namespace Malina.Compiler.Generator
 
         private AliasContext GetAliasContextForParameter(Parameter parameter)
         {
-            if (_aliasContext == null) return null;
-
-            foreach (var context in _aliasContext)
+            foreach (var context in AliasContext)
             {
                 if (context == null) return null;
                 if (context.AliasDefinition == parameter.Parent) return context;
@@ -328,6 +339,13 @@ namespace Malina.Compiler.Generator
             }
 
             return sb.ToString();
+        }
+
+        public override void OnScope(Scope scope)
+        {
+            ScopeContext.Push(scope);
+            base.OnScope(scope);
+            ScopeContext.Pop();
         }
 
         public override void OnElement(Element node)

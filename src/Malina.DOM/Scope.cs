@@ -3,7 +3,7 @@
 namespace Malina.DOM
 {
     [Serializable]
-    public class Scope : Entity
+    public class Scope : Entity, INsNode
     {
         // Fields
         private NodeCollection<Entity> _entities;
@@ -41,6 +41,8 @@ namespace Malina.DOM
                 }
             }
         }
+
+        public virtual string NsPrefix { get; set; }
     }
 
 

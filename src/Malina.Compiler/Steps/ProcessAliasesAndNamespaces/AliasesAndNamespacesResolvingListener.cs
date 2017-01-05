@@ -72,6 +72,14 @@ namespace Malina.Compiler.Steps
                 return;
             }
 
+            var scopeContext = context as INodeContext<Scope>;
+            if (scopeContext != null)
+            {
+                if(!string.IsNullOrEmpty(scopeContext.Node.NsPrefix))
+                    _context.NamespaceResolver.ProcessNsPrefix(scopeContext.Node);
+                return;
+            }
+
             var aliasContext = context as INodeContext<Alias>;
             if (aliasContext != null)
             {

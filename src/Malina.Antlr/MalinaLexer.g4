@@ -15,7 +15,7 @@ COMMA				:	',';
 NAMESPACE_ID		:	'#' ShortName;
 DOCUMENT_ID			:	'!' Name ':'? {EmitIdWithColon(DOCUMENT_ID);};
 ALIAS_DEF_ID		:	'!$' Name ':'? {EmitIdWithColon(ALIAS_DEF_ID);};
-SCOPE_ID			:   ('#' FullName |'#.' ShortName | '#' ShortName) ':'? {EmitIdWithColon(SCOPE_ID);};
+SCOPE_ID			:   ((('#' FullName |'#.' ShortName | '#' ShortName) ':'?) | '#:') {EmitIdWithColon(SCOPE_ID);};
 ATTRIBUTE_ID		:	'@' ((ShortName '.')? ShortName) {EmitIdWithColon(ATTRIBUTE_ID);};
 ALIAS_ID			:	'$' Name ':'? {EmitIdWithColon(ALIAS_ID);};
 PARAMETER_ID		:	'%' ShortName ':'? {EmitIdWithColon(PARAMETER_ID);};

@@ -500,12 +500,17 @@ namespace Malina.Compiler
             return null;
         }
 
-        public void GetPrefixAndNs(INsNode node, DOM.Document document, Func<DOM.AliasDefinition> getAliasDef, out string prefix, out string ns)
+        public void GetPrefixAndNs(INsNode node, DOM.Document document, Func<DOM.AliasDefinition> getAliasDef, Func<Scope> getScope, out string prefix, out string ns)
         {
             prefix = null;
             ns = null;
 
-            if (node.NsPrefix == null) return;
+            if (node.NsPrefix == null)
+            {
+                var scope = getScope();
+                if (scope == null) return;
+                node.NsPrefix = scope.NsPrefix;
+            }
 
             //Getting namespace info for the generated document.
             var targetNsInfo = ModuleMembersNsInfo.First(n => n.ModuleMember == document);

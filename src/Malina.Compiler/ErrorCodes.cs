@@ -30,6 +30,7 @@
         public const string MCE0025 = "Unexpected default block argument.";
         public const string MCE0026 = "Default value argument is missing.";
         public const string MCE0027 = "Unexpected default value argument.";
+        public const string MCE0028 = "Can not define array item in the xml document.";
 
         public static string Format(string name, params object[] args)
         {

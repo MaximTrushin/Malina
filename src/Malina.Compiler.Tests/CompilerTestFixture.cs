@@ -177,6 +177,19 @@ namespace Malina.Compiler.Tests
         {
             PerformCompilerTest();
         }
+        
+        [Test]
+        public void JsonArrayInXmlDocument()
+        {
+            var errorsExpected = new List<CompilerError>
+            {
+                new CompilerError(new LexicalInfo("JsonArray.mlx", 3, 3,-1), "Can not define array item in the xml document."),
+                new CompilerError(new LexicalInfo("JsonArray.mlx", 7, 5,-1), "Can not define array item in the xml document."),
+                new CompilerError(new LexicalInfo("JsonArray.mlx", 10, 5,-1), "Can not define array item in the xml document."),
+                new CompilerError(new LexicalInfo("JsonArray.mlx", 13, 7,-1), "Can not define array item in the xml document."),
+            };
+            PerformCompilerTest(errorsExpected);
+        }
 
         [Test]
         public void JsonArrayItemInObject()

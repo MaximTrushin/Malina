@@ -7,9 +7,7 @@ using Attribute = Malina.DOM.Attribute;
 namespace Malina.Compiler.Steps
 {
     public class ValidatingDocumentsVisitor: AliasResolvingVisitor
-    {
-        private DOM.Antlr.Module.TargetFormats _targetFormat = DOM.Antlr.Module.TargetFormats.Xml;
-
+    {   
         private bool _blockStart;
         private Stack<JsonGenerator.BlockState> _blockState;
         private Module _currentModule;
@@ -18,16 +16,8 @@ namespace Malina.Compiler.Steps
         {
         }
 
-        public DOM.Antlr.Module.TargetFormats TargetFormat
-        {
-            get { return _targetFormat; }
-            set { _targetFormat = value; }
-        }
-
         public override void OnModule(Module node)
         {
-            if (node.FileName != null && node.FileName.EndsWith(".mlj"))
-                _targetFormat = DOM.Antlr.Module.TargetFormats.Json;
             _currentModule = node;
 
             base.OnModule(node);
@@ -46,7 +36,9 @@ namespace Malina.Compiler.Steps
         {
             CheckBlockIntegrity(node);
 
-            if (HasValue(node)) return;
+            CheckArrayItem(node);
+
+            if (HasValue(node)) return; //This is a value element. It doesn't have block. Don't continue to validate element's block.
 
             _blockStart = true;
             var prevBlockStateCount = _blockState.Count;
@@ -58,6 +50,17 @@ namespace Malina.Compiler.Steps
             if (_blockState.Count > prevBlockStateCount)
             {
                 _blockState.Pop();
+            }
+        }
+
+        private void CheckArrayItem(Element node)
+        {
+            if (((DOM.Antlr.Module) _currentModule).TargetFormat == DOM.Antlr.Module.TargetFormats.Xml)
+            {
+                if (string.IsNullOrEmpty(node.Name))
+                {
+                    _context.AddError(CompilerErrorFactory.CantDefineArrayItemInXmlDocument(node, _currentModule.FileName));
+                }
             }
         }
 

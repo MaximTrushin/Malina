@@ -178,5 +178,10 @@ namespace Malina.Compiler
         {
             return Instantiate("MCE0027", new LexicalInfo(fileName, alias.start.Line, alias.start.Column + 1, alias.start.Index));
         }
+
+        public static CompilerError CantDefineArrayItemInXmlDocument(Element node, string fileName)
+        {
+            return Instantiate("MCE0028", new LexicalInfo(fileName, node.start.Line, node.start.Column + 1, node.start.Index));
+        }
     }
 }

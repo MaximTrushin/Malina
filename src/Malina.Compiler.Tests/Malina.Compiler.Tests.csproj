@@ -68,6 +68,9 @@
     <None Include="Scenarios\AliasWithUnexpectedDefaultValueParameter\Module.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\JsonArrayInXmlDocument\JsonArray.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\NestedAliasesWithParameters\Module.mlj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

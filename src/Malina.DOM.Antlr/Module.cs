@@ -11,10 +11,24 @@ namespace Malina.DOM.Antlr
     {
         public enum TargetFormats
         {
-            Xml = 0,
+            Undefined = 0,
+            Xml,
             Json
         }
-        public TargetFormats TargetFormat { get; set; }
+
+        private TargetFormats _targetFormat;
+        public TargetFormats TargetFormat
+        {
+            get
+            {
+              if (_targetFormat != TargetFormats.Undefined) return _targetFormat;
+
+              if (FileName != null && FileName.EndsWith(".mlj")) return _targetFormat = TargetFormats.Json;  
+
+              return _targetFormat = TargetFormats.Xml;
+            } 
+            set { _targetFormat = value; }
+        }
 
     }
 }

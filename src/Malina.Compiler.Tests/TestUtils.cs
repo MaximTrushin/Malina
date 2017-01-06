@@ -146,41 +146,6 @@ namespace Malina.Compiler.Tests
 
         }
 
-        public static CompilerContext PerformProcessAliasesTest()
-        {
-            PrintTestScenario();
-
-            var compilerParameters = CreateCompilerParameters();
-            var compiler = new MalinaCompiler(compilerParameters);
-
-            var context = compiler.Run();
-            var printerVisitor = new DOMPrinterVisitor();
-            printerVisitor.Visit(context.CompileUnit);
-            Console.WriteLine();
-            Console.WriteLine(printerVisitor.Text);
-
-            var isDomRecordedTest = IsDomRecordedTest();
-            var isDomRecordTest = IsDomRecordTest(); //Overwrites existing recording
-            string recordedDom = null;
-            if (isDomRecordedTest || isDomRecordTest)
-            {
-                if (isDomRecordedTest) recordedDom = LoadRecordedDomTest(true);
-                if (recordedDom == null || isDomRecordTest)
-                {
-                    SaveRecordedDomTest(printerVisitor.Text, true);
-                }
-            }
-
-            //DOM Assertions
-            if (recordedDom != null)
-            {
-                Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
-            }
-
-            return context;
-
-        }
-
         private static void PrintTestScenario()
         {
             var testCaseName = GetTestCaseName();

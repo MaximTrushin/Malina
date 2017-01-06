@@ -1,0 +1,4 @@
+Code=ClosingSqMissing, Start=(6,9,51), Stop=(6,9,51)
+Code=LexerNoViableAltException, Start=(7,4,64), Stop=
+Code=ClosingDqMissing, Start=(8,8,74), Stop=(8,17,84)
+Code=LexerNoViableAltException, Start=(9,3,87), Stop=

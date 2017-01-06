@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using System.Collections.Generic;
+using Malina.DOM;
 using Malina.Parser;
 
 namespace Malina.Parser.Tests
@@ -29,6 +30,10 @@ namespace Malina.Parser.Tests
                 else if (recognizer is MalinaLexer)
                 {
                     var me = new MalinaException((Lexer)recognizer, ((ITokenSource)recognizer).InputStream);
+                    me.Start = new SourceLocation(line, charPositionInLine+1, recognizer.InputStream.Index);
+                    me.Start = new SourceLocation(line, charPositionInLine + 1, recognizer.InputStream.Index);
+                    me.Code = MalinaErrorCode.LexerNoViableAltException;
+ 
                     Errors.Add(me);
                 }
             }

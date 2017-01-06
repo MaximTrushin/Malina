@@ -484,5 +484,11 @@ namespace Malina.Parser.Tests
         {
             PerformTest();
         }
+
+        [Test, LexerRecorded, LexerErrorRecorded, ParseTreeRecorded, DomRecorded]
+        public void Wsa2()
+        {
+            PerformTest();
+        }
     }
 }

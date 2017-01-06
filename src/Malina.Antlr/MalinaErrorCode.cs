@@ -17,10 +17,11 @@ namespace Malina.Parser
         [Message("Missing closing Double Quote.")] ClosingDqMissing,
         [Message("Missing closing Single Quote.")] ClosingSqMissing,
         [Message("Incorrect usage of colon.")] IncorrectColon,
-
+        [Message("Unexpected symbol.")] LexerNoViableAltException,
 
         //Parser Errors
-        [Message("NoViableAltParserException")] NoViableAltParserException
+        [Message("NoViableAltParserException")] NoViableAltParserException,
+        
     }
 
     //[Serializable]

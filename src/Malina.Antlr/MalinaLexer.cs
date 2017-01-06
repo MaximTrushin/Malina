@@ -81,8 +81,8 @@ namespace Malina.Parser
                         new MalinaToken(new Tuple<ITokenSource, ICharStream>(this, (this as ITokenSource).InputStream),
                             OPEN_STRING, Channel, -1, -1) {Text = ""};
                     Emit(_currentToken);
-                }                
-                PopMode();
+                }
+                ExitInValueMode();
             }
             
             if (_tokens.Count > 0) {
@@ -98,7 +98,7 @@ namespace Malina.Parser
         {
             //Lexer recover strategy - ignore all till next space, tab or EOL
             var next = _input.La(1);
-            while (next != -1 && next != ' ' && next != '\n' && next != '\r' && next != '\t')
+            while (next != -1 && next != ' ' && next != '\n' && next != '\r' && next != '\t' && next != ',' && next != ')')
             {
                 Interpreter.Consume(_input);
                 next = _input.La(1);
@@ -384,8 +384,9 @@ namespace Malina.Parser
                     TokenIndent = _indents.Peek() + 1,
                     Column = _tokenStartCharPositionInLine + 1
                 };
+            PushMode(IN_DQS);
             EndDqsIfEofOrWsa();
-            _currentToken.Type = DQS_ML;
+            
         }
 
         private void EndDqs()
@@ -394,7 +395,7 @@ namespace Malina.Parser
             _currentToken.StopLine = Line;
             _currentToken.StopColumn = _tokenStartCharPositionInLine;
             Emit(_currentToken);
-            PopMode();PopMode();
+            ExitInValueMode();
         }
 
 
@@ -429,8 +430,7 @@ namespace Malina.Parser
                 ReportMissingSq();
 
                 //END Multiline SQS
-                PopMode();
-                PopMode();
+                ExitInValueMode();
 
                 //Emitting NEWLINE
                 EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);
@@ -463,7 +463,7 @@ namespace Malina.Parser
                 //Report Lexer Error - missing closing Single Quote.
                 ReportMissingSq();
 
-                PopMode(); PopMode();
+                ExitInValueMode();
             }
         }
 
@@ -472,11 +472,13 @@ namespace Malina.Parser
             if (this._input.La(1) == -1 || InWsaMode)
             {
                 //Report Lexer Error - missing closing Double Quote.
-                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine, "Missing closing Double Quote",
+                ErrorListenerDispatch.SyntaxError(this, 0, this._tokenStartLine, this._tokenStartCharPositionInLine,
+                    "Missing closing Double Quote",
                     new MalinaException(this, InputStream as ICharStream)
                     {
                         Code = MalinaErrorCode.ClosingDqMissing,
-                        Start = new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
+                        Start =
+                            new DOM.SourceLocation(_currentToken.Line, _currentToken.Column, _currentToken.StartIndex),
                         Stop = new DOM.SourceLocation(Line, Column, CharIndex)
                     }
                 );
@@ -485,12 +487,16 @@ namespace Malina.Parser
                 _currentToken.StopLine = Line;
                 _currentToken.StopColumn = Column;
                 Emit(_currentToken);
-                PopMode(); PopMode();
+                ExitInValueMode();
                 //Emitting NEWLINE if not in WSA
                 if (!InWsaMode)
                     EmitIndentationToken(NEWLINE, CharIndex, CharIndex);
             }
-            else Skip();
+            else
+            {
+                _currentToken.Type = DQS_ML;
+                Skip();
+            }
         }
 
         private void ProcessOpenStringLine(int tokenType)
@@ -551,7 +557,7 @@ namespace Malina.Parser
                 _currentToken.StopLine = this._tokenStartLine;
                 _currentToken.StopColumn = this._tokenStartCharPositionInLine;
                 Emit(_currentToken);
-                PopMode(); PopMode();
+                ExitInValueMode();
 
                 //Emitting NEWLINE
                 EmitIndentationToken(NEWLINE, CharIndex - indent - 1, CharIndex - indent - 1);

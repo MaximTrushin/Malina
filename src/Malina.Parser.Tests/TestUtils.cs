@@ -75,27 +75,36 @@ namespace Malina.Parser.Tests
             return recorded;
         }
 
+        /// <summary>
+        /// Returns recorded lexer errors as result. Saves lexer errors for the test case if the test case has 
+        /// attributes LexerErrorRecorded or LexerErrorRecord.
+        /// Overwrites test recording is test has attribute LexerErrorRecorded.
+        /// </summary>
+        /// <param name="lexerErrors">Lexer error listener having all the errors.</param>
+        /// <param name="serialLexerErrors">Returns serialized string representation of errors stored in lexerErrors</param>
+        /// <returns></returns>
         public static string LoadLexerErrors(ErrorListener<int> lexerErrors, out string serialLexerErrors)
         {
             var isLexerErrorRecordedTest = IsLexerErrorRecordedTest();
             var isLexerErrorRecordTest = IsLexerErrorRecordTest(); //Overwrites existing recording
-            string recorded = null;
+            
             serialLexerErrors = null;
-            if (isLexerErrorRecordedTest || isLexerErrorRecordTest)
+
+            if (!isLexerErrorRecordedTest && !isLexerErrorRecordTest) return null;
+
+            string recorded = null;
+            serialLexerErrors = lexerErrors.Errors.Count > 0 ? SerializeErrors(lexerErrors.Errors) : null;
+            if (isLexerErrorRecordedTest)
             {
-                serialLexerErrors = lexerErrors.Errors.Count > 0 ? SerializeErrors(lexerErrors.Errors) : null;
-                if (isLexerErrorRecordedTest)
-                {
-                    var testCaseName = GetTestCaseName();
-                    var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".le").ToString();
-                    if (File.Exists(fileName))
-                        recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
-                }
-                if (recorded == null || isLexerErrorRecordTest)
-                {
-                    SaveLexerErrors(serialLexerErrors);
-                    return serialLexerErrors;
-                }
+                var testCaseName = GetTestCaseName();
+                var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\Recorded\").Append(testCaseName).Append(".le").ToString();
+                if (File.Exists(fileName))
+                    recorded = File.ReadAllText(fileName).Replace("\r\n", "\n");
+            }
+            if (recorded == null || isLexerErrorRecordTest)
+            {
+                SaveLexerErrors(serialLexerErrors);
+                return serialLexerErrors;
             }
             return recorded;
         }
@@ -225,9 +234,13 @@ namespace Malina.Parser.Tests
                 Console.WriteLine("Lexer Errors:");
                 Console.WriteLine(recordedLexerErros);
             }
+
+            if (lexerErrors.HasErrors)
+                PrintErrors(lexerErrors.Errors, "Lexer Errors: ");
+
             //Testing Parse Tree
             lexer.Reset();
-            //lexer.ErrorListeners.Clear();
+            lexer.ErrorListeners.Clear();
             var parser = MalinaParser.Create(new CommonTokenStream(lexer));
             parser.Interpreter.PredictionMode = PredictionMode.Sll;
             var malinaListener = new MalinaParserListener();
@@ -310,8 +323,6 @@ namespace Malina.Parser.Tests
             }
             else
             {
-                if (lexerErrors.HasErrors)
-                    PrintErrors(lexerErrors.Errors);
                 Assert.AreEqual(false, lexerErrors.HasErrors, "LexerErrorListener has errors");
             }
                 
@@ -336,7 +347,7 @@ namespace Malina.Parser.Tests
             else
             {
                 if (parserErrorListener.HasErrors)
-                    PrintErrors(parserErrorListener.Errors);       
+                    PrintErrors(parserErrorListener.Errors, "Parser Errors:");       
                 
                 Assert.AreEqual(false, parserErrorListener.HasErrors, "ParserErrorListener has errors");
             }
@@ -350,9 +361,9 @@ namespace Malina.Parser.Tests
 
         }
 
-        public static void PrintErrors(List<MalinaException> errors)
+        public static void PrintErrors(List<MalinaException> errors, string title)
         {
-            Console.WriteLine("Compiler Errors:");
+            Console.WriteLine(title);
 
             foreach (var error in errors)
             {

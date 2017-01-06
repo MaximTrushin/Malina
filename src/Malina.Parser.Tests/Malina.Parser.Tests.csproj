@@ -312,6 +312,7 @@
     <None Include="Scenarios\ElementAtEOF.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\Wsa2.mlx" />
     <None Include="Scenarios\Wsa1.mlx" />
   </ItemGroup>
   <ItemGroup>

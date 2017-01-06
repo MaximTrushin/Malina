@@ -46,7 +46,7 @@ mode IN_VALUE;
 	
 	//Double Qoute String (DQS) and Multiline DQS
 	DQS					:	'"' (~["\r\n] | '""')+ '"' -> popMode;
-	DQS_ML				:	'"' (~["\r\n] | '""')* {StartDqsMl();} -> skip, pushMode(IN_DQS);
+	DQS_ML				:	'"' (~["\r\n] | '""')* {StartDqsMl();};
 
 	//Single Qoute String (SQS) and Multiline SQS
 	SQS					: '\'' {StartSqs();}  -> pushMode(IN_SQS);

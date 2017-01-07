@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
-using Malina.Console;
 using Malina.Compiler;
-using System;
 
-namespace Malina.Console.Tests
+
+namespace mlc.Tests
 {
     [TestFixture]
     public class ArgumentParserTestFixture

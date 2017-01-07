@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Malina.Console
+namespace mlc
 {
     public class ArgumentsParserException: Exception
     {

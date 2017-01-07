@@ -56,10 +56,6 @@
       <Project>{6807E668-DA17-4871-9620-08682C940405}</Project>
       <Name>Malina.Compiler</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Malina.Console\Malina.Console.csproj">
-      <Project>{878c0cb0-9e45-4961-9347-8a7656bc60f1}</Project>
-      <Name>Malina.Console</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

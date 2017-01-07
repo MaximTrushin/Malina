@@ -21,9 +21,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.DOM.Antlr", "src\Mal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Compiler", "src\Malina.Compiler\Malina.Compiler.csproj", "{6807E668-DA17-4871-9620-08682C940405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console", "src\Malina.Console\Malina.Console.csproj", "{878C0CB0-9E45-4961-9347-8A7656BC60F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mlc", "src\Malina.Console\mlc.csproj", "{878C0CB0-9E45-4961-9347-8A7656BC60F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Console.Tests", "src\Malina.Console.Tests\Malina.Console.Tests.csproj", "{FA7EF547-D386-4415-8363-7D6E99D8C870}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mlc.Tests", "src\Malina.Console.Tests\mlc.Tests.csproj", "{FA7EF547-D386-4415-8363-7D6E99D8C870}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malina.Compiler.Tests", "src\Malina.Compiler.Tests\Malina.Compiler.Tests.csproj", "{FD22DBF6-4EC4-4742-916F-88EBB8E59008}"
 EndProject

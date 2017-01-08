@@ -7,8 +7,8 @@
     <ProjectGuid>{878C0CB0-9E45-4961-9347-8A7656BC60F1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Malina.Console</RootNamespace>
-    <AssemblyName>Malina.Console</AssemblyName>
+    <RootNamespace>mlc</RootNamespace>
+    <AssemblyName>mlc</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -83,6 +83,10 @@
     <ProjectReference Include="..\Malina.Compiler\Malina.Compiler.csproj">
       <Project>{6807e668-da17-4871-9620-08682c940405}</Project>
       <Name>Malina.Compiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Malina.DOM\Malina.DOM.csproj">
+      <Project>{66e57a03-08ad-491b-9b1d-6cb4a0d37969}</Project>
+      <Name>Malina.DOM</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

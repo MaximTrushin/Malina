@@ -54,7 +54,7 @@ namespace mlc
                             var dir = arg.Substring(3);
                             if (Directory.Exists(dir))
                             {
-                                AddFilesFromDir(dir, files);
+                                AddFilesFromDir(dir, files, recursive);
                             }
                             else InvalidOption(arg, ParameterErrors.InvalidDirectory);
                         }
@@ -76,14 +76,14 @@ namespace mlc
                 }
             }
 
-            if (files.Count == 0) AddFilesFromDir(Directory.GetCurrentDirectory(), files);
+            if (files.Count == 0) AddFilesFromDir(Directory.GetCurrentDirectory(), files, recursive);
 
             if (files.Count == 0) throw new ArgumentsParserException(ParameterErrors.NoInput);
         }
 
-        private static void AddFilesFromDir(string dir, ICollection<string> files)
+        private static void AddFilesFromDir(string dir, ICollection<string> files, bool recursive)
         {
-            foreach (var fileName in Directory.EnumerateFiles(dir))
+            foreach (var fileName in Directory.EnumerateFiles(dir, "*", recursive?SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
             {
                 if (fileName.EndsWith(".mlx") || fileName.EndsWith(".mlj") || fileName.EndsWith(".xsd"))
                 {

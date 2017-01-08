@@ -59,7 +59,7 @@ namespace Malina.Compiler.Steps
 
         private XmlWriter XmlFileWriterDelegate(string documentName)
         {
-            var fileName = Path.Combine(_context.Parameters.OutputDirectory + documentName + ".xml");
+            var fileName = Path.Combine(_context.Parameters.OutputDirectory, documentName + ".xml");
             return XmlWriter.Create(
                 new XmlTextWriter(fileName, Encoding.UTF8) {Formatting = System.Xml.Formatting.Indented, Namespaces = true},
                 new XmlWriterSettings {ConformanceLevel = ConformanceLevel.Document});

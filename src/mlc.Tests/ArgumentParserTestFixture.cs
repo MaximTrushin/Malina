@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Malina.Compiler;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 
 
 namespace mlc.Tests
@@ -10,8 +10,12 @@ namespace mlc.Tests
         [Test]
         public void NoFilesSpecified()
         {
-            var cp = new CompilerParameters();
-            Assert.Throws<ArgumentsParserException>(() => ArgumentsParser.Parse(new string[] { }, cp), ArgumentsParser.ParameterErrors.NoInput);            
+            List<string> files;
+            bool recursive;
+            string outputDirectory;
+            Assert.Throws<ArgumentsParserException>(
+                () => ArgumentsParser.Parse(new string[] {}, out files, out recursive, out outputDirectory),
+                ArgumentsParser.ParameterErrors.NoInput);
         }
     }
 }

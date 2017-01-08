@@ -1,5 +1,4 @@
-﻿using System;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using Malina.DOM;
 using Malina.DOM.Antlr;
 using IValueNode = Malina.DOM.IValueNode;

@@ -1,7 +1,6 @@
 ﻿using Antlr4.Runtime;
 using System.Collections.Generic;
 using Malina.DOM;
-using Malina.Parser;
 
 namespace Malina.Parser.Tests
 {

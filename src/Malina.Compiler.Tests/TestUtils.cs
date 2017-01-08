@@ -3,14 +3,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Malina.Compiler;
 using Malina.Compiler.Pipelines;
 using Malina.Compiler.IO;
 using static Malina.Parser.Tests.TestUtils;
 using System;
 using Malina.Parser.Tests;
 using System.Text;
-using Malina.DOM;
 using System.Collections.Generic;
 
 namespace Malina.Compiler.Tests
@@ -127,7 +125,7 @@ namespace Malina.Compiler.Tests
                 Assert.IsTrue(Directory.Exists(recordedDir), "Directory {0} doesn't exist", recordedDir);
 
                 //Equal number of files
-                Assert.AreEqual(Directory.GetFiles(recordedDir).Count(), Directory.GetFiles(resultDir).Count(), "Number of files {0} in '{1}' should be equal {2}", Directory.GetFiles(resultDir).Count(), resultDir, Directory.GetFiles(recordedDir).Count());
+                Assert.AreEqual(Directory.GetFiles(recordedDir).Length, Directory.GetFiles(resultDir).Length, "Number of files {0} in '{1}' should be equal {2}", Directory.GetFiles(resultDir).Length, resultDir, Directory.GetFiles(recordedDir).Length);
                 Console.WriteLine();
                 Console.WriteLine("Generated Files:");
                 foreach (var file in Directory.GetFiles(recordedDir))
@@ -183,14 +181,8 @@ namespace Malina.Compiler.Tests
             return compilerParameters;
         }
 
-        public static string AssemblyDirectory
-        {
-            get
-            {
-                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            }
-        }
- 
+        public static string AssemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
         private static string GetTestCaseName()
         {
             var trace = new StackTrace();
@@ -200,9 +192,10 @@ namespace Malina.Compiler.Tests
         private static bool TestHasAttribute<T>()
         {
             var trace = new StackTrace();
-            var method = trace.GetFrames().Select(f => f.GetMethod()).Where(m => m.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TestAttribute)))).First();
-            return method.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T))) ||
-                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType.Equals(typeof(T)));
+            var method = trace.GetFrames().Select(f => f.GetMethod()).First(m => m.CustomAttributes.Any(a => a.AttributeType == typeof(TestAttribute)));
+            Debug.Assert(method.DeclaringType != null, "method.DeclaringType != null");
+            return method.CustomAttributes.Any(ca => ca.AttributeType == typeof(T)) ||
+                method.DeclaringType.CustomAttributes.Any(ca => ca.AttributeType == typeof(T));
         }
 
         public static bool IsRecordedTest()

@@ -4,10 +4,8 @@ using static Malina.Parser.Tests.TestUtils;
 using Antlr4.Runtime;
 using Malina.Parser.Tests;
 using Antlr4.Runtime.Atn;
-using Malina.DOM;
 using Malina.Compiler;
 using Malina.Compiler.Pipelines;
-using System.IO;
 using Malina.Compiler.IO;
 
 namespace Malina.Parser.PerformanceTests

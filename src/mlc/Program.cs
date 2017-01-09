@@ -8,7 +8,7 @@ using Malina.Compiler.Pipelines;
 
 namespace mlc
 {
-    class Program
+    public class Program
     {
         public static int Main(string[] args)
         {
@@ -21,7 +21,7 @@ namespace mlc
                 string outputDirectory;
                 ArgumentsParser.Parse(args, out files, out recursive, out outputDirectory);
 
-                var compilerParameters = GetCompilerParameters(files, outputDirectory);// new CompilerParameters { Pipeline = new CompileToFiles() };
+                var compilerParameters = GetCompilerParameters(files, outputDirectory);
 
                 var compiler = new MalinaCompiler(compilerParameters);
 
@@ -49,7 +49,7 @@ namespace mlc
             return result;
         }
 
-        private static CompilerParameters GetCompilerParameters(List<string> files, string outputDirectory)
+        private static CompilerParameters GetCompilerParameters(IEnumerable<string> files, string outputDirectory)
         {
             var compilerParameters = new CompilerParameters {OutputDirectory = outputDirectory != string.Empty?outputDirectory: Directory.GetCurrentDirectory(), Pipeline = new CompileToFiles() };
 

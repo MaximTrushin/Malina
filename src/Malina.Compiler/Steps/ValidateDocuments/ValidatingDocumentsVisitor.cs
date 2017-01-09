@@ -10,7 +10,7 @@ namespace Malina.Compiler.Steps
     {   
         private bool _blockStart;
         private Stack<JsonGenerator.BlockState> _blockState;
-        private Module _currentModule;
+        private DOM.Antlr.Module _currentModule;
 
         public ValidatingDocumentsVisitor(CompilerContext context):base(context)
         {
@@ -18,7 +18,7 @@ namespace Malina.Compiler.Steps
 
         public override void OnModule(Module node)
         {
-            _currentModule = node;
+            _currentModule = (DOM.Antlr.Module) node;
 
             base.OnModule(node);
 
@@ -55,12 +55,10 @@ namespace Malina.Compiler.Steps
 
         private void CheckArrayItem(Element node)
         {
-            if (((DOM.Antlr.Module) _currentModule).TargetFormat == DOM.Antlr.Module.TargetFormats.Xml)
+            if (_currentModule.TargetFormat != DOM.Antlr.Module.TargetFormats.Xml) return;
+            if (string.IsNullOrEmpty(node.Name) && !node.IsValueNode)
             {
-                if (string.IsNullOrEmpty(node.Name))
-                {
-                    _context.AddError(CompilerErrorFactory.CantDefineArrayItemInXmlDocument(node, _currentModule.FileName));
-                }
+                _context.AddError(CompilerErrorFactory.CantDefineArrayItemInXmlDocument(node, _currentModule.FileName));
             }
         }
 
@@ -97,12 +95,13 @@ namespace Malina.Compiler.Steps
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(node.Name))
-                    {
-                        ReportErrorForEachNodeInAliasContext(
-                            n => CompilerErrorFactory.PropertyIsExpected(n, _currentModule.FileName));
-                        _context.AddError(CompilerErrorFactory.PropertyIsExpected(node, _currentModule.FileName));
-                    }
+                    if (!string.IsNullOrEmpty(node.Name)) return;
+
+                    if(_currentModule.TargetFormat == DOM.Antlr.Module.TargetFormats.Xml && ((IValueNode)node).IsValueNode ) return; 
+
+                    ReportErrorForEachNodeInAliasContext(
+                        n => CompilerErrorFactory.PropertyIsExpected(n, _currentModule.FileName));
+                    _context.AddError(CompilerErrorFactory.PropertyIsExpected(node, _currentModule.FileName));
                 }
 
                 return;

@@ -63,7 +63,8 @@ namespace Malina.Compiler.Generator
                 out prefix, out ns);
 
             //Starting Element
-            _xmlTextWriter.WriteStartElement(prefix, node.Name, ns);
+            if (!string.IsNullOrEmpty(node.Name)) //not text node
+                _xmlTextWriter.WriteStartElement(prefix, node.Name, ns);
             LocationMap.Add(new LexicalInfo(_currentDocument.Module.FileName, node.start.Line, node.start.Column, node.start.Index));
 
             //Write all namespace declarations in the root element
@@ -77,7 +78,8 @@ namespace Malina.Compiler.Generator
                 base.OnElement(node);
 
             //End Element
-            _xmlTextWriter.WriteEndElement();
+            if (!string.IsNullOrEmpty(node.Name)) //not text node
+                _xmlTextWriter.WriteEndElement();
         }
 
         public override void OnValue(string value, ValueType type)

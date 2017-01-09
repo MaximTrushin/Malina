@@ -84,6 +84,13 @@ namespace Malina.Compiler.Tests
             };
             PerformCompilerTest(errorsExpected);
         }
+        
+        [Test, RecordedTest]
+        public void MixedContentInXml()
+        {
+            PerformCompilerTest();
+        }
+
 
         [Test]
         public void NamespaceIsNotDefined()
@@ -198,7 +205,6 @@ namespace Malina.Compiler.Tests
                 new CompilerError(new LexicalInfo("JsonArray.mlx", 3, 3,-1), "Can not define array item in the xml document."),
                 new CompilerError(new LexicalInfo("JsonArray.mlx", 7, 5,-1), "Can not define array item in the xml document."),
                 new CompilerError(new LexicalInfo("JsonArray.mlx", 10, 5,-1), "Can not define array item in the xml document."),
-                new CompilerError(new LexicalInfo("JsonArray.mlx", 13, 7,-1), "Can not define array item in the xml document."),
             };
             PerformCompilerTest(errorsExpected);
         }
@@ -208,10 +214,10 @@ namespace Malina.Compiler.Tests
         {
             var errorsExpected = new List<CompilerError>
             {
-                new CompilerError(new LexicalInfo("JsonArray.mlj", 4, 3,-1), "Object property is expected."),
-                new CompilerError(new LexicalInfo("JsonArray.mlj", 6, 3,-1), "Object property is expected."),
-                new CompilerError(new LexicalInfo("JsonArray.mlj", 9, 3,-1), "Object property is expected."),
-                new CompilerError(new LexicalInfo("JsonArray.mlj", 14, 2,-1), "Object property is expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 4, 3,-1), "Array item is not expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 6, 3,-1), "Array item is not expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 9, 3,-1), "Array item is not expected."),
+                new CompilerError(new LexicalInfo("JsonArray.mlj", 14, 2,-1), "Array item is not expected."),
             };
             PerformCompilerTest(errorsExpected);
         }

@@ -22,7 +22,7 @@
         public const string MCE0017 = "Can not use block alias as value.";
         public const string MCE0018 = "XML validation error - '{0}'.";
         public const string MCE0019 = "Array item is expected.";
-        public const string MCE0020 = "Object property is expected.";
+        public const string MCE0020 = "Array item is not expected.";
         public const string MCE0021 = "Default parameter must be the only parameter.";
         public const string MCE0022 = "Argument can be defined only in an alias' block.";
         public const string MCE0023 = "Default block argument is missing.";

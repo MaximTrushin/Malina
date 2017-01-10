@@ -5,9 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Malina.Compiler.Pipelines;
 using Malina.Compiler.IO;
-using static Malina.Parser.Tests.TestUtils;
 using System;
-using Malina.Parser.Tests;
 using System.Text;
 using System.Collections.Generic;
 
@@ -39,32 +37,6 @@ namespace Malina.Compiler.Tests
                 {
                     CompareErrors(errors[i++], contextError);
                 }
-            }
-
-
-
-            var isDomRecordedTest = IsDomRecordedTest();
-            var isDomRecordTest = IsDomRecordTest(); //Overwrites existing recording
-            string recordedDom = null;
-            if (isDomRecordedTest || isDomRecordTest)
-            {
-                var printerVisitor = new DOMPrinterVisitor();
-                printerVisitor.Visit(context.CompileUnit);
-                Console.WriteLine();
-                Console.WriteLine(printerVisitor.Text);
-
-                if (isDomRecordedTest) recordedDom = LoadRecordedDomTest(true);
-                if (recordedDom == null || isDomRecordTest)
-                {
-                    SaveRecordedDomTest(printerVisitor.Text, true);
-                }
-
-                //DOM Assertions
-                if (recordedDom != null)
-                {
-                    Assert.AreEqual(recordedDom, printerVisitor.Text.Replace("\r\n", "\n"), "DOM assertion failed");
-                }
-
             }
 
 
@@ -179,6 +151,32 @@ namespace Malina.Compiler.Tests
             } 
 
             return compilerParameters;
+        }
+
+        public static void PrintCode(string code)
+        {
+            int line = 1;
+            Console.WriteLine("Code:");
+            Console.Write("{0}:\t ", line);
+            int offset = 0;
+            foreach (var c in code)
+            {
+                if (c == '\r') continue;
+                if (c == '\n')
+                {
+                    Console.Write(" ({0})", offset);
+                }
+
+                Console.Write(c);
+                offset++;
+                if (c == '\n')
+                {
+                    line++;
+                    Console.Write("{0}:\t ", line);
+                }
+            }
+            Console.Write(" ({0})", offset);
+            Console.WriteLine();
         }
 
         public static string AssemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

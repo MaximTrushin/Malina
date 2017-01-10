@@ -64,9 +64,15 @@
     <None Include="Scenarios\AliasWithDefaultValueParameter.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\HybridBlockParameterStmt.mlx" />
-    <None Include="Scenarios\HybridBlockArgumentStmt.mlx" />
-    <None Include="Scenarios\HybridBlockAliasStmt.mlx" />
+    <None Include="Scenarios\HybridBlockParameterStmt.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\HybridBlockArgumentStmt.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\HybridBlockAliasStmt.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\InlineAliasEndOfBlock.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -157,7 +163,9 @@
     <None Include="Scenarios\InlineAliasDefinition.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\HybridBlock.mlx" />
+    <None Include="Scenarios\HybridBlock.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\ValueAliasDefinition.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -287,8 +295,12 @@
     <None Include="Scenarios\ElementAtEOF.mlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\Wsa2.mlx" />
-    <None Include="Scenarios\Wsa1.mlx" />
+    <None Include="Scenarios\Wsa2.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\Wsa1.mlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

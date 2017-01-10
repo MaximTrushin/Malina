@@ -5,6 +5,7 @@ nuget:
 before_build:
 - cmd: >-
     nuget restore
+	
     nuget restore  src\Malina.Antlr\packages.config -PackagesDirectory src\Malina.Antlr\packages
 build:
   project: /Malina.sln

@@ -13,4 +13,4 @@ build:
 test:
   assemblies: '**\*.tests.dll'
 artifacts:
-  - path: '\build\release'
+  - path: 'build'

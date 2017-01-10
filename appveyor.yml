@@ -1,13 +1,14 @@
-version: 0.1.{build}
+version: 1.0.{build}
 nuget:
   project_feed: true
   disable_publish_on_pr: true
 before_build:
 - cmd: >-
     nuget restore
-    
+
     nuget restore  src\Malina.Antlr\packages.config -PackagesDirectory src\Malina.Antlr\packages
 build:
   project: /Malina.sln
-  parallel: true
   verbosity: minimal
+test:
+  assemblies: '*Tests.dll'

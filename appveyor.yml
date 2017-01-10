@@ -12,3 +12,5 @@ build:
   verbosity: minimal
 test:
   assemblies: '**\*.tests.dll'
+artifacts:
+  - path: '\build\release'

@@ -323,7 +323,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rmdir $(TargetDir)Scenarios /s /q
-xcopy $(ProjectDir)Scenarios  $(TargetDir)Scenarios /E /I /Y
+xcopy $(ProjectDir)Scenarios  $(TargetDir)Scenarios /E /I /Y /Q
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

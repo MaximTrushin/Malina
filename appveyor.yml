@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 0.1.{build}
 nuget:
   project_feed: true
   disable_publish_on_pr: true
@@ -11,4 +11,4 @@ build:
   project: /Malina.sln
   verbosity: minimal
 test:
-  assemblies: '*Tests.dll'
+  assemblies: '**\*.tests.dll'

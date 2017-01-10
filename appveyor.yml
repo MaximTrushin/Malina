@@ -1,7 +1,17 @@
 version: 0.1.{build}
+
+configuration:
+- Debug
+- Release
+
+platform:
+- Any CPU
+- x64
+
 nuget:
   project_feed: true
   disable_publish_on_pr: true
+  
 before_build:
 - cmd: >-
     nuget restore
@@ -10,7 +20,10 @@ before_build:
 build:
   project: /Malina.sln
   verbosity: minimal
+  parallel: true
+  
 test:
   assemblies: '**\*.tests.dll'
+  
 artifacts:
   - path: 'build'

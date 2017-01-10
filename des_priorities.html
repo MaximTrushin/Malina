@@ -1,0 +1,112 @@
+<html lang="en-US">
+<head>
+<title>Malina Tutorial</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="Malina,XML,json,tutorials,programming,training,learning,lessons,references,examples,source code,colors,demos,tips">
+<meta name="Description" content="Well organized and easy to understand guide for Malina language with lots of examples of how to use Malina to create XML and JSON documents.">
+<link rel="stylesheet" href="/lib/w3.css">
+<link rel="stylesheet" href="/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<script src="/lib/w3data.js"></script>
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+.w3-sidenav a,.w3-sidenav h4{padding:12px;}
+.w3-navbar a{padding-top:12px !important;padding-bottom:12px !important;}
+</style>
+
+</head>
+<body>
+  <div w3-include-html="guide_nav.html"></div>
+
+  <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
+  <div class="w3-main w3-content" style="margin-left:250px">
+
+    <div class="w3-row w3-padding-64">
+      <div class="w3-container">
+        <h1 class="w3-text-teal">Design priorities</h1>
+        <p>
+        <ol class="w3-large">
+          <li>Readability and editability</li>
+          <br>
+          <div class="w3-container w3-sand w3-leftbar">
+              <p><span class="w3-serif w3-large">
+                <i>Malina achieves the higher people-friendliness by using clean, intuitive and people-friendly syntax.</i>
+              </span></p>
+          </div>
+          <br>
+
+          <li>Semantic compatibility with XML and JSON</li>
+          <br>
+          <div class="w3-container w3-sand w3-leftbar">
+              <p><span class="w3-serif w3-large">
+                <i>Semantic compatibility means that Malina document can be converted to either XML or JSON formats.</i>
+              </span></p>
+          </div>
+          <br>
+          <li>Powerful code reuse features</li>
+          <br>
+          <div class="w3-container w3-sand w3-leftbar">
+              <p><span class="w3-serif w3-large">
+                <i>Malina allows higher productivity by using rich code reuse features which are unique among all existing data-formats and markup-languages.</i>
+              </span></p>
+          </div>
+          <br>
+          <li>Minimum set of syntax rules</li>
+          <br>
+          <div class="w3-container w3-sand w3-leftbar">
+              <p><span class="w3-serif w3-large">
+                <i>Malina can be used by people who have never worked with markup languages.</i>
+              </span></p>
+          </div>
+          <br>
+
+        </ol>
+      </p>
+
+      </div>
+
+    </div>
+
+    <div w3-include-html="guide_foot.html"></div>
+    <!-- END MAIN -->
+    </div>
+    <!-- Footer -->
+
+    <script>
+    w3IncludeHTML();
+
+
+    // Toggle between showing and hiding the sidenav, and add overlay effect
+    function w3_open() {
+      // Get the Sidenav
+       var mySidenav = document.getElementById("mySidenav");
+
+       // Get the DIV with overlay effect
+       var overlayBg = document.getElementById("myOverlay");
+
+        if (mySidenav.style.display === 'block') {
+            mySidenav.style.display = 'none';
+            overlayBg.style.display = "none";
+        } else {
+            mySidenav.style.display = 'block';
+            overlayBg.style.display = "block";
+        }
+    }
+
+    // Close the sidenav with the close button
+    function w3_close() {
+      // Get the Sidenav
+       var mySidenav = document.getElementById("mySidenav");
+
+       // Get the DIV with overlay effect
+       var overlayBg = document.getElementById("myOverlay");
+        mySidenav.style.display = "none";
+        overlayBg.style.display = "none";
+    }
+    </script>
+
+
+</body>
+</html>

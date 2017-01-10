@@ -1,0 +1,46 @@
+<html lang="en-US">
+<head>
+<title>Malina Tutorial</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="Malina,XML,json,tutorials,programming,training,learning,lessons,references,examples,source code,colors,demos,tips">
+<meta name="Description" content="Well organized and easy to understand guide for Malina language with lots of examples of how to use Malina to create XML and JSON documents.">
+<link rel="stylesheet" href="/lib/w3.css">
+<link rel="stylesheet" href="/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<script src="/lib/w3data.js"></script>
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+.w3-sidenav a,.w3-sidenav h4{padding:12px;}
+.w3-navbar a{padding-top:12px !important;padding-bottom:12px !important;}
+</style>
+
+</head>
+<body>
+  <div w3-include-html="guide_nav.html"></div>
+
+  <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
+  <div class="w3-main w3-content" style="margin-left:250px">
+
+    <div class="w3-row w3-padding-64">
+      <div class="w3-container">
+        <h1 class="w3-text-teal">Namespace declaration</h1>
+        <p>Namespaces can be declared in the Module, Document or Alias Definition.</p>
+        <p>Although JSON do not support XML namespaces they can be used in the Malina document to create JSON files.</p>
+        <p>Namespace declaration has the following syntax. #namespace_prefix=namespace</p>
+        <p>For example:</p>
+        <p class="w3-code"><span style="color: #00c800;">#xsi</span>&nbsp;=&nbsp;<span style="color: #ff9900;">http://www.w3.org/2001/XMLSchema-instance</span><br />
+          <span style="color: #00c800;">#ipo</span>&nbsp;=&nbsp;<span style="color: #ff9900;">http://www.example.com/myipo</span></p>
+
+      </div>
+    </div>
+    <div w3-include-html="guide_foot.html"></div>
+    <!-- END MAIN -->
+    </div>
+    <!-- Footer -->
+    <script>
+    w3IncludeHTML();
+    </script>
+</body>
+</html>

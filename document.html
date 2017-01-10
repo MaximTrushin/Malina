@@ -1,0 +1,50 @@
+<html lang="en-US">
+<head>
+<title>Malina Tutorial</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="Malina,XML,json,tutorials,programming,training,learning,lessons,references,examples,source code,colors,demos,tips">
+<meta name="Description" content="Well organized and easy to understand guide for Malina language with lots of examples of how to use Malina to create XML and JSON documents.">
+<link rel="stylesheet" href="/lib/w3.css">
+<link rel="stylesheet" href="/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<script src="/lib/w3data.js"></script>
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+.w3-sidenav a,.w3-sidenav h4{padding:12px;}
+.w3-navbar a{padding-top:12px !important;padding-bottom:12px !important;}
+</style>
+
+</head>
+<body>
+  <div w3-include-html="guide_nav.html"></div>
+
+  <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
+  <div class="w3-main w3-content" style="margin-left:250px">
+
+    <div class="w3-row w3-padding-64">
+      <div class="w3-container">
+        <h1 class="w3-text-teal">Document</h1>
+        <p>Each Malina Document semantically represents either XML or JSON document (file).</p>
+        <p>The name of the Document can include all characters that are allowed in the XML element name except colon &ldquo;:&rdquo;.</p>
+        <p>By default the document represents XML document. You can explicitly specify that document represents XML by adding extension &ldquo;.xml&rdquo; to the name of the document.</p>
+        <p>If document&rsquo;s name end with &ldquo;.json&rdquo; then the document represents JSON document.</p>
+        <p>The max length of the document&rsquo;s name with extension (&ldquo;xml&rdquo; or &ldquo;json&rdquo;) is 255. The max length of the document&rsquo;s name without extension is 251 (255-4, 4 is the length of &ldquo;.xml&rdquo;).</p>
+        <p>The document&rsquo;s definition start with &ldquo;<strong>!</strong>&rdquo; followed by document&rsquo;s name and colon &ldquo;:&rdquo; that marks the start of the document&rsquo;s body:</p>
+        <p class="w3-code"><span style="color: #0000ff;">!PurchaseOrder:</span></p>
+        <p>OR</p>
+        <p class="w3-code"><span style="color: #0000ff;">!PurchaseOrder2016_08_01.xml:</span></p>
+        <p>OR</p>
+        <p class="w3-code"><span style="color: #0000ff;">!PurchaseOrder2016_08_01.json:</span></p>
+      </div>
+    </div>
+    <div w3-include-html="guide_foot.html"></div>
+    <!-- END MAIN -->
+    </div>
+    <!-- Footer -->
+    <script>
+    w3IncludeHTML();
+    </script>
+</body>
+</html>

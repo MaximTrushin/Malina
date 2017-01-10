@@ -1,0 +1,288 @@
+<html lang="en-US">
+<head>
+<title>Malina Tutorial</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="Malina,XML,json,tutorials,programming,training,learning,lessons,references,examples,source code,colors,demos,tips">
+<meta name="Description" content="Well organized and easy to understand guide for Malina language with lots of examples of how to use Malina to create XML and JSON documents.">
+<link rel="stylesheet" href="/lib/w3.css">
+<link rel="stylesheet" href="/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<script src="/lib/w3data.js"></script>
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+.w3-sidenav a,.w3-sidenav h4{padding:12px;}
+.w3-navbar a{padding-top:12px !important;padding-bottom:12px !important;}
+</style>
+
+</head>
+<body>
+  <div w3-include-html="guide_nav.html"></div>
+
+  <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
+  <div class="w3-main w3-content" style="margin-left:250px">
+
+    <div class="w3-row w3-padding-64">
+      <div class="w3-container">
+        <h1 class="w3-text-teal">String Constants</h1>
+        <p>In Malina, there are two types of string constants: <b>quoted strings</b> and <b>open strings</b>.</p>
+        <h3>Quoted strings</h3>
+        <p>Malina uses double quoted and singled quote strings.</p>
+        <p>To escape double quote in a double-quoted string use two consequent double quotes ( "" ). The same approach works for single quote.</p>
+        <p class="w3-code"><span style="color: #ff0000;">@partNum</span>&nbsp;=&nbsp;<span style="color: #ff6600;">"748-OT"</span>
+          <br /><span style="color: #993300;">productName</span>&nbsp;=&nbsp;<span style="color: #333399;">"Diamond ""Quoted""&nbsp;heart"</span>
+          <br /><span style="color: #993300;">quantity</span>&nbsp;=&nbsp;<span style="color: #333399;">"1"</span>
+          <br /><span style="color: #993300;">price</span>&nbsp;=&nbsp;<span style="color: #333399;">"248.90"</span>
+          <br /><span style="color: #993300;">ipo.comment</span>&nbsp;=&nbsp;<span style="color: #333399;">'Valentine''s&nbsp;day&nbsp;packaging.'</span>
+        </p>
+        <h3>Escape characters</h3>
+        <p>Malina allows using escape characters in the single quoted strings.</p>
+        <p>The following formats are used to insert UTF-8/16 escape character into the string:</p>
+        <table class="w3-table w3-bordered w3-striped w3-border " >
+        <thead>
+        <tr class="w3-light-grey">
+        <td>
+        <p><strong>Use case </strong>(for new line character)</p>
+        </td>
+        <td>
+        <p><strong>decimal</strong></p>
+        </td>
+        <td>
+        <p><strong>hex</strong></p>
+        </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>
+        <p>Escape symbol not followed by digit (decimal or hex)</p>
+        </td>
+        <td>
+        <p><span style="color: #008080;">$10</span></p>
+        </td>
+        <td>
+        <p><span style="color: #008080;">$%A</span></p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>Escape symbol followed by a digit (decimal or hex). Max length is 6 symbols including $ or $%.</p>
+        </td>
+        <td>
+        <p><span style="color: #008080;">$(10)</span>,&nbsp;<span style="color: #008080;">$00010</span></p>
+        </td>
+        <td>
+        <p><span style="color: #008080;">$(%A)</span>,&nbsp;<span style="color: #008080;">$%000A</span></p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>Example</p>
+        </td>
+        <td>
+        <p>&lsquo;Line 1<span style="color: #008080;">$10</span>Line2&rsquo;, &lsquo;Line3<span style="color: #008080;">$(10)</span>Line4&rsquo;</p>
+        </td>
+        <td>
+        <p>&lsquo;Line 1<span style="color: #008080;">$%A</span> Line2&rsquo;, &lsquo;Line3<span style="color: #008080;">$(%A)</span>Line4&rsquo;</p>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <p>&nbsp;</p>
+        <div class="w3-container w3-sand w3-leftbar">
+          <p>Note: Because $ is used for escape characters, it should be escaped if it actually means a dollar sign. Dollar sign can be escaped as "<span style="color: #008080;">$$"</span>&nbsp;or "<span style="color: #008080;">\$"</span>.</p>
+        </div>
+        <p>Single quoted string also supports Java script escape sequences:</p>
+        <table class="w3-table w3-bordered w3-striped w3-border">
+        <tbody>
+        <tr>
+        <td>
+        <p><strong>Unicode character value</strong></p>
+        </td>
+        <td>
+        <p><strong>Escape sequence</strong></p>
+        </td>
+        <td>
+        <p><strong>Meaning</strong></p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u0008</p>
+        </td>
+        <td>
+        <p>\b</p>
+        </td>
+        <td>
+        <p>Backspace</p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u0009</p>
+        </td>
+        <td>
+        <p>\t</p>
+        </td>
+        <td>
+        <p>Tab</p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u000A</p>
+        </td>
+        <td>
+        <p>\n</p>
+        </td>
+        <td>
+        <p>Line feed (new line)</p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u000B</p>
+        </td>
+        <td>
+        <p>\v</p>
+        </td>
+        <td>
+        <p>Vertical tab</p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u000C</p>
+        </td>
+        <td>
+        <p>\f</p>
+        </td>
+        <td>
+        <p>Form feed</p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u000D</p>
+        </td>
+        <td>
+        <p>\r</p>
+        </td>
+        <td>
+        <p>Carriage return</p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u0022</p>
+        </td>
+        <td>
+        <p>\"</p>
+        </td>
+        <td>
+        <p>Double quotation mark (")</p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u0027</p>
+        </td>
+        <td>
+        <p>\'</p>
+        </td>
+        <td>
+        <p>Single quotation mark (')</p>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <p>\u005C</p>
+        </td>
+        <td>
+        <p>\\</p>
+        </td>
+        <td>
+        <p>Backslash (\)</p>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <h3>String Interpolation</h3>
+        <p>String interpolation allows you to insert a value of an alias inside a string. The interpolation has the following syntax. $(alias_name). The parentheses are optional
+          if interpolation is followed by space or another symbol that can&rsquo;t be used in the alias name. Examples:</p>
+        <p class="w3-code"><span style="color: #993300;">line1</span>&nbsp;=&nbsp;<span style="color: #333399;">'The&nbsp;customer&nbsp;name&nbsp;is&nbsp;</span><span style="color: #008080;">$Customer.NJ.Newark</span><span style="color: #333399;">'</span>
+          <span style="color: #993300;">line2</span>&nbsp;=&nbsp;<span style="color: #333399;">'The&nbsp;customer\'s&nbsp;phone&nbsp;number&nbsp;is&nbsp;</span><span style="color: #008080;">$(Customer.Phone.AreaCode)</span>-<span style="color: #008080;">$(Customer.Phone.LocalNumber)</span>-<span style="color: #008080;">$Customer.Phone.Extention</span><span style="color: #333399;">'</span>
+        </p>
+        <h3>Open strings</h3>
+        <p>Open strings are defined without quotes. &nbsp;In the next examples all values are defined as open strings.</p>
+        <p class="w3-code"><span style="color: #993300;">productName</span>&nbsp;=&nbsp;<span style="color: #333399;">Diamond&nbsp;heart</span>
+          <br /><span style="color: #993300;">quantity</span>&nbsp;=&nbsp;<span style="color: #333399;">1</span>
+          <br /><span style="color: #993300;">price</span>&nbsp;=&nbsp;<span style="color: #333399;">248.90</span>
+          <br /><span style="color: #993300;">ipo.comment</span>&nbsp;=&nbsp;<span style="color: #333399;">Valentine's&nbsp;day&nbsp;packaging.</span>
+          <br /><span style="color: #993300;">shipDate</span>&nbsp;=&nbsp;<span style="color: #333399;">2000-02-14</span>
+        </p>
+        <p>There are certain restrictions on usage of the open strings. The open string can&rsquo;t start from dollar sign, single or double quote and it can&rsquo;t have any special non-visible symbols that require escaping.</p>
+        <p>If the string starts with a quote then quoted string should be used instead.</p>
+        <p>Open string can&rsquo;t start with a <strong>$</strong> dollar sign because a dollar is used for aliases.</p>
+        <p>The restrictions listed above do not work for the open strings defined with double equality "==". For example, you can define open string starting with quote and dollar sign like in the following example.</p>
+        <p  class="w3-code"><span style="color: #993300;">Comment</span>&nbsp;== "<span style="color: #333399;">Lorem&nbsp;ipsum" dolor&nbsp;sit&nbsp;amet</span>
+          <br /><span style="color: #993300;">Price</span>&nbsp;==&nbsp;<span style="color: #333399;">$10</span>
+        </p>
+        <p>Both types of open strings continue until the end of the line and ignore leading and trailing spaces.</p>
+        <h3>Multiline Open Strings</h3>
+        <p>Multiline open string is a simple way to add long strings to your Malina document. It uses indents to define multiline strings&nbsp;&nbsp; For example:</p>
+        <p class="w3-code"><span style="color: #993300;">LoremIpsum</span>&nbsp;=
+          <br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #333399;">Lorem&nbsp;ipsum&nbsp;dolor&nbsp;sit&nbsp;amet,&nbsp;consectetur&nbsp;adipiscing&nbsp;elit.&nbsp;Pellentesque&nbsp;a&nbsp;lectus&nbsp;gravida,&nbsp;congue.</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;Quisque&nbsp;mollis&nbsp;ut&nbsp;odio&nbsp;sed&nbsp;facilisis.&nbsp;Donec&nbsp;dictum&nbsp;ullamcorper&nbsp;lectus,&nbsp;ultrices&nbsp;convallis&nbsp;justo.</span>
+          <br />==</p>
+        <p>If the first line doesn&rsquo;t have any symbols then it will be ignored and actually start from the next line.</p>
+        <p>The ending double equality is used to specify the end of the string. It can be omitted. In this case, the string will end based on indents and all trailing white space and new line symbols will be trimmed.</p>
+
+        <h3>Folded open string</h3>
+
+        <p>Sometimes strings are too long and thus hard to read and edit. In this case, the folded open string should be used. In the folded open string, newlines become spaces. The empty line is used to define a new line symbol. For example:</p>
+        <p class="w3-code"><span style="color: #993300;">LoremIpsum</span>&nbsp;==<br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #333399;">Lorem&nbsp;ipsum&nbsp;dolor&nbsp;sit&nbsp;amet,&nbsp;consectetur&nbsp;adipiscing&nbsp;elit.&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;Pellentesque&nbsp;a&nbsp;lectus&nbsp;gravida,&nbsp;congue&nbsp;tellus&nbsp;quis,&nbsp;sagittis&nbsp;massa.&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;Aenean&nbsp;sed&nbsp;odio&nbsp;nec&nbsp;tellus&nbsp;vulputate&nbsp;vestibulum.&nbsp;Sed&nbsp;sed&nbsp;pulvinar&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;ex.&nbsp;</span><br />
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;Quisque&nbsp;mollis&nbsp;ut&nbsp;odio&nbsp;sed&nbsp;facilisis.&nbsp;Donec&nbsp;dictum&nbsp;ullamcorper&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;lectus,&nbsp;ultrices&nbsp;convallis&nbsp;justo&nbsp;volutpat&nbsp;at.&nbsp;Cras&nbsp;nibh&nbsp;tellus,&nbsp;placerat&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;pretium&nbsp;sit&nbsp;amet,&nbsp;tempor&nbsp;sit&nbsp;amet&nbsp;nibh.&nbsp;Nulla&nbsp;tempus&nbsp;molestie&nbsp;ligula&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;sed&nbsp;semper.</span><br />==</p>
+        <p>All open strings don&rsquo;t support escape characters and string interpolation. If you need to add a multiline string with special symbols or string interpolation then multiline single-quoted string has to be used.</p>
+
+        <h3>Multiline quoted string</h3>
+
+        <p><strong>Double-quoted multiline string</strong> can be used to define multiline strings. It works pretty straightforward. The first line of the string starts after opening double quote. The second and the next lines of the string are indented. The string ends with closing quote. For example:</p>
+        <p class="w3-code"><span style="color: #993300;">LoremIpsum</span>&nbsp;=<span style="color: #333399;">"&nbsp;Lorem&nbsp;ipsum&nbsp;dolor&nbsp;sit&nbsp;amet,&nbsp;consectetur&nbsp;adipiscing&nbsp;elit.&nbsp;Pellentesque&nbsp;a&nbsp;congue.</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;Quisque&nbsp;mollis&nbsp;ut&nbsp;odio&nbsp;sed&nbsp;facilisis.&nbsp;Donec&nbsp;dictum&nbsp;ullamcorper&nbsp;lectus,&nbsp;convallis&nbsp;volutpat&nbsp;at"</span>
+        </p>
+        <p><strong>Single-quoted string</strong> allows usage of string interpolation and escape characters in the multiline string. At the same time it works as folded multiline string:</p>
+        <p class="w3-code"><span style="color: #993300;">LoremIpsum</span>&nbsp;=&nbsp;<span style="color: #333399;">'<span style="color: #008080;">\t</span>Lorem&nbsp;ipsum&nbsp;dolor&nbsp;<span style="color: #008080;">$CustomerName</span>&nbsp;consectetur&nbsp;adipiscing&nbsp;elit.</span>
+        <span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;Pellentesque&nbsp;a&nbsp;lectus&nbsp;gravida,&nbsp;congue&nbsp;tellus&nbsp;quis,&nbsp;sagittis&nbsp;massa.&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;Aenean&nbsp;sed&nbsp;odio&nbsp;nec&nbsp;tellus&nbsp;vulputate&nbsp;vestibulum.&nbsp;Sed&nbsp;sed&nbsp;pulvinar&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;ex. <span style="color: #008080;">\n </span></span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quisque&nbsp;mollis&nbsp;ut&nbsp;odio&nbsp;sed&nbsp;facilisis.&nbsp;Donec&nbsp;dictum&nbsp;ullamcorper&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;lectus,&nbsp;ultrices&nbsp;convallis&nbsp;justo&nbsp;volutpat&nbsp;at.&nbsp;Cras&nbsp;nibh&nbsp;tellus,&nbsp;placerat&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;pretium&nbsp;sit&nbsp;amet,&nbsp;tempor&nbsp;sit&nbsp;amet&nbsp;nibh.&nbsp;Nulla&nbsp;tempus&nbsp;molestie&nbsp;ligula&nbsp;</span>
+          <br /><span style="color: #333399;">&nbsp;&nbsp;&nbsp;&nbsp;sed&nbsp;semper.'</span>
+        </p>
+
+      </div>
+
+    </div>
+
+    <div w3-include-html="guide_foot.html"></div>
+    <!-- END MAIN -->
+    </div>
+    <!-- Footer -->
+
+    <script>
+    w3IncludeHTML();
+
+    </script>
+
+
+</body>
+</html>

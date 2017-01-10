@@ -1,0 +1,136 @@
+<html lang="en-US">
+<head>
+<title>Malina Tutorial</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="Malina,XML,json,tutorials,programming,training,learning,lessons,references,examples,source code,colors,demos,tips">
+<meta name="Description" content="Well organized and easy to understand guide for Malina language with lots of examples of how to use Malina to create XML and JSON documents.">
+<link rel="stylesheet" href="/lib/w3.css">
+<link rel="stylesheet" href="/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<script src="/lib/w3data.js"></script>
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+.w3-sidenav a,.w3-sidenav h4{padding:12px;}
+.w3-navbar a{padding-top:12px !important;padding-bottom:12px !important;}
+</style>
+
+</head>
+<body>
+  <div w3-include-html="guide_nav.html"></div>
+  <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
+  <div class="w3-main w3-content" style="margin-left:250px">
+
+    <div class="w3-row w3-padding-64">
+      <div class="w3-container">
+        <h1 class="w3-text-teal">Alias and Alias Definition</h1>
+
+        <h3>Alias definition</h3>
+        <p>Malina has a very powerful code reuse feature called Alias. Basically, Alias is a short name for a fragment of the code. It can be used in place of element, attribute,
+          block or value.</p>
+        <p>Aliases are defined in the module. Alias Definition starts with &ldquo;<strong>!$&rdquo;</strong> followed by alias name and block or value. For example:</p>
+        <p class="w3-code"><span style="color: #0000ff;">!$Address.US:</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;">@xsi.type</span>&nbsp;=&nbsp;<span style="color: #ff6600;">"ipo:US-Address"</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.name</span>&nbsp;=&nbsp;<span style="color: #333399;">Robert&nbsp;Smith</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.street</span>&nbsp;=&nbsp;<span style="color: #333399;">8&nbsp;Oak&nbsp;Avenue</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.city</span>&nbsp;=&nbsp;<span style="color: #333399;">Old&nbsp;Town</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.state</span>&nbsp;=&nbsp;<span style="color: #333399;">NJ</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.zip</span>&nbsp;=&nbsp;<span style="color: #333399;">95819</span></p>
+        <p class="w3-code"><span style="color: #0000ff;">!$Pi</span>&nbsp;=&nbsp;<span style="color: #333399;">3.14159265359</span></p>
+        <p>Alias can be also defined with parameters. Parameters are defined inside the Alias Definition. Each parameter can be defined with the optional default value.</p>
+        <p>There are two types of parameters. Value Parameter represents a value (for example element&rsquo;s or attribute&rsquo;s value). Block Parameter represents a block
+        (one or more attributes or elements).</p>
+        <p>The Value Parameter has the following syntax. %parameter_name [= optional_default_value]</p>
+        <p>The Block Parameter has the following syntax.</p>
+        <p>%parameter_name [: optional_default_block]</p>
+        <p>For example the following alias <span style="color: #0000ff;">Items.Jewelry.Rings.Amber</span>&nbsp;is defined with Value Parameter <span style="color: #33cccc;">quantity</span>
+          with the default value 1.</p>
+        <p class="w3-code"><span style="color: #0000ff;">!$Items.Jewelry.Rings.Amber:</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">item:</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;">@partNum</span>&nbsp;=&nbsp;<span style="color: #ff6600;">238-KK</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">productName</span>&nbsp;=&nbsp;<span style="color: #333399;">Amber&nbsp;ring</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">quantity</span>&nbsp;=&nbsp;<span style="color: #33cccc;">%quantity</span>&nbsp;=&nbsp;
+        <span style="color: #333399;">1</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">price</span>&nbsp;=&nbsp;<span style="color: #333399;">89.90</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.comment</span>&nbsp;=&nbsp;
+        <span style="color: #333399;">With&nbsp;no&nbsp;inclusions,&nbsp;please.</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">shipDate</span>&nbsp;=&nbsp;<span style="color: #333399;">2000-01-07</span></p>
+        <p>In the next example alias <span style="color: #0000ff;">Templates.PurchaseOrder</span> is defined with Block Parameters <span style="color: #33cccc;">ShipTo</span>,
+        <span style="color: #33cccc;">BillTo</span>, <span style="color: #33cccc;">Items</span>. Parameter <span style="color: #33cccc;">ShipTo</span> has a default block.</p>
+        <p class="w3-code"><span style="color: #0000ff;">!$Templates.PurchaseOrder:</span> <br />&nbsp; &nbsp; <span style="color: #993300;">ipo.purchaseOrder:</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">shipTo:</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #33cccc;">%ShipTo</span>:
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.name</span>&nbsp;=&nbsp;
+        <span style="color: #333399;">Helen&nbsp;Zoe</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.street</span>&nbsp;=&nbsp;
+        <span style="color: #333399;">47&nbsp;Eden&nbsp;Street</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.city</span>&nbsp;=&nbsp;
+        <span style="color: #333399;">Cambridge</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.postcode</span>&nbsp;=&nbsp;
+        <span style="color: #333399;">126</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">billTo:</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #33cccc;">%BillTo</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">Items:</span><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #33cccc;">%Items</span>&nbsp;</p>
+        <h3>Alias</h3>
+        <p>Alias can be used in place of any element or attribute if it is a Block Alias, or in place of value if it is a Value Alias.</p>
+        <p>Alias starts with $ following by alias name. For example the following document uses two Block Aliases <span style="color: #008080;">$Address.EU</span> and
+          <span style="color: #008080;">$Address.US</span>&nbsp;</p>
+        <p class="w3-code"><span style="color: #0000ff;">!purchaseOrder:</span><br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.purchaseOrder:</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;">@orderDate</span>&nbsp;=&nbsp;<span style="color: #ff6600;">2001-10-10</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">shipTo:</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #008080;">$Address.EU</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">billTo:</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #008080;">$Address.US</span>
+        </p>
+        <p>&nbsp;</p>
+        <p>In the next example alias <span style="color: #008080;">$States.Alaska</span> is used to fill in the correct abbreviation for the state of Alaska.</p>
+        <p class="w3-code"><span style="color: #993300;">billTo:</span><br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.name</span>&nbsp;=&nbsp;
+          <span style="color: #333399;">Robert&nbsp;Smith</span><br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.street</span>&nbsp;=&nbsp;
+          <span style="color: #333399;">8&nbsp;Oak&nbsp;Avenue</span><br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.city</span>&nbsp;=&nbsp;
+          <span style="color: #333399;">Old&nbsp;Town</span><br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.state</span>&nbsp;=&nbsp;
+          <span style="color: #008080;">$States.Alaska</span><br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.zip</span>&nbsp;=&nbsp;
+          <span style="color: #333399;">95819</span>
+        </p>
+        <p>&nbsp;</p>
+        <p>The alias could be specified with arguments if its definition contains parameters. If a parameter doesn&rsquo;t have a default value then the corresponding argument must
+          be&nbsp;added to the alias.</p>
+        <p>Arguments are added inside the alias block.&nbsp;</p>
+        <p>Value argument has the following syntax. .argument_name = value</p>
+        <p class="w3-code"><span style="color: #008080;">$Items.Jewelry.Necklaces.Lapis:</span>&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #33cccc;">.quantity</span>&nbsp;=&nbsp;
+          <span style="color: #333399;">2</span></p>
+        <p>&nbsp;</p>
+        <p>Block arguments has the following syntax .argument_name: block</p>
+        <p>In the following example the alias &ldquo;<span style="color: #008080;">Templates.PurchaseOrder</span>&rdquo; has three block arguments
+          <span style="color: #33cccc;">ShipTo</span>, <span style="color: #33cccc;">BillTo</span> and <span style="color: #33cccc;">Items</span></p>
+        <p class="w3-code"><span style="color: #008080;">$Templates.PurchaseOrder:</span><br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #33cccc;">.ShipTo:</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;">@xsi.type</span>&nbsp;=&nbsp;<span style="color: #ff6600;">"ipo:EU-Address"</span>&nbsp;
+        <span style="color: #ff0000;">@export-code</span>&nbsp;=&nbsp;<span style="color: #ff6600;">"1"</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.name</span>&nbsp;=&nbsp;<span style="color: #333399;">Helen&nbsp;Zoe</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.street</span>&nbsp;=&nbsp;<span style="color: #333399;">47&nbsp;Eden&nbsp;Street</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.city</span>&nbsp;=&nbsp;<span style="color: #333399;">Cambridge</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.postcode</span>&nbsp;=&nbsp;<span style="color: #333399;">126</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #33cccc;">.BillTo:</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;">@xsi.type</span>&nbsp;=&nbsp;<span style="color: #ff6600;">"ipo:US-Address"</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.name</span>&nbsp;=&nbsp;<span style="color: #333399;">Robert&nbsp;Smith</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.street</span>&nbsp;=&nbsp;<span style="color: #333399;">8&nbsp;Oak&nbsp;Avenue</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.city</span>&nbsp;=&nbsp;<span style="color: #333399;">Old&nbsp;Town</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.state</span>&nbsp;=&nbsp;<span style="color: #333399;">NJ</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.zip</span>&nbsp;=&nbsp;<span style="color: #333399;">95819</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #33cccc;">.Items:</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">item</span>:
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;">@partNum</span>&nbsp;=&nbsp;<span style="color: #ff6600;">833-AA</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">productName</span>&nbsp;=&nbsp;<span style="color: #333399;">Lapis&nbsp;necklace</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">quantity</span>&nbsp;=&nbsp;<span style="color: #333399;">1</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">price</span>&nbsp;=&nbsp;<span style="color: #333399;">99.95</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">ipo.comment</span>&nbsp;=&nbsp;<span style="color: #333399;">Need&nbsp;this&nbsp;for&nbsp;the&nbsp;holidays!</span>
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">shipDate</span>&nbsp;=&nbsp;<span style="color: #333399;">2013-12-12</span></p>
+      </div>
+    </div>
+    <div w3-include-html="guide_foot.html"></div>
+    <!-- END MAIN -->
+    </div>
+    <!-- Footer -->
+    <script>
+    w3IncludeHTML();
+    </script>
+</body>
+</html>

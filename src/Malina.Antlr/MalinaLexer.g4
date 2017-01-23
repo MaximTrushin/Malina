@@ -149,7 +149,7 @@ fragment	NameStartChar	:   [a-zA-Z]
 							|   '\u3001'..'\uD7FF' 
 							|   '\uF900'..'\uFDCF' 
 							|   '\uFDF0'..'\uFFFD'
-//							|   '\u00010000'..'\u000effff' utf-32 not supported by ANTLR
+							|   '\u00010000'..'\u000effff'
 							;
 
 fragment	Digit			:   [0-9]

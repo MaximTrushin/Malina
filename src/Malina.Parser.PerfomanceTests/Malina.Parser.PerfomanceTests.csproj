@@ -64,10 +64,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Malina.Compiler.Tests\Malina.Compiler.Tests.csproj">
-      <Project>{fd22dbf6-4ec4-4742-916f-88ebb8e59008}</Project>
-      <Name>Malina.Compiler.Tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Malina.Compiler\Malina.Compiler.csproj">
       <Project>{6807e668-da17-4871-9620-08682c940405}</Project>
       <Name>Malina.Compiler</Name>

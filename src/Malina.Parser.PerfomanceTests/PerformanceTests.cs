@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using static Malina.Parser.Tests.TestUtils;
 using Antlr4.Runtime;
@@ -150,7 +151,7 @@ namespace Malina.Parser.PerformanceTests
 
             if (context.Errors.Count > 0)
             {
-                Malina.Compiler.Tests.TestUtils.PrintCompilerErrors(context.Errors);
+                PrintCompilerErrors(context.Errors);
             }
             Assert.AreEqual(0, context.Errors.Count);
         }
@@ -167,6 +168,20 @@ namespace Malina.Parser.PerformanceTests
             compilerParameters.Input.Add(new FileInput(dir + fileName));
 
             return compilerParameters;
+        }
+
+        public static void PrintCompilerErrors(IEnumerable<CompilerError> errors)
+        {
+            Console.WriteLine("Compiler Errors:");
+
+            foreach (var error in errors)
+            {
+                Console.WriteLine();
+                Console.Write(error.Code + " " + error.LexicalInfo + ": ");
+                Console.WriteLine(error.Message);
+                if (error.InnerException != null)
+                    Console.WriteLine(error.InnerException.StackTrace);
+            }
         }
     }
 }

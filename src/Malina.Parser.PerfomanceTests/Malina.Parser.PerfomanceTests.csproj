@@ -72,10 +72,6 @@
       <Project>{66e57a03-08ad-491b-9b1d-6cb4a0d37969}</Project>
       <Name>Malina.DOM</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Malina.Parser.Tests\Malina.Parser.Tests.csproj">
-      <Project>{66c5a6d0-ffdc-4da6-9421-e6ae76e5718a}</Project>
-      <Name>Malina.Parser.Tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Malina.Parser\Malina.Parser.csproj">
       <Project>{78d74fb6-fada-405b-9494-ede7688491ed}</Project>
       <Name>Malina.Parser</Name>

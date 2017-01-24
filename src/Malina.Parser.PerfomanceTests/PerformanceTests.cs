@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using NUnit.Framework;
-using static Malina.Parser.Tests.TestUtils;
 using Antlr4.Runtime;
-using Malina.Parser.Tests;
 using Antlr4.Runtime.Atn;
 using Malina.Compiler;
 using Malina.Compiler.Pipelines;
@@ -14,6 +17,7 @@ namespace Malina.Parser.PerformanceTests
     [TestFixture]
     public class PerformanceTests
     {
+        public static string AssemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         //[Test]
         public void BigFile()
         {
@@ -39,8 +43,8 @@ namespace Malina.Parser.PerformanceTests
             var parser = MalinaParser.Create(new CommonTokenStream(lexer));
             parser.Interpreter.PredictionMode = PredictionMode.Sll;
             var malinaListener = new MalinaParserListener();
-            var parserErrorListener = new ErrorListener<IToken>();
-            parser.AddErrorListener(parserErrorListener);
+            //var parserErrorListener = new ErrorListener<IToken>();
+            //parser.AddErrorListener(parserErrorListener);
             //parser.AddParseListener(malinaListener);
             parser.BuildParseTree = false;
             t1 = Environment.TickCount;
@@ -49,7 +53,7 @@ namespace Malina.Parser.PerformanceTests
 
             Console.WriteLine("Parse Time: {0}", t2 - t1);
             Assert.Less(t2 - t1, 15000);
-            Assert.IsFalse(parserErrorListener.HasErrors);
+            
 
 
             lexer.Reset();
@@ -60,7 +64,7 @@ namespace Malina.Parser.PerformanceTests
             t2 = Environment.TickCount;
             Console.WriteLine("DOM Time: {0}", t2 - t1);
             Assert.Less(t2 - t1, 25000);
-            Assert.IsFalse(parserErrorListener.HasErrors);
+            
 
             t1 = Environment.TickCount;
             //var visitor = new DOMPrinterVisitor();
@@ -107,8 +111,8 @@ namespace Malina.Parser.PerformanceTests
             var parser = MalinaParser.Create(new CommonTokenStream(lexer));
             parser.Interpreter.PredictionMode = PredictionMode.Sll;
             var malinaListener = new MalinaParserListener();
-            var parserErrorListener = new ErrorListener<IToken>();
-            parser.AddErrorListener(parserErrorListener);
+            //var parserErrorListener = new ErrorListener<IToken>();
+            //parser.AddErrorListener(parserErrorListener);
             //parser.AddParseListener(malinaListener);
             parser.BuildParseTree = false;
             t1 = Environment.TickCount;
@@ -117,7 +121,7 @@ namespace Malina.Parser.PerformanceTests
 
             Console.WriteLine("Parse Time: {0}", t2 - t1);
             Assert.Less(t2 - t1, 15000);
-            Assert.IsFalse(parserErrorListener.HasErrors);
+            //Assert.IsFalse(parserErrorListener.HasErrors);
 
 
             lexer.Reset();
@@ -131,13 +135,13 @@ namespace Malina.Parser.PerformanceTests
             t2 = Environment.TickCount;
             Console.WriteLine("DOM Time: {0}", t2 - t1);
             Assert.Less(t2 - t1, 20000);
-            Assert.IsFalse(parserErrorListener.HasErrors);
+            //Assert.IsFalse(parserErrorListener.HasErrors);
 
-            t1 = Environment.TickCount;
-            var visitor = new DOMPrinterVisitor();
-            visitor.Visit(malinaListener.CompileUnit);
-            t2 = Environment.TickCount;
-            Console.WriteLine("Visitor Time: {0}", t2 - t1);
+            //t1 = Environment.TickCount;
+            //var visitor = new DOMPrinterVisitor();
+            //visitor.Visit(malinaListener.CompileUnit);
+            //t2 = Environment.TickCount;
+            //Console.WriteLine("Visitor Time: {0}", t2 - t1);
         }
 
         //[Test]
@@ -183,5 +187,21 @@ namespace Malina.Parser.PerformanceTests
                     Console.WriteLine(error.InnerException.StackTrace);
             }
         }
+
+        public static string LoadTestCodeRaw()
+        {
+            var testCaseName = GetTestCaseName();
+
+            var fileName = new StringBuilder(AssemblyDirectory + @"\Scenarios\").Append(testCaseName).Append(".mlx").ToString();
+
+            return File.ReadAllText(fileName);
+        }
+
+        private static string GetTestCaseName()
+        {
+            var trace = new StackTrace();
+            return trace.GetFrames().Select(f => f.GetMethod()).First(m => m.CustomAttributes.Any(a => a.AttributeType.FullName == "NUnit.Framework.TestAttribute")).Name;
+        }
+
     }
 }

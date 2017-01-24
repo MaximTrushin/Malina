@@ -11,7 +11,7 @@ namespace Malina.Parser.Tests
     /// 4) ParserError - compare parser errors with recorded parser errors
     /// 5) Dom - compare generated Dom structure with the recorded Dom structure
     /// </summary>
-    [TestFixture]
+    [TestFixture, Category("LexerParser")]
     public class LexerParserTests
     {
 

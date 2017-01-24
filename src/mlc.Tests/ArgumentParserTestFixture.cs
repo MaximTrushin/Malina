@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace mlc.Tests
 {
-    [TestFixture]
+    [TestFixture, Category("ArgumentParser")]
     public class ArgumentParserTestFixture
     {
         [Test]

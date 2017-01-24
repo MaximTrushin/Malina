@@ -24,6 +24,11 @@ build:
   
 test:
   assemblies: '**\*.tests.dll'
+  categories:
+    only:
+    - LexerParser
+    - ArgumentParser
+    - Compiler
   
 artifacts:
   - path: 'build'

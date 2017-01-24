@@ -5,7 +5,7 @@ using static Malina.Compiler.Tests.TestUtils;
 
 namespace Malina.Compiler.Tests
 {
-    [TestFixture]
+    [TestFixture, Category("Compiler")]
     public class CompilerTestFixture
     {
 

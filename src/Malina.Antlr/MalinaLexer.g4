@@ -149,7 +149,7 @@ fragment	NameStartChar	:   [a-zA-Z]
 							|   '\u3001'..'\uD7FF' 
 							|   '\uF900'..'\uFDCF' 
 							|   '\uFDF0'..'\uFFFD'
-							|   '\u00010000'..'\u000effff'
+							//|   '\u10000'..'\u10ffff' known issue of antlr4cs. https://github.com/tunnelvisionlabs/antlr4cs/issues/135
 							;
 
 fragment	Digit			:   [0-9]

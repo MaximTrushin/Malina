@@ -139,7 +139,7 @@ namespace Malina.Compiler.Generator
         {
             var code = token.Text.TrimStart('$', '(', '\t', ' ').TrimEnd(')', '\t', ' ');
 
-            if (code[0] != '%') return (char) int.Parse(code);
+            if (code[0] != '#') return (char) int.Parse(code);
             return Convert.ToChar(Convert.ToUInt32(code.Substring(1), 16));
         }
 

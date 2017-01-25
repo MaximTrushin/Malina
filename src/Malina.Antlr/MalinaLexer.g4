@@ -89,8 +89,8 @@ fragment	UnicodeEsc	: '\\' 'u' HexDigit HexDigit HexDigit HexDigit;
 fragment	SqsEscapeCode	:	'$' (
 										EscapeDecimalNumber | 
 										('(' [ \t]* EscapeDecimalNumber [ \t]* ')' ) | 
-										('%' EscapeHexNumber) | 
-										('(' [ \t]* '%' EscapeHexNumber [ \t]* ')' )
+										('#' EscapeHexNumber) | 
+										('(' [ \t]* '#' EscapeHexNumber [ \t]* ')' )
 								);
 
 fragment	EscapeDecimalNumber	:	Digit Digit? Digit? Digit? Digit?;
@@ -149,7 +149,6 @@ fragment	NameStartChar	:   [a-zA-Z]
 							|   '\u3001'..'\uD7FF' 
 							|   '\uF900'..'\uFDCF' 
 							|   '\uFDF0'..'\uFFFD'
-							//|   '\u10000'..'\u10ffff' known issue of antlr4cs. https://github.com/tunnelvisionlabs/antlr4cs/issues/135
 							;
 
 fragment	Digit			:   [0-9]

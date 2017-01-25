@@ -3,7 +3,7 @@
 **Reviewed till [Alias](#alias)**
 [![Build status](https://ci.appveyor.com/api/projects/status/8ehh57khcupl5nte?svg=true)](https://ci.appveyor.com/project/syntactik/malina)
 
-## Overview
+# Overview
 Malina is a people friendly markup language with code reuse features designed to be semantically compatible with XML and JSON formats.
 
 - Define data using clean and intuitive syntax.
@@ -18,7 +18,7 @@ The purpose of the language is:
 - improving productivity of people working with XML and JSON .
 - creating new use cases by introducing the data oriented markup language with people friendly syntax and code reuse features.
 
-## Language design requirements
+# Language design requirements
 
 Malina is designed with the following initial requirements:
 - It must be more people friendly than XML and JSON.
@@ -26,7 +26,7 @@ Malina is designed with the following initial requirements:
 - It must be symantically compatible with XML and JSON to replace them in editing (there is no intention to replace XML and JSON with Malina in APIs).
 - It must have powerfull code reuse features.
 
-## Language design principles
+# Language design principles
 
 To meet the requirements mentioned above the following language design principles were used:
 - Malina uses indents to define document structure (like Python, YAML etc). 
@@ -35,7 +35,7 @@ To meet the requirements mentioned above the following language design principle
 - Malina provides syntax to support basic primitives of both XML (like namespaces, elements and attributes) and JSON (like collections and lists).
 - Malina provides code reuse features similar to code reuse features of modern programming languages in a form of parameterized aliases and interpolated strings.
 
-## Example
+# Example
 
 ```
 //Namespace declarations
@@ -83,15 +83,15 @@ To meet the requirements mentioned above the following language design principle
 		ipo.comment = Need this for the holidays!
 		shipDate = 2016-12-12				
 ```
-## Language reference
+# Language reference
 
-### Text encoding
+## Text encoding
 - Currently the lexer supports **UTF-8**.
 - Malina is **case sensitive**.
 - Indents are defined by **whitespaces** formed by tab (**ASCII 0x9**, \t) or space (**ASCII 0x20**) symbols.
 - Malina supports "Windows" (ASCII **0x0D0A**, \r \n) and "Linux" (ASCII **0x0A**, \n) **new line** symbols. 
 
-### Comments
+## Comments
 
 Malina supports single line comments. The comments start with **//**
 ```
@@ -99,7 +99,7 @@ Malina supports single line comments. The comments start with **//**
 name = "John Smith" //The rest of the line is a comment
 ```
 
-### Name/Value pair
+## Name/Value pair
 Malina language is built upon the **Name/Value pair** abstraction.
 This abstraction consists of 3 parts:
 - [Name](#name)
@@ -108,10 +108,10 @@ This abstraction consists of 3 parts:
 
 Any part could be omitted. For example omitted name or value means that the name or value is empty. If the value is omitted then the assignment can be omitted too.
 
-### Name
+## Name
 A name starts with the [Symbol Prefix](#symbol-prefix) followed by the [Identifier](#identifier).
 
-### Symbol Prefix
+## Symbol Prefix
 A **Symbol Prefix** defines type of the language construct. 
 If the prefix is omitted then the language construct is [Element](#Element).
 This is the list of the prefixes with the corresponding language constructs:
@@ -119,16 +119,16 @@ This is the list of the prefixes with the corresponding language constructs:
 
 | Symbol Prefix        | Type           |
 | :-------------: |:-------------|
-|       | [Element](#Element) |
-| **!**      | [Document](#Document) |
-| **!$** | [Alias Definition](#Alias-Definition)      |
-| **#**      | [Namespace Declaration](#Namespace-Declaration) or [Scope](#Scope) |
-| **@**  | [Attribute](#Attribute)   |
-| **$** | [Alias](#Alias) |
-| **.** | [Argument](#Argument) |
-| **%** | [Parameter](#Parameter) |
+|       | [Element](#element) |
+| `!`      | [Document](#document) |
+| `!$` | [Alias Definition](#alias-Definition)      |
+| `#`      | [Namespace Declaration](#namespace-declaration) or [Namespace Scope](#namespace-scope) |
+| `@`  | [Attribute](#attribute)   |
+| `$` | [Alias](#alias) |
+| `.` | [Argument](#argument) |
+| `%` | [Parameter](#parameter) |
 
-### Identifier
+## Identifier
 
 In the current version of the language, **IDs** are defined by the same rules as for an XML element name:
 - Element names are case-sensitive
@@ -137,9 +137,9 @@ In the current version of the language, **IDs** are defined by the same rules as
 - Element names cannot contain spaces
 - See the full spec for the XML Name gere http://www.w3.org/TR/REC-xml/#NT-Name
 
->>JSON has different rules for names. In the future, for the sake of the full symantic compatibility with JSON, the support of JSON names will be added by introduction of "quoted IDs". Still, the current implementation covers majority of the use cases because names with spaces or other special symbols are used rarely in the real life scenarios.
+>JSON has different rules for names. In the future, for the sake of the full symantic compatibility with JSON, the support of JSON names will be added by introduction of "quoted IDs". Still, the current implementation covers majority of the use cases because names with spaces or other special symbols are used rarely in the real life scenarios.
 
-#### Compound Identifier
+### Compound Identifier
 ID with dot(s) is called a **Compound Identifier**. Dots split a compound identifier in several parts.
 In the [Element](#element), [Attribute](#attribute) or [Scope](#scope) the **compound identifier** is used to specify [namespace prefix](#namespace-prefix). 
 For example, in the following code the atrribute and element have the namespace prefix `ipo`.
@@ -164,19 +164,19 @@ A Compound Identifier can be used in the all language constructs except a [Names
 !$Items.Jewelry.Earings.Jade:
 ...
 ```
->>Code editors can take advantage of compound IDs to provide a better autocomplete.
+>Code editors can take advantage of compound IDs to provide a better autocomplete.
 
-#### Simple Identifier
+### Simple Identifier
 The term **Simple Identifier** is used as opposite to the term of [Compound Identifier](#compound-identifier), meaning that the identifier doesn't have any dots in it, thus it is not divided in parts and represents a single word identifier.
 In the example below the `name` is a simple identifier:
 ```
 name = John Smith
 ```
 
-### Value
+## Value
 There are two types of values: **literal** and **object**.
 
-#### Literal
+### Literal
 In Malina, **literals** have 4 types: 
 - **strings** are the only literals used in XML. In addition to string literals, JSON also uses: 
 - **number**, 
@@ -185,14 +185,14 @@ In Malina, **literals** have 4 types:
 
 The **empty literal** is defined by ommited [value](#value) and represents the **empty string**.
 
-#### Object
+### Object
 **Object** is a set of name/value pairs. A set of name/value pairs is defined in Malina using [Blocks](#Block).
 
-#### Empty Object
+### Empty Object
 The empty objects is a special type of value which, being an [object](#object), doesn't contain any name/value pairs.
 The [empty block](#empty-block) represents the **empty object**.
 
-### Block
+## Block
 Block is a syntax construct for defining an [object](#object). 
 As mentioned in the section ["language design principles"](#language-design-principles), malina uses indents to define document structure. The consiquent lines of code, having the same indentation, belong to the same block.
 >A line with the greater indent still indirectly belongs to the same block because it is actually a part of a nested block.
@@ -207,7 +207,7 @@ billTo:
     ipo.state = AK
     ipo.zip = 95819
 ```
-### Empty Block
+## Empty Block
 Block can be empty. In this case it represents the [empty object](#empty-object).
 In the example below, the element `items` has the [empty object value](#empty-object).
 ```
@@ -215,16 +215,16 @@ items:
 comments = this is the empty order
 ```
 
-### Assignment
+## Assignment
 Malina has two types of an assignment operator: **literal assignment** and **object assignment**.
 
-#### Literal Assignment
+### Literal Assignment
 The **literal assignment** is used when the right side of the assignment is a [literal](#literal). Equality sigh **=** is used for the assignment of a literal:
 ```
 name = John Smith
 ```
 
-#### Object Assignment
+### Object Assignment
 The **object assignment** is used when the right side of the assignment is an [object](#object). Colon `:` is used for the assignment of an object value:
 ```
 address:
@@ -234,10 +234,10 @@ address:
 ```
 In the example above, the element `address` has an [object value](#object) which consists of three elements: `street`, `city` and `state`.
 
->>With the two types of assignments, Malina resolves syntax ambiguities and, at the same time, improves readability of code.
+> With the two types of assignments, Malina resolves syntax ambiguities and, at the same time, improves readability of code.
 
 
-### Module (file)
+## Module (file)
 Malina has a notion of a **Module**. 
 Module is a container for:
 - [Namespace declarations](#namespace-Declaration)
@@ -246,17 +246,17 @@ Module is a container for:
 
 A **Module** is physically represented by a file with the extentions **"mlx"** or **"mlj"**.
 
-#### Mlx-module
+### Mlx-module
 
 **Mlx-module** is physically represented by a file with the extentions **"mlx"**. **Mlx-module** contains [documents](#document) symantically representing XML documents. 
 
-#### Mlj-module
+### Mlj-module
 
 **Mlj-modules** is physically represented by a file with the extentions **"mlj"**. **Mlj-module** contains [documents](#document) symantically representing JSON documents.
 
 The differences in the MLX and MLJ symantics are covered later in this document.
 
-### Namespace Declaration
+## Namespace Declaration
 Namespaces can be declared in the [Module](#module), [Document](#document) or [Alias Definition](#alias-definition).
 The hash symbol `#` starts the declaration of a namespace followed by a name/value pair, there an [identifier](#identifier) represents an [xml namespace prefix](https://www.w3.org/TR/xml-names11/#NT-Prefix) and a [string literal](#literal) represents an [xml namespace name](https://www.w3.org/TR/xml-names11/#dt-NSName).
 For example:
@@ -265,11 +265,11 @@ For example:
 #ipo = http://www.example.com/myipo
 ```
 
-#### Namespace Prefix
+### Namespace Prefix
 A **namespace prefix** is a [simple identifier](#simple-identifier).
 The namespace declared in the module is visible in the all documents and alias definitions in this module. The namespace declared in the document and alias definitions is visible only inside the document or alias definition.  The namespace declared in the document or alias definition overrides the namespace with the same namespace prefix declared in the module.
 
-### Document
+## Document
 Document starts with the exclamation mark `!` followed by [Identifier](#identifier), colon **:** and [object](#object).
 ```
 !PurchaseOrder: // Exclamation mark “!” followed by the identifier "PurchaseOrder" and colon : 
@@ -283,11 +283,11 @@ Document starts with the exclamation mark `!` followed by [Identifier](#identifi
 			ipo.city = Cambridge
 			ipo.postcode = 126
 ```
-#### Mlx-document
+### Mlx-document
 An **Mlx-document** represents the XML file. It must be defined in the [**mlx-module**](#module).
 Mlx-document must have only one root element. 
 
-#### Mlj-document
+### Mlj-document
 A **Mlj-document** represent then JSON file. It must be defined in [**mlj-modules**](#module).
 
 Because in JSON the literal value represents the valid document, **Mlj-document** name can be also followed by equality `=` and [literal value](#literal).
@@ -295,7 +295,7 @@ Because in JSON the literal value represents the valid document, **Mlj-document*
 !document = This is a valid json document.
 ```
 
-### Element
+## Element
 An Element is the most used type of a name/value pair in Malina. It corresponds to XML element and name\value pair in JSON object. 
 Element [name](#name) doesn't have a [symbol prefix](#symbol-prefix).
 An element name can be a [compound identifier](#compound-identifier). In this case first part of the name is a [namespace prefix](#namespace-prefix). The [namespace prefix](#namespace-prefix) has to be declared in the [module](#module), [document](#document) or [alias definition](#alias-definition). 
@@ -304,7 +304,7 @@ ipo.name = Robert Smith
 ```
 If the [assignment](#assignment) and [value](#value) are omitted then the element has the [empty object value](#empty-object).
 
-### Attribute
+## Attribute
 An **attribute** corresponds to an attribute in XML and name\value pair in JSON object.
 Generally it should not be used in [mlj-documents](#mlj-document) but it is allowed to do so. In this case it will be treated like the [element](#element) with the same name.
 An attribute starts with "at sign", `@`, followed by [identifier](#identifier) that can be [compound](#compound-identifier). 
@@ -317,7 +317,7 @@ The **attribute** can have only the [literal value](#literal). If the [assignmen
 @empty
 ```
 
-### Alias
+## Alias
 Malina has еру powerful code reuse feature called **Alias**. Basically, an Alias is a short name for a fragment of code.
 An alias starts with a dollar sign `$` followed by a [simple identifier](#simple-identifier) or [compound identifier](#compound-identifier). 
 In some cases a [value](#value) and [assignment](#assignment) are omitted in the **alias**. In other cases the **alias**  has the assignment and the value in the form of a [block of arguments](#block-of-arguments) or [default argument](#default-argument).
@@ -325,7 +325,7 @@ In some cases a [value](#value) and [assignment](#assignment) are omitted in the
 An alias must be defined in the [Alias Definition](#alias-definition). It is recommended to use [compound identifiers](#compound-identifier) to create tree structure of aliases.
 Depending on the code it represents, the alias can be either a [literal alias](#literal-alias) or an [object alias](#object-alias).
 
-#### Literal Alias
+### Literal Alias
 A **Literal Alias** represent a [literal](#literal) and can be used in place of the literal value or inside of the [interpolated string](#interpolated-string).
 ```
 // Alias CurrentDate has the simple identifier and the literal value
@@ -335,7 +335,7 @@ A **Literal Alias** represent a [literal](#literal) and can be used in place of 
 // It is used inside the interpolated string.
 @customerGreating = 'Hello $customer.firstName'
 ```
-#### Object Alias
+### Object Alias
 
 An **Object Alias** represents an object that have only the following types of [name/value pairs](#name-value-pair):
 
@@ -356,11 +356,11 @@ items:
     $Items.Jewelry.Rings.Amber
     $Items.Jewelry.Earings.Jade
 ```
-### Alias Definition
+## Alias Definition
 [Aliases](#alias) are defined in the [module](#module). An **Alias Definition** starts with the exclamation and dollar signs `!$` followed by an [Identifier](#identifier).
 
-#### Object Alias Definition 
-#### Literal Alias Definition
+### Object Alias Definition 
+### Literal Alias Definition
 Depending on the code it represents, the **alias definition** declares either a [literal alias](#literal-alias) or an [object alias](#object-alias).
 In the example below, the alias definition declares the object alias `$Address.US` and the literal alias `$Pi`:
 ```
@@ -378,12 +378,12 @@ In the example below, the alias definition declares the object alias `$Address.U
 ```
 
 
-### Parameter
+## Parameter
 [Alias Definition](#alias-definition) can have **parameters** and then it's called a **parameterized alias definition**.
 A parameter can represent either an [object](#object) or [literal](#literal) value, thus there are two types of parameters: [object parameter](#object-parameter) and [literal parameter](#literal-parameter). 
 A parameter starts with percent sign `%` followed by an [Identifier](#identifier). Two or more parameters with the same name are allowed if they have they have the same value type: [object](#object) or [literal](#literal). 
 
-#### Object parameter
+### Object parameter
 **Object parameter** represents an object (the whole object or some of the object's name/value pairs).
 In the example below the alias definition `!$Templates.PurchaseOrder.With.Necklace.Lapis` has 3 object parameters: `%shipTo`, `%billTo` and `%items`.
 ```
@@ -400,7 +400,7 @@ In the example below the alias definition `!$Templates.PurchaseOrder.With.Neckla
 Parameters `%shipTo` and `%billTo` represent the whole object. The parameter `%items` represents the trailing part of the object where the leading part of the object is defined by the alias `$Items.Jewelry.Necklaces.Lapis`.
 
 
-#### Literal parameter
+### Literal parameter
 **Literal parameter** represents a  whole or partial literal value. 
 In the example below, the alias definition `!$Address.US.NJ` has 2 literal parameters: `%name` and `%street`. Both parameters represent the whole literal value. The literal parameter `%customerName` defined in the [literal alias definition](#literal-alias-definition) `!$CustomerGreating` represents a part of the literal value. The parameter `%customerName` is used inside of the [interpolated string](#interpolated-string) `'Hello %customerName'`.
 ```
@@ -415,7 +415,7 @@ In the example below, the alias definition `!$Address.US.NJ` has 2 literal param
 !$CustomerGreating = 'Hello %customerName'
 ```
 
-#### Default Parameter Value
+### Default Parameter Value
 All types of parameters can have a default value.
 For the [object parameter](#object-parameter) the default value is defined by the rules of the [object assignment](#object-assignment).
 In the example below, the parameter `%shipTo` has the default object value defined by the alias `$Address.UK.Cambridge` and the parameter `%billTo` has the default object value defined by [block (object)](#block) which consists of 5 elements. The parameter `%items` has the the [empty object](#empty-object) as a default value.
@@ -449,7 +449,7 @@ In the following example, the parameter `%name` has the default string value "Jo
 	
 !$CustomerGreating = 'Hello %(customerName = "My Friend")'
 ```
-### Argument
+## Argument
 The [Alias](#alias) can have **arguments** if its [definition (alias definition)](#alias-definition) has [parameters](#parameter). An argument can represent either [object](#object) or [literal](#literal) value, thus there are two types of arguments: [object argument](#object-argument) and [literal argument](#literal-argument). 
 An argument starts with dot `.` followed by an [Identifier](#identifier).
 Each argument corresponds to the parameter with the same name. There are several restrictions for arguments:
@@ -461,10 +461,10 @@ Each argument corresponds to the parameter with the same name. There are several
 All arguments are passed to the alias as an [object value](#object) in the form of a [Block of Arguments](#block-of-arguments). 
 
 
-#### Block of Arguments
+### Block of Arguments
 Block of Arguments is a [block](#block) where each [name/value pair](#name-value-pair) is an [argument](#argument). A block of arguments always represents an [object value](#object) of [alias](#alias).
 
-#### Object Argument
+### Object Argument
 An **Object Argument** is used to specify the value of an [object parameter](#object-parameter) in the [alias](#alias).
 In the example below, the alias `$Templates.PurchaseOrder` has the [block of arguments](#block-of-arguments) which consists of 3 **object arguments**: `.shipTo`, `.billTo` and `.items`. 
 ```
@@ -482,8 +482,8 @@ In the example below, the alias `$Templates.PurchaseOrder` has the [block of arg
 			$Items.Jewelry.Necklaces.Lapis
 			$Items.Jewelry.Diamonds.Heart
 ```
-#### Literal Argument
-A **Literal Argument** is used to specify the value of an [literal parameter](#literal-parameter) in the [alias](#alias).
+### Literal Argument
+The **Literal Argument** is used to specify the value of the [literal parameter](#literal-parameter) in the [alias](#alias).
 In the following example, the alias `$$Items.Jewelry.Necklaces.Lapis` has the [block of arguments](#block-of-arguments) which consists of 1 **literal arguments**: `.quantity` with the assigned [literal](#literal) value of `2`. 
 ```
 ...
@@ -491,4 +491,93 @@ In the following example, the alias `$$Items.Jewelry.Necklaces.Lapis` has the [b
 		$Items.Jewelry.Necklaces.Lapis: 
 		    .quantity = 2
 ...
+```
+
+## Namespace Scope
+A **Namespace Scope** in Malina has the same purpose as a [default namespace](https://www.w3.org/TR/REC-xml-names/#defaulting) in XML. Basically, it defines the namespace for the [elements](#element) that have no [namespace prefix](#namespace-prefix).
+A **Namespace Scope** starts with the hash symbol `#` followed by [simple](#simple-identifier) or [compound identifier](#compound-identifier).
+The **simple identifier** represent the [namespace prefix](#namespace-prefix) (*it has to be declared previosly in the [module](#module), [document](#document) or [alias definition](#alias-definition)*). The [object  assignment](#object-assignment) follows the identifier. All elements inside the [object value](#object) that don't have a [namespace prefix](#namespace-prefix) will got the **default namespace prefix** from the scope.
+In the following example, the scope `#ipo` defines the default namespace for all elements inside its [object value](#object).
+```
+...
+	#ipo:
+	    purchaseOrder:
+        	shipTo:
+        		name = Helen Zoe
+        		street = 47 Eden Street
+        		city = Cambridge
+        		postcode = 126
+...
+```
+A scope with a **compound identifier** is used to declare a **default namespace prefix** and an element at the same time. The first part of the [compound identifier](#compound-identifier) represents the **default namespace prefix** and the rest represent the name of the element. 
+The example below, uses the namespace scope with the [compound identifier](#compound-identifier). The scope `#ipo.purchaseOrder` declares the **default namespace prefix** `ipo` and the element `purchaseOrder`. This example is symantically identical to the example above.
+
+```
+...
+	#ipo.purchaseOrder:
+        	shipTo:
+        		name = Helen Zoe
+        		street = 47 Eden Street
+        		city = Cambridge
+        		postcode = 126
+...
+```
+The **Namespace Scope** impacts only element that are inside its [object-value](#object). **Namespace Scopes** can be nested. The inner scope override the action the outer scope.
+
+### Empty Namespace Scope
+Sometimes it's needed to set the value of the default namespace prefix to empty. So there will be no default namespace prefix. In this case the name of the default namespace prefix should be omitted when defining the **namespace scope**. For example: 
+```
+...
+	#:
+	    purchaseOrder:...
+```
+**or**
+```
+...
+	#.purchaseOrder:
+...
+```
+## JSON Array
+In Malina, **JSON Array** is a special case of an [object](#object). Like an [object](#object), a **JSON Array** is defined using a [block](#block). 
+To be a **JSON Array**, the [object](#object) has to comply with the condition that all of its [name/value pairs](#name-value-pair) have no name. This kind of the [name/value pairs](#name-value-pair) is called an [Array Item](#array-item).
+
+### Array Item
+An **Array Item** is a [name/value pairs](#name-value-pair) that have no name.
+There are 2 types of the array item: [Literal Array Item](#literal-array-item) and [Object Array Item](#object-array-item).
+
+#### Literal Array Item
+A **literal array item** consists of an empty name, a [literal value assignment](#literal-assignment) and an optional [literal value](#literal-value). If the [literal value](#literal-value) is omitted then the item represents the empty string.
+In the example below, the element `colors` has the value defined as the **array** of 7 **literal array items**.
+```
+colors:
+    = red
+    = orange
+    = yellow
+    = green
+    = blue
+    = indigo
+    = violet
+```
+#### Object Array Item
+Aa **object array item** consists of an empty name, an [object value assignment](#object-assignment) and an optional [object value](#object). If the [object value](#object) is omitted the the item represents the [empty object](#empty-object).
+In the example below, the element `Items` has the value defined as the **array** of 3 **object array items**.
+```
+Items:
+	:
+		productName = Lapis necklace
+		quantity = 2
+		price = 99.95
+		ipo.comment = Need this for the holidays!
+		shipDate = 1999-12-05
+	:
+		productName = Diamond heart
+		quantity = 1
+		price = 248.90
+		ipo.comment = Valentine's day packaging.
+		shipDate = 2000-02-14
+	:
+		productName = Uncut diamond
+		quantity = 7
+		price = 79.90
+		shipDate = 2000-01-07
 ```

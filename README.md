@@ -59,7 +59,7 @@ To meet the requirements mentioned above the following language design principle
             $Address.US.NJ //Alias with compound name
         Items:
             $Items.Jewelry.Necklaces.Lapis:
-                .quantity = 2 //Argument of the alias
+                .quantity = "2" //Argument of the alias
             item:
                 @partNum = 748-OT
                 productName = Diamond heart
@@ -80,7 +80,7 @@ To meet the requirements mentioned above the following language design principle
     item:
         @partNum = 833-AA
         productName = Lapis necklace
-        quantity = %quantity = 1 //Parameter with default value
+        quantity = %quantity = "1" //Parameter with default value
         price = 99.95
         ipo.comment = Need this for the holidays!
         shipDate = 2016-12-12                
@@ -115,7 +115,7 @@ Any part could be omitted. For example omitted **name** or **value** means that 
 
 ## Prefix
 A **Prefix** defines a type of the language construct. 
-If it is omitted, then the language construct is an [Element](#Element).
+If it is omitted, then the language construct is an [Element](#element).
 This is the list of the prefixes with the corresponding language constructs:
  
 
@@ -123,7 +123,7 @@ This is the list of the prefixes with the corresponding language constructs:
 | :-------------: |:-------------|
 |      | [Element](#element) |
 | `!`   | [Document](#document) |
-| `!$` | [Alias Definition](#alias-Definition)      |
+| `!$` | [Alias Definition](#alias-definition)      |
 | `#`      | [Namespace Declaration](#namespace-declaration) or [Namespace Scope](#namespace-scope) |
 | `@`  | [Attribute](#attribute)   |
 | `$` | [Alias](#alias) |
@@ -187,7 +187,7 @@ In Malina, **literals** have 4 types:
 The **empty literal** is defined by omitted [value](#value) and represents the **empty string**.
 
 ### Object
-**Object** is a set of name/value pairs. A set of name/value pairs is defined in Malina using [Blocks](#Block).
+**Object** is a set of name/value pairs. A set of name/value pairs is defined in Malina using [Blocks](#block).
 
 ### Empty Object
 The empty objects is a special type of value which, being an [object](#object), doesn't contain any name/value pairs.
@@ -243,9 +243,9 @@ In the example above, the element `address` has an [object value](#object) which
 ## Module (file)
 Malina has a notion of a **Module**. 
 Module is a container for:
-- [Namespace declarations](#namespace-Declaration)
+- [Namespace declarations](#namespace-declaration)
 - [Documents](#document)
-- [Alias Definitions](#alias-Definition)
+- [Alias Definitions](#alias-definition)
 
 A **Module** is physically represented by a file with the extentions **"mlx"** or **"mlj"**.
 
@@ -328,7 +328,7 @@ Because in JSON the literal value represents the valid document, **Mlj-document*
 | [Prefix](#prefix)     | none |
 | [Identifier](#identifier)    | [simple](#simple-identifier) or [compound](#compound-identifier) |
 | [Value](#value) | [literal](#literal) or [object](#object)    |
-| Declared in | [Document](#document), [Element](#element), [Alias Definition](#alias-Definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
+| Declared in | [Document](#document), [Element](#element), [Alias Definition](#alias-definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
 | Contains | [Element](#element), [Attribute](#attribute), [Alias](#alias), [Namespace Scope](#namespace-scope), [Parameter](#parameter) |
 
 ### Description
@@ -348,7 +348,7 @@ If the [assignment](#assignment) and [value](#value) are omitted then the elemen
 | [Prefix](#prefix)     | `@` |
 | [Identifier](#identifier)    | [simple](#simple-identifier) or [compound](#compound-identifier) |
 | [Value](#value) | [literal](#literal)    |
-| Declared in | [[Element](#element), [Alias Definition](#alias-Definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
+| Declared in | [[Element](#element), [Alias Definition](#alias-definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
 
 ### Description
 An **attribute** corresponds to an attribute in XML and a name\value pair in a JSON object.
@@ -370,7 +370,7 @@ The **attribute** can have only the [literal value](#literal). If the [assignmen
 | [Prefix](#prefix)     | `$` |
 | [Identifier](#identifier)    | [simple](#simple-identifier) or [compound](#compound-identifier) |
 | [Value](#value) | [literal](#literal) or [object](#object)    |
-| Declared in | [Document](#document), [Element](#element), [Alias Definition](#alias-Definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
+| Declared in | [Document](#document), [Element](#element), [Alias Definition](#alias-definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
 | Contains | [Element](#element), [Attribute](#attribute), [Alias](#alias), [Namespace Scope](#namespace-scope), [Argument](#argument), [Parameter](#parameter) |
 
 ### Description
@@ -451,7 +451,7 @@ In the example below, the alias definition declares the object alias `$Address.U
 | [Prefix](#prefix)     | `%` |
 | [Identifier](#identifier)    | [simple](#simple-identifier) or [compound](#compound-identifier) |
 | [Value](#value) | [literal](#literal) or [object](#object)    |
-| Declared in | [Element](#element), [Alias Definition](#alias-Definition), [Namespace Scope](#namespace-scope), [Attribute](#attribute), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
+| Declared in | [Element](#element), [Alias Definition](#alias-definition), [Namespace Scope](#namespace-scope), [Attribute](#attribute), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
 | Contains | [Element](#element), [Attribute](#attribute), [Alias](#alias), [Namespace Scope](#namespace-scope),  [Parameter](#parameter) |
 
 ### Description
@@ -526,7 +526,7 @@ In the following example, the parameter `%name` has the default string value `Jo
 !$CustomerGreating = 'Hello %(customerName = "My Friend")'
 ```
 ### Default Parameter
-If the [Alias Definition](#alias-Definition) has only one [parameter](#parameter) then this parameter is called a **Default Parameter**. In the corresponding [alias](#alias) you don't need to specify [argument](#argument) for the **default parameter**. Instead, the value of the argument has to be assigned directly to the alias. If the **default parameter** is an [object parameter](#object-parameter) then [object value](#object) has to be assigned to the alias. And the same should be done for the [literal parameter](#literal-parameter) amd [literal value](#literal).
+If the [Alias Definition](#alias-definition) has only one [parameter](#parameter) then this parameter is called a **Default Parameter**. In the corresponding [alias](#alias) you don't need to specify [argument](#argument) for the **default parameter**. Instead, the value of the argument has to be assigned directly to the alias. If the **default parameter** is an [object parameter](#object-parameter) then [object value](#object) has to be assigned to the alias. And the same should be done for the [literal parameter](#literal-parameter) amd [literal value](#literal).
 
 In the example below:
 + the alias definition `!$CustomerGreating` has default literal parameter `%customerName` which has a default value `"My Friend"`
@@ -611,7 +611,7 @@ In the following example, the alias `$$Items.Jewelry.Necklaces.Lapis` has the [b
 | [Prefix](#prefix)     | `#` |
 | [Identifier](#identifier)    | [simple](#simple-identifier), [compound](#compound-identifier) or [omitted](#empty-namespace-scope) |
 | [Value](#value) | [literal](#literal) or [object](#object)    |
-| Declared in | [Document](#document), [Element](#element), [Alias Definition](#alias-Definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
+| Declared in | [Document](#document), [Element](#element), [Alias Definition](#alias-definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
 | Contains | [Element](#element), [Attribute](#attribute), [Alias](#alias), [Namespace Scope](#namespace-scope), [Parameter](#parameter) |
 
 ### Description
@@ -673,7 +673,7 @@ To be a **JSON Array**, the [object](#object) has to comply with the condition t
 | [Prefix](#prefix)     | none |
 | [Identifier](#identifier)    |  omitted |
 | [Value](#value) | [literal](#literal) or [object](#object)    |
-| Declared in | [Document](#document), [Element](#element), [Alias Definition](#alias-Definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
+| Declared in | [Document](#document), [Element](#element), [Alias Definition](#alias-definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
 | Contains | [Element](#element), [Attribute](#attribute), [Alias](#alias), [Namespace Scope](#namespace-scope), [Parameter](#parameter) |
 
 #### Description
@@ -694,7 +694,7 @@ colors:
     = violet
 ```
 #### Object Array Item
-Aa **object array item** consists of an empty name, an [object value assignment](#object-assignment) and an optional [object value](#object). If the [object value](#object) is omitted the the item represents the [empty object](#empty-object).
+An **object array item** consists of an empty name, an [object value assignment](#object-assignment) and an optional [object value](#object). If the [object value](#object) is omitted the the item represents the [empty object](#empty-object).
 In the example below, the element `Items` has the value defined as the **array** of 3 **object array items**.
 ```
 Items:
@@ -757,7 +757,7 @@ Malina has the second **open string** called [free open string](#free-open-strin
 There is the multiline version of the **open string** called [multiline open string](#multiline-open-string).
 
 ### Free Open String
-An **Free Open String** defines a literal without using quotes like [open string](#open-string) but with fewer restrictions. 
+A **Free Open String** defines a literal without using quotes like [open string](#open-string) but with fewer restrictions. 
 There are just two constraints for the **free open strings**:
 +  the parser ignores leading and trailing whitespaces
 +  it can’t have any non-visible symbols that require escaping (like newline)

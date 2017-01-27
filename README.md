@@ -143,7 +143,7 @@ In the current version, **IDs** are defined by the same rules as for an XML elem
 
 ### Compound Identifier
 ID with the dot(s) is called a **Compound Identifier**. Dots split a compound identifier into several parts.
-In the [Element](#element), [Attribute](#attribute) or [Scope](#scope) the **compound identifier** is used to specify [namespace prefix](#namespace-prefix). 
+In the [Element](#element), [Attribute](#attribute) or [Namespace Scope](#namespace-scope) the **compound identifier** is used to specify [namespace prefix](#namespace-prefix). 
 For example, in the following code, the attribute and element have the namespace prefix `ipo`.
 ```
 @ipo.export-code = 1
@@ -240,7 +240,7 @@ In the example above, the element `address` has an [object value](#object) which
 > With the two types of assignments, Malina resolves syntax ambiguities and, at the same time, improves readability of code.
 
 
-## Module (file)
+## Module
 Malina has a notion of a **Module**. 
 Module is a container for:
 - [Namespace declarations](#namespace-declaration)
@@ -348,7 +348,7 @@ If the [assignment](#assignment) and [value](#value) are omitted then the elemen
 | [Prefix](#prefix)     | `@` |
 | [Identifier](#identifier)    | [simple](#simple-identifier) or [compound](#compound-identifier) |
 | [Value](#value) | [literal](#literal)    |
-| Declared in | [[Element](#element), [Alias Definition](#alias-definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
+| Declared in | [Element](#element), [Alias Definition](#alias-definition), [Namespace Scope](#namespace-scope), [Alias](#alias), [Argument](#argument), [Parameter](#parameter) |
 
 ### Description
 An **attribute** corresponds to an attribute in XML and a name\value pair in a JSON object.
@@ -526,6 +526,7 @@ In the following example, the parameter `%name` has the default string value `Jo
 !$CustomerGreating = 'Hello %(customerName = "My Friend")'
 ```
 ### Default Parameter
+### Default Argument
 If the [Alias Definition](#alias-definition) has only one [parameter](#parameter) then this parameter is called a **Default Parameter**. In the corresponding [alias](#alias) you don't need to specify [argument](#argument) for the **default parameter**. Instead, the value of the argument has to be assigned directly to the alias. If the **default parameter** is an [object parameter](#object-parameter) then [object value](#object) has to be assigned to the alias. And the same should be done for the [literal parameter](#literal-parameter) amd [literal value](#literal).
 
 In the example below:
@@ -563,6 +564,7 @@ In the example below:
 The [Alias](#alias) can have **arguments** if its [definition (alias definition)](#alias-definition) has [parameters](#parameter). An argument can represent either [object](#object) or [literal](#literal) value, thus there are two types of arguments: [object argument](#object-argument) and [literal argument](#literal-argument). 
 An argument starts with dot `.` followed by an [Identifier](#identifier).
 Each argument corresponds to the parameter with the same name. There are several restrictions for arguments:
+
 1. The argument must have the same [value type](#value) as the corresponding parameter.
 2. There can't be two or more arguments with the same name.
 3. If the parameter doesn't have a default value, then the argument with the same name must be specified in the alias.

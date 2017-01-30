@@ -1,4 +1,21 @@
-﻿using System;
+﻿#region license
+// Copyright © 2016, 2017 Maxim Trushin (dba Syntactik, trushin@gmail.com, maxim.trushin@syntactik.com)
+//
+// This file is part of Malina.
+// Malina is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Malina is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+
+// You should have received a copy of the GNU Lesser General Public License
+// along with Malina.  If not, see <http://www.gnu.org/licenses/>.
+#endregion
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -109,12 +126,11 @@ namespace mlc
                     "Description:\n\n" +
                     "Compiles a set of files in Malina format into XML or JSON.\n" +
                     "Validates generated XML files against XML schema (XSD).\n" +
-                    "You can specify one or many files of type .mlx, .mlj and xsd.\n" +
-                    "You can also specify as many input directories as you want.\n" +
-                    "If neither directories nor files are given then compiler takes \nthem from the current directory.\n\n"
+                    "You can specify one or many input directories or files of \ntype .mlx, .mlj and xsd.\n" +
+                    "If neither directories nor files are given then compiler takes \nthem from the current directory.\n\n" +
+                    " "
             );
         }
-
 
         private static void InvalidOption(string arg, string message = null)
         {

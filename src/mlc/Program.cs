@@ -1,4 +1,21 @@
-﻿using System;
+﻿#region license
+// Copyright © 2016, 2017 Maxim Trushin (dba Syntactik, trushin@gmail.com, maxim.trushin@syntactik.com)
+//
+// This file is part of Malina.
+// Malina is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Malina is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+
+// You should have received a copy of the GNU Lesser General Public License
+// along with Malina.  If not, see <http://www.gnu.org/licenses/>.
+#endregion
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -38,6 +55,7 @@ namespace mlc
             {
                 Console.WriteLine("Fatal error: {0}", e.Message);
                 ArgumentsParser.Help();
+                AppInfo2();
 
             }
             catch (Exception e)
@@ -69,6 +87,13 @@ namespace mlc
             var type = typeof(MalinaCompiler);
             Console.WriteLine("Malina Compiler version {0}. Environment: {1}",
                 type.Assembly.GetName().Version, RuntimeDisplayName);
+        }
+
+        private static void AppInfo2()
+        {
+            var type = typeof(MalinaCompiler);
+            Console.WriteLine("Malina Compiler version {0}. {1}",
+                type.Assembly.GetName().Version, Path.GetDirectoryName(type.Assembly.Location));
         }
 
         public static string RuntimeDisplayName

@@ -1030,7 +1030,8 @@ letter: (
 
 # Command line tool
 The executable file `mlc.exe` is a command line tool that compiles specified files, stores results in the output directory and validate output XML against XML schema if XSD files are listed in the options.
-This is the command line format:
+The command line format is:
+
 `mlc [options] [inputFiles]`
 
 Options:

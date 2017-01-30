@@ -1002,7 +1002,7 @@ As an example we can use the following XML:
   will be shipped on <shipdate>2001-07-13</shipdate>.
 </letter>
 ```
-The xml above can represented by the following Malina code:
+The xml above can be represented by the following Malina code:
 ```
 letter:
     = Dear Mr.
@@ -1013,13 +1013,13 @@ letter:
     shipdate = 2001-07-13
 ```
 
-The same data structure defined using [inline syntax](#inline-syntax).
+The same data structure defined using [inline syntax](#inline-syntax):
 
 ```
 letter: = "Dear Mr." name = "John Smith" = "Your order " orderid = '1032' = "will be shipped on " shipdate = 2001-07-13
 ```
 
-The same data described in Malina using [WSA mode](#wsa-mode).
+The same data described in Malina using [WSA mode](#wsa-mode):
 
 ```
 letter: ( 
@@ -1027,3 +1027,16 @@ letter: (
     = "Your order " orderid = '1032' 
     = "will be shipped on " shipdate = "2001-07-13" )
 ```
+
+# Command line tool
+The executable file `mlc.exe` is a command line tool that compiles specified files, stores results in the output directory and validate output XML against XML schema if XSD files are listed in the options.
+This is the command line format:
+`mlc [options] [inputFiles]`
+
+Options:
++ `-i=DIR`             Input directory with mlx, mlj and xsd files
++ `-o=DIR`             Output directory
++ `-r`                 Turns on recursive search of files in the input directories
+
+You can specify one or many input directories or files of type .mlx, .mlj and xsd. If neither directories nor files are given, then compiler takes them from the current directory. 
+

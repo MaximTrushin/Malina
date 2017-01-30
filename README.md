@@ -806,6 +806,7 @@ A [single quoted string](#single-quoted-string) and [multiline single quoted str
 
 Malina also has own escape sequences. Malina escape sequence starts with the dollar sign `$` followed by a decimal number or hash sign `#` and hexadecimal number where the number represents a UTF-8 symbol. The brackets `()` can surround the decimal or hexadecimal number. The max length of decimal and hexadecimal number is 5 and 4 digits.
 The following example shows how to escape new line symbol using Malina escape sequence.
+
 | Use Case        | decimal           | hex  |
 |:-------------: |:-------------:|:-------------:|
 | Escape symbol not followed by digit (decimal or hex)     | `$10` | `$#A` |

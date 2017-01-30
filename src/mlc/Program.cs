@@ -45,7 +45,6 @@ namespace mlc
                 Console.WriteLine("Fatal error: {0}", e.Message);
                 Console.WriteLine(e.StackTrace);
             }
-            Console.Read();
             return result;
         }
 

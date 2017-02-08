@@ -2,6 +2,8 @@
 
 **MA**rkup **L**anguage **IN**tended for **A**ll
 
+[![Join the chat at https://gitter.im/syntactik/malina](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/syntactik/malina?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build status](https://ci.appveyor.com/api/projects/status/8ehh57khcupl5nte?svg=true)](https://ci.appveyor.com/project/syntactik/malina)
 
 # Overview

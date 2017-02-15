@@ -1,4 +1,4 @@
-<img src="http://malina.syntactik.com/lib/malina-logo.gif" alt="Malina Logo" />    
+<img src="http://malina.tech/img/malina-logo.gif" alt="Malina Logo" />    
 
 **MA**rkup **L**anguage **IN**tended for **A**ll
 

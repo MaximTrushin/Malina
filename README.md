@@ -1,6 +1,8 @@
-# Malina    
+<img src="http://malina.tech/img/malina-logo.gif" alt="Malina Logo" />    
 
 **MA**rkup **L**anguage **IN**tended for **A**ll
+
+[![Join the chat at https://gitter.im/syntactik-Malina/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/syntactik-Malina/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8ehh57khcupl5nte?svg=true)](https://ci.appveyor.com/project/syntactik/malina)
 
@@ -806,6 +808,7 @@ A [single quoted string](#single-quoted-string) and [multiline single quoted str
 
 Malina also has own escape sequences. Malina escape sequence starts with the dollar sign `$` followed by a decimal number or hash sign `#` and hexadecimal number where the number represents a UTF-8 symbol. The brackets `()` can surround the decimal or hexadecimal number. The max length of decimal and hexadecimal number is 5 and 4 digits.
 The following example shows how to escape new line symbol using Malina escape sequence.
+
 | Use Case        | decimal           | hex  |
 |:-------------: |:-------------:|:-------------:|
 | Escape symbol not followed by digit (decimal or hex)     | `$10` | `$#A` |

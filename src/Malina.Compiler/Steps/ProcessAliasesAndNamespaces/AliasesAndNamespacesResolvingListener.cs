@@ -53,22 +53,10 @@ namespace Malina.Compiler.Steps
             _context.NamespaceResolver.EnterDocument(context.Node);
         }
 
-        public override void ExitDocument_stmt(MalinaParser.Document_stmtContext context)
-        {
-            base.ExitDocument_stmt(context);
-            _context.NamespaceResolver.ExitDocument(context.Node);
-        }
-
         public override void EnterAlias_def_stmt([NotNull] MalinaParser.Alias_def_stmtContext context)
         {
             base.EnterAlias_def_stmt(context);
             _context.NamespaceResolver.EnterAliasDef(context.Node);
-        }
-
-        public override void ExitAlias_def_stmt(MalinaParser.Alias_def_stmtContext context)
-        {
-            base.ExitAlias_def_stmt(context);
-            _context.NamespaceResolver.ExitAliasDef(context.Node);
         }
 
         public override void ExitEveryRule([NotNull] ParserRuleContext context)

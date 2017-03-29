@@ -36,6 +36,7 @@ namespace Malina.Compiler.Steps
         public override void OnModule(Module node)
         {
             _currentModule = (DOM.Antlr.Module) node;
+            _context.NamespaceResolver.EnterModule(node);
 
             base.OnModule(node);
 
@@ -46,11 +47,46 @@ namespace Malina.Compiler.Steps
             _blockStart = true;
             _blockState = new Stack<JsonGenerator.BlockState>();
 
+            //Checking if the document's name is unique per format (json/xml)
+            var sameNameDocuments = _context.NamespaceResolver.ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.Document && ((DOM.Document)n.ModuleMember).Name == node.Name)
+                && ((DOM.Antlr.Module)node.Module).TargetFormat == ((DOM.Antlr.Module)((DOM.Document)n.ModuleMember).Module).TargetFormat
+             );
+            if (sameNameDocuments.Count > 1)
+            {
+                if (sameNameDocuments.Count == 2)
+                {
+                    //Reporting error for 2 documents (existing and new)
+                    var prevDoc = (DOM.Document)sameNameDocuments[0].ModuleMember;
+                    _context.AddError(CompilerErrorFactory.DuplicateDocumentName(prevDoc, prevDoc.Module.FileName));
+                }
+                _context.AddError(CompilerErrorFactory.DuplicateDocumentName(node, _currentModule.FileName));
+
+            }
+
             base.OnDocument(node);
+        }
+
+        public override void OnAliasDefinition(AliasDefinition node)
+        {
+            //Checking if the alias definition name is unique
+            var sameNameAliasDef = _context.NamespaceResolver.ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.AliasDefinition && ((DOM.AliasDefinition)n.ModuleMember).Name == node.Name));
+            if (sameNameAliasDef.Count > 1)
+            {
+                if (sameNameAliasDef.Count == 2)
+                {
+                    //Reporting error for 2 documents (existing and new)
+                    var prevAliasDef = (DOM.AliasDefinition)sameNameAliasDef[0].ModuleMember;
+                    _context.AddError(CompilerErrorFactory.DuplicateAliasDefName(prevAliasDef, prevAliasDef.Module.FileName));
+                }
+                _context.AddError(CompilerErrorFactory.DuplicateAliasDefName(node, _currentModule.FileName));
+
+            }
+            base.OnAliasDefinition(node);
         }
 
         public override void OnElement(Element node)
         {
+
             CheckBlockIntegrity(node);
 
             CheckArrayItem(node);

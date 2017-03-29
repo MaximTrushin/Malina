@@ -312,8 +312,6 @@ namespace Malina.Parser.Tests
             Console.WriteLine();
 
             var printerVisitor = new DOMPrinterVisitor();
-            //module.
-
             printerVisitor.Visit(malinaListener.CompileUnit);
 
 

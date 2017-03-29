@@ -20,7 +20,7 @@ using System;
 namespace Malina.DOM
 {
     [Serializable]
-    public class Alias : Entity, IValueNode, INsNode
+    public class Alias : Entity, IValueNode
     {
         // Fields
         private NodeCollection<Argument> _arguments;
@@ -28,8 +28,6 @@ namespace Malina.DOM
         private NodeCollection<Entity> _entities;
         private object _objectValue;
         private ValueType _valueType;
-        private string _nsPrefix;
-
 
         //Properties
         public NodeCollection<Entity> Entities
@@ -79,19 +77,6 @@ namespace Malina.DOM
             set
             {
                 _valueType = value;
-            }
-        }
-
-        public virtual string NsPrefix
-        {
-            get
-            {
-                return _nsPrefix;
-            }
-
-            set
-            {
-                _nsPrefix = value;
             }
         }
 

@@ -42,7 +42,7 @@ namespace Malina.Compiler
         /// <summary>
         /// NsInfo for all Module Members (Documents and AliasDef)
         /// </summary>
-        private List<NsInfo> ModuleMembersNsInfo => _moduleMembersNsInfo ?? (_moduleMembersNsInfo = new List<NsInfo>());
+        public List<NsInfo> ModuleMembersNsInfo => _moduleMembersNsInfo ?? (_moduleMembersNsInfo = new List<NsInfo>());
 
         //This method is called from ProcessAliasesAndNamespaces step after the all Nodes are visited.
         public void ResolveAliasesAndDoChecks()
@@ -306,7 +306,7 @@ namespace Malina.Compiler
             if (alias.AliasDefinition != null)
                 return alias.AliasDefinition == AliasDefinition.Undefined ? null : alias.AliasDefinition;
 
-            var result = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            var result = GetAliasDefinition(alias.Name);
 
             alias.AliasDefinition = result ?? AliasDefinition.Undefined;
             return result;
@@ -357,7 +357,7 @@ namespace Malina.Compiler
         private NsInfo ResolveAliasInAliasDefinition(DOM.Alias alias, NsInfo aliasDefNsInfo)
         {
             //Finding AliasDef
-            var aliasDef = _context.NamespaceResolver.GetAliasDefinition(alias.Name);
+            var aliasDef = GetAliasDefinition(alias.Name);
             if (aliasDef == null)
             {
                 //Report Error
@@ -399,8 +399,6 @@ namespace Malina.Compiler
         {
             var dups = alias.Arguments.GroupBy(a => a.Name).Where(g => g.Count() > 1).SelectMany(g => g).ToList();
             dups.ForEach(a => _context.AddError(CompilerErrorFactory.DuplicateArgumentName(a, _currentModule.FileName)));
-
-
         }
 
         public void EnterDocument(DOM.Antlr.Document node)
@@ -409,44 +407,6 @@ namespace Malina.Compiler
             _currentModuleMemberNsInfo = new NsInfo(_currentModuleMember);
             ModuleMembersNsInfo.Add(_currentModuleMemberNsInfo);
         }
-
-        public void ExitDocument(DOM.Antlr.Document node)
-        {
-            //Checking if the document's name is unique per format (json/xml)
-            var sameNameDocuments = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.Document && ((DOM.Document) n.ModuleMember).Name == node.Name) 
-                && ((DOM.Antlr.Module)node.Module).TargetFormat == ((DOM.Antlr.Module)((DOM.Document)n.ModuleMember).Module).TargetFormat
-             );
-            if (sameNameDocuments.Count > 1)
-            {
-                if (sameNameDocuments.Count == 2)
-                {
-                    //Reporting error for 2 documents (existing and new)
-                    var prevDoc = (DOM.Document) sameNameDocuments[0].ModuleMember;
-                    _context.AddError(CompilerErrorFactory.DuplicateDocumentName(prevDoc, prevDoc.Module.FileName));
-                }
-                _context.AddError(CompilerErrorFactory.DuplicateDocumentName(node, _currentModule.FileName));
-
-            }
-        }
-
-
-        public void ExitAliasDef(DOM.Antlr.AliasDefinition node)
-        {
-            //Checking if the alias definition name is unique
-            var sameNameAliasDef = ModuleMembersNsInfo.FindAll(n => (n.ModuleMember is DOM.AliasDefinition && ((DOM.AliasDefinition) n.ModuleMember).Name == node.Name));
-            if (sameNameAliasDef.Count > 1)
-            {
-                if (sameNameAliasDef.Count == 2)
-                {
-                    //Reporting error for 2 documents (existing and new)
-                    var prevAliasDef = (DOM.AliasDefinition) sameNameAliasDef[0].ModuleMember;
-                    _context.AddError(CompilerErrorFactory.DuplicateAliasDefName(prevAliasDef, prevAliasDef.Module.FileName));
-                }
-                _context.AddError(CompilerErrorFactory.DuplicateAliasDefName(node, _currentModule.FileName));
-
-            }
-        }
-
 
         public void EnterAliasDef(DOM.Antlr.AliasDefinition node)
         {
@@ -503,7 +463,7 @@ namespace Malina.Compiler
             if ((ns = _currentModuleMember.Namespaces.FirstOrDefault(n => n.Name == nsPrefix)) != null)
                 return ns;
 
-            //Looking up in the ModuleMember
+            //Looking up in the Module
             if ((ns = _currentModule.Namespaces.FirstOrDefault(n => n.Name == nsPrefix)) != null)
             {
                 //Checking if this namespace can be replaced by ns from ModuleMember because it has same URI

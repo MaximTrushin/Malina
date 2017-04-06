@@ -46,7 +46,7 @@ namespace Malina.Compiler.Steps
                     try
                     {
                         using (var reader = input.Open())
-                            DoProcessAliasesAndNamespaces(input.Name, reader);
+                            DoProcessAliasesAndNamespaces(input.Name, reader, _context);
                     }
                     catch (Exception ex)
                     {
@@ -61,29 +61,29 @@ namespace Malina.Compiler.Steps
             }
         }
 
-        private void DoProcessAliasesAndNamespaces(string fileName, TextReader reader)
+        private static void DoProcessAliasesAndNamespaces(string fileName, TextReader reader, CompilerContext context)
         {
             try
             {
                 var lexer = new MalinaLexer(new AntlrInputStream(reader));
 
                 lexer.RemoveErrorListeners();
-                lexer.AddErrorListener(new LexerParserErrorListener<int>(_context, fileName));
+                lexer.AddErrorListener(new LexerParserErrorListener<int>(context, fileName));
 
                 var parser = MalinaParser.Create(new CommonTokenStream(lexer));
                 parser.Interpreter.PredictionMode = PredictionMode.Sll;
 
-                var resolvingListener = new AliasesAndNamespacesResolvingListener(_context, fileName);
+                var resolvingListener = new AliasesAndNamespacesResolvingListener(context, fileName);
 
                 parser.RemoveErrorListeners();
-                parser.AddErrorListener(new LexerParserErrorListener<IToken>(_context, fileName));
+                parser.AddErrorListener(new LexerParserErrorListener<IToken>(context, fileName));
                 parser.AddParseListener(resolvingListener);
                 parser.module();
 
             }
             catch(Exception ex)
             {
-                _context.AddError(CompilerErrorFactory.FatalError(ex));
+                context.AddError(CompilerErrorFactory.FatalError(ex));
             }
         }
     }

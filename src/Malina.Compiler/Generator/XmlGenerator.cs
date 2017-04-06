@@ -31,6 +31,7 @@ namespace Malina.Compiler.Generator
         private XmlWriter _xmlTextWriter;
         private readonly Func<string, XmlWriter> _writerDelegate;
         private bool _rootElementAdded;
+        protected AliasDefinition _currentAliasDefinition;
 
         public List<LexicalInfo> LocationMap { get; set; }
 
@@ -75,7 +76,6 @@ namespace Malina.Compiler.Generator
             //Getting namespace and prefix
             string prefix, ns;
             _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument,
-                () => { var aliasContext = AliasContext.Peek(); return aliasContext?.AliasDefinition; },
                 () => ScopeContext.Peek(),
                 out prefix, out ns);
 
@@ -136,7 +136,6 @@ namespace Malina.Compiler.Generator
             string prefix, ns;
 
             _context.NamespaceResolver.GetPrefixAndNs(node, _currentDocument,
-                () => { var aliasContext = AliasContext.Peek(); return aliasContext?.AliasDefinition; },
                 () => ScopeContext.Peek(),
                 out prefix, out ns);
             
@@ -182,8 +181,9 @@ namespace Malina.Compiler.Generator
         }
 
 
-
-
-
+        public override void OnAliasDefinition(AliasDefinition node)
+        {
+            _currentAliasDefinition = node;
+        }
     }
 }

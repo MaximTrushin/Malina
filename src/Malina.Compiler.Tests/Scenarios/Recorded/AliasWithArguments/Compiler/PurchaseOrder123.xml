@@ -8,10 +8,10 @@
     <ipo:zip>95819</ipo:zip>
   </shipTo>
   <billTo xsi:type="ipo:EU-Address" export-code="1">
-    <name>Helen Zoe</name>
-    <street>47 Eden Street</street>
-    <city>Cambridge</city>
-    <postcode>126</postcode>
+    <ipo:name>Helen Zoe</ipo:name>
+    <ipo:street>47 Eden Street</ipo:street>
+    <ipo:city>Cambridge</ipo:city>
+    <ipo:postcode>126</ipo:postcode>
   </billTo>
   <ipo:comment />
 </ipo:purchaseOrder>

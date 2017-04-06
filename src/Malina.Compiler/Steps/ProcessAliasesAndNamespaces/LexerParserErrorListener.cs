@@ -32,9 +32,6 @@ namespace Malina.Compiler
             _fileName = fileName;
         }
 
-        public List<MalinaException> Errors { get; } = new List<MalinaException>();
-
-
         public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg,
             RecognitionException e)
         {

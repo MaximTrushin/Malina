@@ -2,6 +2,8 @@
 
 **MA**rkup **L**anguage **IN**tended for **A**ll
 
+**This is a prototype of Syntactik ([www.syntactik.com](http://syntactik.com)) based on ANTLR parser generator. No further development of this language is planned because Syntactik is the final version.**
+
 [![Join the chat at https://gitter.im/syntactik-Malina/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/syntactik-Malina/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8ehh57khcupl5nte?svg=true)](https://ci.appveyor.com/project/syntactik/malina)
